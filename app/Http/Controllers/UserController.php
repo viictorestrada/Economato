@@ -35,7 +35,7 @@ class UserController extends Controller
   public function store(saveUserRequest $request)
   {
     User::create($request->all());
-    return redirect('users')->with([swal()->autoclose(1500)->success('Registro Éxitoso!', 'Se agrego un nuevo usuario')]);
+    return redirect('users')->with([swal()->autoclose(1500)->success('Registro Exitoso!', 'Se agrego un nuevo usuario')]);
   }
 
 
@@ -72,7 +72,7 @@ class UserController extends Controller
   {
     $user = User::find($id);
     $user->update($request->all());
-    return redirect('users')->with([swal()->autoclose(1500)->success('Actualización Éxitoso!', 'Se actualizo el usuario éxitosamente!')]);
+    return redirect('users')->with([swal()->autoclose(1500)->success('Actualización Exitosa!', 'Se actualizo el usuario correctamente!')]);
   }
 
 

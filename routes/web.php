@@ -21,12 +21,8 @@ Route::get('panel', function(){
   return view('administrator.panel');
 })->middleware('auth');
 
+//Ruta para configuraciones (maestras)
 Route::get('configurations', 'AdministratorController@configurations');
-
-//Rutas para crud de usuarios
-Route::get('/users/get', 'UserController@usersList');
-Route::get('users/status/{id}/{status}', 'UserController@status');
-Route::resource('users', 'UserController', ['except' => 'show', 'destroy']);
 
 //Rutas para crud de tablas maestras
 Route::resource('roles', 'RoleController', ['except' => 'index','create','show','destroy']);
@@ -38,3 +34,13 @@ Route::resource('storages', 'StorageController', ['except' => 'index','create','
 Route::resource('recipes', 'RecipeController', ['except' => 'index','create','show','destroy']);
 Route::resource('measures', 'MeasureUnitController', ['except' => 'index','create','show','destroy']);
 Route::resource('product_types', 'ProductTypeController', ['except' => 'index','create','show','destroy']);
+
+//Rutas para crud de usuarios
+Route::get('/users/get', 'UserController@usersList');
+Route::get('users/status/{id}/{status}', 'UserController@status');
+Route::resource('users', 'UserController', ['except' => 'show', 'destroy']);
+
+//Rutas para crud de productos
+Route::get('products/get', 'ProductController@productsList');
+Route::get('products/status/{id}/{status}', 'ProductController@status');
+Route::resource('products', 'ProductController');
