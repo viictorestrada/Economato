@@ -1,0 +1,40 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+//Rutas de Auntenticación
+Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+//Ruta vista administrador
+Route::get('panel', function(){
+  return view('administrator.panel');
+})->middleware('auth');
+
+Route::get('configurations', 'AdministratorController@configurations');
+
+//Rutas para crud de usuarios
+Route::get('/users/get', 'UserController@usersList');
+Route::get('users/status/{id}/{status}', 'UserController@status');
+Route::resource('users', 'UserController', ['except' => 'show', 'destroy']);
+
+//Rutas para crud de tablas maestras
+Route::resource('roles', 'RoleController', ['except' => 'index','create','show','destroy']);
+Route::resource('document_types', 'DocumentTypeController', ['except' => 'index','create','show','destroy']);
+Route::resource('characterizations', 'CharacterizationController', ['except' => 'index','create','show','destroy']);
+Route::resource('regions', 'RegionController', ['except' => 'index','create','show','destroy']);
+Route::resource('programs', 'ProgramController', ['except' => 'index','create','show','destroy']);
+Route::resource('storages', 'StorageController', ['except' => 'index','create','show','destroy']);
+Route::resource('recipes', 'RecipeController', ['except' => 'index','create','show','destroy']);
+Route::resource('measures', 'MeasureUnitController', ['except' => 'index','create','show','destroy']);
+Route::resource('product_types', 'ProductTypeController', ['except' => 'index','create','show','destroy']);

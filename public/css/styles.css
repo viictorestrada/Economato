@@ -1,0 +1,50 @@
+.signIn {
+  display: flex;
+  background-color: #FFF;
+  margin: 10em auto;
+  max-width: 90%;
+  width: 340px;
+  height: auto;
+  box-shadow: 0.5px 1px;
+}
+
+.signIn form input {
+  border-radius: 20px;
+}
+
+.signIn form button {
+  border-radius: 20px;
+}
+
+.img img {
+  width: 120px;
+  height: 120px;
+  border-radius: 40%;
+}
+
+.forms input {
+  border-radius: 20px;
+}
+
+.forms select {
+  border-radius: 20px;
+}
+
+.forms button {
+  border-radius: 20px;
+}
+
+.conf.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #17a2b8;
+}
+
+.admin.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #17a2b8;
+}
+
+.pedid.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #17a2b8;
+}
+
+.repor.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #17a2b8;
