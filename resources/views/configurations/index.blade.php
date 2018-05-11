@@ -12,7 +12,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Modalidad y Programa</a>
+            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programa y Fichas</a>
           </li>
 
           <li class="nav-item">
@@ -30,7 +30,7 @@
         </ul>
       </section>
 
-      <!--Formaularios de contenidos-->
+      <!--Formularios de contenidos-->
       <section class="container mt-2 mb-5 col-10">
         <div class="tab-content" id="v-pills-tabContent">
           <!--Formularios de Regional y Centro de Formación-->
@@ -93,27 +93,27 @@
               </div>
             </div>
           </div>
-          <!--Formularios de Modalidad y Programa-->
+          <!--Formularios de Programa y Ficha-->
           <div class="tab-pane fade show" id="v-pills-moda" role="tabpanel" aria-labelledby="v-pills-home-tab">
-            <!--Panel de sección Modalidad y programa-->
+            <!--Panel de sección Programa y ficha-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Modalidades y Programas</h4>
+              <h4 class="card-header bg-secondary text-light">Programas y Fichas</h4>
               <div class="card-body">
 
-                <!--Formularios de Modalidad y Programa-->
+                <!--Formularios de Programa y Ficha-->
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Modalidades</h4>
+                        <h4 class="card-title text-center">Programas</h4>
                         <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Modalidades para editar:-->
+                        <!--Entrada de Busqueda de Programas para editar:-->
                         <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Modalidad</label>
+                          <label class="sr-only" for="inlineFormInputGroup">Programas de formación</label>
                           <div class="input-group mb-2 mb-sm-0">
                             <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
                             <!--Al ingresar datos ejecuta modadlidad.js:-->
-                            <input type="text" class="form-control border-secondary" id="buscaM" placeholder="Nombre de la Modalidades">
+                            <input type="text" class="form-control border-secondary" id="buscaM" placeholder="Nombre del programa">
                           </div>
                         </div>
                         <hr class="bg-info">
@@ -121,7 +121,7 @@
                         </section>
                         <div>
 
-                          <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Modalidad</a>
+                          <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Programa</a>
 
                         </div>
                       </div>
@@ -130,21 +130,21 @@
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Programas de Formación</h4>
+                        <h4 class="card-title text-center">Fichas</h4>
                         <hr class="bg-info">
-                        <!--Entrada de Busqueda de Programas para editar:-->
+                        <!--Entrada de Busqueda de Fichas para editar:-->
                         <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Programas de Formación</label>
+                          <label class="sr-only" for="inlineFormInputGroup">Fichas</label>
                           <div class="input-group mb-2 mb-sm-0">
                             <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaPf" placeholder="Nombre de Programa de Formación">
+                            <input type="text" class="form-control border-secondary" id="buscaPf" placeholder="Ingrese el número de ficha">
                           </div>
                         </div>
 
                         <hr class="bg-info">
                         <section id="tbl_prog">
                         </section>
-                        <a href="#modprograma"  data-toggle="modal" data-target="#modprograma" class="btn btn-info">Agregar Programa</a>
+                        <a href="#modprograma"  data-toggle="modal" data-target="#modprograma" class="btn btn-info">Agregar Ficha</a>
                       </div>
                     </div>
                   </div>
@@ -447,12 +447,12 @@
       </div>
     </div>
 
-    <!-- Modal para agregar modalidades -->
+    <!-- Modal para agregar Programas de Formación -->
     <div class="modal fade" data-backdrop="static" id="modmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Modalidades</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Registrar Programas</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -466,7 +466,7 @@
                       <form action="modalidades/store" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre modalidad <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Nombre Programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
@@ -477,7 +477,16 @@
                         </div>
 
                         <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción de la modalidad <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-pencil-alt"></i> Código del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label><i class="fa fa-pencil-alt"></i> Descripción del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
@@ -486,8 +495,6 @@
                             <strong class="invalid-feedback">{{$errors->first('descripcionModalidad')}}</strong>
                           </div>
                         </div>
-
-                        <input type="hidden" name="estado" value="Activo">
 
                         <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
