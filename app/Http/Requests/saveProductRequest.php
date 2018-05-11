@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class saveProductRequest extends FormRequest
 {
 
-  
+
     public function authorize()
     {
         return true;
@@ -23,7 +23,7 @@ class saveProductRequest extends FormRequest
         'id_measure_unit' => 'required',
         'presentation' => 'nullable|string|max:45',
         'quantity' => 'required|integer|min:1',
-        'due_date' => 'date|after',
+        'due_date' => 'after:date',
         'unit_price' => 'nullable|numeric|min:0',
         'stock' => 'required|integer|min:0'
       ];

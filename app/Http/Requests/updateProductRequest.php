@@ -3,10 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class updateProductRequest extends FormRequest
 {
-    
+
     public function authorize()
     {
         return true;
@@ -16,13 +17,13 @@ class updateProductRequest extends FormRequest
     public function rules()
     {
       return [
-        'product_code' => 'required|integer|min:0|unique:products', Rule::unique('products')->ignore($this->id, 'id'),
+        'product_code' => 'required|integer|min:0', Rule::unique('products')->ignore($this->id, 'id'),
         'id_product_type' => 'required',
-        'product_name' => 'required|string|max:100|unique:products', Rule::unique('products')->ignore($this->id, 'id'),
+        'product_name' => 'required|string|max:100', Rule::unique('products')->ignore($this->id, 'id'),
         'id_measure_unit' => 'required',
         'presentation' => 'nullable|string|max:45',
         'quantity' => 'required|integer|min:1',
-        'due_date' => 'date|after',
+        'due_date' => 'date|after:date',
         'unit_price' => 'nullable|numeric|min:0',
         'stock' => 'required|integer|min:0'
       ];

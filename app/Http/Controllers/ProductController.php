@@ -8,6 +8,7 @@ use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveProductRequest;
 use App\Http\Requests\updateProductRequest;
+use DataTables;
 
 class ProductController extends Controller
 {
@@ -34,7 +35,7 @@ class ProductController extends Controller
   }
 
 
-  public function productsList(Product $product)
+  public function productsList(Request $request)
   {
     $products = Product::select('products.*','measure_unit.measure_name', 'product_type.product_type_name')->join('measure_unit', 'measure_unit.id', '=', 'products.id_measure_unit')->join('product_type', 'product_type.id', '=', 'products.id_product_type')->get();
     return DataTables::of($products)
@@ -49,7 +50,7 @@ class ProductController extends Controller
       }
       return $boton.'  <a href="/products/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
     })->editColumn('status',function($id){
-      return $id->status == 1 ? "Activo":"Inactivo";
+      return $id->status == 1 ? "Activo" : "Inactivo";
     })
     ->make(true);
   }
@@ -59,7 +60,7 @@ class ProductController extends Controller
   {
     $measure_unit = MeasureUnit::all();
     $product_types = ProductType::all();
-    $products = Product::find($product);
+    $products = Product::find($id);
     return view('products.edit', compact('products','measure_unit', 'product_types'));
   }
 
@@ -79,7 +80,7 @@ class ProductController extends Controller
       return redirect('products');
     }else {
       $product->update(["status"=>$status]);
-      return redirect('product')->with([swal()->autoclose(1500)->message('El usuario '.$product->product_name.' esta',''.$product->status == 1 ? "Activo":"Inactivo".'','success')]);
+      return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'','success')]);
     }
   }
 

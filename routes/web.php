@@ -41,6 +41,6 @@ Route::get('users/status/{id}/{status}', 'UserController@status');
 Route::resource('users', 'UserController', ['except' => 'show', 'destroy']);
 
 //Rutas para crud de productos
-Route::get('products/get', 'ProductController@productsList');
+Route::get('/products/get', 'ProductController@productsList');
 Route::get('products/status/{id}/{status}', 'ProductController@status');
 Route::resource('products', 'ProductController');
