@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class RegionController extends Controller
 {
@@ -22,6 +23,16 @@ class RegionController extends Controller
   public function edit(Region $region)
   {
     //
+  }
+
+  public function regionsList(Request $request)
+  {
+    $regions = Region::select('regions.*')->get();
+    return DataTables::of($regions)
+    ->addColumn('action', function($id) {
+      $button = ' ';
+      return $button.'<a href="/regions/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+    })->make(true);
   }
 
 

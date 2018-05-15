@@ -42,3 +42,19 @@ $('#users').DataTable({
       {data: 'action', name: 'action', orderable: false, searchable: true},
       ]
     });
+
+    $('#regions').DataTable({
+        destroy: true,
+        scrollX: true,
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        language: {
+          "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax:'/regions/get',
+        columns: [
+        {data: 'region_name', name: 'region_name'},
+        {data: 'action', name: 'action', orderable: false, searchable: true},
+        ]
+      });

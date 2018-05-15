@@ -3,7 +3,7 @@
   {{-- Navegación lateral --}}
   <section class="container-fluid mt-1">
     <div class="row">
-      <section class="col-lg-2 col-md-12 col-sm-12 d-flex flex-colum mt-2">
+      <section class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-around mt-2">
 
         <ul class="nav nav-pills nav-fill bg-secondary conf" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
@@ -31,7 +31,7 @@
       </section>
 
       <!--Formularios de contenidos-->
-      <section class="container mt-2 mb-5 col-10">
+      <section class="container-fluid mt-2 mb-5 col-12">
         <div class="tab-content" id="v-pills-tabContent">
           <!--Formularios de Regional y Centro de Formación-->
           <div class="tab-pane fade show active" id="v-pills-region" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -45,21 +45,21 @@
                       <div class="card-body">
                         <h4 class="card-title text-center">Regional</h4>
                         <hr  class="bg-info">
-
-                        <!--Entrada de Busqueda de Regional para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Regional</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaR" placeholder="Nombre de Regional">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
                         <!--Resultados de la consulta a la tabla con las regionales-->
                         <section id="tbl_reg">
                           <!--Impresion de los resultados de las Regionales agregadas en la base de datos-->
+                          <div class="table-responsive">
+                            <table class="table table table-bordered" width="100%" id="regions">
+                              <thead>
+                                <tr>
+                                  <th>Nombre Regional</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
-
+                        <hr class="bg-info">
                         <a href="#modregional"  data-toggle="modal" data-target="#modregional" class="btn btn-info">Agregar Regional</a>
                       </div>
                     </div>
@@ -351,7 +351,6 @@
                     <div class="card-body">
                       <form action="{{ url('regions') }}" method="post">
                         @csrf
-
                         <div class="form-group">
                           <label><i class="fa fa-edit"></i> Nombre de la Regional <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
@@ -464,7 +463,7 @@
                   <div class="card border-secondary">
                     <div class="card-body">
                       <form action="modalidades/store" method="post">
-                        {{ csrf_field() }}
+                        @csrf
                         <div class="form-group">
                           <label><i class="fa fa-edit"></i> Nombre Programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
@@ -482,6 +481,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
+                            <input class="form-control">
                             </div>
                         </div>
 

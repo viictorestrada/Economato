@@ -28,7 +28,10 @@ Route::get('configurations', 'AdministratorController@configurations');
 Route::resource('roles', 'RoleController', ['except' => 'index','create','show','destroy']);
 Route::resource('document_types', 'DocumentTypeController', ['except' => 'index','create','show','destroy']);
 Route::resource('characterizations', 'CharacterizationController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/regions/get', 'RegionController@regionsList');
 Route::resource('regions', 'RegionController', ['except' => 'index','create','show','destroy']);
+
 Route::resource('programs', 'ProgramController', ['except' => 'index','create','show','destroy']);
 Route::resource('storages', 'StorageController', ['except' => 'index','create','show','destroy']);
 Route::resource('recipes', 'RecipeController', ['except' => 'index','create','show','destroy']);
