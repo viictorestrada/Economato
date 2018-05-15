@@ -49,8 +49,8 @@
                         <section id="tbl_reg">
                           <!--Impresion de los resultados de las Regionales agregadas en la base de datos-->
                           <div class="table-responsive">
-                            <table class="table table table-bordered" width="100%" id="regions">
-                              <thead>
+                            <table class="table table table-bordered table-sm" width="100%" id="regions">
+                              <thead class="bg-secondary text-light">
                                 <tr>
                                   <th>Nombre Regional</th>
                                   <th>Acciones</th>
