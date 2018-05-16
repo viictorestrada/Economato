@@ -22,7 +22,7 @@ Route::get('panel', function(){
 })->middleware('auth');
 
 //Ruta para configuraciones (maestras)
-Route::get('configurations', 'AdministratorController@configurations');
+Route::get('configurations', 'AdministratorController@configurations')->middleware('auth', 'admin' or 'executive');
 
 //Rutas para crud de tablas maestras
 Route::resource('roles', 'RoleController', ['except' => 'index','create','show','destroy']);
