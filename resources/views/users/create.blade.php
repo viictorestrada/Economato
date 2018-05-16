@@ -11,7 +11,7 @@
                 <h4>Registro de Usuarios</h4>
               </div>
               <div class="">
-                <a href="{{ url('users') }}" class="btn btn-info"><i class="fa fa-eye"></i> Mostrar todos</a>
+                <a href="{{ url('users') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar todos</a>
               </div>
             </div><hr>
 

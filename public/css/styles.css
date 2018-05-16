@@ -48,3 +48,9 @@
 
 .repor.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   background-color: #17a2b8;
+}
+
+.page-item.active .page-link {
+  border-color: #17a2b8;
+  background-color: #17a2b8;
+}
