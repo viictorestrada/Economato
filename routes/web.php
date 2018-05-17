@@ -40,7 +40,10 @@ Route::resource('programs', 'ProgramController', ['except' => 'index','create','
 
 Route::resource('storages', 'StorageController', ['except' => 'index','create','show','destroy']);
 Route::resource('recipes', 'RecipeController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/measures/get', 'MeasureUnitController@measuresList');
 Route::resource('measures', 'MeasureUnitController', ['except' => 'index','create','show','destroy']);
+
 Route::resource('product_types', 'ProductTypeController', ['except' => 'index','create','show','destroy']);
 
 //Rutas para crud de usuarios

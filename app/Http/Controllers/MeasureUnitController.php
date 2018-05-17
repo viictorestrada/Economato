@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MeasureUnit;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class MeasureUnitController extends Controller
 {
@@ -22,6 +23,17 @@ class MeasureUnitController extends Controller
     public function edit(MeasureUnit $measure)
     {
         //
+    }
+
+
+    public function measuresList(Request $request)
+    {
+      $measures = MeasureUnit::select('measure_unit.*')->get();
+      return DataTables::of($measures)
+      ->addColumn('action', function($id) {
+        $button=" ";
+        return $button.'  <a href="/measures/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      })->make(true);
     }
 
 

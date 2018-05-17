@@ -210,6 +210,8 @@
             </div>
           </div>
 
+
+
           <!--Contenido de Tipos de usuario y documentos de identidad-->
           <div class="tab-pane fade" id="v-pills-tipous" role="tabpanel" aria-labelledby="v-pills-profile-tab">
             <!--Panel de sección Tipos de usuario y documento-->
@@ -270,59 +272,61 @@
 
           <!--Contenido de Tipos de Producto y unidades de medida-->
           <div class="tab-pane fade" id="v-pills-producto" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-            <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Tipos de Productos y Unidades de Medida</h4>
-              <div class="card-body">
+         <div class="card border-secondary text-center">
+           <h4 class="card-header bg-secondary text-light">Tipos de Productos y Unidades de Medida</h4>
+           <div class="card-body">
 
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="card border-info">
-                      <div class="card-body">
-                        <h4 class="card-title text-center">Tipos de Productos</h4>
-                        <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Tipos de prod para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Tipos de Productos</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaP" placeholder="Tipo de Producto">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
-                        <section id="tbl_tipoprod">
+             <div class="row">
+               <div class="col-sm-6">
+                 <div class="card border-info">
+                   <div class="card-body">
+                     <h4 class="card-title text-center">Tipos de Productos</h4>
+                     <hr  class="bg-info">
+                     <!--Entrada de Busqueda de Tipos de prod para editar:-->
+                     <div class="col-auto">
+                       <label class="sr-only" for="inlineFormInputGroup">Tipos de Productos</label>
+                       <div class="input-group mb-2 mb-sm-0">
+                         <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
+                         <input type="text" class="form-control border-secondary" id="buscaP" placeholder="Tipo de Producto">
+                       </div>
+                     </div>
+                     <hr class="bg-info">
+                     <section id="tbl_tipoprod">
 
-                        </section>
-                        <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
-                      </div>
-                    </div>
-                  </div>
+                     </section>
+                     <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
+                   </div>
+                 </div>
+               </div>
 
-                  <div class="col-sm-6">
-                    <div class="card border-info">
-                      <div class="card-body">
-                        <h4 class="card-title text-center">Unidades de Medida</h4>
-                        <hr class="bg-info">
-                        <!--Entrada de Busqueda de Unidad de Medida para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Unidad de Medida</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaUM" placeholder="Unidad de Medida">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
-                        <section id="tbl_unimedi">
+               <div class="col-sm-6">
+                 <div class="card border-info">
+                   <div class="card-body">
+                     <h4 class="card-title text-center">Unidades de Medida</h4>
+                     <hr class="bg-info">
+                     <!--Entrada de Busqueda de Unidad de Medida para editar:-->
 
-                        </section>
-                        <a href="#modunidmed" data-toggle="modal" data-target="#modunidmed" class="btn btn-info">Agregar Unidad de Medida</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                     <section id="tbl_unimedi">
+                       <div class="table-responsive">
+                         <table class="table table table-bordered table-sm" width="100%" id="measures">
+                           <thead class="bg-secondary text-light">
+                             <tr>
+                               <th>Unidad de medida</th>
+                               <th>Acciones</th>
+                             </tr>
+                           </thead>
+                         </table>
+                       </div>
+                     </section>
+                     <hr class="bg-info">
+                     <a href="#modunidmed" data-toggle="modal" data-target="#modunidmed" class="btn btn-info">Agregar Unidad de Medida</a>
+                   </div>
+                 </div>
+               </div>
+             </div>
 
-              </div>
-            </div>
-          </div>
+           </div>
+         </div>
           <!--Fin del contenido-->
         </section>
       </div>
@@ -917,16 +921,16 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="unidades/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('measures') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit fa-lg"></i> Nombre de la Unidad de medida <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Nombre Unidad de medida <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreUnidad') ? 'is-invalid' : ''}}" name="nombreUnidad" value="{{old('nombreUnidad')}}" required autofocus autocomplete="off" maxlength="45">
-                            <strong class="invalid-feedback">{{$errors->first('nombreUnidad')}}</strong>
+                            <input id="nombreRegional" class="form-control {{$errors->has('measure_name') ? 'is-invalid' : ''}}" name="measure_name" value="{{ old('measure_name') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('measure_name')}}</strong>
                           </div>
                         </div>
 

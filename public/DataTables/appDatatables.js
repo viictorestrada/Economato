@@ -96,3 +96,19 @@ $('#users').DataTable({
             {data: 'action', name: 'action', orderable: false, searchable: true},
             ]
           });
+
+          $('#measures').DataTable({
+              destroy: true,
+              scrollX: true,
+              responsive: true,
+              processing: true,
+              serverSide: true,
+              language: {
+                "url": '/DataTables/datatables-spanish.json'
+              },
+              ajax:'/measures/get',
+              columns: [
+              {data: 'measure_name', name: 'measure_name'},
+              {data: 'action', name: 'action', orderable: false, searchable: true},
+              ]
+            });
