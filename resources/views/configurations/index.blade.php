@@ -470,8 +470,13 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
+<<<<<<< HEAD
+                            <input class="form-control">
+                          </div>
+=======
                               <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off" autofocus>
                             </div>
+>>>>>>> 492c0e2ad8b102d999bb2613be3e5477311034ec
                         </div>
 
                         <div class="form-group">
