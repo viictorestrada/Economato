@@ -482,7 +482,7 @@
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
                             <input class="form-control">
-                            </div>
+                          </div>
                         </div>
 
                         <div class="form-group">

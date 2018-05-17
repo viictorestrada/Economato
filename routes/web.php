@@ -47,3 +47,8 @@ Route::resource('users', 'UserController', ['except' => 'show', 'destroy']);
 Route::get('/products/get', 'ProductController@productsList');
 Route::get('products/status/{id}/{status}', 'ProductController@status');
 Route::resource('products', 'ProductController');
+
+//Rutas para fichas
+Route::get('/files/get', 'FileController@filesList');
+Route::get('files/status/{id}/{status}', 'FileController@status');
+Route::resource('files', 'FileController');
