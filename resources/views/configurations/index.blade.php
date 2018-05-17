@@ -12,7 +12,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programa y Fichas</a>
+            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programas</a>
           </li>
 
           <li class="nav-item">
@@ -64,25 +64,31 @@
                       </div>
                     </div>
                   </div>
+
+
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
                         <h4 class="card-title text-center">Centro de Formación</h4>
                         <hr class="bg-info">
-                        <!--Entrada de Busqueda de Centro de Formaciòn para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Centro de Formación</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaC" placeholder="Nombre de Centro de Formación">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
                         <!--Resultados de la consulta a la tabla con las regionales-->
                         <section id="tbl_cen">
                           <!--Impresion de los resultados de los centros de formación-->
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="locations">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Complejo</th>
+                                  <th>Centro de formación</th>
+                                  <th>Programa de formación</th>
+                                  <th>Estado</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
-
+                        <hr class="bg-info">
                         <a href="#modcentro"  data-toggle="modal" data-target="#modcentro" class="btn btn-info">Agregar Centro</a>
 
                       </div>
@@ -93,58 +99,50 @@
               </div>
             </div>
           </div>
-          <!--Formularios de Programa y Ficha-->
+
+
+          <!--Formularios de Programas de formación-->
           <div class="tab-pane fade show" id="v-pills-moda" role="tabpanel" aria-labelledby="v-pills-home-tab">
-            <!--Panel de sección Programa y ficha-->
+            <!--Panel de sección Programa de formación-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Programas y Fichas</h4>
+              <h4 class="card-header bg-secondary text-light">Programas de formación</h4>
               <div class="card-body">
 
-                <!--Formularios de Programa y Ficha-->
+                <!--Formularios de Programa de formación  -->
                 <div class="row">
-                  <div class="col-sm-6">
+                  <div class="col-sm-1">
+                  </div>
+                  <div class="col-sm-10">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Programas</h4>
+                        <h4 class="card-title text-center">Programas de formación</h4>
                         <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Programas para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Programas de formación</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <!--Al ingresar datos ejecuta modadlidad.js:-->
-                            <input type="text" class="form-control border-secondary" id="buscaM" placeholder="Nombre del programa">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
+
                         <section id="tbl_mod">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm table-md" width="100%" id="programs">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Programa de formación</th>
+                                  <th>Versión</th>
+                                  <th>Descripción</th>
+                                  <th>Estado</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+
+                        <div class="col-sm-1">
+                        </div>
                         <div>
+
+                          <hr class="bg-info">
 
                           <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Programa</a>
 
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="card border-info">
-                      <div class="card-body">
-                        <h4 class="card-title text-center">Fichas</h4>
-                        <hr class="bg-info">
-                        <!--Entrada de Busqueda de Fichas para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Fichas</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaPf" placeholder="Ingrese el número de ficha">
-                          </div>
-                        </div>
-
-                        <hr class="bg-info">
-                        <section id="tbl_prog">
-                        </section>
-                        <a href="#modprograma"  data-toggle="modal" data-target="#modprograma" class="btn btn-info">Agregar Ficha</a>
                       </div>
                     </div>
                   </div>
@@ -391,8 +389,8 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="centros/store" method="post">
-                        {{csrf_field()}}
+                      <form action={{ url('locations') }} method="post">
+                        @csrf
                         <div class="form-group">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar Regional <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
@@ -410,28 +408,15 @@
                         </div>
 
                         <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código del centro de formación <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('codigoCentro') ? 'is-invalid' : ''}}" name="codigoCentro" value="{{old('codigoRegional')}}" onkeypress="soloNumeros()" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('codigoCentro')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
                           <label><i class="fa fa-edit"></i> Nombre centro de formación <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreCentro') ? 'is-invalid' : ''}}" name="nombreCentro" value="{{ old('nombreRegional') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('nombreCentro')}}</strong>
+                            <input class="form-control {{$errors->has('location_name') ? 'is-invalid' : ''}}" name="location_name" value="{{ old('location_name') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('location_name')}}</strong>
                           </div>
                         </div>
-
-                        <input type="hidden" name="estado" value="Activo">
 
                         <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
@@ -462,7 +447,7 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="modalidades/store" method="post">
+                      <form action="{{ url('programs') }}" method="post">
                         @csrf
                         <div class="form-group">
                           <label><i class="fa fa-edit"></i> Nombre Programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
@@ -470,19 +455,24 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreModalidad') ? 'is-invalid' : ''}}" name="nombreModalidad" value="{{old('nombreModalidad')}}" required autocomplete="off" autofocus>
-                            <strong class="invalid-feedback">{{$errors->first('nombreModalidad')}}</strong>
+                            <input class="form-control {{$errors->has('program_name') ? 'is-invalid' : ''}}" name="program_name" value="{{old('program_name')}}" required autocomplete="off" autofocus>
+                            <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Código del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-pencil-alt"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
+<<<<<<< HEAD
                             <input class="form-control">
                           </div>
+=======
+                              <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off" autofocus>
+                            </div>
+>>>>>>> 492c0e2ad8b102d999bb2613be3e5477311034ec
                         </div>
 
                         <div class="form-group">
@@ -491,8 +481,8 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <textarea class="form-control {{$errors->has('descripcionModalidad') ? 'is-invalid' : ''}}" name="descripcionModalidad" value="{{old('descripcionModalidad')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionModalidad')}}</strong>
+                            <textarea class="form-control {{$errors->has('program_description') ? 'is-invalid' : ''}}" name="program_description" value="{{old('descripcionModalidad')}}" rows="1" required></textarea>
+                            <strong class="invalid-feedback">{{$errors->first('program_description')}}</strong>
                           </div>
                         </div>
 
