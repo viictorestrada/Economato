@@ -282,18 +282,21 @@
                    <div class="card-body">
                      <h4 class="card-title text-center">Tipos de Productos</h4>
                      <hr  class="bg-info">
-                     <!--Entrada de Busqueda de Tipos de prod para editar:-->
-                     <div class="col-auto">
-                       <label class="sr-only" for="inlineFormInputGroup">Tipos de Productos</label>
-                       <div class="input-group mb-2 mb-sm-0">
-                         <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                         <input type="text" class="form-control border-secondary" id="buscaP" placeholder="Tipo de Producto">
-                       </div>
-                     </div>
-                     <hr class="bg-info">
-                     <section id="tbl_tipoprod">
 
+                     <section id="tbl_tipoprod">
+                       <div class="table-responsive">
+                         <table class="table table table-bordered table-sm" width="100%" id="product_types">
+                           <thead class="bg-secondary text-light">
+                             <tr>
+                               <th>Tipo de producto</th>
+                               <th>Descripción</th>
+                               <th>Acciones</th>
+                             </tr>
+                           </thead>
+                         </table>
+                       </div>
                      </section>
+                     <hr class="bg-info">
                      <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
                    </div>
                  </div>
@@ -470,13 +473,10 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-<<<<<<< HEAD
                             <input class="form-control">
                           </div>
-=======
                               <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off" autofocus>
                             </div>
->>>>>>> 492c0e2ad8b102d999bb2613be3e5477311034ec
                         </div>
 
                         <div class="form-group">
@@ -873,31 +873,29 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="tipoproductos/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('product_types') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre tipo de Producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Nombre tipo de producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreTipoProducto') ? 'is-invalid' : ''}}" name="nombreTipoProducto" value="{{old('nombreTipoProducto')}}" required autofocus autocomplete="off" maxlength="45">
-                            <strong class="invalid-feedback">{{$errors->first('nombreTipoProducto')}}</strong>
+                            <input id="" class="form-control {{$errors->has('product_type_name') ? 'is-invalid' : ''}}" name="product_type_name" value="{{ old('product_type_name') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('product_type_name')}}</strong>
                           </div>
                         </div>
 
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción tipo de Producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('descripcionTipoProducto') ? 'is-invalid' : ''}}" name="descripcionTipoProducto" value="{{old('descripcionTipoProducto')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionTipoProducto')}}</strong>
+                        <label><i class="fa fa-edit"></i> Descripción tipo de producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                           </div>
+                          <input id="" class="form-control {{$errors->has('description') ? 'is-invalid' : ''}}" name="description" value="{{ old('description') }}" required autocomplete="off" maxlength="255">
+                          <strong class="invalid-feedback">{{$errors->first('description')}}</strong>
                         </div>
 
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
+                        <button type="submit" class="btn btn-info btn-block">Agregar tipo de producto</button>
 
                       </form>
                     </div>
@@ -934,7 +932,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input id="nombreRegional" class="form-control {{$errors->has('measure_name') ? 'is-invalid' : ''}}" name="measure_name" value="{{ old('measure_name') }}" required autocomplete="off" maxlength="255">
+                            <input id="" class="form-control {{$errors->has('measure_name') ? 'is-invalid' : ''}}" name="measure_name" value="{{ old('measure_name') }}" required autocomplete="off" maxlength="255">
                             <strong class="invalid-feedback">{{$errors->first('measure_name')}}</strong>
                           </div>
                         </div>

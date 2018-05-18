@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class ProductTypeController extends Controller
 {
@@ -25,6 +26,16 @@ class ProductTypeController extends Controller
         //
     }
 
+    public function productTypesList(Request $request)
+    {
+      $productTypes = ProductType::select('product_type.*')->get();
+      return DataTables::of($productTypes)
+      ->addColumn('action', function($id) {
+        $button=" ";
+        return $button.'  <a href="/product_types/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      })->make(true);
+    }
+
 
     public function update(Request $request, $id)
     {
@@ -32,8 +43,8 @@ class ProductTypeController extends Controller
         'product_type_name' => 'required|string|max:80|unique:product_type_name', Rule::unique('product_type')->ignore($this->id, 'id'),
         'description' => 'required|string',
       ]);
-      $measure = ProductType::find($id);
-      $measure->update($request->all());
+      $productTypes = ProductType::find($id);
+      $productTypes->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
     }
 
