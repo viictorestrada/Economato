@@ -15,14 +15,14 @@
               </div>
             </div><hr>
 
-            {{ Form::Model($file, ['url' => 'files',$file->id], 'method' => 'PATCH') }}
+            <form action="{{ url('files/'.$file->id) }}" method="POST" class="forms">
+              {{ method_field('PATCH') }}
+              @csrf
+              <div class="row">
+                @include('files.form')
+              </div>
 
-            @csrf
-            <div class="row">
-              @include('files.form')
-            </div>
-
-            {{ Form::close() }}
+            </form>
           </div>
         </div>
       </div>

@@ -70,7 +70,7 @@
                                 <p class="text-center">Prestamos</p></a>
                               </div>
                               <div class="col">
-                                <a href="#" class="text-secondary text-center" style="text-decoration: none;">
+                                <a href="{{ url('files') }}" class="text-secondary text-center" style="text-decoration: none;">
                                   <h1 class="display-1 text-center"><i class="fa fa-globe"></i></h1>
                                   <p class="text-center">Fichas</p></a>
                                 </div>
