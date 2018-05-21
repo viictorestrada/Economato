@@ -20,7 +20,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-tipous" role="tab" aria-controls="v-pills-tipous" aria-selected="false" style="color: #fff">Tipos de Usuario y Documento</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-tipous" role="tab" aria-controls="v-pills-tipous" aria-selected="false" style="color: #fff">Roles y Tipo de Documento</a>
           </li>
 
           <li class="nav-item">
@@ -119,8 +119,8 @@
                         <hr  class="bg-info">
 
                         <section id="tbl_mod">
-                          <div class="table-responsive">
-                            <table class="table table table-bordered table-sm table-md" width="100%" id="programs">
+                          <div class="table-responsive" style="width:100%">
+                            <table class="table table-bordered table-sm table-md" style="width:100%" id="programs">
                               <thead class="bg-secondary text-light">
                                 <tr>
                                   <th>Programa de formación</th>
@@ -212,32 +212,32 @@
 
 
 
-          <!--Contenido de Tipos de usuario y documentos de identidad-->
+          <!--Contenido de Roles y documentos de identidad-->
           <div class="tab-pane fade" id="v-pills-tipous" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-            <!--Panel de sección Tipos de usuario y documento-->
+            <!--Panel de sección Roles y documento-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Tipos de Usuario y de Documentos de Identidad</h4>
+              <h4 class="card-header bg-secondary text-light">Roles y Tipos de Documento</h4>
               <div class="card-body">
-
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Tipos de Usuario</h4>
+                        <h4 class="card-title text-center">Roles</h4>
                         <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Modalidades para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Tipos de Usuario</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaTU" placeholder="Tipos de Usuario">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
                         <section id="tbl_tipousua">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="roles">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Rol</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
-                        <a href="#modtipous"  data-toggle="modal" data-target="#modtipous" class="btn btn-info">Agregar Tipo de Usuario</a>
+                        <hr class="bg-info">
+                        <a href="#modtipous"  data-toggle="modal" data-target="#modtipous" class="btn btn-info">Agregar Roles</a>
                       </div>
                     </div>
                   </div>
@@ -246,20 +246,21 @@
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Tipos de Documentos de Identidad</h4>
-                        <hr class="bg-info">
-                        <!--Entrada de Busqueda de Regional para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Tipos de Documentos</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaTD" placeholder="Nombre de Tipo de Documento">
-                          </div>
-                        </div>
+                        <h4 class="card-title text-center">Tipos de Documentos</h4>
                         <hr class="bg-info">
                         <section id="tbl_tipodocu">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="document_types">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Tipo de documento</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+                        <hr class="bg-info">
                         <a href="#modtipodoc"  data-toggle="modal" data-target="#modtipodoc" class="btn btn-info">Agregar Tipo de Documento</a>
                       </div>
                     </div>
@@ -749,13 +750,13 @@
       </div>
     </div>
 
-    <!--Modal para agregar Tipos de Usuarios -->
+    <!--Modal para agregar Roles -->
 
     <div class="modal fade" data-backdrop="static" id="modtipous" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Tipos de usuarios</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Registrar Roles</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -766,27 +767,16 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="tipousuarios/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('roles') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre tipo de usuario <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Roles <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreTipoUsuario') ? 'is-invalid' : ''}}" name="nombreTipoUsuario" value="{{old('nombreTipoUsuario')}}" required autofocus autocomplete="off" maxlength="45">
-                            <strong class="invalid-feedback">{{$errors->first('nombreTipoUsuario')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción tipo de usuario <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('descripcionTipoUsuario') ? 'is-invalid' : ''}}" name="descripcionTipoUsuario" value="{{old('descripcionTipoUsuario')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionTipoUsuario')}}</strong>
+                            <input id="" class="form-control {{$errors->has('role') ? 'is-invalid' : ''}}" name="role" value="{{ old('role') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('role')}}</strong>
                           </div>
                         </div>
 
@@ -820,27 +810,16 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="tipodocumentos/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('document_types') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Código tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('codigoTipoDocumento') ? 'is-invalid' : ''}}" name="codigoTipoDocumento" value="{{old('codigoTipoDocumento')}}" maxlength="4" required>
-                            <strong class="invalid-feedback">{{$errors->first('codigoTipoDocumento')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Nombre tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('nombreTipoDocumento') ? 'is-invalid' : ''}}" name="nombreTipoDocumento" value="{{old('nombreTipoDocumento')}}" maxlength="45" required autofocus autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('nombreTipoDocumento')}}</strong>
+                            <input id="" class="form-control {{$errors->has('type_document') ? 'is-invalid' : ''}}" name="type_document" value="{{ old('type_document') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('type_document')}}</strong>
                           </div>
                         </div>
 
@@ -951,3 +930,7 @@
     </div>
     <!--FINAL DE LAS VENTANAS MODALES-->
   @stop
+
+  @section('script')
+      <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
+  @endsection

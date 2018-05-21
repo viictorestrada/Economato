@@ -25,8 +25,12 @@ Route::get('panel', function(){
 Route::get('configurations', 'AdministratorController@configurations')->middleware('auth', 'admin' or 'executive');
 
 //Rutas para crud de tablas maestras
+Route::get('/roles/get', 'RoleController@rolesList');
 Route::resource('roles', 'RoleController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/document_types/get', 'DocumentTypeController@documentTypesList');
 Route::resource('document_types', 'DocumentTypeController', ['except' => 'index','create','show','destroy']);
+
 Route::resource('characterizations', 'CharacterizationController', ['except' => 'index','create','show','destroy']);
 
 Route::get('/locations/get', 'LocationController@locationsList');
