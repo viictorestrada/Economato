@@ -163,19 +163,21 @@
                     <div class="card border-info">
                       <div class="card-body">
                         <h4 class="card-title text-center">Competencias</h4>
-                        <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Competencias para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Competencias</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaCp" placeholder="Nombre de la Competencia">
-                          </div>
-                        </div>
                         <hr class="bg-info">
                         <section id="tbl_compete">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="competences">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Programa</th>
+                                  <th>Competencia</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+                        <hr  class="bg-info">
                         <a href="#modcompete"  data-toggle="modal" data-target="#modcompete" class="btn btn-info">Agregar Competencia</a>
 
                       </div>
@@ -188,18 +190,20 @@
                       <div class="card-body">
                         <h4 class="card-title text-center">Resultados de Aprendizaje</h4>
                         <hr class="bg-info">
-                        <!--Entrada de Busqueda de Resultados de Aprendizaje para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Resultados de Aprendizaje</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaRa" placeholder="Nombre de Resultado de Aprendizaje">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
                         <section id="tbl_resul">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="learning_results">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Competencia</th>
+                                  <th>Resultado de aprendizaje</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+                        <hr class="bg-info">
                         <a href="#modresul"  data-toggle="modal" data-target="#modresul" class="btn btn-info">Agregar Resultado</a>
                       </div>
                     </div>
@@ -467,17 +471,15 @@
                             <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
                           </div>
                         </div>
-
                         <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control">
+                            <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off">
+                            <strong class="invalid-feedback">{{$errors->first('program_version')}}</strong>
                           </div>
-                              <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off" autofocus>
-                            </div>
                         </div>
 
                         <div class="form-group">
@@ -490,83 +492,6 @@
                             <strong class="invalid-feedback">{{$errors->first('program_description')}}</strong>
                           </div>
                         </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Modal para agregar Programas de Formación -->
-    <div class="modal fade" data-backdrop="static" id="modprograma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Programas de formación</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="programas/store" method="post">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('codigoPrograma') ? 'is-invalid' : ''}}" name="codigoPrograma" value="{{old('codigoPrograma')}}" onkeypress="soloNumeros()" required autocomplete="off" autofocus>
-                            <strong class="invalid-feedback">{{$errors->first('codigoPrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('nombrePrograma') ? 'is-invalid' : ''}}" name="nombrePrograma" value="{{old('nombrePrograma')}}" required autocomplete="off" maxlength="250">
-                            <strong class="invalid-feedback">{{$errors->first('nombrePrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-hashtag"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('versionPrograma') ? 'is-invalid' : ''}}" name="versionPrograma" value="{{old('versionPrograma')}}" required autocomplete="off" maxlength="4">
-                            <strong class="invalid-feedback">{{$errors->first('versionPrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('descripcionPrograma') ? 'is-invalid' : ''}}" name="descripcionPrograma" value="{{old('descripcionPrograma')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionPrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <input type="hidden" name="estado" value="Activo">
 
                         <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
@@ -597,32 +522,21 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="competencias/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('competences') }}" method="post">
+                        @csrf
                         <div class="form-group">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <select class="form-control {{$errors->has('programa') ? 'is-invalid' : ''}}" name="programa" required>
-                              <option hidden value="{{old('programa')}}">Seleccione el Programa</option>
-                              @foreach ($program as $programa)
-                                <option value="{{ $programa->id }}">{{ $programa->program_name }}</option>
+                            <select class="form-control {{$errors->has('program_name') ? 'is-invalid' : ''}}" name="program_name" required>
+                              <option hidden value="{{old('program_name')}}">Seleccione el Programa</option>
+                              @foreach ($program as $programs)
+                                <option value="{{ $programs->id }}">{{ $programs->program_name }}</option>
                               @endforeach
                             </select>
-                            <strong class="invalid-feedback">{{$errors->first('programa')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código de la competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('codigoCompetencia') ? 'is-invalid' : ''}}" name="codigoCompetencia" value="{{old('codigoCompetencia')}}" onkeypress="soloNumeros()" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('codigoCompetencia')}}</strong>
+                            <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
                           </div>
                         </div>
 
@@ -632,23 +546,10 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreCompetencia') ? 'is-invalid' : ''}}" name="nombreCompetencia" value="{{old('nombreCompetencia')}}" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('nombreCompetencia')}}</strong>
+                            <input class="form-control {{$errors->has('competence_name') ? 'is-invalid' : ''}}" name="competence_name" value="{{old('competence_name')}}" required autocomplete="off">
+                            <strong class="invalid-feedback">{{$errors->first('competence_name')}}</strong>
                           </div>
                         </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-hashtag"></i> Versión de la competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('versionCompetencia') ? 'is-invalid' : ''}}" name="versionCompetencia" value="{{old('versionCompetencia')}}" required autocomplete="off" maxlength="12">
-                            <strong class="invalid-feedback">{{$errors->first('versionCompetencia')}}</strong>
-                          </div>
-                        </div>
-
-                        <input type="hidden" name="estado" value="Activo">
 
                         <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
@@ -681,59 +582,32 @@
                   <div class="card border-secondary">
                     <div class="card-body">
 
-                      <form action="resultados/store" method="post">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                          <label><i class="fa fa-mouse-pointer"></i> Seleccionar Programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <select class="form-control {{$errors->has('programa') ? 'is-invalid' : ''}}" name="programa" required>
-                              <option hidden value="{{old('programa')}}">Seleccione Programa</option>
-                              @foreach ($program as $programa)
-                                <option value="{{ $programa->id }}">{{ $programa->program_name }}</option>
-                              @endforeach
-                            </select>
-                            <strong class="invalid-feedback">{{$errors->first('programa')}}</strong>
-                          </div>
-                        </div>
-
+                      <form action="{{ url('learning_results') }}" method="post">
+                        @csrf
                         <div class="form-group">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar Competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <select class="form-control {{$errors->has('competencia') ? 'is-invalid' : ''}}" name="competencia" required>
-                              <option hidden value="{{old('competencia')}}">Seleccione Competencia</option>
-                              @foreach ($competence as $competencia)
-                                <option value="{{ $competencia->id }}">{{ $competencia->competence_name }}</option>
+                            <select class="form-control {{$errors->has('competence_name') ? 'is-invalid' : ''}}" name="competence_name" required>
+                              <option hidden value="{{old('competence_name')}}">Seleccione Competencia</option>
+                              @foreach ($competence as $competences)
+                                <option value="{{ $competences->id }}">{{ $competences->competence_name }}</option>
                               @endforeach
                             </select>
-                            <strong class="invalid-feedback">{{$errors->first('competencia')}}</strong>
+                            <strong class="invalid-feedback">{{$errors->first('competence_name')}}</strong>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código del Resultado <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-pencil-alt"></i> Resultado de aprendizaje<strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('codigoResultado') ? 'is-invalid' : ''}}" name="codigoResultado" value="{{old('codigoResultado')}}" onkeypress="soloNumeros()" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('codigoResultado')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Resultado <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('resultado') ? 'is-invalid' : ''}}" name="resultado" value="{{old('resultado')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('resultado')}}</strong>
+                            <textarea class="form-control {{$errors->has('learning_result') ? 'is-invalid' : ''}}" name="learning_result" value="{{old('learning_result')}}" rows="1" required></textarea>
+                            <strong class="invalid-feedback">{{$errors->first('learning_result')}}</strong>
                           </div>
                         </div>
 
@@ -770,7 +644,7 @@
                       <form action="{{ url('roles') }}" method="post">
                         @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Roles <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Registrar Rol <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>

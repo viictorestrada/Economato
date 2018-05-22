@@ -157,4 +157,37 @@ $(()=>{
     ]
   });
 
+
+    $('#competences').DataTable({
+      destroy: true,
+      responsive: true,
+      processing: true,
+      serverSide: true,
+      language: {
+        "url": '/DataTables/datatables-spanish.json'
+      },
+      ajax:'/competences/get',
+      columns: [
+        {data: 'program_name', name: 'id_program'},
+        {data: 'competence_name', name: 'competence_name'},
+        {data: 'action', name: 'action', orderable: false, searchable: true},
+      ]
+    });
+
+    $('#learning_results').DataTable({
+      destroy: true,
+      responsive: true,
+      processing: true,
+      serverSide: true,
+      language: {
+        "url": '/DataTables/datatables-spanish.json'
+      },
+      ajax:'/learning_results/get',
+      columns: [
+        {data: 'competence_name', name: 'id_competence'},
+        {data: 'learning_result', name: 'learning_result'},
+        {data: 'action', name: 'action', orderable: false, searchable: true},
+      ]
+    });
+
 });
