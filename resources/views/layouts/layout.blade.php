@@ -18,6 +18,12 @@
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <!-- Icono -->
   <link rel="icon" href="{{ asset('images/logo.png') }}">
+
+  <style media="screen">
+    .dataTables_scrollHeadInner {
+      width: 100% !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -62,7 +68,7 @@
   <script src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('datatables/js/dataTables.responsive.min.js') }}"></script>
   <script src="{{ asset('datatables/js/responsive.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
+  @yield('script')
   @include('sweetalert::cdn')
   @include('sweetalert::view')
 </body>

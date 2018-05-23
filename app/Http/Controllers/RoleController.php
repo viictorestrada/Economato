@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class RoleController extends Controller
 {
@@ -20,9 +21,20 @@ class RoleController extends Controller
   }
 
 
-  public function edit(Rol $rol)
+  public function edit(Role $role)
   {
     //
+  }
+
+
+  public function rolesList(Request $request)
+  {
+    $roles = Role::select('roles.*')->get();
+    return DataTables::of($roles)
+    ->addColumn('action', function($id) {
+      $button=" ";
+      return $button.'  <a href="/roles/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+    })->make(true);
   }
 
 

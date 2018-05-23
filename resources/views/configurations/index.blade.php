@@ -12,7 +12,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programas</a>
+            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programas y presentación</a>
           </li>
 
           <li class="nav-item">
@@ -20,7 +20,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-tipous" role="tab" aria-controls="v-pills-tipous" aria-selected="false" style="color: #fff">Tipos de Usuario y Documento</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-tipous" role="tab" aria-controls="v-pills-tipous" aria-selected="false" style="color: #fff">Roles y Tipo de Documento</a>
           </li>
 
           <li class="nav-item">
@@ -110,17 +110,15 @@
 
                 <!--Formularios de Programa de formación  -->
                 <div class="row">
-                  <div class="col-sm-1">
-                  </div>
-                  <div class="col-sm-10">
+                  <div class="col-sm-7">
                     <div class="card border-info">
                       <div class="card-body">
                         <h4 class="card-title text-center">Programas de formación</h4>
                         <hr  class="bg-info">
 
                         <section id="tbl_mod">
-                          <div class="table-responsive">
-                            <table class="table table table-bordered table-sm table-md" width="100%" id="programs">
+                          <div class="table-responsive" style="width:100%">
+                            <table class="table table-bordered table-sm table-md" style="width:100%" id="programs">
                               <thead class="bg-secondary text-light">
                                 <tr>
                                   <th>Programa de formación</th>
@@ -133,9 +131,6 @@
                             </table>
                           </div>
                         </section>
-
-                        <div class="col-sm-1">
-                        </div>
                         <div>
 
                           <hr class="bg-info">
@@ -143,6 +138,30 @@
                           <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Programa</a>
 
                         </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--Formularios de Programa de Presentaciones  -->
+                  <div class="col-sm-5">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Presentaciones</h4>
+                        <hr class="bg-info">
+                        <section id="tbl_resul">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="presentations">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Presentación</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modpresen"  data-toggle="modal" data-target="#modpresen" class="btn btn-info">Agregar Presentación</a>
                       </div>
                     </div>
                   </div>
@@ -163,19 +182,21 @@
                     <div class="card border-info">
                       <div class="card-body">
                         <h4 class="card-title text-center">Competencias</h4>
-                        <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Competencias para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Competencias</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaCp" placeholder="Nombre de la Competencia">
-                          </div>
-                        </div>
                         <hr class="bg-info">
                         <section id="tbl_compete">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="competences">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Programa</th>
+                                  <th>Competencia</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+                        <hr  class="bg-info">
                         <a href="#modcompete"  data-toggle="modal" data-target="#modcompete" class="btn btn-info">Agregar Competencia</a>
 
                       </div>
@@ -188,18 +209,20 @@
                       <div class="card-body">
                         <h4 class="card-title text-center">Resultados de Aprendizaje</h4>
                         <hr class="bg-info">
-                        <!--Entrada de Busqueda de Resultados de Aprendizaje para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Resultados de Aprendizaje</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaRa" placeholder="Nombre de Resultado de Aprendizaje">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
                         <section id="tbl_resul">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="learning_results">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Competencia</th>
+                                  <th>Resultado de aprendizaje</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+                        <hr class="bg-info">
                         <a href="#modresul"  data-toggle="modal" data-target="#modresul" class="btn btn-info">Agregar Resultado</a>
                       </div>
                     </div>
@@ -212,32 +235,32 @@
 
 
 
-          <!--Contenido de Tipos de usuario y documentos de identidad-->
+          <!--Contenido de Roles y documentos de identidad-->
           <div class="tab-pane fade" id="v-pills-tipous" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-            <!--Panel de sección Tipos de usuario y documento-->
+            <!--Panel de sección Roles y documento-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Tipos de Usuario y de Documentos de Identidad</h4>
+              <h4 class="card-header bg-secondary text-light">Roles y Tipos de Documento</h4>
               <div class="card-body">
-
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Tipos de Usuario</h4>
+                        <h4 class="card-title text-center">Roles</h4>
                         <hr  class="bg-info">
-                        <!--Entrada de Busqueda de Modalidades para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Tipos de Usuario</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaTU" placeholder="Tipos de Usuario">
-                          </div>
-                        </div>
-                        <hr class="bg-info">
                         <section id="tbl_tipousua">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="roles">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Rol</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
-                        <a href="#modtipous"  data-toggle="modal" data-target="#modtipous" class="btn btn-info">Agregar Tipo de Usuario</a>
+                        <hr class="bg-info">
+                        <a href="#modtipous"  data-toggle="modal" data-target="#modtipous" class="btn btn-info">Agregar Roles</a>
                       </div>
                     </div>
                   </div>
@@ -246,20 +269,21 @@
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Tipos de Documentos de Identidad</h4>
-                        <hr class="bg-info">
-                        <!--Entrada de Busqueda de Regional para editar:-->
-                        <div class="col-auto">
-                          <label class="sr-only" for="inlineFormInputGroup">Tipos de Documentos</label>
-                          <div class="input-group mb-2 mb-sm-0">
-                            <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                            <input type="text" class="form-control border-secondary" id="buscaTD" placeholder="Nombre de Tipo de Documento">
-                          </div>
-                        </div>
+                        <h4 class="card-title text-center">Tipos de Documentos</h4>
                         <hr class="bg-info">
                         <section id="tbl_tipodocu">
-
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="document_types">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Tipo de documento</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                         </section>
+                        <hr class="bg-info">
                         <a href="#modtipodoc"  data-toggle="modal" data-target="#modtipodoc" class="btn btn-info">Agregar Tipo de Documento</a>
                       </div>
                     </div>
@@ -282,18 +306,21 @@
                    <div class="card-body">
                      <h4 class="card-title text-center">Tipos de Productos</h4>
                      <hr  class="bg-info">
-                     <!--Entrada de Busqueda de Tipos de prod para editar:-->
-                     <div class="col-auto">
-                       <label class="sr-only" for="inlineFormInputGroup">Tipos de Productos</label>
-                       <div class="input-group mb-2 mb-sm-0">
-                         <div class="input-group-addon bg-secondary"><span class="fa fa-search fa-2x text-light"></span></div>
-                         <input type="text" class="form-control border-secondary" id="buscaP" placeholder="Tipo de Producto">
-                       </div>
-                     </div>
-                     <hr class="bg-info">
-                     <section id="tbl_tipoprod">
 
+                     <section id="tbl_tipoprod">
+                       <div class="table-responsive">
+                         <table class="table table table-bordered table-sm" width="100%" id="product_types">
+                           <thead class="bg-secondary text-light">
+                             <tr>
+                               <th>Tipo de producto</th>
+                               <th>Descripción</th>
+                               <th>Acciones</th>
+                             </tr>
+                           </thead>
+                         </table>
+                       </div>
                      </section>
+                     <hr class="bg-info">
                      <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
                    </div>
                  </div>
@@ -463,20 +490,15 @@
                             <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
                           </div>
                         </div>
-
                         <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-<<<<<<< HEAD
-                            <input class="form-control">
+                            <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off">
+                            <strong class="invalid-feedback">{{$errors->first('program_version')}}</strong>
                           </div>
-=======
-                              <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off" autofocus>
-                            </div>
->>>>>>> 492c0e2ad8b102d999bb2613be3e5477311034ec
                         </div>
 
                         <div class="form-group">
@@ -503,12 +525,13 @@
       </div>
     </div>
 
-    <!--Modal para agregar Programas de Formación -->
-    <div class="modal fade" data-backdrop="static" id="modprograma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal para agregar Regional -->
+
+    <div class="modal fade" id="modpresen" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Programas de formación</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Registrar Presentación</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -519,53 +542,18 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="programas/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('presentations') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('codigoPrograma') ? 'is-invalid' : ''}}" name="codigoPrograma" value="{{old('codigoPrograma')}}" onkeypress="soloNumeros()" required autocomplete="off" autofocus>
-                            <strong class="invalid-feedback">{{$errors->first('codigoPrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Nombre de la Presentación <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombrePrograma') ? 'is-invalid' : ''}}" name="nombrePrograma" value="{{old('nombrePrograma')}}" required autocomplete="off" maxlength="250">
-                            <strong class="invalid-feedback">{{$errors->first('nombrePrograma')}}</strong>
+                            <input id="nombreRegional" class="form-control {{$errors->has('presentation') ? 'is-invalid' : ''}}" name="presentation" value="{{ old('presentation') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('presentation')}}</strong>
                           </div>
                         </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-hashtag"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('versionPrograma') ? 'is-invalid' : ''}}" name="versionPrograma" value="{{old('versionPrograma')}}" required autocomplete="off" maxlength="4">
-                            <strong class="invalid-feedback">{{$errors->first('versionPrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('descripcionPrograma') ? 'is-invalid' : ''}}" name="descripcionPrograma" value="{{old('descripcionPrograma')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionPrograma')}}</strong>
-                          </div>
-                        </div>
-
-                        <input type="hidden" name="estado" value="Activo">
 
                         <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
@@ -596,32 +584,21 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="competencias/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('competences') }}" method="post">
+                        @csrf
                         <div class="form-group">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <select class="form-control {{$errors->has('programa') ? 'is-invalid' : ''}}" name="programa" required>
-                              <option hidden value="{{old('programa')}}">Seleccione el Programa</option>
-                              @foreach ($program as $programa)
-                                <option value="{{ $programa->id }}">{{ $programa->program_name }}</option>
+                            <select class="form-control {{$errors->has('program_name') ? 'is-invalid' : ''}}" name="program_name" required>
+                              <option hidden value="{{old('program_name')}}">Seleccione el Programa</option>
+                              @foreach ($program as $programs)
+                                <option value="{{ $programs->id }}">{{ $programs->program_name }}</option>
                               @endforeach
                             </select>
-                            <strong class="invalid-feedback">{{$errors->first('programa')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código de la competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('codigoCompetencia') ? 'is-invalid' : ''}}" name="codigoCompetencia" value="{{old('codigoCompetencia')}}" onkeypress="soloNumeros()" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('codigoCompetencia')}}</strong>
+                            <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
                           </div>
                         </div>
 
@@ -631,23 +608,10 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreCompetencia') ? 'is-invalid' : ''}}" name="nombreCompetencia" value="{{old('nombreCompetencia')}}" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('nombreCompetencia')}}</strong>
+                            <input class="form-control {{$errors->has('competence_name') ? 'is-invalid' : ''}}" name="competence_name" value="{{old('competence_name')}}" required autocomplete="off">
+                            <strong class="invalid-feedback">{{$errors->first('competence_name')}}</strong>
                           </div>
                         </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-hashtag"></i> Versión de la competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('versionCompetencia') ? 'is-invalid' : ''}}" name="versionCompetencia" value="{{old('versionCompetencia')}}" required autocomplete="off" maxlength="12">
-                            <strong class="invalid-feedback">{{$errors->first('versionCompetencia')}}</strong>
-                          </div>
-                        </div>
-
-                        <input type="hidden" name="estado" value="Activo">
 
                         <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
@@ -680,59 +644,32 @@
                   <div class="card border-secondary">
                     <div class="card-body">
 
-                      <form action="resultados/store" method="post">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                          <label><i class="fa fa-mouse-pointer"></i> Seleccionar Programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <select class="form-control {{$errors->has('programa') ? 'is-invalid' : ''}}" name="programa" required>
-                              <option hidden value="{{old('programa')}}">Seleccione Programa</option>
-                              @foreach ($program as $programa)
-                                <option value="{{ $programa->id }}">{{ $programa->program_name }}</option>
-                              @endforeach
-                            </select>
-                            <strong class="invalid-feedback">{{$errors->first('programa')}}</strong>
-                          </div>
-                        </div>
-
+                      <form action="{{ url('learning_results') }}" method="post">
+                        @csrf
                         <div class="form-group">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar Competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <select class="form-control {{$errors->has('competencia') ? 'is-invalid' : ''}}" name="competencia" required>
-                              <option hidden value="{{old('competencia')}}">Seleccione Competencia</option>
-                              @foreach ($competence as $competencia)
-                                <option value="{{ $competencia->id }}">{{ $competencia->competence_name }}</option>
+                            <select class="form-control {{$errors->has('competence_name') ? 'is-invalid' : ''}}" name="competence_name" required>
+                              <option hidden value="{{old('competence_name')}}">Seleccione Competencia</option>
+                              @foreach ($competence as $competences)
+                                <option value="{{ $competences->id }}">{{ $competences->competence_name }}</option>
                               @endforeach
                             </select>
-                            <strong class="invalid-feedback">{{$errors->first('competencia')}}</strong>
+                            <strong class="invalid-feedback">{{$errors->first('competence_name')}}</strong>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label><i class="fa fa-barcode"></i> Código del Resultado <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-pencil-alt"></i> Resultado de aprendizaje<strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('codigoResultado') ? 'is-invalid' : ''}}" name="codigoResultado" value="{{old('codigoResultado')}}" onkeypress="soloNumeros()" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('codigoResultado')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Resultado <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('resultado') ? 'is-invalid' : ''}}" name="resultado" value="{{old('resultado')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('resultado')}}</strong>
+                            <textarea class="form-control {{$errors->has('learning_result') ? 'is-invalid' : ''}}" name="learning_result" value="{{old('learning_result')}}" rows="1" required></textarea>
+                            <strong class="invalid-feedback">{{$errors->first('learning_result')}}</strong>
                           </div>
                         </div>
 
@@ -749,13 +686,13 @@
       </div>
     </div>
 
-    <!--Modal para agregar Tipos de Usuarios -->
+    <!--Modal para agregar Roles -->
 
     <div class="modal fade" data-backdrop="static" id="modtipous" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Tipos de usuarios</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Registrar Roles</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -766,27 +703,16 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="tipousuarios/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('roles') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre tipo de usuario <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Registrar Rol <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreTipoUsuario') ? 'is-invalid' : ''}}" name="nombreTipoUsuario" value="{{old('nombreTipoUsuario')}}" required autofocus autocomplete="off" maxlength="45">
-                            <strong class="invalid-feedback">{{$errors->first('nombreTipoUsuario')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción tipo de usuario <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('descripcionTipoUsuario') ? 'is-invalid' : ''}}" name="descripcionTipoUsuario" value="{{old('descripcionTipoUsuario')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionTipoUsuario')}}</strong>
+                            <input id="" class="form-control {{$errors->has('role') ? 'is-invalid' : ''}}" name="role" value="{{ old('role') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('role')}}</strong>
                           </div>
                         </div>
 
@@ -820,27 +746,16 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="tipodocumentos/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('document_types') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Código tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('codigoTipoDocumento') ? 'is-invalid' : ''}}" name="codigoTipoDocumento" value="{{old('codigoTipoDocumento')}}" maxlength="4" required>
-                            <strong class="invalid-feedback">{{$errors->first('codigoTipoDocumento')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Nombre tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('nombreTipoDocumento') ? 'is-invalid' : ''}}" name="nombreTipoDocumento" value="{{old('nombreTipoDocumento')}}" maxlength="45" required autofocus autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('nombreTipoDocumento')}}</strong>
+                            <input id="" class="form-control {{$errors->has('type_document') ? 'is-invalid' : ''}}" name="type_document" value="{{ old('type_document') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('type_document')}}</strong>
                           </div>
                         </div>
 
@@ -873,31 +788,29 @@
                 <div class="col-12">
                   <div class="card border-secondary">
                     <div class="card-body">
-                      <form action="tipoproductos/store" method="post">
-                        {{ csrf_field() }}
+                      <form action="{{ url('product_types') }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre tipo de Producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <label><i class="fa fa-edit"></i> Nombre tipo de producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('nombreTipoProducto') ? 'is-invalid' : ''}}" name="nombreTipoProducto" value="{{old('nombreTipoProducto')}}" required autofocus autocomplete="off" maxlength="45">
-                            <strong class="invalid-feedback">{{$errors->first('nombreTipoProducto')}}</strong>
+                            <input id="" class="form-control {{$errors->has('product_type_name') ? 'is-invalid' : ''}}" name="product_type_name" value="{{ old('product_type_name') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('product_type_name')}}</strong>
                           </div>
                         </div>
 
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción tipo de Producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('descripcionTipoProducto') ? 'is-invalid' : ''}}" name="descripcionTipoProducto" value="{{old('descripcionTipoProducto')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('descripcionTipoProducto')}}</strong>
+                        <label><i class="fa fa-edit"></i> Descripción tipo de producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                           </div>
+                          <input id="" class="form-control {{$errors->has('description') ? 'is-invalid' : ''}}" name="description" value="{{ old('description') }}" required autocomplete="off" maxlength="255">
+                          <strong class="invalid-feedback">{{$errors->first('description')}}</strong>
                         </div>
 
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
+                        <button type="submit" class="btn btn-info btn-block">Agregar tipo de producto</button>
 
                       </form>
                     </div>
@@ -934,7 +847,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input id="nombreRegional" class="form-control {{$errors->has('measure_name') ? 'is-invalid' : ''}}" name="measure_name" value="{{ old('measure_name') }}" required autocomplete="off" maxlength="255">
+                            <input id="" class="form-control {{$errors->has('measure_name') ? 'is-invalid' : ''}}" name="measure_name" value="{{ old('measure_name') }}" required autocomplete="off" maxlength="255">
                             <strong class="invalid-feedback">{{$errors->first('measure_name')}}</strong>
                           </div>
                         </div>
@@ -953,3 +866,7 @@
     </div>
     <!--FINAL DE LAS VENTANAS MODALES-->
   @stop
+
+  @section('script')
+      <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
+  @endsection
