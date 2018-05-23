@@ -6,7 +6,8 @@ use App\Models\File;
 use App\Models\Program;
 use App\Models\Characterization;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\saveFileRequest;
+use App\Http\Requests\updateFileRequest;
 use DataTables;
 
 class FileController extends Controller
@@ -24,15 +25,8 @@ class FileController extends Controller
     return view('files.create', compact('programs', 'characterizations'));
   }
 
-  public function store(Request $request)
+  public function store(saveFileRequest $request)
   {
-    $this->validate($request, [
-      'program_id' => 'required',
-      'characterization_id' => 'required',
-      'file_number' => 'required|string|max:45|unique:files',
-      'file_route' => 'required|integer',
-      'apprentices' => 'required|integer',
-    ]);
     File::create($request->all());
     return redirect('files')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
@@ -65,22 +59,15 @@ class FileController extends Controller
     $file = File::find($id);
     $programs = Program::all();
     $characterizations = Characterization::all();
-    return view('files.create', compact('programs', 'characterizations'));
+    return view('files.edit', compact('file', 'programs', 'characterizations'));
   }
 
 
-  public function update(Request $request,  $id)
+  public function update(updateFileRequest $request,  $id)
   {
-    $this->validate($request, [
-      'program_id' => 'required',
-      'characterization_id' => 'required',
-      'file_number' => 'required|string|max:45', Rule::unique('files')->ignore($this->id, 'id'),
-      'file_route' => 'required|integer',
-      'apprentices' => 'required|integer',
-    ]);
     $file = File::find($id);
     $file->update($request->all());
-    return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
+    return redirect('files')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
   }
 
 
@@ -92,7 +79,7 @@ class FileController extends Controller
       return redirect('files');
     }else {
       $file->update(["status"=>$status]);
-      return redirect('files')->with([swal()->autoclose(1500)->message('La ficha '.$file->file_number.' esta',''.$file->status == 1 ? "Activo":"Inactivo".'','success')]);
+      return redirect('files')->with([swal()->autoclose(1500)->message('La ficha '.$file->file_number.' esta',' '.$file->status == 1 ? "Activo":"Inactivo".' ','success')]);
     }
   }
 

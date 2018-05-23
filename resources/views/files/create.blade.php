@@ -15,7 +15,7 @@
               </div>
             </div><hr>
 
-            <form action="{{ url('files') }}" class="forms">
+            <form action="{{ url('files') }}" method="POST" class="forms">
 
             @csrf
             <div class="row">

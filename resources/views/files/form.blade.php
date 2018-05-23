@@ -1,9 +1,9 @@
 <div class="form-group col-lg-6 col-md-6">
   <label for="program_id">Programa de Formación <strong class="text-danger">*</strong></label>
   <select class="form-control {{ $errors->has('program_id') ? 'is-invalid' : '' }}" name="program_id">
-    <option hidden value="{{ $file->program_id or old('program_id') }}">--Seleccionar Programa--</option>
+    <option hidden value="">--Seleccionar Programa--</option>
     @foreach ($programs as $programa)
-      <option value="{{ $programa->id }}">{{ $programa->program_name }}</option>
+      <option value="{{ $programa->id }}">{{ $programa->program_name or old('program_id') }}</option>
     @endforeach
   </select>
   <strong class="invalid-feedback">{{ $errors->first('program_id') }}</strong>
