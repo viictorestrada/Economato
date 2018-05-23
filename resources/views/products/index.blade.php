@@ -35,3 +35,7 @@
     </div>
   </div>
 @endsection
+
+@section('script')
+    <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
+@endsection

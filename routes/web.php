@@ -25,8 +25,21 @@ Route::get('panel', function(){
 Route::get('configurations', 'AdministratorController@configurations')->middleware('auth', 'admin' or 'executive');
 
 //Rutas para crud de tablas maestras
+Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
+Route::resource('learning_results', 'LearningResultController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/presentations/get', 'PresentationController@presentationsList');
+Route::resource('presentations', 'PresentationController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/competences/get', 'CompetenceController@competencesList');
+Route::resource('competences', 'CompetenceController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/roles/get', 'RoleController@rolesList');
 Route::resource('roles', 'RoleController', ['except' => 'index','create','show','destroy']);
+
+Route::get('/document_types/get', 'DocumentTypeController@documentTypesList');
 Route::resource('document_types', 'DocumentTypeController', ['except' => 'index','create','show','destroy']);
+
 Route::resource('characterizations', 'CharacterizationController', ['except' => 'index','create','show','destroy']);
 
 Route::get('/locations/get', 'LocationController@locationsList');
@@ -44,6 +57,7 @@ Route::resource('recipes', 'RecipeController', ['except' => 'index','create','sh
 Route::get('/measures/get', 'MeasureUnitController@measuresList');
 Route::resource('measures', 'MeasureUnitController', ['except' => 'index','create','show','destroy']);
 
+Route::get('/product_types/get', 'ProductTypeController@productTypesList');
 Route::resource('product_types', 'ProductTypeController', ['except' => 'index','create','show','destroy']);
 
 //Rutas para crud de usuarios

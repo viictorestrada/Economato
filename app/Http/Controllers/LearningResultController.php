@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\LearningResult;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
-class LearningResult extends Controller
+class LearningResultController extends Controller
 {
 
   public function store(Request $request)
@@ -20,9 +21,20 @@ class LearningResult extends Controller
   }
 
 
-  public function edit(file $learning_result)
+  public function edit($id)
   {
     //
+  }
+
+
+  public function learningResultsList(Request $request)
+  {
+    $learning_results = LearningResult::select('learning_results.*','competences.competence_name')->join('competences', 'competences.id', '=', 'learning_results.id_competence')->get();
+    return DataTables::of($learning_results)
+    ->addColumn('action', function($id) {
+      $button=" ";
+      return $button.'  <a href="/learning_results/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+    })->make(true);
   }
 
 
