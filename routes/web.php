@@ -28,6 +28,9 @@ Route::get('configurations', 'AdministratorController@configurations')->middlewa
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
 Route::resource('learning_results', 'LearningResultController', ['except' => 'index','create','show','destroy']);
 
+Route::get('/presentations/get', 'PresentationController@presentationsList');
+Route::resource('presentations', 'PresentationController', ['except' => 'index','create','show','destroy']);
+
 Route::get('/competences/get', 'CompetenceController@competencesList');
 Route::resource('competences', 'CompetenceController', ['except' => 'index','create','show','destroy']);
 

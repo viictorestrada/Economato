@@ -190,4 +190,19 @@ $(()=>{
       ]
     });
 
+    $('#presentations').DataTable({
+      destroy: true,
+      responsive: true,
+      processing: true,
+      serverSide: true,
+      language: {
+        "url": '/DataTables/datatables-spanish.json'
+      },
+      ajax:'/presentations/get',
+      columns: [
+        {data: 'presentation', name: 'presentation'},
+        {data: 'action', name: 'action', orderable: false, searchable: true},
+      ]
+    });
+
 });

@@ -12,7 +12,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programas</a>
+            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programas y presentación</a>
           </li>
 
           <li class="nav-item">
@@ -110,9 +110,7 @@
 
                 <!--Formularios de Programa de formación  -->
                 <div class="row">
-                  <div class="col-sm-1">
-                  </div>
-                  <div class="col-sm-10">
+                  <div class="col-sm-7">
                     <div class="card border-info">
                       <div class="card-body">
                         <h4 class="card-title text-center">Programas de formación</h4>
@@ -133,9 +131,6 @@
                             </table>
                           </div>
                         </section>
-
-                        <div class="col-sm-1">
-                        </div>
                         <div>
 
                           <hr class="bg-info">
@@ -143,6 +138,30 @@
                           <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Programa</a>
 
                         </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--Formularios de Programa de Presentaciones  -->
+                  <div class="col-sm-5">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Presentaciones</h4>
+                        <hr class="bg-info">
+                        <section id="tbl_resul">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="presentations">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Presentación</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modpresen"  data-toggle="modal" data-target="#modpresen" class="btn btn-info">Agregar Presentación</a>
                       </div>
                     </div>
                   </div>
@@ -490,6 +509,49 @@
                             </div>
                             <textarea class="form-control {{$errors->has('program_description') ? 'is-invalid' : ''}}" name="program_description" value="{{old('descripcionModalidad')}}" rows="1" required></textarea>
                             <strong class="invalid-feedback">{{$errors->first('program_description')}}</strong>
+                          </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para agregar Regional -->
+
+    <div class="modal fade" id="modpresen" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-light">
+            <h5 class="modal-title" id="exampleModalLabel">Registrar Presentación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card border-secondary">
+                    <div class="card-body">
+                      <form action="{{ url('presentations') }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <label><i class="fa fa-edit"></i> Nombre de la Presentación <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
+                            </div>
+                            <input id="nombreRegional" class="form-control {{$errors->has('presentation') ? 'is-invalid' : ''}}" name="presentation" value="{{ old('presentation') }}" required autocomplete="off" maxlength="255">
+                            <strong class="invalid-feedback">{{$errors->first('presentation')}}</strong>
                           </div>
                         </div>
 
