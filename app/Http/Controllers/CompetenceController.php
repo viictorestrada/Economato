@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Competence;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class CompetenceController extends Controller
 {
@@ -23,6 +24,17 @@ class CompetenceController extends Controller
     public function edit(Competence $competence)
     {
         //
+    }
+
+
+    public function competencesList(Request $request)
+    {
+      $competences = Competence::select('competences.*','programs.program_name')->join('programs', 'programs.id', '=', 'competences.id_program')->get();
+      return DataTables::of($competences)
+      ->addColumn('action', function($id) {
+        $button=" ";
+        return $button.'  <a href="/competences/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      })->make(true);
     }
 
 
