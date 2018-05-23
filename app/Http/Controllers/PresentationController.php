@@ -32,7 +32,7 @@ class PresentationController extends Controller
       return DataTables::of($presentations)
       ->addColumn('action', function($id) {
         $button=" ";
-        return $button.'  <a href="/presentations/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+        return $button.'<a href="/presentations/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
       })->make(true);
     }
 
