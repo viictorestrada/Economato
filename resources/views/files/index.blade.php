@@ -31,3 +31,30 @@
     </div>
   </div>
 @endsection
+
+@section('script')
+  <script>
+
+    $('#files').DataTable({
+        destroy: true,
+        scrollX: true,
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/files/get',
+        columns: [
+            { data: 'program_name', name: 'program_id' },
+            { data: 'characterization_name', name: 'characterization_id' },
+            { data: 'file_number', name: 'file_number' },
+            { data: 'file_route', name: 'file_route' },
+            { data: 'apprentices', name: 'apprentices' },
+            { data: 'status', name: 'status' },
+            { data: 'action', name: 'action', orderable: false, searchable: true },
+        ]
+    });
+
+  </script>
+@endsection

@@ -40,7 +40,7 @@
                       <p class="text-center">Usuarios</p></a>
                     </div>
                     <div class="col">
-                      <a href="{{ url('products') }}" class="text-secondary text-center" style="text-decoration: none;">
+                      <a href="{{ url('products/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                         <h1 class="display-1 text-center"><i class="fa fa-shopping-cart"></i></h1>
                         <p class="text-center">Productos</p></a>
                       </div>
