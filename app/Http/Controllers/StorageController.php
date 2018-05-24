@@ -6,7 +6,7 @@ use App\Models\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class Storage extends Controller
+class StorageController extends Controller
 {
 
   public function store(Request $request)

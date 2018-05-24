@@ -12,9 +12,17 @@ class MeasureUnitController extends Controller
 
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'measure_name' => 'required|string|max:45|unique:measure_name',
-      ]);
+
+      $rules = [
+        'measure_name' => 'required|string|max:45|unique:measure_unit'
+      ];
+
+      $messages = [
+        'measure_name.required' => 'El campo Presentación es obligatorio.',
+        'measure_name.max' => 'El campo Presentación debe contener máximo 45 caracteres.'
+      ];
+
+      $this->validate($request, $rules, $messages);
       MeasureUnit::create($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
@@ -39,9 +47,16 @@ class MeasureUnitController extends Controller
 
     public function update(Request $request, $id)
     {
-      $this->validate($request, [
-        'measure_name' => 'required|string|max:45|unique:measure_name', Rule::unique('measure_unit')->ignore($this->id, 'id')
-      ]);
+      $rules = [
+        'measure_name' => 'required|string|max:45', Rule::unique('measure_unit')->ignore($this->id, 'id')
+      ];
+
+      $messages = [
+        'measure_name.required' => 'El campo Presentación es obligatorio.',
+        'measure_name.max' => 'El campo Presentación debe contener máximo 45 caracteres.',
+      ];
+
+      $this->validate($request, $rules, $messages);
       $measure = MeasureUnit::find($id);
       $measure->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
