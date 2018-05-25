@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\MeasureUnit;
 use App\Models\ProductType;
+use App\Models\Presentation;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveProductRequest;
 use App\Http\Requests\updateProductRequest;
@@ -22,9 +23,10 @@ class ProductController extends Controller
 
   public function create()
   {
-    $measure_unit = MeasureUnit::all();
-    $product_types = ProductType::all();
-    return view('products.create', compact('measure_unit', 'product_types'));
+    $measure_unit = MeasureUnit::pluck('measure_name', 'id');
+    $product_types = ProductType::pluck('product_type_name', 'id');
+    $presentations = Presentation::pluck('presentation', 'id');
+    return view('products.create', compact('measure_unit', 'product_types', 'presentations'));
   }
 
 
@@ -37,19 +39,22 @@ class ProductController extends Controller
 
   public function productsList(Request $request)
   {
-    $products = Product::select('products.*','measure_unit.measure_name', 'product_type.product_type_name')->join('measure_unit', 'measure_unit.id', '=', 'products.id_measure_unit')->join('product_type', 'product_type.id', '=', 'products.id_product_type')->get();
+    $products = Product::select('products.*', 'measure_unit.measure_name', 'product_type.product_type_name', 'presentations.presentation')
+    ->join('measure_unit', 'measure_unit.id', '=', 'products.id_measure_unit')
+    ->join('product_type', 'product_type.id', '=', 'products.id_product_type')
+    ->join('presentations', 'presentations.id', '=', 'products.presentation_id')->get();
     return DataTables::of($products)
-    ->addColumn('action', function($id) {
-      $boton=" ";
+    ->addColumn('action', function ($id) {
+      $button=" ";
       if ($id->status == 1) {
-        $boton = '<a href="/products/status/'.$id->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+        $button = '<a href="/products/status/'.$id->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
       }
       else
       {
-        $boton = '<a href="/products/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
+        $button = '<a href="/products/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
       }
-      return $boton.'  <a href="/products/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
-    })->editColumn('status',function($id){
+      return $button.' <a href="/products/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+    })->editColumn('status', function ($id) {
       return $id->status == 1 ? "Activo" : "Inactivo";
     })
     ->make(true);
@@ -58,10 +63,11 @@ class ProductController extends Controller
 
   public function edit($id)
   {
-    $measure_unit = MeasureUnit::all();
-    $product_types = ProductType::all();
+    $measure_unit = MeasureUnit::pluck('measure_name', 'id');
+    $product_types = ProductType::pluck('product_type_name', 'id');
+    $presentations = Presentation::pluck('presentation', 'id');
     $products = Product::find($id);
-    return view('products.edit', compact('products','measure_unit', 'product_types'));
+    return view('products.edit', compact('products', 'measure_unit', 'product_types', 'presentations'));
   }
 
 
@@ -76,11 +82,11 @@ class ProductController extends Controller
   {
     $product = Product::find($id);
     if ($product == null) {
-      alert()->autoclose(1500)->warning('Advertencia','No se encontraron datos!');
+      alert()->autoclose(1500)->warning('Advertencia', 'No se encontraron datos!');
       return redirect('products');
     }else {
       $product->update(["status"=>$status]);
-      return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'','success')]);
+      return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
     }
   }
 
