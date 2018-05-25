@@ -20,8 +20,8 @@ class FileController extends Controller
 
   public function create()
   {
-    $programs = Program::all();
-    $characterizations = Characterization::all();
+    $programs = Program::pluck('program_name', 'id');
+    $characterizations = Characterization::pluck('characterization_name', 'id');
     return view('files.create', compact('programs', 'characterizations'));
   }
 
@@ -37,7 +37,7 @@ class FileController extends Controller
     ->join('programs', 'programs.id', '=', 'files.program_id')
     ->join('characterizations', 'characterizations.id', '=', 'files.characterization_id')->get();
     return DataTables::of($files)
-    ->addColumn('action', function($id) {
+    ->addColumn('action', function ($id) {
       $button=" ";
       if ($id->status == 1) {
         $button = '<a href="/files/status/'.$id->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
@@ -47,7 +47,7 @@ class FileController extends Controller
         $button = '<a href="/files/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
       }
       return $button.'  <a href="/files/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
-    })->editColumn('status',function($id){
+    })->editColumn('status', function ($id) {
       return $id->status == 1 ? "Activo":"Inactivo";
     })
     ->make(true);
@@ -57,8 +57,8 @@ class FileController extends Controller
   public function edit($id)
   {
     $file = File::find($id);
-    $programs = Program::all();
-    $characterizations = Characterization::all();
+    $programs = Program::pluck('program_name', 'id');
+    $characterizations = Characterization::pluck('characterization_name', 'id');
     return view('files.edit', compact('file', 'programs', 'characterizations'));
   }
 
@@ -75,12 +75,11 @@ class FileController extends Controller
   {
     $file = File::find($id);
     if ($file == null) {
-      alert()->autoclose(1500)->warning('Advertencia','No se encontraron datos!');
+      alert()->autoclose(1500)->warning('Advertencia', 'No se encontraron datos!');
       return redirect('files');
     }else {
       $file->update(["status"=>$status]);
       return redirect('files')->with([swal()->autoclose(1500)->message('La ficha '.$file->file_number.' esta',' '.$file->status == 1 ? "Activo":"Inactivo".' ','success')]);
     }
   }
-
 }
