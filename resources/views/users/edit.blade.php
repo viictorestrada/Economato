@@ -14,15 +14,16 @@
                 <a href="{{ url('users') }}" class="btn btn-info"><i class="fa fa-eye"></i> Mostrar todos</a>
               </div>
             </div><hr>
-
-            <form action="{{ url('users/'.$user->id) }}" method="POST" class="forms">
-              {{ method_field('PATCH') }}
+            
+            {{ Form::model($user, ['url' => ['users', $user->id], 'class' => 'forms', 'method' => 'PATCH']) }}
+            
               @csrf
               <div class="row">
                 @include('users.form')
               </div>
 
-            </form>
+            {{ Form::close() }}
+
           </div>
         </div>
       </div>

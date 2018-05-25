@@ -15,14 +15,15 @@
               </div>
             </div><hr>
 
-            <form action="{{ url('products/'.$products->id) }}" method="POST" class="forms">
-              {{ method_field('PATCH') }}
+            {{ Form::model($products, ['url' => ['products', $products->id], 'class' => 'forms', 'method' => 'PATCH']) }}
+
               @csrf
               <div class="row">
                 @include('products.form')
               </div>
 
-            </form>
+              {{ Form::close() }}
+
           </div>
         </div>
       </div>

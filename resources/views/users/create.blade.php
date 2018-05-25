@@ -15,14 +15,15 @@
               </div>
             </div><hr>
 
-            <form action="{{ url('users') }}" method="POST" class="forms">
+            {{ Form::open(['url' => 'users', 'class' => 'forms']) }}  
 
               @csrf
               <div class="row">
                 @include('users.form')
               </div>
 
-            </form>
+            {{ Form::close() }}
+            
           </div>
         </div>
       </div>

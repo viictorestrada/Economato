@@ -52,7 +52,7 @@
             { data: 'product_type_name', name: 'id_product_type' },
             { data: 'product_name', name: 'product_name' },
             { data: 'measure_name', name: 'id_measure_unit' },
-            { data: 'presentation', name: 'presentation' },
+            { data: 'presentation', name: 'presentation_id' },
             { data: 'quantity', name: 'quantity' },
             { data: 'due_date', name: 'due_date' },
             { data: 'unit_price', name: 'unit_price' },
