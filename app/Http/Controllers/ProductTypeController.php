@@ -12,10 +12,19 @@ class ProductTypeController extends Controller
 
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'product_type_name' => 'required|string|max:45|unique:product_type_name',
-        'description' => 'required|string'
-      ]);
+      $rules = [
+        'product_type_name' => 'required|string|max:80|unique:product_type',
+        'description' => 'required|string',
+      ];
+
+      $messages = [
+        'product_type_name.required' => 'El campo Tipo de producto es obligatorio.',
+        'product_type_name.max' => 'El campo Tipo de producto debe contener máximo 80 caracteres.',
+        'product_type_name,unique' => 'El campo Tipo de producto ya existe.',
+        'description.required' => 'El campo Descripción es obligatorio.'
+      ];
+
+      $this->validate($request, $rules, $messages);
       ProductType::create($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
@@ -39,10 +48,19 @@ class ProductTypeController extends Controller
 
     public function update(Request $request, $id)
     {
-      $this->validate($request, [
-        'product_type_name' => 'required|string|max:80|unique:product_type_name', Rule::unique('product_type')->ignore($this->id, 'id'),
+
+      $rules = [
+        'product_type_name' => 'required|string|max:80',                Rule::unique('product_type')->ignore($this->id, 'id'),
         'description' => 'required|string',
-      ]);
+      ];
+
+      $messages = [
+        'product_type_name.required' => 'El campo Tipo de producto es obligatorio.',
+        'product_type_name.max' => 'El campo Tipo de producto debe contener máximo 80 caracteres.',
+        'description.required' => 'El campo Descripción es obligatorio.'
+      ];
+
+      $this->validate($request, $rules, $messages);
       $productTypes = ProductType::find($id);
       $productTypes->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);

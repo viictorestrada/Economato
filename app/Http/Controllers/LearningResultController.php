@@ -12,10 +12,19 @@ class LearningResultController extends Controller
 
   public function store(Request $request)
   {
-    $this->validate($request, [
+
+    $rules = [
       'id_competence' => 'required',
-      'learning_result' => 'required|string|max:255|unique:learning_results',
-    ]);
+      'learning_result' => 'required|string|max:255|unique:leaning_results'
+    ];
+
+    $messages = [
+      'id_competence.required' => 'El campo Competencia es obligatorio.',
+      'learning_result.required' => 'El campo Resultado de Aprendizaje es obligatorio.',
+      'learning_result.max' => 'El campo Resultado de Aprendizaje.'
+    ];
+
+    $this->validate($request,$rules, $messages);
     LearningResult::create($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
@@ -40,10 +49,18 @@ class LearningResultController extends Controller
 
   public function update(Request $request,  $id)
   {
-    $this->validate($request, [
+    $rules = [
       'id_competence' => 'required',
       'learning_result' => 'required|string|max:255', Rule::unique('learning_results')->ignore($this->id, 'id')
-    ]);
+    ];
+
+    $messages = [
+      'id_competence.required' => 'El campo Competencia es obligatorio.',
+      'learning_result.required' => 'El campo Resultado de Aprendizaje es obligatorio.',
+      'learning_result.max' => 'El campo Resultado de Aprendizaje.'
+    ];
+
+    $this->validate($request,$rules, $messages);
     $learning_result = LearningResult::find($id);
     $learning_result->update($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
