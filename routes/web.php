@@ -78,3 +78,7 @@ Route::resource('files', 'FileController');
 //Rutas para Presupuesto
 Route::get('/budgets/get', 'BudgetController@budgetsList');
 Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
+
+//Rutas para Proveedores
+Route::get('/providers/get', 'ProviderController@providersList');
+Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy']);
