@@ -41,7 +41,7 @@ $(() => {
         language: {
             "url": '/DataTables/datatables-spanish.json'
         },
-        ajax: '/locations/get',
+        ajax: '/programs/get',
         columns: [
             { data: 'program_name', name: 'program_name' },
             { data: 'program_version', name: 'program_version' },

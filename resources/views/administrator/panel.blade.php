@@ -60,7 +60,7 @@
                         <div class="row">
 
                           <div class="col">
-                            <a href="#" class="text-secondary text-center" style="text-decoration: none;">
+                            <a href="{{ url('contracts') }}" class="text-secondary text-center" style="text-decoration: none;">
                               <h1 class="display-1 text-center"><i class="fa fa-book"></i></h1>
                               <p class="text-center">Contratos</p></a>
                             </div>
