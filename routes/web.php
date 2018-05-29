@@ -60,6 +60,10 @@ Route::resource('measures', 'MeasureUnitController', ['except' => 'index', 'crea
 Route::get('/product_types/get', 'ProductTypeController@productTypesList');
 Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Rutas para crud de Contratos
+Route::get('/contracts/get', 'ContractController@contractsList');
+Route::resource('contracts', 'ContractController', ['except' => 'show', 'destroy']);
+
 //Rutas para crud de usuarios
 Route::get('/users/get', 'UserController@usersList');
 Route::get('users/status/{id}/{status}', 'UserController@status');

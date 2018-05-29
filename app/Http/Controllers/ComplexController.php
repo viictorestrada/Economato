@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Complex;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class ComplexController extends Controller
 {

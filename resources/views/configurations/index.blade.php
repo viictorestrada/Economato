@@ -75,7 +75,7 @@
                         <section id="tbl_cen">
                           <!--Impresion de los resultados de los centros de formación-->
                           <div class="table-responsive">
-                            <table class="table table table-bordered table-sm" width="100%" id="locations">
+                            <table class="table table table-bordered table-sm" width="100%" id="complex">
                               <thead class="bg-secondary text-light">
                                 <tr>
                                   <th>Complejo</th>
