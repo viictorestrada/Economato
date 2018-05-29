@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Complex;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class ComplexController extends Controller
 {
@@ -23,10 +24,20 @@ class ComplexController extends Controller
         'complex_name.max' => 'El campo Completo debe contener máximo 200 caracteres.'
       ];
 
-
       $this->validate($request, $rules, $messages);
       Complex::create($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+    }
+
+    public function complexList()
+    {
+      $complex = Complex::select('complex.*', 'regions.region_name')->join('regions', 'regions.id', '=', 'complex.id_region')->get();
+      return DataTables::of($complex)
+      ->addColumn('action', function ($id) {
+        $button = " ";
+        return $button.'<a href="/complex/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      })
+      ->make(true);
     }
 
 
@@ -45,11 +56,10 @@ class ComplexController extends Controller
       ];
 
       $messages = [
-        'id_region.required' => 'El Campo región es obligatorio.',
+        'id_region.required' => 'El Campo Región es obligatorio.',
         'complex_name.required' => 'El campo Complejo es obligatorio',
         'complex_name.max' => 'El campo Completo debe contener máximo 200 caracteres.'
       ];
-
 
       $this->validate($request, $rules, $messages);
       $complex = Complex::find($id);

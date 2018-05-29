@@ -19,7 +19,7 @@ class DocumentTypeController extends Controller
     $messages = [
       'type_document.required' => 'El campo Tipo de Documento es obligatorio.',
       'type_document.max' => 'El campo Tipo de Documento debe contener máximo 45 caracteres.',
-      'type_document.unique' => 'El campo Tipo de Documento ya existe.'
+      'type_document.unique' => 'El Tipo de Documento ya existe.'
     ];
 
     $this->validate($request, $rules, $message);
