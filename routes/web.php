@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 //Rutas de Auntenticación
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
@@ -40,6 +29,8 @@ Route::resource('roles', 'RoleController', ['except' => 'index', 'create', 'show
 Route::get('/document_types/get', 'DocumentTypeController@documentTypesList');
 Route::resource('document_types', 'DocumentTypeController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+Route::get('/characterizations/get', 'CharacterizationController@characterizationsList');
+Route::get('/characterizations/status/{id}/{status}', 'CharacterizationController@status');
 Route::resource('characterizations', 'CharacterizationController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/locations/get', 'LocationController@locationsList');
@@ -48,10 +39,15 @@ Route::resource('locations', 'LocationController', ['except' => 'index', 'create
 Route::get('/regions/get', 'RegionController@regionsList');
 Route::resource('regions', 'RegionController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+Route::get('/complex/get', 'ComplexController@complexList');
+Route::resource('complex', 'ComplexController', ['except' => 'index', 'create', 'show', 'destroy']);
+
 Route::get('/programs/get', 'ProgramController@programsList');
 Route::resource('programs', 'ProgramController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+Route::get('/storages/get', 'StorageController@storagesList');
 Route::resource('storages', 'StorageController', ['except' => 'index', 'create', 'show', 'destroy']);
+
 Route::resource('recipes', 'RecipeController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/measures/get', 'MeasureUnitController@measuresList');

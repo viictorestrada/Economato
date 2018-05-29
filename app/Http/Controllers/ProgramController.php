@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use DataTables;
 
 class ProgramController extends Controller
 {
@@ -20,7 +21,7 @@ class ProgramController extends Controller
     $messages = [
       'program_name.required' => 'El campo Nombre de programa es obligatorio.',
       'program_name.max' => 'El campo Nombre de programa debe contener máximo 255 caracteres.',
-      'program_name.unique' => 'El campo Nombre de programa ya existe.',
+      'program_name.unique' => 'El Nombre del programa ya existe.',
       'program_version.required' => 'El campo Versión de programa es obligatorio.',
       'program_version.numeric' => 'El campo Versión del programa es estrictamente númerico.',
       'program_version.min' => 'El campo Versión del programa debe contener mínimo 1 caracter.',
@@ -31,6 +32,17 @@ class ProgramController extends Controller
     $this->validate($request, $rules, $messages);
     Program::create($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+  }
+
+  public function programsList()
+  {
+    $programs = Program::select('programs.*')->get();
+    return DataTables::of($programs)
+    ->addColumn('action', function ($id) {
+      $button = "";
+      return $button.'<a href="/programs/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+    })
+    ->make(true);
   }
 
 
@@ -54,10 +66,9 @@ class ProgramController extends Controller
       'program_name.max' => 'El campo Nombre de programa debe contener máximo 255 caracteres.',
       'program_version.required' => 'El campo Versión de programa es obligatorio.',
       'program_version.numeric' => 'El campo Versión del programa es estrictamente númerico.',
-      'program_version.min' => 'El campo Versión del programa debe contener mínimo 1 caracter.',
+      'program_version.min' => 'El campo Versión del programa debe contener mínimo 1.',
       'program_description.required' => 'El campo Descripción es obligatorio.'
     ];
-
 
     $this->validate($request, $rules, $messages);
     $program = Program::find($id);

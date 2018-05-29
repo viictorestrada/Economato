@@ -20,7 +20,7 @@ class CompetenceController extends Controller
 
       $messages = [
         'id_region.required' => 'El campo Regional es obligatorio.',
-        'competence_name.unique' => 'El campo Competencia ya existe.',
+        'competence_name.unique' => 'La Competencia ya existe.',
         'competence_name.required' => 'El campo Competencia es obligatorio.',
         'competence_name.max' => 'El campo Competencia debe contener máximo 255 caracteres.'
       ];

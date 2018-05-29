@@ -8,7 +8,7 @@ class Characterization extends Model
 {
     protected $table = 'characterizations';
 
-    protected $fillable =['characterization_name'];
+    protected $fillable =['characterization_name', 'status'];
 
     public $timestamps = false;
 }
