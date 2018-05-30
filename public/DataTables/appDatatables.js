@@ -162,9 +162,6 @@ $(() => {
         ]
     });
 
-<<<<<<< HEAD
-});
-=======
     $('#characterizations').DataTable({
         destroy: true,
         responsive: true,
@@ -214,4 +211,3 @@ $(() => {
     });
 
 });
->>>>>>> d62743696ba7644916ae9274dc7b08afc494b9ac
