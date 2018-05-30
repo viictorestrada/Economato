@@ -12,9 +12,17 @@ class DocumentTypeController extends Controller
 
   public function store(Request $request)
   {
-    $this->validate($request, [
+    $rules = [
       'type_document' => 'required|string|max:45|unique:document_type'
-    ]);
+    ];
+
+    $messages = [
+      'type_document.required' => 'El campo Tipo de Documento es obligatorio.',
+      'type_document.max' => 'El campo Tipo de Documento debe contener máximo 45 caracteres.',
+      'type_document.unique' => 'El Tipo de Documento ya existe.'
+    ];
+
+    $this->validate($request, $rules, $message);
     DocumentType::create($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
@@ -39,6 +47,15 @@ class DocumentTypeController extends Controller
 
   public function update(Request $request,  $id)
   {
+    $rules = [
+      'type_document' => 'required|string|max:45', Rule::unique('document_type')->ignore($this->id, 'id')
+    ];
+
+    $messages = [
+      'type_document.required' => 'El campo Tipo de Documento es obligatorio.',
+      'type_document.max' => 'El campo Tipo de Documento debe contener máximo 45 caracteres.'
+    ];
+
     $this->validate($request, [
       'type_document' => 'required|string|max:45', Rule::unique('document_type')->ignore($this->id, 'id')
     ]);

@@ -13,9 +13,18 @@ class RoleController extends Controller
 
   public function store(Request $request)
   {
-    $this->validate($request, [
-      'role' => 'required|string|max:45|unique:roles'
-    ]);
+
+    $rules = [
+      'role' => 'required|max:45|string|unique:roles'
+    ];
+
+    $messages = [
+      'role.required' => 'El campo Rol es obligatorio.',
+      'role.unique' => 'El campot Rol ya existe.',
+      'role.max' => 'El campo Rol debe contener máximo 45 caracteres.'
+    ];
+
+    $this->validate($request, $rules, $messages);
     Role::create($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
@@ -40,9 +49,17 @@ class RoleController extends Controller
 
   public function update(Request $request, $id)
   {
-    $this->validate($request, [
+
+    $rules = [
       'role' => 'required|max:45|string', Rule::unique('roles')->ignore($this->id, 'id')
-    ]);
+    ];
+
+    $messages = [
+      'role.required' => 'El campo Rol es obligatorio.',
+      'role.max' => 'El campo Rol debe contener máximo 45 caracteres.'
+    ];
+
+    $this->validate($request, $rules, $messages);
     $role = Role::find($id);
     $role->update($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);

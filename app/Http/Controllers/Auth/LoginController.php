@@ -23,7 +23,7 @@ class LoginController extends Controller
   {
     $credentials = $this->validate(request(), [
       'email' => 'required|email|string',
-      'password' => 'required|string',
+      'password' => 'required|string'
     ]);
 
     if (Auth::attempt($credentials)) {
@@ -47,7 +47,7 @@ class LoginController extends Controller
   protected function credentials(Request $request)
   {
     $credentials = $request->only($this->username(), 'password');
-    $credentials['status'] = 1;
+    $credentials['status'] = true;
     return $credentials;
   }
 

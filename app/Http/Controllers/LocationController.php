@@ -12,11 +12,22 @@ class LocationController extends Controller
 
   public function store(Request $request)
   {
-    $this->validate($request, [
+    $rules = [
       'id_complex' => 'required',
       'location_name' => 'required|string|max:45|unique:locations',
       'id_program' => 'required'
-    ]);
+    ];
+
+    $messages = [
+      'location_name.required' => 'El campo Centro de formación es obligatorio.',
+      'location_name.max' => 'El campo Centro de formacion debe contener máximo 45 caracteres.',
+      'location_name.unique' => 'El campo Centro de formación ya existe.',
+      'id_complex' => 'El campo Complejo es obligatorio.',
+      'id_program' => 'El campo Programa es obligatorio'
+    ];
+
+    $this->validate($request, $rules, $messages);
+
     Location::create($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
@@ -48,11 +59,21 @@ class LocationController extends Controller
 
   public function update(Request $request, $id)
   {
-    $this->validate($request, [
+
+    $rules = [
       'id_complex' => 'required',
       'location_name' => 'required|string|max:45', Rule::unique('locations')->ignore($this->id, 'id'),
       'id_program' => 'required'
-    ]);
+    ];
+
+    $messages = [
+      'location_name.required' => 'El campo Centro de formación es obligatorio.',
+      'location_name.max' => 'El campo Centro de formacion debe contener máximo 45 caracteres.',
+      'id_complex' => 'El campo Complejo es obligatorio.',
+      'id_program' => 'El campo Programa es obligatorio'
+    ];
+
+    $this->validate($request, $rules, $messages);
     $location = Location::find($id);
     $location->update($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);

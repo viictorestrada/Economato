@@ -12,10 +12,20 @@ class CompetenceController extends Controller
 
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'id_program' => 'required',
+
+      $rules = [
+        'id_region' => 'required',
         'competence_name' => 'required|string|max:255|unique:competences'
-      ]);
+      ];
+
+      $messages = [
+        'id_region.required' => 'El campo Regional es obligatorio.',
+        'competence_name.unique' => 'La Competencia ya existe.',
+        'competence_name.required' => 'El campo Competencia es obligatorio.',
+        'competence_name.max' => 'El campo Competencia debe contener máximo 255 caracteres.'
+      ];
+
+      $this->validate($request, $rules, $messages);
       Competence::create($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
@@ -40,10 +50,19 @@ class CompetenceController extends Controller
 
     public function update(Request $request, $id)
     {
-      $this->validate($request, [
+
+      $rules = [
         'id_region' => 'required',
         'competence_name' => 'required|string|max:255', Rule::unique('competences')->ignore($this->id, 'id')
-      ]);
+      ];
+
+      $messages = [
+        'id_region.required' => 'El campo Regional es obligatorio.',
+        'competence_name.required' => 'El campo Competencia es obligatorio.',
+        'competence_name.max' => 'El campo Competencia debe contener máximo 255 caracteres.'
+      ];
+
+      $this->validate($request, $rules, $messages);
       $competences = Competence::find($id);
       $competences->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
