@@ -44,7 +44,7 @@
 
 <div class="form-group col-md-6 col-lg-6">
   {{ Form::label('email', 'Correo Electrónico') }}
-  {{ Form::email('email', null, ['class' => 'form-control']) }}
+  {{ Form::email('email', null, array('class' => 'form-control')) }}
 </div>
 
 {{-- <div class="form-group col-md-6 col-lg-6">
@@ -55,7 +55,7 @@
 
 <div class="form-group col-md-6 col-lg-6">
   {{ Form::label('password', 'Contraseña') }}
-  {{ Form::password('password', array('class' => 'form-control')) }}
+  {{ Form::password('password', array('class' => 'form-control', 'id' => 'password')) }}
 </div>
 
 {{-- <div class="form-group col-md-6 col-lg-6">

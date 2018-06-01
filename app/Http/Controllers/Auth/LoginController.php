@@ -25,6 +25,7 @@ class LoginController extends Controller
       'email' => 'required|email|string',
       'password' => 'required|string'
     ]);
+    $credentials['status'] = true;
 
     if (Auth::attempt($credentials)) {
       if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2){
@@ -42,13 +43,6 @@ class LoginController extends Controller
   {
     Auth::logout();
     return redirect('/');
-  }
-
-  protected function credentials(Request $request)
-  {
-    $credentials = $request->only($this->username(), 'password');
-    $credentials['status'] = true;
-    return $credentials;
   }
 
 }

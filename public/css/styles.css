@@ -1,56 +1,76 @@
 .signIn {
-  display: flex;
-  background-color: #FFF;
-  margin: 5em auto;
-  max-width: 100%;
-  width: 340px;
-  height: auto;
-  box-shadow: 0.5px 1px;
+    display: flex;
+    background-color: #FFF;
+    margin: 5em auto;
+    max-width: 100%;
+    width: 340px;
+    height: auto;
+    box-shadow: 0.5px 1px;
 }
 
 .signIn form input {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
 .signIn form button {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
 .img img {
-  width: 120px;
-  height: 120px;
-  border-radius: 40%;
+    width: 120px;
+    height: 120px;
+    border-radius: 40%;
 }
 
 .forms input {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
 .forms select {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
 .forms button {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
-.conf.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: #17a2b8;
+.conf.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: #17a2b8;
 }
 
-.admin.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: #17a2b8;
+.admin.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: #17a2b8;
 }
 
-.pedid.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: #17a2b8;
+.pedid.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: #17a2b8;
 }
 
-.repor.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: #17a2b8;
+.repor.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: #17a2b8;
 }
 
 .page-item.active .page-link {
-  border-color: #17a2b8;
-  background-color: #17a2b8;
+    border-color: #17a2b8;
+    background-color: #17a2b8;
+}
+
+label.error {
+    float: none;
+    color: red;
+    padding-left: .5em;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+input.error {
+    border: 1px solid red;
+}
+
+input.error:focus {
+    border: 1px solid red;
 }
