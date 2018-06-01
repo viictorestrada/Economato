@@ -23,8 +23,9 @@ class LoginController extends Controller
   {
     $credentials = $this->validate(request(), [
       'email' => 'required|email|string',
-      'password' => 'required|string',
+      'password' => 'required|string'
     ]);
+    $credentials['status'] = true;
 
     if (Auth::attempt($credentials)) {
       if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2){

@@ -15,7 +15,7 @@
               </div>
             </div><hr>
 
-            {{ Form::open(['url' => 'users', 'class' => 'forms']) }}  
+            {{ Form::open(['url' => 'users', 'class' => 'forms', 'id' => 'createUser']) }}
 
               @csrf
               <div class="row">
@@ -23,10 +23,66 @@
               </div>
 
             {{ Form::close() }}
-            
+
           </div>
         </div>
       </div>
     </div>
   </div>
+@endsection
+
+@section('script')
+  <script>
+    $(() => {
+      $('#createUser').validate({
+        rules: {
+          rol_id: {
+            required: true
+          },
+          name: {
+            required: true,
+            maxlength: 45
+          },
+          last_name: {
+            required: true,
+            maxlength: 45
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 6,
+            maxlength: 16
+          },
+          password_confirmation: {
+            equalTo: "#password"
+          }
+        },
+        messages: {
+          name: {
+            required: "El campo Nombres es obligatorio.",
+            maxlength: "El campo Nombres debe contener máximo 45 caracteres."
+          },
+          last_name: {
+            required: "El campo Apellidos es obligatorio.",
+            maxlength: "El campo Apellidos debe contener máximo 45 caracteres."
+          },
+          email: {
+            required: "El campo Correo Electrónico es obligatorio.",
+            email: "Debe ingresar una dirección de correo valida."
+          },
+          password: {
+            required: "El campo Nombres es obligatorio.",
+            minlength: "El campo Contraseña debe contener mínimo 6 caracteres.",
+            maxlength: "El campo Contraseña debe contener máximo 16 caracteres."
+          },
+          password_confirmation: {
+            equalTo: "Confirmar contraseña"
+          }
+        }
+      });
+    });
+  </script>
 @endsection
