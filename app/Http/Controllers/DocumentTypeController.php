@@ -22,7 +22,7 @@ class DocumentTypeController extends Controller
       'type_document.unique' => 'El Tipo de Documento ya existe.'
     ];
 
-    $this->validate($request, $rules, $message);
+    $this->validate($request, $rules, $messages);
     DocumentType::create($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
@@ -56,9 +56,7 @@ class DocumentTypeController extends Controller
       'type_document.max' => 'El campo Tipo de Documento debe contener máximo 45 caracteres.'
     ];
 
-    $this->validate($request, [
-      'type_document' => 'required|string|max:45', Rule::unique('document_type')->ignore($this->id, 'id')
-    ]);
+    $this->validate($request, $rules, $messages);
     $document = DocumentType::find($id);
     $document->update($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
