@@ -8,7 +8,7 @@ class Program extends Model
 {
   protected $table = 'programs';
 
-  protected $fillable = ['program_name', 'program_version', 'program_description'];
+  protected $fillable = ['locations_id','program_name', 'program_version', 'program_description', 'status'];
 
   public $timestamps = false;
 }

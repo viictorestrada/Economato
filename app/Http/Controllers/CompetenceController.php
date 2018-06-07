@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Competence;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use DataTables;
@@ -14,12 +15,12 @@ class CompetenceController extends Controller
     {
 
       $rules = [
-        'id_region' => 'required',
+        'id_program' => 'required',
         'competence_name' => 'required|string|max:255|unique:competences'
       ];
 
       $messages = [
-        'id_region.required' => 'El campo Regional es obligatorio.',
+        'id_program.required' => 'El campo Regional es obligatorio.',
         'competence_name.unique' => 'La Competencia ya existe.',
         'competence_name.required' => 'El campo Competencia es obligatorio.',
         'competence_name.max' => 'El campo Competencia debe contener máximo 255 caracteres.'
@@ -39,8 +40,8 @@ class CompetenceController extends Controller
 
     public function competencesList(Request $request)
     {
-      $competences = Competence::select('competences.*','programs.program_name')->join('programs', 'programs.id', '=', 'competences.id_program')->get();
-      return DataTables::of($competences)
+      $competence = Competence::select('competences.*','programs.program_name')->join('programs', 'programs.id', '=', 'competences.id_program')->get();
+      return DataTables::of($competence)
       ->addColumn('action', function($id) {
         $button=" ";
         return $button.'  <a href="/competences/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
@@ -63,8 +64,8 @@ class CompetenceController extends Controller
       ];
 
       $this->validate($request, $rules, $messages);
-      $competences = Competence::find($id);
-      $competences->update($request->all());
+      $competence = Competence::find($id);
+      $competence->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
     }
 

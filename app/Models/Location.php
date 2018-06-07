@@ -8,7 +8,7 @@ class Location extends Model
 {
   protected $table = 'locations';
 
-  protected $fillable = ['id_complex', 'location_name', 'id_program'];
+  protected $fillable = ['id_complex', 'location_name', 'status'];
 
   public $timestamps = false;
 }

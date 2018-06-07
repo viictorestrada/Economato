@@ -27,7 +27,6 @@ $(() => {
         columns: [
             { data: 'complex_name', name: 'id_complex' },
             { data: 'location_name', name: 'location_name' },
-            { data: 'program_name', name: 'id_program' },
             { data: 'status', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]
@@ -43,6 +42,7 @@ $(() => {
         },
         ajax: '/programs/get',
         columns: [
+            { data: 'location_name', name: 'locations_id' },
             { data: 'program_name', name: 'program_name' },
             { data: 'program_version', name: 'program_version' },
             { data: 'program_description', name: 'program_description' },

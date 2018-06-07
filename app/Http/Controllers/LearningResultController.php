@@ -15,13 +15,14 @@ class LearningResultController extends Controller
 
     $rules = [
       'id_competence' => 'required',
-      'learning_result' => 'required|string|max:255|unique:leaning_results'
+      'learning_result' => 'required|string|max:255|unique:learning_results'
     ];
 
     $messages = [
       'id_competence.required' => 'El campo Competencia es obligatorio.',
       'learning_result.required' => 'El campo Resultado de Aprendizaje es obligatorio.',
-      'learning_result.max' => 'El campo Resultado de Aprendizaje.'
+      'learning_result.max' => 'El campo Resultado de Aprendizaje debe contener máximo 255 caracteres.',
+      'learning_result.unique' => 'El Resultado de Aprendizaje ya existe.'
     ];
 
     $this->validate($request,$rules, $messages);
@@ -57,7 +58,7 @@ class LearningResultController extends Controller
     $messages = [
       'id_competence.required' => 'El campo Competencia es obligatorio.',
       'learning_result.required' => 'El campo Resultado de Aprendizaje es obligatorio.',
-      'learning_result.max' => 'El campo Resultado de Aprendizaje.'
+      'learning_result.max' => 'El campo Resultado de Aprendizaje debe contener máximo 255 caracteres.'
     ];
 
     $this->validate($request,$rules, $messages);

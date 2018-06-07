@@ -8,11 +8,11 @@
         <ul class="nav nav-pills nav-fill bg-secondary conf" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
           <li class="nav-item">
-            <a class="nav-link active" id="v-pills-region-tab" data-toggle="pill" href="#v-pills-region" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Regional y Centros de Formación</a>
+            <a class="nav-link active" id="v-pills-region-tab" data-toggle="pill" href="#v-pills-region" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Regional y Complejo</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Programas y presentación</a>
+            <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-moda" role="tab" aria-controls="v-pills-moda" aria-selected="true" style="color: #fff">Centros y Programas de formación</a>
           </li>
 
           <li class="nav-item">
@@ -20,11 +20,15 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-tipous" role="tab" aria-controls="v-pills-tipous" aria-selected="false" style="color: #fff">Roles y Tipo de Documento</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-tipous" role="tab" aria-controls="v-pills-tipous" aria-selected="false" style="color: #fff">Tipo de producto y Presentación</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-producto" role="tab" aria-controls="v-pills-producto" aria-selected="false" style="color: #fff">Tipo de Productos y Unidades de Medida</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-producto" role="tab" aria-controls="v-pills-producto" aria-selected="false" style="color: #fff">Unidad de medida y Tipo documento</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="v-pills-charact-tab" data-toggle="pill" href="#v-pills-charact" role="tab" aria-controls="v-pills-charact" aria-selected="false" style="color: #fff">Caracterización y Roles</a>
           </li>
 
         </ul>
@@ -35,9 +39,10 @@
         <div class="tab-content" id="v-pills-tabContent">
           <!--Formularios de Regional y Centro de Formación-->
           <div class="tab-pane fade show active" id="v-pills-region" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
             <!--Panel de sección-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Regional y Centro de Formación</h4>
+              <h4 class="card-header bg-secondary text-light">Regional y Complejos</h4>
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-6">
@@ -69,19 +74,17 @@
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
-                        <h4 class="card-title text-center">Centro de Formación</h4>
+                        <h4 class="card-title text-center">Complejos</h4>
                         <hr class="bg-info">
-                        <!--Resultados de la consulta a la tabla con las regionales-->
+                        <!--Resultados de la consulta a la tabla con las Complejos-->
                         <section id="tbl_cen">
-                          <!--Impresion de los resultados de los centros de formación-->
+                          <!--Impresion de los resultados de los complejos-->
                           <div class="table-responsive">
                             <table class="table table table-bordered table-sm" width="100%" id="complex">
                               <thead class="bg-secondary text-light">
                                 <tr>
+                                  <th>Regional</th>
                                   <th>Complejo</th>
-                                  <th>Centro de formación</th>
-                                  <th>Programa de formación</th>
-                                  <th>Estado</th>
                                   <th>Acciones</th>
                                 </tr>
                               </thead>
@@ -89,7 +92,7 @@
                           </div>
                         </section>
                         <hr class="bg-info">
-                        <a href="#modcentro"  data-toggle="modal" data-target="#modcentro" class="btn btn-info">Agregar Centro</a>
+                        <a href="#modcomplex"  data-toggle="modal" data-target="#modcomplex" class="btn btn-info">Agregar Complejo</a>
 
                       </div>
                     </div>
@@ -105,11 +108,40 @@
           <div class="tab-pane fade show" id="v-pills-moda" role="tabpanel" aria-labelledby="v-pills-home-tab">
             <!--Panel de sección Programa de formación-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Programas de formación</h4>
+              <h4 class="card-header bg-secondary text-light">Centros y Programas de formación</h4>
               <div class="card-body">
 
                 <!--Formularios de Programa de formación  -->
                 <div class="row">
+                  <div class="col-sm-5">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Centro de Formación</h4>
+                        <hr class="bg-info">
+                        <!--Resultados de la consulta a la tabla con las regionales-->
+                        <section id="tbl_cen">
+                          <!--Impresion de los resultados de los centros de formación-->
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="locations">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Complejo</th>
+                                  <th>Centro de formación</th>
+                                  <th>Estado</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modcentro"  data-toggle="modal" data-target="#modcentro" class="btn btn-info">Agregar Centro</a>
+
+                      </div>
+                    </div>
+                  </div>
+
+
                   <div class="col-sm-7">
                     <div class="card border-info">
                       <div class="card-body">
@@ -121,6 +153,7 @@
                             <table class="table table-bordered table-sm table-md" style="width:100%" id="programs">
                               <thead class="bg-secondary text-light">
                                 <tr>
+                                  <th>Centro de formación</th>
                                   <th>Programa de formación</th>
                                   <th>Versión</th>
                                   <th>Descripción</th>
@@ -138,30 +171,6 @@
                           <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Programa</a>
 
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!--Formularios de Programa de Presentaciones  -->
-                  <div class="col-sm-5">
-                    <div class="card border-info">
-                      <div class="card-body">
-                        <h4 class="card-title text-center">Presentaciones</h4>
-                        <hr class="bg-info">
-                        <section id="tbl_resul">
-                          <div class="table-responsive">
-                            <table class="table table table-bordered table-sm" width="100%" id="presentations">
-                              <thead class="bg-secondary text-light">
-                                <tr>
-                                  <th>Presentación</th>
-                                  <th>Acciones</th>
-                                </tr>
-                              </thead>
-                            </table>
-                          </div>
-                        </section>
-                        <hr class="bg-info">
-                        <a href="#modpresen"  data-toggle="modal" data-target="#modpresen" class="btn btn-info">Agregar Presentación</a>
                       </div>
                     </div>
                   </div>
@@ -239,9 +248,160 @@
           <div class="tab-pane fade" id="v-pills-tipous" role="tabpanel" aria-labelledby="v-pills-profile-tab">
             <!--Panel de sección Roles y documento-->
             <div class="card border-secondary text-center">
-              <h4 class="card-header bg-secondary text-light">Roles y Tipos de Documento</h4>
+              <h4 class="card-header bg-secondary text-light">Tipo de producto y presentación</h4>
               <div class="card-body">
                 <div class="row">
+
+                  <div class="col-sm-6">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Tipo de Producto</h4>
+                        <hr  class="bg-info">
+
+                        <section id="tbl_tipoprod">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="product_types">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Tipo de producto</th>
+                                  <th>Descripción</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--Formularios de Programa de Presentaciones  -->
+                  <div class="col-sm-6">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Presentaciones</h4>
+                        <hr class="bg-info">
+                        <section id="tbl_resul">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="presentations">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Presentación</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modpresen"  data-toggle="modal" data-target="#modpresen" class="btn btn-info">Agregar Presentación</a>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!--Contenido de Tipos de Producto y unidades de medida-->
+          <div class="tab-pane fade" id="v-pills-producto" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+            <div class="card border-secondary text-center">
+              <h4 class="card-header bg-secondary text-light">Unidades de Medida y Tipo Documento</h4>
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Unidades de Medida</h4>
+                        <hr class="bg-info">
+                        <!--Entrada de Busqueda de Unidad de Medida para editar:-->
+
+                        <section id="tbl_unimedi">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="measures">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Unidad de medida</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modunidmed" data-toggle="modal" data-target="#modunidmed" class="btn btn-info">Agregar Unidad de Medida</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Tipo de Documento</h4>
+                        <hr class="bg-info">
+                        <section id="tbl_tipodocu">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="document_types">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Tipo de documento</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modtipodoc"  data-toggle="modal" data-target="#modtipodoc" class="btn btn-info">Agregar Tipo de Documento</a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!--Contenido caracterización y roles-->
+<div class="tab-pane fade" id="v-pills-charact" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+    <div class="card border-secondary text-center">
+        <h4 class="card-header bg-secondary text-light">Caracterización y Roles</h4>
+            <div class="card-body">
+
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Caracterización</h4>
+                        <hr  class="bg-info">
+
+                        <section id="tbl_tipoprod">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="characterizations">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>Caracterización</th>
+                                  <th>Estado</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a href="#modcaract" data-toggle="modal" data-target="#modcaract" class="btn btn-info">Agregar Caracterización</a>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-sm-6">
                     <div class="card border-info">
                       <div class="card-body">
@@ -264,609 +424,38 @@
                       </div>
                     </div>
                   </div>
-
-
-                  <div class="col-sm-6">
-                    <div class="card border-info">
-                      <div class="card-body">
-                        <h4 class="card-title text-center">Tipos de Documentos</h4>
-                        <hr class="bg-info">
-                        <section id="tbl_tipodocu">
-                          <div class="table-responsive">
-                            <table class="table table table-bordered table-sm" width="100%" id="document_types">
-                              <thead class="bg-secondary text-light">
-                                <tr>
-                                  <th>Tipo de documento</th>
-                                  <th>Acciones</th>
-                                </tr>
-                              </thead>
-                            </table>
-                          </div>
-                        </section>
-                        <hr class="bg-info">
-                        <a href="#modtipodoc"  data-toggle="modal" data-target="#modtipodoc" class="btn btn-info">Agregar Tipo de Documento</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <!--Contenido de Tipos de Producto y unidades de medida-->
-          <div class="tab-pane fade" id="v-pills-producto" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-         <div class="card border-secondary text-center">
-           <h4 class="card-header bg-secondary text-light">Tipos de Productos y Unidades de Medida</h4>
-           <div class="card-body">
-
-             <div class="row">
-               <div class="col-sm-6">
-                 <div class="card border-info">
-                   <div class="card-body">
-                     <h4 class="card-title text-center">Tipos de Productos</h4>
-                     <hr  class="bg-info">
-
-                     <section id="tbl_tipoprod">
-                       <div class="table-responsive">
-                         <table class="table table table-bordered table-sm" width="100%" id="product_types">
-                           <thead class="bg-secondary text-light">
-                             <tr>
-                               <th>Tipo de producto</th>
-                               <th>Descripción</th>
-                               <th>Acciones</th>
-                             </tr>
-                           </thead>
-                         </table>
-                       </div>
-                     </section>
-                     <hr class="bg-info">
-                     <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
-                   </div>
-                 </div>
-               </div>
-
-               <div class="col-sm-6">
-                 <div class="card border-info">
-                   <div class="card-body">
-                     <h4 class="card-title text-center">Unidades de Medida</h4>
-                     <hr class="bg-info">
-                     <!--Entrada de Busqueda de Unidad de Medida para editar:-->
-
-                     <section id="tbl_unimedi">
-                       <div class="table-responsive">
-                         <table class="table table table-bordered table-sm" width="100%" id="measures">
-                           <thead class="bg-secondary text-light">
-                             <tr>
-                               <th>Unidad de medida</th>
-                               <th>Acciones</th>
-                             </tr>
-                           </thead>
-                         </table>
-                       </div>
-                     </section>
-                     <hr class="bg-info">
-                     <a href="#modunidmed" data-toggle="modal" data-target="#modunidmed" class="btn btn-info">Agregar Unidad de Medida</a>
-                   </div>
-                 </div>
-               </div>
-             </div>
-
-           </div>
-         </div>
-          <!--Fin del contenido-->
-        </section>
-      </div>
-    </section>
-
-    <!--CREACIÓN DE VENTANAS MODALES-->
-
-    <!-- Modal para agregar Regional -->
-
-    <div class="modal fade" id="modregional" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Regional</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('regions') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre de la Regional <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input id="nombreRegional" class="form-control {{$errors->has('region_name') ? 'is-invalid' : ''}}" name="region_name" value="{{ old('region_name') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('region_name')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para agregar Centro de formación -->
-    <div class="modal fade" data-backdrop="static" id="modcentro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Centro de formación</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action={{ url('locations') }} method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-mouse-pointer"></i> Seleccionar Regional <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <select class="form-control {{$errors->has('regional') ? 'is-invalid' : ''}}" name="regional" required autofocus>
-                              <option hidden value="{{old('regional')}}">Seleccione la Regional</option>
-                              @foreach ($region as $regional)
-                                <option value="{{ $regional->id }}">{{ $regional->region_name }}</option>
-                              @endforeach
-                            </select>
-                            <strong class="invalid-feedback">{{$errors->first('regional')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre centro de formación <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('location_name') ? 'is-invalid' : ''}}" name="location_name" value="{{ old('location_name') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('location_name')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <!--Fin del contenido-->
+          </section>
 
-    <!-- Modal para agregar Programas de Formación -->
-    <div class="modal fade" data-backdrop="static" id="modmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Programas</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('programs') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre Programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('program_name') ? 'is-invalid' : ''}}" name="program_name" value="{{old('program_name')}}" required autocomplete="off" autofocus>
-                            <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Versión del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('program_version') ? 'is-invalid' : ''}}" name="program_version" value="{{old('program_version')}}" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('program_version')}}</strong>
-                          </div>
-                        </div>
 
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Descripción del programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('program_description') ? 'is-invalid' : ''}}" name="program_description" value="{{old('descripcionModalidad')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('program_description')}}</strong>
-                          </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
+          <!--CREACIÓN DE VENTANAS MODALES-->
 
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Modal para agregar Regional -->
+          @include('configurations.regions.create')
+          @include('configurations.regions.edit')
+          @include('configurations.locations.create')
+          @include('configurations.competences.create')
+          @include('configurations.presentations.create')
+          @include('configurations.programs.create')
+          @include('configurations.learning_results.create')
+          @include('configurations.roles.create')
+          @include('configurations.document_types.create')
+          @include('configurations.product_types.create')
+          @include('configurations.measures.create')
+          @include('configurations.complexes.create')
+          @include('configurations.characterizations.create')
 
-    <div class="modal fade" id="modpresen" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Presentación</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('presentations') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre de la Presentación <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input id="nombreRegional" class="form-control {{$errors->has('presentation') ? 'is-invalid' : ''}}" name="presentation" value="{{ old('presentation') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('presentation')}}</strong>
-                          </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
 
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          <!--FINAL DE LAS VENTANAS MODALES-->
 
-    <!--Modal para agregar Competencias -->
-    <div class="modal fade" data-backdrop="static" id="modcompete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Competencias</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('competences') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-mouse-pointer"></i> Seleccionar programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <select class="form-control {{$errors->has('program_name') ? 'is-invalid' : ''}}" name="program_name" required>
-                              <option hidden value="{{old('program_name')}}">Seleccione el Programa</option>
-                              @foreach ($program as $programs)
-                                <option value="{{ $programs->id }}">{{ $programs->program_name }}</option>
-                              @endforeach
-                            </select>
-                            <strong class="invalid-feedback">{{$errors->first('program_name')}}</strong>
-                          </div>
-                        </div>
+          
+        @stop
 
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre de la competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input class="form-control {{$errors->has('competence_name') ? 'is-invalid' : ''}}" name="competence_name" value="{{old('competence_name')}}" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('competence_name')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Modal para agregar Resultados de aprendizaje -->
-
-    <div class="modal fade" data-backdrop="static" id="modresul" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title">Resultados de aprendizaje</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-
-                      <form action="{{ url('learning_results') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-mouse-pointer"></i> Seleccionar Competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <select class="form-control {{$errors->has('competence_name') ? 'is-invalid' : ''}}" name="competence_name" required>
-                              <option hidden value="{{old('competence_name')}}">Seleccione Competencia</option>
-                              @foreach ($competence as $competences)
-                                <option value="{{ $competences->id }}">{{ $competences->competence_name }}</option>
-                              @endforeach
-                            </select>
-                            <strong class="invalid-feedback">{{$errors->first('competence_name')}}</strong>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label><i class="fa fa-pencil-alt"></i> Resultado de aprendizaje<strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
-                            </div>
-                            <textarea class="form-control {{$errors->has('learning_result') ? 'is-invalid' : ''}}" name="learning_result" value="{{old('learning_result')}}" rows="1" required></textarea>
-                            <strong class="invalid-feedback">{{$errors->first('learning_result')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Modal para agregar Roles -->
-
-    <div class="modal fade" data-backdrop="static" id="modtipous" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Roles</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('roles') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Registrar Rol <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input id="" class="form-control {{$errors->has('role') ? 'is-invalid' : ''}}" name="role" value="{{ old('role') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('role')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Modal para agregar Tipos de Documentos -->
-
-    <div class="modal fade" data-backdrop="static" id="modtipodoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Tipos de documentos</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('document_types') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Tipo de documento <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input id="" class="form-control {{$errors->has('type_document') ? 'is-invalid' : ''}}" name="type_document" value="{{ old('type_document') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('type_document')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para agregar Tipos de Productos  -->
-    <div class="modal fade" data-backdrop="static" id="modtipoprod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Tipos de Productos</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('product_types') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre tipo de producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input id="" class="form-control {{$errors->has('product_type_name') ? 'is-invalid' : ''}}" name="product_type_name" value="{{ old('product_type_name') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('product_type_name')}}</strong>
-                          </div>
-                        </div>
-
-                        <label><i class="fa fa-edit"></i> Descripción tipo de producto <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                          </div>
-                          <input id="" class="form-control {{$errors->has('description') ? 'is-invalid' : ''}}" name="description" value="{{ old('description') }}" required autocomplete="off" maxlength="255">
-                          <strong class="invalid-feedback">{{$errors->first('description')}}</strong>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar tipo de producto</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para agregar Unidades de medida  -->
-    <div class="modal fade" data-backdrop="static" id="modunidmed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-light">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar Unidad de medida</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card border-secondary">
-                    <div class="card-body">
-                      <form action="{{ url('measures') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                          <label><i class="fa fa-edit"></i> Nombre Unidad de medida <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                            <input id="" class="form-control {{$errors->has('measure_name') ? 'is-invalid' : ''}}" name="measure_name" value="{{ old('measure_name') }}" required autocomplete="off" maxlength="255">
-                            <strong class="invalid-feedback">{{$errors->first('measure_name')}}</strong>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info btn-block">Agregar</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--FINAL DE LAS VENTANAS MODALES-->
-  @stop
-
-  @section('script')
-      <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
-  @endsection
+        @section('script')
+          <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
+        @endsection

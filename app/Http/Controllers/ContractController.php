@@ -45,7 +45,7 @@ class ContractController extends Controller
             ];
 
 
-            $this->validate($request, $rules, $messages);
+      $this->validate($request, $rules, $messages);
       Contract::create($request->all());
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }

@@ -29,7 +29,7 @@ class CharacterizationController extends Controller
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
 
-    public function characterizationList()
+    public function characterizationsList()
     {
       $characterizations = Characterization::select('characterizations.*')->get();
       return DataTables::of($characterizations)

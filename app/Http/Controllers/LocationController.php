@@ -15,15 +15,13 @@ class LocationController extends Controller
     $rules = [
       'id_complex' => 'required',
       'location_name' => 'required|string|max:45|unique:locations',
-      'id_program' => 'required'
     ];
 
     $messages = [
       'location_name.required' => 'El campo Centro de formación es obligatorio.',
       'location_name.max' => 'El campo Centro de formacion debe contener máximo 45 caracteres.',
       'location_name.unique' => 'El campo Centro de formación ya existe.',
-      'id_complex' => 'El campo Complejo es obligatorio.',
-      'id_program' => 'El campo Programa es obligatorio'
+      'id_complex' => 'El campo Complejo es obligatorio.'
     ];
 
     $this->validate($request, $rules, $messages);
@@ -40,7 +38,7 @@ class LocationController extends Controller
 
   public function locationsList(Request $request)
   {
-    $locations = Location::select('locations.*', 'complex.complex_name', 'programs.program_name')->join('complex', 'complex.id', '=', 'locations.id_complex')->join('programs', 'programs.id', '=', 'locations.id_program')->get();
+    $locations = Location::select('locations.*', 'complex.complex_name')->join('complex', 'complex.id', '=', 'locations.id_complex');
     return DataTables::of($locations)
     ->addColumn('action', function($id) {
       $button=" ";
@@ -62,15 +60,13 @@ class LocationController extends Controller
 
     $rules = [
       'id_complex' => 'required',
-      'location_name' => 'required|string|max:45', Rule::unique('locations')->ignore($this->id, 'id'),
-      'id_program' => 'required'
+      'location_name' => 'required|string|max:45', Rule::unique('locations')->ignore($this->id, 'id')
     ];
 
     $messages = [
       'location_name.required' => 'El campo Centro de formación es obligatorio.',
       'location_name.max' => 'El campo Centro de formacion debe contener máximo 45 caracteres.',
-      'id_complex' => 'El campo Complejo es obligatorio.',
-      'id_program' => 'El campo Programa es obligatorio'
+      'id_complex' => 'El campo Complejo es obligatorio.'
     ];
 
     $this->validate($request, $rules, $messages);
