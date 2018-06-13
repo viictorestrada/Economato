@@ -24,7 +24,7 @@
                           <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                         </div>
                         <select class="form-control {{$errors->has('id_complex') ? 'is-invalid' : ''}}" name="id_complex" required autofocus>
-                          <option hidden value="{{old('id_complex')}}">Seleccione el Complejo</option>
+                          <option hidden value="{{old('id_complex')}}"> -- Seleccione el Complejo -- </option>
                           @foreach ($complex as $complex)
                             <option value="{{ $complex->id }}">{{ $complex->complex_name }}</option>
                           @endforeach

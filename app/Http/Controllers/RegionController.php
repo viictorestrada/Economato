@@ -28,37 +28,30 @@ class RegionController extends Controller
   }
 
 
-  public function edit(Region $region)
+  public function edit($id)
   {
-    //
+    $region = Region::find($id);
+    return $region;
   }
 
   public function regionsList(Request $request)
   {
-    $regions = Region::select('regions.*')->get();
+    $regions = Region::all();
     return DataTables::of($regions)
-    ->addColumn('action', function($id) {
+    ->addColumn('action', function($region) {
       $button = ' ';
-      return $button.'<a href="/regions/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.'<a onclick="editRegion('. $region->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
     })->make(true);
   }
 
   public function update(Request $request, $id)
   {
 
-    $rules = [
-      'region_name' => 'required|string|max:45', Rule::unique('regions')->ignore($this->id, 'id')
-    ];
-
-    $messages = [
-      'region_name.required' => 'El campo Regional es obligatorio.',
-      'region_name.max' => 'El campo Regional debe contener máximo 45 caracteres.'
-    ];
-
-    $this->validate($request, $rules, $messages);
+    $this->validate($request->all());
     $region = Region::find($id);
     $region->update($request->all());
-    return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
+    return $region;
   }
+
 
 }
