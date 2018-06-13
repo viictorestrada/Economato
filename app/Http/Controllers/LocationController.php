@@ -75,4 +75,15 @@ class LocationController extends Controller
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
   }
 
+  public function status($id, $status)
+    {
+      $location = Location::find($id);
+      if ($location == null) {
+      return redirect('configurations');
+      }else {
+      $location->update(["status"=>$status]);
+      return redirect('configurations')->with([swal()->autoclose(1500)->success('Cambio de estado', 'Se cambio el estado exitosamente')]);
+    }
+    }
+
 }

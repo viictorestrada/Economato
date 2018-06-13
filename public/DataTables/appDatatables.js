@@ -42,7 +42,7 @@ $(() => {
         },
         ajax: '/programs/get',
         columns: [
-            { data: 'location_name', name: 'locations_id' },
+            { data: 'location_name', name: 'location_id' },
             { data: 'program_name', name: 'program_name' },
             { data: 'program_version', name: 'program_version' },
             { data: 'program_description', name: 'program_description' },

@@ -13,12 +13,14 @@ class ProgramController extends Controller
   public function store(Request $request)
   {
     $rules = [
+      'location_id' => 'required',
       'program_name' => 'required|string|max:255|unique:programs',
       'program_version' => 'required|numeric|min:1',
       'program_description' => 'required|string'
     ];
 
     $messages = [
+      'location_id.required' => 'El campo Centro de formación es obligatorio',
       'program_name.required' => 'El campo Nombre de programa es obligatorio.',
       'program_name.max' => 'El campo Nombre de programa debe contener máximo 255 caracteres.',
       'program_name.unique' => 'El Nombre del programa ya existe.',
@@ -34,9 +36,9 @@ class ProgramController extends Controller
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
   }
 
-  public function programsList()
+  public function programsList(Request $request)
   {
-    $programs = Program::select('programs.*', 'locations.location_name')->join('locations', 'locations.id', '=', 'programs.locations_id')->get();
+    $programs = Program::select('programs.*', 'locations.location_name')->join('locations', 'locations.id', '=', 'programs.location_id')->get();
     return DataTables::of($programs)
     ->addColumn('action', function ($id) {
       $button = "";
@@ -47,7 +49,7 @@ class ProgramController extends Controller
       {
         $button = '<a href="/programs/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
       }
-      return $button.'  <a href="/locations/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.'  <a href="/programs/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
     })->editColumn('status',function($id){
       return $id->status == 1 ? "Activo":"Inactivo";
     })->make(true);
@@ -83,5 +85,16 @@ class ProgramController extends Controller
     $program->update($request->all());
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
   }
+
+  public function status($id, $status)
+    {
+      $program = Program::find($id);
+      if ($program == null) {
+      return redirect('configurations');
+      }else {
+      $program->update(["status"=>$status]);
+      return redirect('configurations')->with([swal()->autoclose(1500)->success('Cambio de estado', 'Se cambio el estado exitosamente')]);
+    }
+    }
 
 }

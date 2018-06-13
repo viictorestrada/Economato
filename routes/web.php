@@ -34,6 +34,7 @@ Route::get('/characterizations/status/{id}/{status}', 'CharacterizationControlle
 Route::resource('characterizations', 'CharacterizationController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/locations/get', 'LocationController@locationsList');
+Route::get('/locations/status/{id}/{status}', 'LocationController@status');
 Route::resource('locations', 'LocationController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/regions/get', 'RegionController@regionsList');
@@ -43,11 +44,14 @@ Route::get('/complex/get', 'ComplexController@complexList');
 Route::resource('complex', 'ComplexController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/programs/get', 'ProgramController@programsList');
+Route::get('/programs/status/{id}/{status}', 'ProgramController@status');
 Route::resource('programs', 'ProgramController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/storages/get', 'StorageController@storagesList');
 Route::resource('storages', 'StorageController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+Route::get('/recipes/get', 'RecipeController@recipesList');
+Route::get('/recipes/status/{id}/{status}', 'RecipeController@status');
 Route::resource('recipes', 'RecipeController', ['except' => 'index', 'create', 'show', 'destroy']);
 
 Route::get('/measures/get', 'MeasureUnitController@measuresList');

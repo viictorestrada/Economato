@@ -19,8 +19,8 @@ class ContractController extends Controller
 
     public function create()
     {
-      $contract = Provider::pluck('provider_name', 'id');
-      return view('contracts.create', compact('contract'));
+      $providers = Provider::pluck('provider_name', 'id');
+      return view('contracts.create', compact('providers'));
     }
 
 
@@ -51,7 +51,7 @@ class ContractController extends Controller
     }
 
 
-    public function edit(Contract $contract)
+    public function edit($id)
     {
       $providers = Provider::pluck('provider_name', 'id');
       $contract = Contract::find($id);

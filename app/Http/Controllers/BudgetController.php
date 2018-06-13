@@ -9,6 +9,11 @@ use DataTables;
 class BudgetController extends Controller
 {
 
+  public function __construct()
+  {
+    $this->middleware(['auth', 'executive']);
+  }
+
     public function index()
     {
         return view('budget.index');
@@ -34,7 +39,8 @@ class BudgetController extends Controller
       return DataTables::of($budgets)
       ->addColumn('action', function ($id) {
         $button = " ";
-        return $button.'<a href="/budgets/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+        return $button.'<a href="/budgets/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>  '.
+        '<a onclick="addBudget()" data-toggle="tooltip" data-placement="top" title="Adicionar Presupuesto" class="btn btn-md btn-info text-light"><i class="fa fa-plus-circle"></i></a>';
       })
       ->make(true);
     }
