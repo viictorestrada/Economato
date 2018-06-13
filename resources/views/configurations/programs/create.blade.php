@@ -23,13 +23,13 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                         </div>
-                        <select class="form-control {{$errors->has('locations_id') ? 'is-invalid' : ''}}" name="locations_id" required autofocus>
-                          <option hidden value="{{old('locations_id')}}"> -- Seleccione el Complejo -- </option>
+                        <select class="form-control {{$errors->has('location_id') ? 'is-invalid' : ''}}" name="location_id" required autofocus>
+                          <option hidden value="{{old('location_id')}}"> -- Seleccione el Centro de formación -- </option>
                           @foreach ($location as $locations)
                             <option value="{{ $locations->id }}">{{ $locations->location_name }}</option>
                           @endforeach
                         </select>
-                        <strong class="invalid-feedback">{{$errors->first('locations_id')}}</strong>
+                        <strong class="invalid-feedback">{{$errors->first('location_id')}}</strong>
                       </div>
                     </div>
 

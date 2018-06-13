@@ -15,7 +15,6 @@
                 <thead>
                   <tr>
                     <th>Presupuesto</th>
-                    <th>Presupuesto Adiccionado</th>
                     <th>Código</th>
                     <th>Fecha Inicial</th>
                     <th>Fecha Final</th>
@@ -44,7 +43,6 @@
         ajax: '/budgets/get',
         columns: [
             { data: 'budget', name: 'budget' },
-            { data: 'budget_adition', name: 'budget_adition' },
             { data: 'budget_code', name: 'budget_code' },
             { data: 'budget_begin_date', name: 'budget_begin_date' },
             { data: 'budget_finish_date', name: 'budget_finish_date' },

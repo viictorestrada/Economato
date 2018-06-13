@@ -15,7 +15,7 @@
               </div>
             </div><hr>
 
-            {{ Form::open(['url' => 'products', 'class' => 'forms']) }}
+            {{ Form::open(['url' => 'products', 'class' => 'forms', 'id' => 'createProduct']) }}
 
               @csrf
               <div class="row">
@@ -23,10 +23,26 @@
               </div>
 
               {{ Form::close() }}
-              
+
           </div>
         </div>
       </div>
     </div>
   </div>
+@endsection
+
+@section('script')
+  <script>
+    $( document ).ready( () => {
+    $("#createProduct").validate({
+      rules: {
+      product_code: {
+        required: true,
+        integer: true,
+        minlength: 1
+      }
+    }
+    });
+  });
+  </script>
 @endsection

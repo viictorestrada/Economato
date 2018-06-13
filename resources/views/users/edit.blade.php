@@ -14,9 +14,9 @@
                 <a href="{{ url('users') }}" class="btn btn-info"><i class="fa fa-eye"></i> Mostrar todos</a>
               </div>
             </div><hr>
-            
-            {{ Form::model($user, ['url' => ['users', $user->id], 'class' => 'forms', 'method' => 'PATCH']) }}
-            
+
+            {{ Form::model($user, ['url' => ['users', $user->id], 'class' => 'forms', 'id' => 'editUser', 'method' => 'PATCH']) }}
+
               @csrf
               <div class="row">
                 @include('users.form')
@@ -29,4 +29,59 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('script')
+  <script>
+    $(() => {
+      $('#editUser').validate({
+        rules: {
+          rol_id: {
+            required: true
+          },
+          name: {
+            required: true,
+            maxlength: 45
+          },
+          last_name: {
+            required: true,
+            maxlength: 45
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            minlength: 6,
+            maxlength: 16
+          },
+          password_confirmation: {
+            equalTo: "#password"
+          }
+        },
+        messages: {
+          name: {
+            required: "El campo Nombres es obligatorio.",
+            maxlength: "El campo Nombres debe contener máximo 45 caracteres."
+          },
+          last_name: {
+            required: "El campo Apellidos es obligatorio.",
+            maxlength: "El campo Apellidos debe contener máximo 45 caracteres."
+          },
+          email: {
+            required: "El campo Correo Electrónico es obligatorio.",
+            email: "Debe ingresar una dirección de correo valida."
+          },
+          password: {
+            required: "El campo Nombres es obligatorio.",
+            minlength: "El campo Contraseña debe contener mínimo 6 caracteres.",
+            maxlength: "El campo Contraseña debe contener máximo 16 caracteres."
+          },
+          password_confirmation: {
+            equalTo: "Confirmar contraseña"
+          }
+        }
+      });
+    });
+  </script>
 @endsection

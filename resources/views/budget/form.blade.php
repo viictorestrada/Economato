@@ -2,13 +2,13 @@
   {{ Form::label('budget', 'Presupuesto') }}
   {{ Form::number('budget', null, ['class' => 'form-control']) }}
 </div>
-
+{{--
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('budget_adition', 'Valor adicional al presupuesto actual') }}
   {{ Form::number('budget_adition', null, ['class' => 'form-control']) }}
-</div>
+</div> --}}
 
-<div class="form-group col-lg-12 col-md-12">
+<div class="form-group col-lg-6 col-md-6">
   {{ Form::label('budget_code', 'Código') }}
   {{ Form::number('budget_code', null, ['class' => 'form-control']) }}
 </div>

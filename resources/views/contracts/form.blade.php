@@ -1,4 +1,4 @@
-<div class="form-group col-lg-4 col-md-6">
+<div class="form-group col-lg-6 col-md-6">
   {{ Form::label('contract_number', 'Número de Contrato') }}
   {{ Form::number('contract_number', null, ['class' => 'form-control']) }}
 </div>
@@ -8,13 +8,13 @@
   {{ Form::select('provider_id', $providers, null, ['class' => 'form-control']) }}
 </div>
 
-<div class="form-group col-lg-4 col-md-6">
+<div class="form-group col-lg-6 col-md-6">
   {{ Form::label('contract_price', 'Monto') }}
   {{ Form::number('contract_price', null, ['class' => 'form-control']) }}
 </div>
 
 
-<div class="form-group col-lg-4 col-md-6">
+<div class="form-group col-lg-6 col-md-6">
   {{ Form::label('contract_date', 'Fecha') }}
   {{ Form::date('contract_date', null, ['class' => 'form-control'], 'd/m/Y') }}
 </div>
