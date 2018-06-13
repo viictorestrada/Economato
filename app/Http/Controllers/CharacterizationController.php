@@ -12,7 +12,7 @@ class CharacterizationController extends Controller
 
     public function store(Request $request)
     {
-      $rules = [
+      $rules = [ 
         'characterization_name' => 'required|string|max:100|unique:characterizations',
       ];
 

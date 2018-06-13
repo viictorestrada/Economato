@@ -402,29 +402,93 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!--Fin del contenido-->
-      </section>
+              </div>
+            <!--Fin del contenido-->
+          </section>
 
-      <!--CREACIÓN DE VENTANAS MODALES-->
 
-      @include('configurations.regions.create')
-      @include('configurations.regions.edit')
-      @include('configurations.locations.create')
-      @include('configurations.competences.create')
-      @include('configurations.presentations.create')
-      @include('configurations.programs.create')
-      @include('configurations.learning_results.create')
-      @include('configurations.roles.create')
-      @include('configurations.document_types.create')
-      @include('configurations.product_types.create')
-      @include('configurations.measures.create')
-      @include('configurations.complexes.create')
-      @include('configurations.characterizations.create')
 
-      <!--FINAL DE LAS VENTANAS MODALES-->
-@stop
-@section('script')
-<script src="{{ asset('DataTables/appDatatables.js') }}"></script>
-@endsection
+          <!--CREACIÓN DE VENTANAS MODALES-->
+
+
+          @include('configurations.regions.create')
+          @include('configurations.regions.edit')
+          @include('configurations.locations.create')
+          @include('configurations.competences.create')
+          @include('configurations.presentations.create')
+          @include('configurations.programs.create')
+          @include('configurations.learning_results.create')
+          @include('configurations.roles.create')
+          @include('configurations.document_types.create')
+          @include('configurations.product_types.create')
+          @include('configurations.measures.create')
+          @include('configurations.complexes.create')
+          @include('configurations.characterizations.create')
+
+
+
+          <!--FINAL DE LAS VENTANAS MODALES-->
+
+
+        @stop
+
+        @section('script')
+          <script type="text/javascript">
+
+            function addForm() {
+              save_method = "add";
+              $('input[name=method]').val('POST');
+              $('#modalEditRegion form')[0].reset();
+              $('#modalEditRegion').modal('show');
+            }
+
+            $(function() {
+              $('#modalEditRegion form').on('submit' , function(e){
+                if (!e.isDefaultPrevented()){
+                  var id = $('#id').val();
+                  if (save_method == 'add') {
+                  url = "{{ url('regions') }}";
+                }
+                else{
+                  url = "{{ url('regions'). '/'}}" + id;
+                }
+                $.ajax({
+                  url: url,
+                  type: "POST",
+                  data: $('#modalEditRegion form').serialize(),
+                  success: function(response) {
+                    $('#modalEditRegion').modal('hide');
+                  },
+                  error: function(){
+                    $('#modalEditRegion').modal('hide');
+                  }
+                });
+                return false;
+                }
+              });
+            });
+
+            function editRegion(id) {
+              save_method = "edit";
+              $('input[name=_method]').val('PATCH');
+              $("#modalEditRegion form")[0].reset();
+              $.ajax({
+                url: "{{ url('regions') }}" + '/' + id + "/edit",
+                type: "GET",
+                dataType: "JSON",
+                success: function(data) {
+                  $('#modalEditRegion').modal('show');
+
+                  $('#id').val(data.id);
+                  $('#region_name').val(data.region_name);
+                },
+                error : function() {
+                  alert("No hay datos");
+                }
+              });
+            }
+
+          </script>
+
+          <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
+        @endsection
