@@ -1,20 +1,5 @@
 $(() => {
 
-    $('#regions').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/regions/get',
-        columns: [
-            { data: 'region_name', name: 'region_name' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
-
     $('#locations').DataTable({
         destroy: true,
         responsive: true,
@@ -174,22 +159,6 @@ $(() => {
         columns: [
             { data: 'characterization_name', name: 'characterization_name' },
             { data: 'status', name: 'status' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
-
-    $('#complex').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/complex/get',
-        columns: [
-            { data: 'region_name', name: 'id_region' },
-            { data: 'complex_name', name: 'complex_name' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]
     });
