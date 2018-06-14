@@ -475,6 +475,17 @@ function addRegion() {
           success: function(response) {
             $('#region-form').modal('hide');
             tableRegion.ajax.reload();
+            if (save_method == 'add') {
+              toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.success('Elemento agregado exitosamente!');
+            } else {
+              toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.success('Elemento editado exitosamente!');
+            }
           },
           error: function(){
             $('#region-form').modal('hide');
@@ -546,12 +557,24 @@ function addComplex() {
           data: $('#complexes-form form').serialize(),
           success: function(response) {
             $('#complexes-form').modal('hide');
-
             tableComplex.ajax.reload();
+            if (save_method == 'add') {
+              toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.success('Elemento agregado exitosamente!');
+            } else {
+              toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.success('Elemento editado exitosamente!');
+            }
           },
           error: function(){
-            $('#complexes-form').modal('hide');
-            tableComplex.ajax.reload();
+            toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.error('Oops!, Se ha generado un error!');
           }
         });
         return false;

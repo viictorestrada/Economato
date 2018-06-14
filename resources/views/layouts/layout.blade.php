@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="{{ asset('fontawesome/web-fonts-with-css/css/fontawesome-all.min.css') }}">
   <!-- Main styles -->
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- Icono -->
   <link rel="icon" href="{{ asset('images/logo.png') }}">
 
@@ -65,7 +65,7 @@
   <script src="{{ asset('js/jquery.min.js') }}"></script>
   <script src="{{ asset('js/popper.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="{{ asset('js/toastr.min.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
   <script src="{{ asset('datatables/js/jquery.dataTables.min.js') }}"></script>
