@@ -30,18 +30,19 @@ class ProductTypeController extends Controller
     }
 
 
-    public function edit(ProductType $productType)
+    public function edit($id)
     {
-        //
+        $productType = ProductType::find($id);
+        return $productType;
     }
 
     public function productTypesList(Request $request)
     {
       $productTypes = ProductType::select('product_type.*')->get();
       return DataTables::of($productTypes)
-      ->addColumn('action', function($id) {
+      ->addColumn('action', function($productType) {
         $button=" ";
-        return $button.'  <a href="/product_types/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+        return $button.'<a onclick="editProductType('. $productType->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
       })->make(true);
     }
 
@@ -49,21 +50,9 @@ class ProductTypeController extends Controller
     public function update(Request $request, $id)
     {
 
-      $rules = [
-        'product_type_name' => 'required|string|max:80',                Rule::unique('product_type')->ignore($this->id, 'id'),
-        'description' => 'required|string',
-      ];
-
-      $messages = [
-        'product_type_name.required' => 'El campo Tipo de producto es obligatorio.',
-        'product_type_name.max' => 'El campo Tipo de producto debe contener máximo 80 caracteres.',
-        'description.required' => 'El campo Descripción es obligatorio.'
-      ];
-
-      $this->validate($request, $rules, $messages);
       $productTypes = ProductType::find($id);
       $productTypes->update($request->all());
-      return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
+      return $productTypes;
     }
 
 }

@@ -32,9 +32,10 @@ class CompetenceController extends Controller
     }
 
 
-    public function edit(Competence $competence)
+    public function edit($id)
     {
-        //
+      $competence = Competence::find($id);
+      return $competence;
     }
 
 
@@ -42,28 +43,15 @@ class CompetenceController extends Controller
     {
       $competence = Competence::select('competences.*','programs.program_name')->join('programs', 'programs.id', '=', 'competences.id_program')->get();
       return DataTables::of($competence)
-      ->addColumn('action', function($id) {
+      ->addColumn('action', function($competences) {
         $button=" ";
-        return $button.'  <a href="/competences/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+        return $button.'  <a onclick="editCompetence('. $competences->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
       })->make(true);
     }
 
 
     public function update(Request $request, $id)
     {
-
-      $rules = [
-        'id_region' => 'required',
-        'competence_name' => 'required|string|max:255', Rule::unique('competences')->ignore($this->id, 'id')
-      ];
-
-      $messages = [
-        'id_region.required' => 'El campo Regional es obligatorio.',
-        'competence_name.required' => 'El campo Competencia es obligatorio.',
-        'competence_name.max' => 'El campo Competencia debe contener máximo 255 caracteres.'
-      ];
-
-      $this->validate($request, $rules, $messages);
       $competence = Competence::find($id);
       $competence->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);

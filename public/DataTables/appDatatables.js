@@ -1,40 +1,5 @@
 $(() => {
 
-    $('#locations').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/locations/get',
-        columns: [
-            { data: 'complex_name', name: 'id_complex' },
-            { data: 'location_name', name: 'location_name' },
-            { data: 'status', name: 'status' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
-
-    $('#programs').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/programs/get',
-        columns: [
-            { data: 'location_name', name: 'location_id' },
-            { data: 'program_name', name: 'program_name' },
-            { data: 'program_version', name: 'program_version' },
-            { data: 'program_description', name: 'program_description' },
-            { data: 'status', name: 'status' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
 
     $('#measures').DataTable({
         destroy: true,
@@ -51,22 +16,6 @@ $(() => {
         ]
     });
 
-
-    $('#product_types').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/product_types/get',
-        columns: [
-            { data: 'product_type_name', name: 'product_type_name' },
-            { data: 'description', name: 'description' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
 
 
     $('#document_types').DataTable({
@@ -100,52 +49,6 @@ $(() => {
     });
 
 
-    $('#competences').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/competences/get',
-        columns: [
-            { data: 'program_name', name: 'id_program' },
-            { data: 'competence_name', name: 'competence_name' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
-
-    $('#learning_results').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/learning_results/get',
-        columns: [
-            { data: 'competence_name', name: 'id_competence' },
-            { data: 'learning_result', name: 'learning_result' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
-
-    $('#presentations').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/presentations/get',
-        columns: [
-            { data: 'presentation', name: 'presentation' },
-            { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
 
     $('#characterizations').DataTable({
         destroy: true,

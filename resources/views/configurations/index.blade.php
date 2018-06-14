@@ -134,7 +134,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modcentro"  data-toggle="modal" data-target="#modcentro" class="btn btn-info">Agregar Centro</a>
+                      <a onclick="addLocation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Centro de formación</a>
                     </div>
                   </div>
                 </div>
@@ -162,7 +162,7 @@
                       </section>
                       <div>
                         <hr class="bg-info">
-                        <a href="#modmodal"  data-toggle="modal" data-target="#modmodal" class="btn btn-info">Agregar Programa</a>
+                      <a onclick="addProgram()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Programa de formación</a>
                       </div>
                     </div>
                   </div>
@@ -199,7 +199,7 @@
                         </div>
                       </section>
                       <hr  class="bg-info">
-                      <a href="#modcompete"  data-toggle="modal" data-target="#modcompete" class="btn btn-info">Agregar Competencia</a>
+                      <a onclick="addCompetence()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Competencia</a>
                     </div>
                   </div>
                 </div>
@@ -223,7 +223,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modresul"  data-toggle="modal" data-target="#modresul" class="btn btn-info">Agregar Resultado</a>
+                      <a onclick="addLearningResult()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Competencia</a>
                     </div>
                   </div>
                 </div>
@@ -235,7 +235,7 @@
 
         <!--Contenido de Roles y documentos de identidad-->
         <div class="tab-pane fade" id="v-pills-tipous" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-          <!--Panel de sección Roles y documento-->
+          <!--Panel de sección Tipo de producto-->
           <div class="card border-secondary text-center">
             <h4 class="card-header bg-secondary text-light">Tipo de producto y presentación</h4>
             <div class="card-body">
@@ -259,7 +259,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modtipoprod" data-toggle="modal" data-target="#modtipoprod" class="btn btn-info">Agregar Tipo de Producto</a>
+                      <a onclick="addProductType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Tipo de Producto</a>
                     </div>
                   </div>
                 </div>
@@ -283,7 +283,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modpresen"  data-toggle="modal" data-target="#modpresen" class="btn btn-info">Agregar Presentación</a>
+                      <a onclick="addPresentation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Tipo de Producto</a>
                     </div>
                   </div>
                 </div>
@@ -517,6 +517,8 @@ function addRegion() {
   }
   // Fin Seccion Regionales
 
+
+
   //Tabla para mostrar los complejos
   var tableComplex = $('#complex').DataTable({
         destroy: true,
@@ -533,6 +535,7 @@ function addRegion() {
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]
     });
+
   //Funciones para agregar y editar Complejos
 function addComplex() {
   save_method = "add";
@@ -601,6 +604,557 @@ function addComplex() {
       }
     });
   }
+
+   // Fin seccion Complejos
+
+   // Tabla para mostrar centros de formación
+
+   var tableLocations = $('#locations').DataTable({
+           destroy: true,
+           responsive: true,
+           processing: true,
+           serverSide: true,
+           language: {
+               "url": '/DataTables/datatables-spanish.json'
+           },
+           ajax: '/locations/get',
+           columns: [
+               { data: 'complex_name', name: 'id_complex' },
+               { data: 'location_name', name: 'location_name' },
+               { data: 'status', name: 'status' },
+               { data: 'action', name: 'action', orderable: false, searchable: true },
+           ]
+       });
+
+       //Funciones para agregar y editar Centros de formación
+       function addLocation() {
+       save_method = "add";
+       $('input[name=_method]').val('POST');
+       $('#locations-form form')[0].reset();
+       $('#locations-form').modal('show');
+       }
+
+       $(function() {
+         $('#locations-form form').on('submit' , function(e){
+           if (!e.isDefaultPrevented()){
+             var id = $('#id').val();
+             if (save_method == 'add') {
+               url = "{{ url('locations') }}";
+             }
+             else {
+               url = "{{ url('locations'). '/'}}" + id;
+             }
+             $.ajax({
+               url: url,
+               type: "POST",
+               data: $('#locations-form form').serialize(),
+               success: function(response) {
+                 $('#locations-form').modal('hide');
+                 tableLocations.ajax.reload();
+                 if (save_method == 'add') {
+                   toastr.options = {
+                     "positionClass": "toast-bottom-right"
+                   }
+                   toastr.success('Elemento agregado exitosamente!');
+                 } else {
+                   toastr.options = {
+                     "positionClass": "toast-bottom-right"
+                   }
+                   toastr.success('Elemento editado exitosamente!');
+                 }
+               },
+               error: function(){
+                 toastr.options = {
+                     "positionClass": "toast-bottom-right"
+                   }
+                   toastr.error('Oops!, Se ha generado un error!');
+               }
+             });
+             return false;
+           }
+         });
+       });
+
+       function editLocation(id) {
+         save_method = "edit";
+         $('input[name=_method]').val('PATCH');
+         $("#locations-form form")[0].reset();
+         $.ajax({
+           url: "{{ url('locations') }}" + '/' + id + "/edit",
+           type: "GET",
+           dataType: "JSON",
+           success: function(data) {
+             $('#locations-form').modal('show');
+             $('#id').val(data.id);
+             $('#id_complex').val(data.id_complex);
+             $('#location_name').val(data.location_name);
+           },
+           error : function() {
+             alert("No hay datos");
+           }
+         });
+       }
+
+        // Fin seccion Centros de formación
+
+        // Tabla para mostrar programas de formación
+
+        var tablePrograms = $('#programs').DataTable({
+              destroy: true,
+              responsive: true,
+              processing: true,
+              serverSide: true,
+              language: {
+                  "url": '/DataTables/datatables-spanish.json'
+              },
+              ajax: '/programs/get',
+              columns: [
+                  { data: 'location_name', name: 'location_id' },
+                  { data: 'program_name', name: 'program_name' },
+                  { data: 'program_version', name: 'program_version' },
+                  { data: 'program_description', name: 'program_description' },
+                  { data: 'status', name: 'status' },
+                  { data: 'action', name: 'action', orderable: false, searchable: true },
+              ]
+            });
+
+            //Funciones para agregar y editar Programas de formación
+            function addProgram() {
+            save_method = "add";
+            $('input[name=_method]').val('POST');
+            $('#programs-form form')[0].reset();
+            $('#programs-form').modal('show');
+            }
+
+            $(function() {
+              $('#programs-form form').on('submit' , function(e){
+                if (!e.isDefaultPrevented()){
+                  var id = $('#id').val();
+                  if (save_method == 'add') {
+                    url = "{{ url('programs') }}";
+                  }
+                  else {
+                    url = "{{ url('programs'). '/'}}" + id;
+                  }
+                  $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: $('#programs-form form').serialize(),
+                    success: function(response) {
+                      $('#programs-form').modal('hide');
+                      tablePrograms.ajax.reload();
+                      if (save_method == 'add') {
+                        toastr.options = {
+                          "positionClass": "toast-bottom-right"
+                        }
+                        toastr.success('Elemento agregado exitosamente!');
+                      } else {
+                        toastr.options = {
+                          "positionClass": "toast-bottom-right"
+                        }
+                        toastr.success('Elemento editado exitosamente!');
+                      }
+                    },
+                    error: function(){
+                      toastr.options = {
+                          "positionClass": "toast-bottom-right"
+                        }
+                        toastr.error('Oops!, Se ha generado un error!');
+                    }
+                  });
+                  return false;
+                }
+              });
+            });
+
+            function editProgram(id) {
+              save_method = "edit";
+              $('input[name=_method]').val('PATCH');
+              $("#programs-form form")[0].reset();
+              $.ajax({
+                url: "{{ url('programs') }}" + '/' + id + "/edit",
+                type: "GET",
+                dataType: "JSON",
+                success: function(data) {
+                  $('#programs-form').modal('show');
+                  $('#id').val(data.id);
+                  $('#location_id').val(data.location_id);
+                  $('#program_name').val(data.program_name);
+                  $('#program_version').val(data.program_version);
+                  $('#program_description').val(data.program_description);
+                },
+                error : function() {
+                  alert("No hay datos");
+                }
+              });
+            }
+
+             // Fin seccion Programas de formación
+
+             // Tabla para mostrar Competencias
+
+             var tableCompetences = $('#competences').DataTable({
+                     destroy: true,
+                     responsive: true,
+                     processing: true,
+                     serverSide: true,
+                     language: {
+                         "url": '/DataTables/datatables-spanish.json'
+                     },
+                     ajax: '/competences/get',
+                     columns: [
+                         { data: 'program_name', name: 'id_program' },
+                         { data: 'competence_name', name: 'competence_name' },
+                         { data: 'action', name: 'action', orderable: false, searchable: true },
+                     ]
+                 });
+
+                 //Funciones para agregar y editar Competencias
+                 function addCompetence() {
+                 save_method = "add";
+                 $('input[name=_method]').val('POST');
+                 $('#competences-form form')[0].reset();
+                 $('#competences-form').modal('show');
+                 }
+
+                 $(function() {
+                   $('#competences-form form').on('submit' , function(e){
+                     if (!e.isDefaultPrevented()){
+                       var id = $('#id').val();
+                       if (save_method == 'add') {
+                         url = "{{ url('competences') }}";
+                       }
+                       else {
+                         url = "{{ url('competences'). '/'}}" + id;
+                       }
+                       $.ajax({
+                         url: url,
+                         type: "POST",
+                         data: $('#competences-form form').serialize(),
+                         success: function(response) {
+                           $('#competences-form').modal('hide');
+                           tableCompetences.ajax.reload();
+                           if (save_method == 'add') {
+                             toastr.options = {
+                               "positionClass": "toast-bottom-right"
+                             }
+                             toastr.success('Elemento agregado exitosamente!');
+                           } else {
+                             toastr.options = {
+                               "positionClass": "toast-bottom-right"
+                             }
+                             toastr.success('Elemento editado exitosamente!');
+                           }
+                         },
+                         error: function(){
+                           toastr.options = {
+                               "positionClass": "toast-bottom-right"
+                             }
+                             toastr.error('Oops!, Se ha generado un error!');
+                         }
+                       });
+                       return false;
+                     }
+                   });
+                 });
+
+                 function editCompetence(id) {
+                   save_method = "edit";
+                   $('input[name=_method]').val('PATCH');
+                   $("#competences-form form")[0].reset();
+                   $.ajax({
+                     url: "{{ url('competences') }}" + '/' + id + "/edit",
+                     type: "GET",
+                     dataType: "JSON",
+                     success: function(data) {
+                       $('#competences-form').modal('show');
+                       $('#id').val(data.id);
+                       $('#id_program').val(data.id_program);
+                       $('#competence_name').val(data.competence_name);
+                     },
+                     error : function() {
+                       alert("No hay datos");
+                     }
+                   });
+                 }
+
+                  // Fin seccion Competencias
+
+          // Tabla para mostrar Resultados de aprendizaje
+
+          var tableLearningResults = $('#learning_results').DataTable({
+              destroy: true,
+              responsive: true,
+              processing: true,
+              serverSide: true,
+              language: {
+                  "url": '/DataTables/datatables-spanish.json'
+              },
+              ajax: '/learning_results/get',
+              columns: [
+                  { data: 'competence_name', name: 'id_competence' },
+                  { data: 'learning_result', name: 'learning_result' },
+                  { data: 'action', name: 'action', orderable: false, searchable: true },
+              ]
+          });
+
+
+              //Funciones para agregar y editar Tipos de producto
+              function addLearningResult() {
+              save_method = "add";
+              $('input[name=_method]').val('POST');
+              $('#learningResult-form form')[0].reset();
+              $('#learningResult-form').modal('show');
+              }
+
+              $(function() {
+                $('#learningResult-form form').on('submit' , function(e){
+                  if (!e.isDefaultPrevented()){
+                    var id = $('#id').val();
+                    if (save_method == 'add') {
+                      url = "{{ url('learning_results') }}";
+                    }
+                    else {
+                      url = "{{ url('learning_results'). '/'}}" + id;
+                    }
+                    $.ajax({
+                      url: url,
+                      type: "POST",
+                      data: $('#learningResult-form form').serialize(),
+                      success: function(response) {
+                        $('#learningResult-form').modal('hide');
+                        tableLearningResults.ajax.reload();
+                        if (save_method == 'add') {
+                          toastr.options = {
+                            "positionClass": "toast-bottom-right"
+                          }
+                          toastr.success('Elemento agregado exitosamente!');
+                        } else {
+                          toastr.options = {
+                            "positionClass": "toast-bottom-right"
+                          }
+                          toastr.success('Elemento editado exitosamente!');
+                        }
+                      },
+                      error: function(){
+                        toastr.options = {
+                            "positionClass": "toast-bottom-right"
+                          }
+                          toastr.error('Oops!, Se ha generado un error!');
+                          tableLearningResults.ajax.reload();
+                      }
+                    });
+                    return false;
+                  }
+                });
+              });
+
+              function editLearningResult(id) {
+                save_method = "edit";
+                $('input[name=_method]').val('PATCH');
+                $("#learningResult-form form")[0].reset();
+                $.ajax({
+                  url: "{{ url('learning_results') }}" + '/' + id + "/edit",
+                  type: "GET",
+                  dataType: "JSON",
+                  success: function(data) {
+                    $('#learningResult-form').modal('show');
+                    $('#id').val(data.id);
+                    $('#id_competence').val(data.id_competence);
+                    $('#learning_result').val(data.learning_result);
+                  },
+                  error : function() {
+                    alert("No hay datos");
+                  }
+                });
+              }
+
+               // Fin seccion Resultados de aprendizaje
+
+
+
+               // Tabla para mostrar Tipo de productos
+
+
+               var tableProductTypes = $('#product_types').DataTable({
+                       destroy: true,
+                       responsive: true,
+                       processing: true,
+                       serverSide: true,
+                       language: {
+                           "url": '/DataTables/datatables-spanish.json'
+                       },
+                       ajax: '/product_types/get',
+                       columns: [
+                           { data: 'product_type_name', name: 'product_type_name' },
+                           { data: 'description', name: 'description' },
+                           { data: 'action', name: 'action', orderable: false, searchable: true },
+                       ]
+                   });
+
+                   //Funciones para agregar y editar Resultados de aprendizaje
+                   function addProductType() {
+                   save_method = "add";
+                   $('input[name=_method]').val('POST');
+                   $('#productType-form form')[0].reset();
+                   $('#productType-form').modal('show');
+                   }
+
+                   $(function() {
+                     $('#productType-form form').on('submit' , function(e){
+                       if (!e.isDefaultPrevented()){
+                         var id = $('#id').val();
+                         if (save_method == 'add') {
+                           url = "{{ url('product_types') }}";
+                         }
+                         else {
+                           url = "{{ url('product_types'). '/'}}" + id;
+                         }
+                         $.ajax({
+                           url: url,
+                           type: "POST",
+                           data: $('#productType-form form').serialize(),
+                           success: function(response) {
+                             $('#productType-form').modal('hide');
+                             tableProductTypes.ajax.reload();
+                             if (save_method == 'add') {
+                               toastr.options = {
+                                 "positionClass": "toast-bottom-right"
+                               }
+                               toastr.success('Elemento agregado exitosamente!');
+                             } else {
+                               toastr.options = {
+                                 "positionClass": "toast-bottom-right"
+                               }
+                               toastr.success('Elemento editado exitosamente!');
+                             }
+                           },
+                           error: function(){
+                             toastr.options = {
+                                 "positionClass": "toast-bottom-right"
+                               }
+                               toastr.error('Oops!, Se ha generado un error!');
+                               tableLearningResults.ajax.reload();
+                           }
+                         });
+                         return false;
+                       }
+                     });
+                   });
+
+                   function editProductType(id) {
+                     save_method = "edit";
+                     $('input[name=_method]').val('PATCH');
+                     $("#productType-form form")[0].reset();
+                     $.ajax({
+                       url: "{{ url('product_types') }}" + '/' + id + "/edit",
+                       type: "GET",
+                       dataType: "JSON",
+                       success: function(data) {
+                         $('#productType-form').modal('show');
+                         $('#id').val(data.id);
+                         $('#product_type_name').val(data.product_type_name);
+                         $('#description').val(data.description);
+                       },
+                       error : function() {
+                         alert("No hay datos");
+                       }
+                     });
+                   }
+
+                    // Fin seccion Tipo de producto
+
+
+                    // Tabla para mostrar Presentaciones
+
+
+            var tablePresentations = $('#presentations').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    processing: true,
+                    serverSide: true,
+                    language: {
+                        "url": '/DataTables/datatables-spanish.json'
+                    },
+                    ajax: '/presentations/get',
+                    columns: [
+                        { data: 'presentation', name: 'presentation' },
+                        { data: 'action', name: 'action', orderable: false, searchable: true },
+                    ]
+                });
+
+                //Funciones para agregar y editar Presentaciones
+                function addPresentation() {
+                save_method = "add";
+                $('input[name=_method]').val('POST');
+                $('#presentation-form form')[0].reset();
+                $('#presentation-form').modal('show');
+                }
+
+                $(function() {
+                  $('#presentation-form form').on('submit' , function(e){
+                    if (!e.isDefaultPrevented()){
+                      var id = $('#id').val();
+                      if (save_method == 'add') {
+                        url = "{{ url('presentations') }}";
+                      }
+                      else {
+                        url = "{{ url('presentations'). '/'}}" + id;
+                      }
+                      $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: $('#presentation-form form').serialize(),
+                        success: function(response) {
+                          $('#presentation-form').modal('hide');
+                          tablePresentations.ajax.reload();
+                          if (save_method == 'add') {
+                            toastr.options = {
+                              "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Elemento agregado exitosamente!');
+                          } else {
+                            toastr.options = {
+                              "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Elemento editado exitosamente!');
+                          }
+                        },
+                        error: function(){
+                          toastr.options = {
+                              "positionClass": "toast-bottom-right"
+                            }
+                            toastr.error('Oops!, Se ha generado un error!');
+                            tableLearningResults.ajax.reload();
+                        }
+                      });
+                      return false;
+                    }
+                  });
+                });
+
+                function editPresentation(id) {
+                  save_method = "edit";
+                  $('input[name=_method]').val('PATCH');
+                  $("#presentation-form form")[0].reset();
+                  $.ajax({
+                    url: "{{ url('presentations') }}" + '/' + id + "/edit",
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function(data) {
+                      $('#presentation-form').modal('show');
+                      $('#id').val(data.id);
+                      $('#presentation').val(data.presentation);
+                    },
+                    error : function() {
+                      alert("No hay datos");
+                    }
+                  });
+                }
+
+                 // Fin seccion Presentaciones
+
 </script>
+
 <script src="{{ asset('DataTables/appDatatables.js') }}"></script>
 @endsection

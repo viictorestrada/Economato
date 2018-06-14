@@ -46,7 +46,6 @@ class RegionController extends Controller
 
   public function update(Request $request, $id)
   {
-
     $region = Region::find($id);
     $region->update($request->all());
     return $region;

@@ -1,6 +1,6 @@
 <!--Modal para agregar Resultados de aprendizaje -->
 
-<div class="modal fade" data-backdrop="static" id="modresul" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade" data-backdrop="static" id="learningResult-form" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-info text-light">
@@ -17,15 +17,16 @@
                 <div class="card-body">
 
                   <form action="{{ url('learning_results') }}" method="post">
-                    @csrf
+                    @csrf {{ method_field('POST') }}
+                    <input type="hidden" name="id" id="id">
                     <div class="form-group">
                       <label><i class="fa fa-mouse-pointer"></i> Seleccionar Competencia <strong class="text-danger" style="font-size: 23px">*</strong></label>
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                         </div>
-                        <select class="form-control {{$errors->has('id_competence') ? 'is-invalid' : ''}}" name="id_competence" required>
-                          <option hidden value="{{old('id_competence')}}">Seleccione Competencia</option>
+                        <select class="form-control {{$errors->has('id_competence') ? 'is-invalid' : ''}}" name="id_competence" id="id_competence" required>
+                          <option hidden value="{{old('id_competence')}}"> -- Seleccione Competencia -- </option>
                           @foreach ($competence as $competences)
                             <option value="{{ $competences->id }}">{{ $competences->competence_name }}</option>
                           @endforeach
@@ -40,7 +41,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                         </div>
-                        <textarea class="form-control {{$errors->has('learning_result') ? 'is-invalid' : ''}}" name="learning_result" value="{{old('learning_result')}}" rows="1" required></textarea>
+                        <textarea class="form-control {{$errors->has('learning_result') ? 'is-invalid' : ''}}" name="learning_result" id="learning_result" value="{{old('learning_result')}}" rows="1" required></textarea>
                         <strong class="invalid-feedback">{{$errors->first('learning_result')}}</strong>
                       </div>
                     </div>
