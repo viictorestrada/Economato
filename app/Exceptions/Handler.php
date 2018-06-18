@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Session;
 
 class Handler extends ExceptionHandler
 {
@@ -48,7 +49,7 @@ class Handler extends ExceptionHandler
   {
     if ($exception instanceof \Illuminate\Auth\AuthenticationException)
     {
-      return redirect('/')->with('flash', 'Por favor inicia sesión para acceder!');
+      return redirect('/')->with(Session::flash('flash', 'Por favor inicia sesión para acceder!'));
     }
     return parent::render($request, $exception);
   }
