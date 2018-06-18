@@ -259,7 +259,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addProductType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Tipo de Producto</a>
+                      <a onclick="addProductType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Tipo de Producto</a>
                     </div>
                   </div>
                 </div>
@@ -283,7 +283,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addPresentation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Presentación</a>
+                      <a onclick="addPresentation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Presentación</a>
                     </div>
                   </div>
                 </div>
@@ -317,7 +317,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addMeasure()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Unidad de Medida</a>
+                      <a onclick="addMeasure()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Unidad de Medida</a>
                     </div>
                   </div>
                 </div>
@@ -340,7 +340,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addDocumentType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Tipo de Documento</a>
+                      <a onclick="addDocumentType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Tipo de Documento</a>
                     </div>
                   </div>
                 </div>
@@ -374,7 +374,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addCharacterization()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Caracterización</a>
+                      <a onclick="addCharacterization()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Caracterización</a>
                     </div>
                   </div>
                 </div>
@@ -397,7 +397,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addRole()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Roles</a>
+                      <a onclick="addRole()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Roles</a>
                     </div>
                   </div>
                 </div>
