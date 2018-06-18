@@ -283,7 +283,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addPresentation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Tipo de Producto</a>
+                      <a onclick="addPresentation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Presentación</a>
                     </div>
                   </div>
                 </div>
@@ -317,7 +317,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modunidmed" data-toggle="modal" data-target="#modunidmed" class="btn btn-info">Agregar Unidad de Medida</a>
+                      <a onclick="addMeasure()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Unidad de Medida</a>
                     </div>
                   </div>
                 </div>
@@ -340,7 +340,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modtipodoc"  data-toggle="modal" data-target="#modtipodoc" class="btn btn-info">Agregar Tipo de Documento</a>
+                      <a onclick="addDocumentType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Tipo de Documento</a>
                     </div>
                   </div>
                 </div>
@@ -374,7 +374,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modcaract" data-toggle="modal" data-target="#modcaract" class="btn btn-info">Agregar Caracterización</a>
+                      <a onclick="addCharacterization()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Caracterización</a>
                     </div>
                   </div>
                 </div>
@@ -397,7 +397,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a href="#modtipous"  data-toggle="modal" data-target="#modtipous" class="btn btn-info">Agregar Roles</a>
+                      <a onclick="addRole()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i>Agregar Roles</a>
                     </div>
                   </div>
                 </div>
@@ -1153,6 +1153,367 @@ function addComplex() {
                 }
 
                  // Fin seccion Presentaciones
+
+
+
+                // Tabla para mostrar Presentaciones
+
+                 var tableMeasures = $('#measures').DataTable({
+                     destroy: true,
+                     responsive: true,
+                     processing: true,
+                     serverSide: true,
+                     language: {
+                         "url": '/DataTables/datatables-spanish.json'
+                     },
+                     ajax: '/measures/get',
+                     columns: [
+                         { data: 'measure_name', name: 'measure_name' },
+                         { data: 'action', name: 'action', orderable: false, searchable: true },
+                     ]
+                 });
+
+                 //Funciones para agregar y editar Unidades de medida
+                 function addMeasure() {
+                 save_method = "add";
+                 $('input[name=_method]').val('POST');
+                 $('#measure-form form')[0].reset();
+                 $('#measure-form').modal('show');
+                 }
+
+                 $(function() {
+                   $('#measure-form form').on('submit' , function(e){
+                     if (!e.isDefaultPrevented()){
+                       var id = $('#id').val();
+                       if (save_method == 'add') {
+                         url = "{{ url('measures') }}";
+                       }
+                       else {
+                         url = "{{ url('measures'). '/'}}" + id;
+                       }
+                       $.ajax({
+                         url: url,
+                         type: "POST",
+                         data: $('#measure-form form').serialize(),
+                         success: function(response) {
+                           $('#measure-form').modal('hide');
+                           tableMeasures.ajax.reload();
+                           if (save_method == 'add') {
+                             toastr.options = {
+                               "positionClass": "toast-bottom-right"
+                             }
+                             toastr.success('Elemento agregado exitosamente!');
+                           } else {
+                             toastr.options = {
+                               "positionClass": "toast-bottom-right"
+                             }
+                             toastr.success('Elemento editado exitosamente!');
+                           }
+                         },
+                         error: function(){
+                           toastr.options = {
+                               "positionClass": "toast-bottom-right"
+                             }
+                             toastr.error('Oops!, Se ha generado un error!');
+                             tableLearningResults.ajax.reload();
+                         }
+                       });
+                       return false;
+                     }
+                   });
+                 });
+
+                 function editMeasure(id) {
+                   save_method = "edit";
+                   $('input[name=_method]').val('PATCH');
+                   $("#measure-form form")[0].reset();
+                   $.ajax({
+                     url: "{{ url('measures') }}" + '/' + id + "/edit",
+                     type: "GET",
+                     dataType: "JSON",
+                     success: function(data) {
+                       $('#measure-form').modal('show');
+                       $('#id').val(data.id);
+                       $('#measure_name').val(data.measure_name);
+                     },
+                     error : function() {
+                       alert("No hay datos");
+                     }
+                   });
+                 }
+
+                  // Fin seccion Unidad de medida
+
+
+                  // Tabla para mostrar Tipo de documento
+
+                  var tableDocumentType = $('#document_types').DataTable({
+                      destroy: true,
+                      responsive: true,
+                      processing: true,
+                      serverSide: true,
+                      language: {
+                          "url": '/DataTables/datatables-spanish.json'
+                      },
+                      ajax: '/document_types/get',
+                      columns: [
+                          { data: 'type_document', name: 'type_document' },
+                          { data: 'action', name: 'action', orderable: false, searchable: true },
+                      ]
+                  });
+
+                  //Funciones para agregar y editar Tipo de documento
+                  function addDocumentType() {
+                  save_method = "add";
+                  $('input[name=_method]').val('POST');
+                  $('#documentType-form form')[0].reset();
+                  $('#documentType-form').modal('show');
+                  }
+
+                  $(function() {
+                    $('#documentType-form form').on('submit' , function(e){
+                      if (!e.isDefaultPrevented()){
+                        var id = $('#id').val();
+                        if (save_method == 'add') {
+                          url = "{{ url('document_types') }}";
+                        }
+                        else {
+                          url = "{{ url('document_types'). '/'}}" + id;
+                        }
+                        $.ajax({
+                          url: url,
+                          type: "POST",
+                          data: $('#documentType-form form').serialize(),
+                          success: function(response) {
+                            $('#documentType-form').modal('hide');
+                            tableDocumentType.ajax.reload();
+                            if (save_method == 'add') {
+                              toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                              }
+                              toastr.success('Elemento agregado exitosamente!');
+                            } else {
+                              toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                              }
+                              toastr.success('Elemento editado exitosamente!');
+                            }
+                          },
+                          error: function(){
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                              }
+                              toastr.error('Oops!, Se ha generado un error!');
+                              tableLearningResults.ajax.reload();
+                          }
+                        });
+                        return false;
+                      }
+                    });
+                  });
+
+                  function editDocumentType(id) {
+                    save_method = "edit";
+                    $('input[name=_method]').val('PATCH');
+                    $("#documentType-form form")[0].reset();
+                    $.ajax({
+                      url: "{{ url('document_types') }}" + '/' + id + "/edit",
+                      type: "GET",
+                      dataType: "JSON",
+                      success: function(data) {
+                        $('#documentType-form').modal('show');
+                        $('#id').val(data.id);
+                        $('#type_document').val(data.type_document);
+                      },
+                      error : function() {
+                        alert("No hay datos");
+                      }
+                    });
+                  }
+
+                   // Fin seccion Tipo de Documento
+
+
+                   // Tabla para mostrar Caracterización
+
+                   var tableCharacterizacions = $('#characterizations').DataTable({
+                       destroy: true,
+                       responsive: true,
+                       processing: true,
+                       serverSide: true,
+                       language: {
+                           "url": '/DataTables/datatables-spanish.json'
+                       },
+                       ajax: '/characterizations/get',
+                       columns: [
+                           { data: 'characterization_name', name: 'characterization_name' },
+                           { data: 'status', name: 'status' },
+                           { data: 'action', name: 'action', orderable: false, searchable: true },
+                       ]
+                   });
+
+
+                   //Funciones para agregar y editar Caracterizaciones
+                   function addCharacterization() {
+                   save_method = "add";
+                   $('input[name=_method]').val('POST');
+                   $('#characterization-form form')[0].reset();
+                   $('#characterization-form').modal('show');
+                   }
+
+                   $(function() {
+                     $('#characterization-form form').on('submit' , function(e){
+                       if (!e.isDefaultPrevented()){
+                         var id = $('#id').val();
+                         if (save_method == 'add') {
+                           url = "{{ url('characterizations') }}";
+                         }
+                         else {
+                           url = "{{ url('characterizations'). '/'}}" + id;
+                         }
+                         $.ajax({
+                           url: url,
+                           type: "POST",
+                           data: $('#characterization-form form').serialize(),
+                           success: function(response) {
+                             $('#characterization-form').modal('hide');
+                             tableCharacterizacions.ajax.reload();
+                             if (save_method == 'add') {
+                               toastr.options = {
+                                 "positionClass": "toast-bottom-right"
+                               }
+                               toastr.success('Elemento agregado exitosamente!');
+                             } else {
+                               toastr.options = {
+                                 "positionClass": "toast-bottom-right"
+                               }
+                               toastr.success('Elemento editado exitosamente!');
+                             }
+                           },
+                           error: function(){
+                             toastr.options = {
+                                 "positionClass": "toast-bottom-right"
+                               }
+                               toastr.error('Oops!, Se ha generado un error!');
+                               tableLearningResults.ajax.reload();
+                           }
+                         });
+                         return false;
+                       }
+                     });
+                   });
+
+                   function editCharacterization(id) {
+                     save_method = "edit";
+                     $('input[name=_method]').val('PATCH');
+                     $("#characterization-form form")[0].reset();
+                     $.ajax({
+                       url: "{{ url('characterizations') }}" + '/' + id + "/edit",
+                       type: "GET",
+                       dataType: "JSON",
+                       success: function(data) {
+                         $('#characterization-form').modal('show');
+                         $('#id').val(data.id);
+                         $('#characterization_name').val(data.characterization_name);
+                       },
+                       error : function() {
+                         alert("No hay datos");
+                       }
+                     });
+                   }
+
+                    // Fin seccion Caracterización
+
+
+                    // Tabla para mostrar Roles
+
+                   var tableRoles = $('#roles').DataTable({
+                        destroy: true,
+                        responsive: true,
+                        processing: true,
+                        serverSide: true,
+                        language: {
+                            "url": '/DataTables/datatables-spanish.json'
+                        },
+                        ajax: '/roles/get',
+                        columns: [
+                            { data: 'role', name: 'role' },
+                            { data: 'action', name: 'action', orderable: false, searchable: true },
+                        ]
+                    });
+
+                    //Funciones para agregar y editar Caracterizaciones
+                    function addRole() {
+                    save_method = "add";
+                    $('input[name=_method]').val('POST');
+                    $('#role-form form')[0].reset();
+                    $('#role-form').modal('show');
+                    }
+
+                    $(function() {
+                      $('#role-form form').on('submit' , function(e){
+                        if (!e.isDefaultPrevented()){
+                          var id = $('#id').val();
+                          if (save_method == 'add') {
+                            url = "{{ url('roles') }}";
+                          }
+                          else {
+                            url = "{{ url('roles'). '/'}}" + id;
+                          }
+                          $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: $('#role-form form').serialize(),
+                            success: function(response) {
+                              $('#role-form').modal('hide');
+                              tableRoles.ajax.reload();
+                              if (save_method == 'add') {
+                                toastr.options = {
+                                  "positionClass": "toast-bottom-right"
+                                }
+                                toastr.success('Elemento agregado exitosamente!');
+                              } else {
+                                toastr.options = {
+                                  "positionClass": "toast-bottom-right"
+                                }
+                                toastr.success('Elemento editado exitosamente!');
+                              }
+                            },
+                            error: function(){
+                              toastr.options = {
+                                  "positionClass": "toast-bottom-right"
+                                }
+                                toastr.error('Oops!, Se ha generado un error!');
+                                tableLearningResults.ajax.reload();
+                            }
+                          });
+                          return false;
+                        }
+                      });
+                    });
+
+                    function editRole(id) {
+                      save_method = "edit";
+                      $('input[name=_method]').val('PATCH');
+                      $("#role-form form")[0].reset();
+                      $.ajax({
+                        url: "{{ url('roles') }}" + '/' + id + "/edit",
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(data) {
+                          $('#role-form').modal('show');
+                          $('#id').val(data.id);
+                          $('#role').val(data.role);
+                        },
+                        error : function() {
+                          alert("No hay datos");
+                        }
+                      });
+                    }
+
+                     // Fin seccion Roles
+
+
 
 </script>
 

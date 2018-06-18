@@ -30,9 +30,10 @@ class RoleController extends Controller
   }
 
 
-  public function edit(Role $role)
+  public function edit($id)
   {
-    //
+    $role = Role::find($id);
+    return $role;
   }
 
 
@@ -40,28 +41,17 @@ class RoleController extends Controller
   {
     $roles = Role::select('roles.*')->get();
     return DataTables::of($roles)
-    ->addColumn('action', function($id) {
+    ->addColumn('action', function($role) {
       $button=" ";
-      return $button.'  <a href="/roles/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.'  <a onclick="editRole('. $role->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
     })->make(true);
   }
 
 
   public function update(Request $request, $id)
   {
-
-    $rules = [
-      'role' => 'required|max:45|string', Rule::unique('roles')->ignore($this->id, 'id')
-    ];
-
-    $messages = [
-      'role.required' => 'El campo Rol es obligatorio.',
-      'role.max' => 'El campo Rol debe contener máximo 45 caracteres.'
-    ];
-
-    $this->validate($request, $rules, $messages);
     $role = Role::find($id);
     $role->update($request->all());
-    return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
+    return $role;
   }
 }
