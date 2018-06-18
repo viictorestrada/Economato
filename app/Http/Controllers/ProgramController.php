@@ -78,7 +78,7 @@ class ProgramController extends Controller
       }else {
       $program->update(["status"=>$status]);
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Cambio de estado', 'Se cambio el estado exitosamente')]);
-    }
+      }
     }
 
 }
