@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('fontawesome/web-fonts-with-css/css/fontawesome-all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- Icono -->
   <link rel="icon" href="{{ asset('images/logo.png') }}">
 </head>
@@ -18,9 +19,6 @@
 
   <div class="container">
     <br>
-    @if (session()->has('flash'))
-      <div class="alert alert-info">{{ session('flash') }}</div>
-    @endif
     <div class="row">
       <div class="col-lg-12 col-md-12">
         <div class="card signIn">
@@ -62,5 +60,13 @@
   <script src="{{ asset('js/jquery.min.js') }}"></script>
   <script src="{{ asset('js/popper.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/toastr.min.js') }}"></script>
+  @if(session()->has('flash'))
+    <script>
+    toastr.options = {
+      "progressBar": true
+    }
+    toastr.info("{{ session('flash') }}")</script>
+  @endif
 </body>
 </html>
