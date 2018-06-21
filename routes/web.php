@@ -80,6 +80,7 @@ Route::get('files/status/{id}/{status}', 'FileController@status');
 Route::resource('files', 'FileController');
 
 //Rutas para Presupuesto
+Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
 Route::get('/budgets/get', 'BudgetController@budgetsList');
 Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 

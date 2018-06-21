@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controller;
+namespace App\Http\Controllers;
 
 use App\Models\Storage;
 use Illuminate\Http\Request;
@@ -30,40 +30,43 @@ class StorageController extends Controller
     return redirect('configurations')->with([swal()->autoclose(1500)->success('Registro Exitosa', 'Se ha agregado un nuevo registro')]);
   }
 
-  public function storagesList()
+  public function storagesList(Request $request)
   {
-    $storages = Storage::select('storages.*')->get();
+    $storages = Storage::all();
     return DataTables::of($storages)
-    ->addColumn('action', function ($id) {
+    ->addColumn('action', function ($storages) {
       $button = " ";
-      return $button.'<a href="/storages/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.'<a onclick="editStorage('.$storages->id.')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
     })
     ->make(true);
   }
 
   public function edit($id)
   {
-    //
+    $storages = Storage::find($id);
+    return $storages;
   }
 
   public function update(Request $request, $id)
   {
 
-    $rules = [
-      'storage_name' => 'required|string|max:45', Rule::unique('storages')->ignore($this->id, 'id'),
-      'storage_location' => 'required|string|max:100'
-    ];
+    // $rules = [
+    //   'storage_name' => 'required|string|max:45', Rule::unique('storages')->ignore($this->id, 'id'),
+    //   'storage_location' => 'required|string|max:100'
+    // ];
 
-    $messages = [
-      'storage_name.require' => 'El campo Bodega debe existir.',
-      'storage_name.max' => 'El campo Bodega debe contener máximo 45 caracteres.',
-      'storage_location.required' => 'El campo Ubicación es obligatorio.',
-      'storage_location.max' => 'El campo Ubicación debe contener máximo 100 caracteres.'
-    ];
+    // $messages = [
+    //   'storage_name.require' => 'El campo Bodega debe existir.',
+    //   'storage_name.max' => 'El campo Bodega debe contener máximo 45 caracteres.',
+    //   'storage_location.required' => 'El campo Ubicación es obligatorio.',
+    //   'storage_location.max' => 'El campo Ubicación debe contener máximo 100 caracteres.'
+    // ];
 
-    $this->validate($request, $rules, $messages);
-    $storage->update($request->all());
-    return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
+    // $this->validate($request, $rules, $messages);
+    $storages = Storage::find($id);
+    $storages->update($request->all());
+    return $storages;
+    //redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
   }
 
 }

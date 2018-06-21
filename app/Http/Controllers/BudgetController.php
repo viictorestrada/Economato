@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Budget;
+use App\Models\AditionalBudget;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -26,6 +27,11 @@ class BudgetController extends Controller
       return view('budget.create');
     }
 
+    public function aditionalBudgetCreate(Request $request)
+    {
+      AditionalBudget::create($request->all());
+    }
+
 
     public function store(Request $request)
     {
@@ -40,8 +46,7 @@ class BudgetController extends Controller
       return DataTables::of($budgets)
       ->addColumn('action', function ($id) {
         $button = " ";
-        return $button.'<a href="/budgets/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>  '.
-        '<a onclick="addBudget()" data-toggle="tooltip" data-placement="top" title="Adicionar Presupuesto" class="btn btn-md btn-info text-light"><i class="fa fa-plus-circle"></i></a>';
+        return $button.'<a href="/budgets/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>  ';
       })
       ->make(true);
     }
