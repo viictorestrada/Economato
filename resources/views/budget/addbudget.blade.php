@@ -18,13 +18,13 @@
                       @csrf {{ method_field('POST') }}
                       <input type="hidden" name="id" id="id">
                       <div class="form-group">
-                        <label><i class="fa fa-mouse-pointer"></i> Seleccionar programa <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                        <label><i class="fa fa-mouse-pointer"></i> Seleccionar Código <strong class="text-danger" style="font-size: 23px">*</strong></label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-plus-circle"></i></span>
                           </div>
                           <select class="form-control {{$errors->has('budget_id') ? 'is-invalid' : ''}}" name="budget_id" id="budget_id" required>
-                            <option hidden value="{{old('budget_id')}}"> -- Seleccione el Programa -- </option>
+                            <option hidden value="{{old('budget_id')}}"> -- Seleccione el Código -- </option>
                             @foreach ($budget as $budgets)
                               <option value="{{ $budgets->id }}">{{ $budgets->budget_code }}</option>
                             @endforeach
@@ -50,8 +50,8 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
                             </div>
-                            <input class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}" name="code" id="code" value="{{old('code')}}" required autocomplete="off">
-                            <strong class="invalid-feedback">{{$errors->first('code')}}</strong>
+                            <input class="form-control {{$errors->has('aditional_budget_code') ? 'is-invalid' : ''}}" name="aditional_budget_code" id="code" value="{{old('aditional_budget_code')}}" required autocomplete="off">
+                            <strong class="invalid-feedback">{{$errors->first('aditional_budget_code')}}</strong>
                           </div>
                         </div>
 

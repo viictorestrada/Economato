@@ -13,9 +13,10 @@
               <div class="col-12">
                 <div class="card border-secondary">
                   <div class="card-body">
-                    <form method="post" data-toggle="validator">
+                    <form method="post">
                       @csrf {{ method_field('POST') }}
                       <input type="hidden" id="id" name="id">
+
                       <div class="form-group">
                         <label><i class="fa fa-edit"></i> Nombre de la Receta <strong class="text-danger" style="font-size: 23px">*</strong></label>
                         <div class="input-group">

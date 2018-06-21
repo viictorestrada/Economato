@@ -38,7 +38,7 @@
 
 @section('script')
   <script>
-        $('#budgets').DataTable({
+        budgetTable = $('#budgets').DataTable({
         destroy: true,
         responsive: true,
         processing: true,
@@ -69,18 +69,18 @@
         if (!e.isDefaultPrevented()){
           var id = $('#id').val();
           if (save_method == 'add') {
-            url = "{{ url('addbudget') }}";
+            url = "{{ url('aditionalBudget') }}";
           }
           else {
-            url = "{{ url('roles'). '/'}}" + id;
+            url = "{{ url('aditionalBudget'). '/'}}" + id;
           }
           $.ajax({
             url: url,
             type: "POST",
             data: $('#addBudget-form form').serialize(),
-            success: function(response) {
+            success: function(data) {
               $('#addBudget-form').modal('hide');
-              tableRoles.ajax.reload();
+              budgetTable.ajax.reload();
               if (save_method == 'add') {
                 toastr.options = {
                   "positionClass": "toast-bottom-right"
@@ -99,12 +99,34 @@
                 "positionClass": "toast-bottom-right"
               }
               toastr.error('Oops!, Se ha generado un error!');
-              tableLearningResults.ajax.reload();
+              budgetTable.ajax.reload();
             }
           });
           return false;
         }
       });
     });
+
+    function editAditionBudget(id) {
+      save_method = "edit";
+      $('input[name=_method]').val('PATCH');
+      $("#addBudget-form form")[0].reset();
+      $.ajax({
+        url: "{{ url('aditionalBudget') }}" + '/' + id + "/edit",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+          $('#addBudget-form').modal('show');
+
+          $('#id').val(data.id);
+          $('#budget_id').val(data.budget_id);
+          $('#aditional_budget').val(data.aditional_budget);
+          $('#code').val(data.aditional_budget_code);
+        },
+        error: function() {
+          toastr.warning('No hay datos!');
+        }
+      });
+    }
   </script>
 @endsection

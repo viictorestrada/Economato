@@ -21,7 +21,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false" style="color: #fff">Bodegas</a>
+            <a class="nav-link" id="v-pills-bodegas-tab" data-toggle="pill" href="#v-pills-bodegas" role="tab" aria-controls="v-pills-bodegas" aria-selected="false" style="color: #fff">Bodegas</a>
           </li>
 
           <li class="nav-item">
@@ -155,17 +155,33 @@
           </div>
 
           <!--Contenido de Bodegas-->
-          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+          <div class="tab-pane fade" id="v-pills-bodegas" role="tabpanel" aria-labelledby="v-pills-bodegas-tab">
             <div class="card border-secondary">
-              <h4 class="card-header bg-secondary text-light">Bodegas</h4>
+              <h4 class="card-header bg-secondary text-light text-center">Bodegas</h4>
               <div class="card-body">
-                <h4 class="card-title">Special title treatment</h4>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                <div class="col-12 d-flex justify-content-end">
+                  <div class="card-title"><h4>Bodegas</h4></div>
+                  <hr>
+                  <div><a onclick="addStorage()" class="btn btn-info text-light"><i class="fa fa-plus-circle"></i> Agregar Bodega</a></div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-md" width="100%" id="storages">
+                    <thead>
+                      <tr>
+                        <th>Nombre Bodega</th>
+                        <th>Ubicación</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+
               </div>
             </div>
-            <!--Fin del contenido-->
           </div>
+          <!--Fin del contenido-->
 
           <!--Contenido de Recetas-->
           <div class="tab-pane fade" id="v-pills-recetas" role="tabpanel" aria-labelledby="v-pills-recetas-tab">
@@ -173,10 +189,10 @@
               <h4 class="card-header bg-secondary text-light text-center">Recetas</h4>
               <div class="card-body">
                 <div class="col-12 d-flex justify-content-end">
-                  <div class="card-title"><h4>Lista de Recetas</h4></div><hr>
-                    <div><a onclick="addForm()" class="btn btn-info text-light"><span class="fa fa-user-plus"></span> Agregar Receta</a>
-                    </div>
-                  </div>
+                  <div class="card-title"><h4>Lista de Recetas</h4></div>
+                  <hr>
+                  <div><a onclick="addRecipe()" class="btn btn-info text-light"><span class="fa fa-utensils"></span> Agregar Receta</a></div>
+                </div>
                   <div class="table-responsive">
                     <table class="table table-bordered table-md" width="100%" id="recipes">
                       <thead>
@@ -189,9 +205,10 @@
                     </table>
                   </div>
                 </div>
-            <!--Fin del contenido-->
-          </div>
-        </div>
+              </div>
+            </div>
+          <!--Fin del contenido-->
+        @include('storages.storages')
         @include('recipes.create')
       </section>
     </div>
@@ -216,7 +233,7 @@
         ]
     });
 
-    function addForm() {
+    function addRecipe() {
       save_method = "add";
       $('input[name=_method]').val('POST');
       $("#recipes-form form")[0].reset();
@@ -237,13 +254,24 @@
             url: url,
             type: "POST",
             data: $('#recipes-form form').serialize(),
-            success: function(response) {
+            success: function(data) {
+              if(save_method == 'add'){
+                toastr.options = {
+                  'positionClass': 'toast-bottom-right'
+                }
+                toastr.success('Se ha agredado un nuevo registro!');
+              }
+              else{
+                toastr.options = {
+                  'positionClass': 'toast-bottom-right'
+                }
+                toastr.success('El registro se ha actualizado con éxito!');
+              }
               $('#recipes-form').modal('hide');
               table.ajax.reload();
             },
             error: function(){
-              $('#recipes-form').modal('hide');
-              table.ajax.reload();
+              toastr.error('Oops!, Se ha generado un error!');
             }
           });
           return false;
@@ -264,6 +292,93 @@
 
           $('#id').val(data.id);
           $('#recipe_name').val(data.recipe_name);
+        },
+        error: function() {
+          toastr.warning('No hay datos!');
+        }
+      });
+    }
+
+//Datatable para Bodegas
+    var storageTable = $('#storages').DataTable({
+        destroy: true,
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/storages/get',
+        columns: [
+          { data: 'storage_name', name: 'storage_name' },
+          { data: 'storage_location', name: 'storage_location' },
+          { data: 'action', name: 'action', orderable: false, searchable: true },
+        ]
+    });
+
+// función para guardar
+    function addStorage() {
+      save_method = "add";
+      $('input[name=_method]').val('POST');
+      $("#storages-form form")[0].reset();
+      $('#storages-form').modal('show');
+    }
+
+//funcion para determinar si guarda o edita
+    $(function() {
+      $('#storages-form form').on('submit', function(e){
+        if(!e.isDefaultPrevented()){
+          var id = $('#id').val();
+          if (save_method == 'add') {
+            url = "{{ url('storages') }}";
+          }
+          else{
+            url = "{{ url('storages'). '/'}}" + id;
+          }
+          $.ajax({
+            url: url,
+            type: "POST",
+            data: $('#storages-form form').serialize(),
+            success: function(response) {
+              if(save_method == 'add'){
+                toastr.options = {
+                  'positionClass': 'toast-bottom-right'
+                }
+                toastr.success('Se ha agredado un nuevo registro!');
+              }
+              else{
+                toastr.options = {
+                  'positionClass': 'toast-bottom-right'
+                }
+                toastr.success('El registro se ha actualizado con éxito!');
+              }
+              $('#storages-form').modal('hide');
+              storageTable.ajax.reload();
+            },
+            error: function(){
+              toastr.error('Oops!, Se ha generado un error');
+            }
+          });
+          return false;
+        }
+      });
+    });
+
+//funcion para editar
+    function editStorage(id) {
+      save_method = "edit";
+      $('input[name=_method]').val('PATCH');
+      $("#storages-form form")[0].reset();
+      $.ajax({
+        url: "{{ url('storages') }}" + '/' + id + "/edit",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+          $('#storages-form').modal('show');
+
+          $('#id').val(data.id);
+          $('#storage_name').val(data.storage_name);
+          $('#storage_location').val(data.storage_location);
         },
         error: function() {
           alert('Nothing Data');
