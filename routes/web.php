@@ -87,3 +87,8 @@ Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 //Rutas para Proveedores
 Route::get('/providers/get', 'ProviderController@providersList');
 Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy']);
+
+
+//store procedure addAditionalBudget
+
+Route::post('storeProcedure', 'BudgetController@aditionalBudgetCreate');

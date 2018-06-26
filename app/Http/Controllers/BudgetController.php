@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use App\Models\AditionalBudget;
 use Illuminate\Http\Request;
+use App\Procedures\AditionalBudgetProcedure;
 use DataTables;
+use DB;
 
 class BudgetController extends Controller
 {
+
+  protected $addAditionalBudget;
 
   public function __construct()
   {
@@ -18,9 +22,13 @@ class BudgetController extends Controller
     public function index()
     {
       $budget = Budget::all();
-        return view('budget.index', compact('budget'));
+      return view('budget.index', compact('budget'));
     }
 
+    public function AddAditionalBudgetProcedure(Request $request)
+    {
+
+    }
 
     public function create()
     {
@@ -29,8 +37,13 @@ class BudgetController extends Controller
 
     public function aditionalBudgetCreate(Request $request)
     {
+      $budget_id=$request->input("budget_id");
+      $aditional=$request->input("aditional_budget");
+      $budget_code=$request->input("aditional_budget_code");
+      $result = $this->AditionalBudgetProcedure->getAditionalBudget($budget_id,$aditional,$budget_code);
       AditionalBudget::create($request->all());
     }
+
 
 
     public function store(Request $request)

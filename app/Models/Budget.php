@@ -9,7 +9,7 @@ class Budget extends Model
     protected $table = 'budget';
 
     protected $fillable = [
-      'budget', 'budget_code', 'budget_begin_date', 'budget_finish_date'
+      'aditional_budget_id', 'budget', 'budget_code', 'budget_begin_date', 'budget_finish_date', 'status'
     ];
 
     public $timestamps = false;
