@@ -15,7 +15,7 @@
               </div>
             </div><hr>
 
-            {{ Form::open(['url' => 'contracts', 'class' => 'forms']) }}
+            {{ Form::open(['url' => 'contracts', 'class' => 'forms', 'id' => 'createContracts']) }}
 
             @csrf
             <div class="row">
@@ -29,4 +29,52 @@
       </div>
     </div>
   </div>
+@endsection
+
+
+@section('script')
+  <script>
+    $(() => {
+      $('#createContracts').validate({
+        rules: {
+          provider_id: {
+            required: true
+          },
+          contract_number: {
+            required: true,
+            digits: true,
+            maxlength: 25
+          },
+          contract_price: {
+            required: true,
+            digits: true,
+            maxlength: 25
+          },
+          contract_date: {
+            required: true,
+            date: true
+          },
+        },
+        messages: {
+          provider_id: {
+            required: "Debes seleccionar un proveedor."
+          },
+          contract_number: {
+            required: "El campo Número de Contrato es obligatorio.",
+            digits: "El campo Número de Contrato debe ser numerico.",
+            maxlength: "El campo Número de Contrato debe contener máximo 25 caracteres."
+          },
+          contract_price: {
+            required: "El campo Monto es obligatorio.",
+            digits: "El campo Monto debe ser numerico.",
+            maxlength: "El campo Monto debe contener máximo 25 caracteres."
+          },
+          contract_date: {
+            required: "El campo Fecha es obligatorio.",
+            date: "El campo debe ser una fecha válida."
+          },
+        }
+      });
+    });
+  </script>
 @endsection
