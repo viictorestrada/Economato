@@ -33,6 +33,11 @@
     Economato
   </div>
   <ul class="nav nav-pills">
+
+      <li class="nav-item">
+          <a href="{{ url('orders') }}" class="nav-link" style="color: white"><i class="fa fa-bell fa-lg"></i> Notificaciones</a>
+      </li>
+
     <li class="nav-item">
       @if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2)
         <a href="{{ url('panel') }}" style="color: white" class="nav-link"><i class="fa fa-home fa-lg"></i> Inicio</a>

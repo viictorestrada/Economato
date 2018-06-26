@@ -92,3 +92,8 @@ Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy
 //store procedure addAditionalBudget
 
 Route::post('storeProcedure', 'BudgetController@aditionalBudgetCreate');
+
+//ruta para pedidos
+Route::get('orders', function () {
+  return view('orders/ordersconfirm');
+});
