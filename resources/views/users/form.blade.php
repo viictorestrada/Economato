@@ -15,7 +15,8 @@
 
 <div class="form-group col-md-6 col-lg-6">
   {{ Form::label('email', 'Correo Electrónico') }}
-  {{ Form::email('email', null, array('class' => 'form-control')) }}
+  {{ Form::email('email', null, array('class' => 'form-control')) }} {{ $errors->has('email') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('email') }}</strong>
 </div>
 
 <div class="form-group col-md-6 col-lg-6">
