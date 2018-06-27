@@ -9,7 +9,6 @@
             <div class="col-12 d-flex justify-content-end">
               <div class="card-title"><h4>Presupuestos</h4></div><hr>
               <div>
-                <a type="button" onclick="aditionalBudget()" class="btn btn-info text-light"><span class="fa fa-plus-circle"></span> Adicionar Presupuesto</a>
                 <a type="button" href="{{ url('budgets/create') }}" class="btn btn-info "><span class="fa fa-plus-circle"></span> Registrar Nuevo</a>
               </div>
             </div>

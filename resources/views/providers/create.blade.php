@@ -91,8 +91,7 @@
           contact_last_name: {
             required: "El campo Apellido de Contacto debe existir.",
             maxlength: "El campo Apellido de Contacto debe existir."
-          },
-        },
+          }
         }
       });
     });

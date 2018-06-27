@@ -1,6 +1,7 @@
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('provider_name', 'Nombre Proveedor') }}
-  {{ Form::text('provider_name', null, ['class' => 'form-control']) }}
+  {{ Form::text('provider_name', null, ['class' => 'form-control']) }} {{ $errors->has('provider_name') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('provider_name') }}</strong>
 </div>
 
 <div class="form-group col-lg-6 col-md-6">

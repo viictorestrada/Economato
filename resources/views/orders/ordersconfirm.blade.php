@@ -64,8 +64,8 @@
                       <td>2018-06-23</td>
                       <td>
                           <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck" onclick="confirmedOrder('2')"  data-toggle="tooltip"  title="Aceptar Pedido" >
-                              <label class="custom-control-label" for="customCheck"></label>
+                              <input type="checkbox" class="custom-control-input" id="customCheck3" onclick="confirmedOrder('3')"  data-toggle="tooltip"  title="Aceptar Pedido" >
+                              <label class="custom-control-label" for="customCheck3"></label>
                             </div>
                       </td>
                       <td>
