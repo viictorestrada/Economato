@@ -8,7 +8,7 @@ class AditionalBudget extends Model
 {
     protected $table = 'aditional_budget';
 
-    protected $fillable = ['aditional_budget', 'aditional_budget_code'];
+    protected $fillable = ['budget_id', 'aditional_budget', 'aditional_budget_code'];
 
     public $timestamps = false;
 }

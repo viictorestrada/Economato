@@ -81,17 +81,13 @@ Route::resource('files', 'FileController');
 
 //Rutas para Presupuesto
 Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
+ROute::get('budgets/status/{id}/{status}', 'BudgetController@status');
 Route::get('/budgets/get', 'BudgetController@budgetsList');
 Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 
 //Rutas para Proveedores
 Route::get('/providers/get', 'ProviderController@providersList');
 Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy']);
-
-
-//store procedure addAditionalBudget
-
-Route::post('storeProcedure', 'BudgetController@aditionalBudgetCreate');
 
 //ruta para pedidos
 Route::get('orders', function () {

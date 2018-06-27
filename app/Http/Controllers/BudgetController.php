@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use App\Models\AditionalBudget;
 use Illuminate\Http\Request;
-use App\Procedures\AditionalBudgetProcedure;
+use Illuminate\Validation\Rule;
 use DataTables;
 use DB;
 
@@ -25,11 +25,6 @@ class BudgetController extends Controller
       return view('budget.index', compact('budget'));
     }
 
-    public function AddAditionalBudgetProcedure(Request $request)
-    {
-
-    }
-
     public function create()
     {
       return view('budget.create');
@@ -37,17 +32,26 @@ class BudgetController extends Controller
 
     public function aditionalBudgetCreate(Request $request)
     {
-      $budget_id=$request->input("budget_id");
-      $aditional=$request->input("aditional_budget");
-      $budget_code=$request->input("aditional_budget_code");
-      $result = $this->AditionalBudgetProcedure->getAditionalBudget($budget_id,$aditional,$budget_code);
+      $budgetCode=$request->input('budget_id');
+      $budgetA=$request->input('aditional_budget');
       AditionalBudget::create($request->all());
+      $budgetOrigin = Budget::select('budget')->get();
+      $budgetOrigin = Budget::find($budgetCode);
+      $budgetFinal=$budgetOrigin->budget;
+      $budget = Budget::find($budgetCode);
+      $budget->update(['budget'=>$budgetFinal+$budgetA]);
     }
 
 
 
     public function store(Request $request)
     {
+      $this->validate($request, [
+        'budget' => 'required|numeric|min:1',
+        'budget_code' => 'required|string|max:45|unique:budget',
+        'budget_begin_date' => 'required|date',
+        'budget_finish_date' => 'required|date'
+      ]);
       Budget::create($request->all());
       return redirect('budgets')->with([swal()->autoclose(1500)->success('Registro Existoso', 'Se agrego un nuevo registro')]);
     }
@@ -57,9 +61,18 @@ class BudgetController extends Controller
     {
       $budgets =  Budget::select('budget.*')->get();
       return DataTables::of($budgets)
-      ->addColumn('action', function ($id) {
+      ->addColumn('action', function ($budgets) {
         $button = " ";
-        return $button.'<a href="/budgets/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>  ';
+        if($budgets->status == 1)
+        {
+          $button = '<a href="/budgets/status/'.$budgets->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>  ';
+        }else{
+          $button = '<a href="/budgets/status/'.$budgets->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>  ';
+        }
+        return $button.'<a href="/budgets/'.$budgets->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>  '.
+        '<a onclick="aditionalBudget('.$budgets->id.')" class="btn btn-md btn-info text-light" data-toggle="tooltip" title="Adicionar Presupuesto"><i class="fa fa-plus-circle"></i></a>';
+      })->editColumn('status', function ($budgets) {
+        return $budgets->status == 1 ? "Activo":"Inactivo";
       })
       ->make(true);
     }
@@ -72,11 +85,24 @@ class BudgetController extends Controller
     }
 
 
-    public function update(Request $request, $budget)
+    public function update(Request $request, $id)
     {
-      $budget = Budget::find($budget);
+      $this->validate($request, [
+        'budget' => 'required|numeric|min:1',
+        'budget_code' => 'required|string|max:45',
+        'budget_begin_date' => 'required|date',
+        'budget_finish_date' => 'required|date'
+      ]);
+      $budget = Budget::find($id);
       $budget->update($request->all());
       return redirect('budgets')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se actualizo el registro exitosamente!')]);
+    }
+
+    public function status($id, $status)
+    {
+      $budget = Budget::find($id);
+      $budget->update(['status'=>$status]);
+      return redirect('budgets')->with([swal()->autoclose(1500)->success('Cambio de estado!', 'El estado se actualizo correctamente')]);
     }
 
 }
