@@ -74,3 +74,10 @@ input.error {
 input.error:focus {
     border: 1px solid red;
 }
+
+[type=reset],
+[type=submit],
+button,
+html [type=button] {
+    -webkit-appearance: none;
+}
