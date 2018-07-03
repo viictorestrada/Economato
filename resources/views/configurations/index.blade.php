@@ -30,6 +30,9 @@
         <li class="nav-item">
           <a class="nav-link" id="v-pills-charact-tab" data-toggle="pill" href="#v-pills-charact" role="tab" aria-controls="v-pills-charact" aria-selected="false" style="color: #fff">Caracterización y Roles</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="v-pills-iva-tab" data-toggle="pill" href="#v-pills-iva" role="tab" aria-controls="v-pills-iva" aria-selected="false" style="color: #fff">IVA</a>
+          </li>
 
       </ul>
     </section>
@@ -402,7 +405,41 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <!-- Contenido IVA-->
+        <div class="tab-pane fade" id="v-pills-iva" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+            <div class="card border-secondary text-center">
+              <h4 class="card-header bg-secondary text-light">IVA</h4>
+              <div class="card-body">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-md-5">
+                    <div class="card border-info">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">IVA</h4>
+                        <hr  class="bg-info">
+                        <section id="tbl_tipoprod">
+                          <div class="table-responsive">
+                            <table class="table table table-bordered table-sm" width="100%" id="taxesTable">
+                              <thead class="bg-secondary text-light">
+                                <tr>
+                                  <th>IVA</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </section>
+                        <hr class="bg-info">
+                        <a onclick="addTaxes()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar IVA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
             <!--Fin del contenido-->
           </section>
 
@@ -423,6 +460,7 @@
           @include('configurations.measures.create')
           @include('configurations.complexes.create')
           @include('configurations.characterizations.create')
+          @include('configurations.taxes.create')
 
 
 
@@ -433,6 +471,92 @@
 
 @section('script')
 <script type="text/javascript">
+//Tabla para mostrar IVA
+
+var tableTaxes = $('#taxesTable').DataTable({
+  destroy: true,
+  responsive: true,
+  processing: true,
+  serverSide: true,
+  language: {
+    "url": '/DataTables/datatables-spanish.json'
+  },
+  ajax: '/taxes/get',
+  columns: [
+    { data: 'tax', name: 'tax' },
+    { data: 'action', name: 'action', orderable: false, searchable: true },
+  ]
+});
+
+//Funcionas para agregar  IVA
+function addTaxes() {
+  save_method = "add";
+  $('input[name=_method]').val('POST');
+  $('#taxes-form form')[0].reset();
+  $('#taxes-form').modal('show');
+  }
+
+  //Función para agregar y editar IVA
+
+  $(function() {
+    $('#taxes-form form').on('submit' , function(e){
+      if (!e.isDefaultPrevented()){
+        var id = $('#id').val();
+        if (save_method == 'add') {
+          url = "{{ url('taxes') }}";
+        }
+        else {
+          url = "{{ url('taxes'). '/'}}" + id;
+        }
+        $.ajax({
+          url: url,
+          type: "POST",
+          data: $('#taxes-form form').serialize(),
+          success: function(response) {
+            $('#taxes-form').modal('hide');
+            tableTaxes.ajax.reload();
+            if (save_method == 'add') {
+              toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.success('Elemento agregado exitosamente!');
+            } else {
+              toastr.options = {
+                "positionClass": "toast-bottom-right"
+              }
+              toastr.success('Elemento editado exitosamente!');
+            }
+          },
+          error: function(){
+            $('#taxes-form').modal('hide');
+            tableRegion.ajax.reload();
+          }
+        });
+        return false;
+      }
+    });
+  });
+
+
+  function editTaxes(id) {
+    save_method = "edit";
+    $('input[name=_method]').val('PATCH');
+    $("#taxes-form form")[0].reset();
+    $.ajax({
+      url: "{{ url('taxes') }}" + '/' + id + "/edit",
+      type: "GET",
+      dataType: "JSON",
+      success: function(data) {
+        $('#taxes-form').modal('show');
+        $('#id').val(data.id);
+        $('#tax').val(data.tax);
+      },
+      error : function() {
+        alert("No hay datos");
+      }
+    });
+  }
+
 
 //Tabla para mostrar las Regionales
 var tableRegion = $('#regions').DataTable({

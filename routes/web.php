@@ -93,3 +93,7 @@ Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy
 Route::get('orders', function () {
   return view('orders/ordersconfirm');
 });
+
+//ruta para iva
+Route::get('/taxes/get','TaxesController@taxesList');
+Route::resource('taxes', 'TaxesController', ['except' => 'show','destroy','create']);
