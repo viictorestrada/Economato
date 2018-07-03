@@ -24,12 +24,11 @@ class RecipeController extends Controller
 
       $this->validate($request, $rules, $messages);
       Recipe::create($request->all());
-      return swal()->autoclose(1500)->success('Registro Exitoso!', 'Se ha agregado un nuevo registro!');
     }
 
     public function edit($id)
     {
-      $recipe = Recipe::find($id);
+      $recipe = Recipe::findOrFail($id);
       return $recipe;
     }
 
@@ -55,14 +54,14 @@ class RecipeController extends Controller
 
     public function update(Request $request, $id)
     {
-      $recipe = Recipe::find($id);
+      $recipe = Recipe::findOrFail($id);
       $recipe->update($request->all());
       return $recipe;
     }
 
     public function status($id, $status)
     {
-      $recipe = Recipe::find($id);
+      $recipe = Recipe::findOrFail($id);
       if ($recipe == null) {
       return redirect('panel');
       }else {
