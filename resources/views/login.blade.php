@@ -24,7 +24,7 @@
         <div class="card signIn">
           <div class="card-body">
             <div class="text-center img">
-              <img src="{{ asset('images/logo.png') }}" alt="Logo" class="img-responsive"><hr>
+              <img src="{{ asset('images/logoLogin.png') }}" alt="Logo" class="img-responsive"><hr>
             </div>
             <form action="{{ route('login') }}" method="POST">
               @csrf

@@ -110,6 +110,21 @@
       }
     }
     });
+
+    $('#base_price').change(function(){
+      var base_price = $('#base_price').val();
+      var tax = $('#tax option:selected').text();
+      var final_price = (base_price)-(-base_price*(tax/100));
+      $('#final_price').val(final_price);
+    });
+
+    $('#tax').change(function(){
+      var base_price = $('#base_price').val();
+      var tax = $('#tax option:selected').text();
+      var final_price = (base_price)-(-base_price*(tax/100));
+      $('#final_price').val(final_price);
+    });
+
   });
   </script>
 @endsection

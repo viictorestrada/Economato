@@ -34,8 +34,18 @@
 </div>
 
 <div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('unit_price', 'Precio Unitario') }}
-  {{ Form::number('unit_price', null, ['class' => 'form-control']) }}
+  {{ Form::label('unit_price', 'Precio Base') }}
+  {{ Form::number('unit_price', null, ['class' => 'form-control', 'id' => 'base_price']) }}
+</div>
+
+<div class="form-group col-md-4 col-lg-4">
+  {{ Form::label('taxes_id', 'Iva') }}
+  {{ Form::select('taxes_id', $tax, null, ['class' => 'form-control', 'id' => 'tax']) }}
+</div>
+
+<div class="form-group col-md-4 col-lg-4">
+  {{ Form::label('unit_price_tax', 'Precio final') }}
+  {{ Form::number('unit_price_tax', null, ['class' => 'form-control', 'id' => 'final_price', 'readonly']) }}
 </div>
 
 <div class="form-group col-md-4 col-lg-4">

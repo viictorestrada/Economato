@@ -30,7 +30,7 @@
 
   <nav class="navbar bg-info">
   <div class=" navbar-brand text-light">
-    Economato
+    <img src="{{ asset('images/navbar.png') }}" alt="">
   </div>
   <ul class="nav nav-pills">
 
