@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Economato</title>
+  <title>Economato -</title>
 
   <!-- Styles -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -30,7 +30,7 @@
 
   <nav class="navbar bg-info">
   <div class=" navbar-brand text-light">
-    <img src="{{ asset('images/navbar.png') }}" alt="">
+    <img src="{{ asset('images/navbar.png') }}"  style="width: 140px;" alt="">
   </div>
   <ul class="nav nav-pills">
 
