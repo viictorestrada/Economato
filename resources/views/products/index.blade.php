@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-  <div class="container-fluid">
+  <div class="container">
     <div class="row mt-5">
       <div class="col-md-12">
         <div class="card">
@@ -19,10 +19,6 @@
                     <th>Nombre</th>
                     <th>Unidad de Medida</th>
                     <th>Presentación</th>
-                    <th>Cantidad</th>
-                    <th>Fecha de Vencimiento</th>
-                    <th>Precio Unitario</th>
-                    <th>Stock</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
@@ -53,10 +49,6 @@
             { data: 'product_name', name: 'product_name' },
             { data: 'measure_name', name: 'id_measure_unit' },
             { data: 'presentation', name: 'presentation_id' },
-            { data: 'quantity', name: 'quantity' },
-            { data: 'due_date', name: 'due_date' },
-            { data: 'unit_price', name: 'unit_price' },
-            { data: 'stock', name: 'Stock' },
             { data: 'status', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]

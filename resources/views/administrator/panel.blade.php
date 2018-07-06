@@ -21,10 +21,6 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-bodegas-tab" data-toggle="pill" href="#v-pills-bodegas" role="tab" aria-controls="v-pills-bodegas" aria-selected="false" style="color: #fff">Bodegas</a>
-          </li>
-
-          <li class="nav-item">
             <a class="nav-link" id="v-pills-recetas-tab" data-toggle="pill" href="#v-pills-recetas" role="tab" aria-controls="v-pills-recetas" aria-selected="false" style="color: #fff">Recetas</a>
           </li>
 
@@ -154,35 +150,6 @@
            </div>
           </div>
 
-          <!--Contenido de Bodegas-->
-          <div class="tab-pane fade" id="v-pills-bodegas" role="tabpanel" aria-labelledby="v-pills-bodegas-tab">
-            <div class="card border-secondary">
-              <h4 class="card-header bg-secondary text-light text-center">Bodegas</h4>
-              <div class="card-body">
-
-                <div class="col-12 d-flex justify-content-end">
-                  <div class="card-title"><h4>Bodegas</h4></div>
-                  <hr>
-                  <div><a onclick="addStorage()" class="btn btn-info text-light"><i class="fa fa-plus-circle"></i> Agregar Bodega</a></div>
-                </div>
-
-                <div class="table-responsive">
-                  <table class="table table-bordered table-md" width="100%" id="storages">
-                    <thead>
-                      <tr>
-                        <th>Nombre Bodega</th>
-                        <th>Ubicación</th>
-                        <th>Acciones</th>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          <!--Fin del contenido-->
-
           <!--Contenido de Recetas-->
           <div class="tab-pane fade" id="v-pills-recetas" role="tabpanel" aria-labelledby="v-pills-recetas-tab">
             <div class="card border-secondary">
@@ -208,7 +175,7 @@
               </div>
             </div>
           <!--Fin del contenido-->
-        @include('storages.storages')
+
         @include('recipes.create')
       </section>
     </div>
@@ -295,93 +262,6 @@
         },
         error: function() {
           toastr.warning('No hay datos!');
-        }
-      });
-    }
-
-//Datatable para Bodegas
-    var storageTable = $('#storages').DataTable({
-        destroy: true,
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/storages/get',
-        columns: [
-          { data: 'storage_name', name: 'storage_name' },
-          { data: 'storage_location', name: 'storage_location' },
-          { data: 'action', name: 'action', orderable: false, searchable: true },
-        ]
-    });
-
-// función para guardar
-    function addStorage() {
-      save_method = "add";
-      $('input[name=_method]').val('POST');
-      $("#storages-form form")[0].reset();
-      $('#storages-form').modal('show');
-    }
-
-//funcion para determinar si guarda o edita
-    $(function() {
-      $('#storages-form form').on('submit', function(e){
-        if(!e.isDefaultPrevented()){
-          var id = $('#id').val();
-          if (save_method == 'add') {
-            url = "{{ url('storages') }}";
-          }
-          else{
-            url = "{{ url('storages'). '/'}}" + id;
-          }
-          $.ajax({
-            url: url,
-            type: "POST",
-            data: $('#storages-form form').serialize(),
-            success: function(response) {
-              if(save_method == 'add'){
-                toastr.options = {
-                  'positionClass': 'toast-bottom-right'
-                }
-                toastr.success('Se ha agredado un nuevo registro!');
-              }
-              else{
-                toastr.options = {
-                  'positionClass': 'toast-bottom-right'
-                }
-                toastr.success('El registro se ha actualizado con éxito!');
-              }
-              $('#storages-form').modal('hide');
-              storageTable.ajax.reload();
-            },
-            error: function(){
-              toastr.error('Oops!, Se ha generado un error');
-            }
-          });
-          return false;
-        }
-      });
-    });
-
-//funcion para editar
-    function editStorage(id) {
-      save_method = "edit";
-      $('input[name=_method]').val('PATCH');
-      $("#storages-form form")[0].reset();
-      $.ajax({
-        url: "{{ url('storages') }}" + '/' + id + "/edit",
-        type: "GET",
-        dataType: "JSON",
-        success: function(data) {
-          $('#storages-form').modal('show');
-
-          $('#id').val(data.id);
-          $('#storage_name').val(data.storage_name);
-          $('#storage_location').val(data.storage_location);
-        },
-        error: function() {
-          alert('Nothing Data');
         }
       });
     }

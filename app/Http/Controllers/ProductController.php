@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\MeasureUnit;
 use App\Models\ProductType;
 use App\Models\Presentation;
-use App\Models\Tax;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveProductRequest;
 use App\Http\Requests\updateProductRequest;
@@ -24,11 +23,10 @@ class ProductController extends Controller
 
   public function create()
   {
-    $tax = Tax::pluck('tax', 'id');
     $measure_unit = MeasureUnit::pluck('measure_name', 'id');
     $product_types = ProductType::pluck('product_type_name', 'id');
     $presentations = Presentation::pluck('presentation', 'id');
-    return view('products.create', compact('measure_unit', 'product_types', 'presentations', 'tax'));
+    return view('products.create', compact('measure_unit', 'product_types', 'presentations'));
   }
 
 
@@ -68,9 +66,8 @@ class ProductController extends Controller
     $measure_unit = MeasureUnit::pluck('measure_name', 'id');
     $product_types = ProductType::pluck('product_type_name', 'id');
     $presentations = Presentation::pluck('presentation', 'id');
-    $tax = Tax::pluck('tax', 'id');
     $products = Product::findOrFail($id);
-    return view('products.edit', compact('products', 'measure_unit', 'product_types', 'presentations', 'tax'));
+    return view('products.edit', compact('products', 'measure_unit', 'product_types', 'presentations'));
   }
 
 
@@ -82,14 +79,10 @@ class ProductController extends Controller
 
   public function status($id, $status)
   {
-    $product = Product::find($id);
-    if ($product == null) {
-      alert()->autoclose(1500)->warning('Advertencia', 'No se encontraron datos!');
-      return redirect('products');
-    }else {
-      $product->update(["status"=>$status]);
-      return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
-    }
+    $product = Product::findOrFail($id);
+
+    $product->update(["status"=>$status]);
+    return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
   }
 
 }

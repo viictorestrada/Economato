@@ -1,56 +1,36 @@
 <div class="form-group col-md-4 col-lg-4">
   {{ Form::label('product_code', 'Código Producto') }}
   {{ Form::text('product_code', null, ['class' => 'form-control']) }}
+  {{ $errors->has('product_code') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('product_code') }}</strong>
 </div>
 
 <div class="form-group col-md-4 col-lg-4">
   {{ Form::label('id_product_type', 'Tipo Producto') }}
   {{ Form::select('id_product_type', $product_types, null, ['class' => 'form-control']) }}
+  {{ $errors->has('id_product_type') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('id_product_type') }}</strong>
 </div>
 
 <div class="form-group col-md-4 col-lg-4">
   {{ Form::label('product_name', 'Nombre Producto') }}
   {{ Form::text('product_name', null, ['class' => 'form-control']) }}
+  {{ $errors->has('product_name') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('product_name') }}</strong>
 </div>
 
-<div class="form-group col-md-4 col-lg-4">
+<div class="form-group col-md-6 col-lg-6">
   {{ Form::label('id_measure_unit', 'Unidad de Medida') }}
   {{ Form::select('id_measure_unit', $measure_unit, null, ['class' => 'form-control']) }}
+  {{ $errors->has('id_measure_unit') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('id_measure_unit') }}</strong>
 </div>
 
-<div class="form-group col-md-4 col-lg-4">
+<div class="form-group col-md-6 col-lg-6">
   {{ Form::label('presentation_id', 'Presentación del producto') }}
   {{ Form::select('presentation_id', $presentations, null, ['class' => 'form-control']) }}
-</div>
-
-<div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('quantity', 'Cantidad') }}
-  {{ Form::number('quantity', null, ['class' => 'form-control']) }}
-</div>
-
-<div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('due_date', 'Fecha de Vencimiento') }}
-  {{ Form::date('due_date', null, ['class' => 'form-control']) }}
-</div>
-
-<div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('unit_price', 'Precio Base') }}
-  {{ Form::number('unit_price', null, ['class' => 'form-control', 'id' => 'base_price']) }}
-</div>
-
-<div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('taxes_id', 'Iva') }}
-  {{ Form::select('taxes_id', $tax, null, ['class' => 'form-control', 'id' => 'tax']) }}
-</div>
-
-<div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('unit_price_tax', 'Precio final') }}
-  {{ Form::number('unit_price_tax', null, ['class' => 'form-control', 'id' => 'final_price', 'readonly']) }}
-</div>
-
-<div class="form-group col-md-4 col-lg-4">
-  {{ Form::label('stock', 'Stock') }}
-  {{ Form::number('stock', null, ['class' => 'form-control']) }}
+  {{ $errors->has('presentation_id') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('presentation_id') }}</strong>
 </div>
 
 <div class="d-flex justify-content-end form-group col-md-12 col-lg-12">
