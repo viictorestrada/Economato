@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use App\Models\Provider;
+use App\Models\Product;
+use App\Models\Tax;
 use Illuminate\Http\Request;
+use App\Http\Requests\saveContractRequest;
 use Illuminate\Validation\Rule;
 use DataTables;
 
@@ -20,31 +23,14 @@ class ContractController extends Controller
     public function create()
     {
       $providers = Provider::pluck('provider_name', 'id');
-      return view('contracts.create', compact('providers'));
+      $products = Product::pluck('product_name', 'id');
+      $taxes = Tax::pluck('tax', 'id');
+      return view('contracts.create', compact('providers', 'products', 'taxes'));
     }
 
 
-    public function store(Request $request)
+    public function store(saveContractRequest $request)
     {
-
-            $rules = [
-              'provider_id' => 'required',
-              'contract_number' => 'required|integer|unique:contracts',
-              'contract_price' =>'required|integer',
-              'contract_date' => 'required|date'
-            ];
-
-            $messages = [
-              'contract_number.unique' => 'El campo Número de Contrato ya eiste.',
-              'provider_id.required' => 'El campo Proveedor es obligatorio.',
-              'contract_number.required' => 'El campo Número de Contrato es obligatorio.',
-              'contract_number.integer' => 'El campo Número de Contrato debe ser numerico.',
-              'contract_price.required' => 'El campo Monto es obligatorio.',
-              'contract_price.ingeter' => 'El campo Monto debe ser numérico.',
-              'contract_date.required' => 'El campo Fecha es obligatorio.'
-            ];
-
-
       $this->validate($request, $rules, $messages);
       Contract::create($request->all());
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);

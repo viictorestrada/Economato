@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-  <div class="container">
+  <div class="container-fluid">
     <div class="row mt-5">
       <div class="col-md-12">
         <div class="card">
@@ -77,4 +77,29 @@
       });
     });
   </script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(document).on('click', '.add', function(){
+      var html = `<tr>
+        <td>{{ Form::select('product_id', $products, null, ['class' => 'form-control']) }}</td>
+        <td><input type="text" name="cantidad[]" onkeypress="soloNumeros()" class="form-control" readonly></td>
+        <td><input type="text" name="cantidad[]" onkeypress="soloNumeros()" class="form-control" placeholder="Cantidad"></td>
+        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio"></td>
+        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
+        <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control']) }}</td>
+        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
+        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
+        <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+      </tr>`;
+      $('tbody').append(html);
+    });
+
+    $(document).on('click', '.remove', function(){
+      $(this).closest('tr').remove();
+    });
+
+  });
+</script>
+
 @endsection
