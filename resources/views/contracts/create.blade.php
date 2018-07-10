@@ -47,7 +47,7 @@
           },
           contract_price: {
             required: true,
-            digits: true,
+            number: true,
             maxlength: 25
           },
           contract_date: {
@@ -65,9 +65,9 @@
             maxlength: "El campo Número de Contrato debe contener máximo 25 caracteres."
           },
           contract_price: {
-            required: "El campo Monto es obligatorio.",
-            digits: "El campo Monto debe ser numerico.",
-            maxlength: "El campo Monto debe contener máximo 25 caracteres."
+            required: "El campo Valor Contrato es obligatorio.",
+            digits: "El campo Valor Contrato debe ser numerico.",
+            maxlength: "El campo Valor Contrato debe contener máximo 25 caracteres."
           },
           contract_date: {
             required: "El campo Fecha es obligatorio.",

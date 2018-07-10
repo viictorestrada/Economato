@@ -1,6 +1,6 @@
 <div class="form-group col-lg-4 col-md-4">
   {{ Form::label('contract_number', 'Número de Contrato') }}
-  {{ Form::number('contract_number', null, ['class' => 'form-control']) }}
+  {{ Form::number('contract_number', null, ['class' => 'form-control', 'onkeypress' => 'onlyNumbers()']) }}
 </div>
 
 <div class="form-group col-lg-4 col-md-4">
@@ -26,7 +26,7 @@
 
 <div class="table-responsive">
 
-  <table class="table table-bordered" id="tabla">
+  <table class="table table-bordered table-sm" id="tabla">
 
     <thead>
       <tr class="text-center">
@@ -38,17 +38,17 @@
         <th>IVA %</th>
         <th>Valor IVA</th>
         <th>Total</th>
-        <th><button type="button" class="btn btn-info add"><i class="fa fa-plus-circle fa-lg"></i></button></th>
+        <th><button type="button" class="btn btn-info add"><i class="fa fa-plus-circle"></i></button></th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
-        <td>{{ Form::select('product_id', $products, null, ['class' => 'form-control']) }}</td>
-        <td><input type="text" name="cantidad[]" onkeypress="soloNumeros()" class="form-control" readonly></td>
-        <td><input type="text" name="cantidad[]" onkeypress="soloNumeros()" class="form-control" placeholder="Cantidad"></td>
-        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio"></td>
-        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
+        <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => '-- Seleccione Producto --', 'onchange="chargeMeasureUnit(this.value)"']) }}</td>
+        <td class="tdUnit"><input type="text" class="form-control unidad" readonly></td>
+        <td><input type="text" name="quantity[]" onkeypress="onlyNumbers()" class="form-control" placeholder="Cantidad"></td>
+        <td><input type="number" name="unit_price[]" class="form-control" onkeypress="onlyNumbers()"></td>
+        <td><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
         <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control']) }}</td>
         <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
         <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
@@ -60,3 +60,4 @@
 <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
   <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
 </div>
+

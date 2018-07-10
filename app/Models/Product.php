@@ -10,5 +10,13 @@ class Product extends Model
       'product_code', 'id_product_type', 'product_name', 'presentation_id', 'id_measure_unit', 'status'
     ];
 
+    public static function measureUnit($id)
+    {
+      $product = Product::where('id', $id)->get()->first();
+      $measureUnit = $product->id_measure_unit;
+      return [$product, $measureUnit];
+    }
+
     public $timestamps = false;
+
 }
