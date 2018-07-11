@@ -23,6 +23,9 @@
           <li class="nav-item">
             <a class="nav-link" id="v-pills-recetas-tab" data-toggle="pill" href="#v-pills-recetas" role="tab" aria-controls="v-pills-recetas" aria-selected="false" style="color: #fff">Recetas</a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link" id="v-pills-recetaFichaTecnica-tab" data-toggle="pill" href="#v-pills-recetaFichaTecnica" role="tab" aria-controls="v-pills-recetaFichaTecnica" aria-selected="false" style="color: #fff">Ficha tecnica receta</a>
+          </li>
 
         </ul>
 
@@ -174,6 +177,85 @@
                 </div>
               </div>
             </div>
+
+            <div class="tab-pane fade" id="v-pills-recetaFichaTecnica" role="tabpanel" aria-labelledby="v-pills-recetaFichaTecnica-tab">
+                <div class="card border-secondary">
+                    <h4 class="card-header bg-secondary text-light text-center">Ficha tecnica recetas</h4>
+                    <div class="card-body">
+                      <form method="post">
+                        @csrf
+                        <div class="form-group col-md-12 col-lg-12">
+                          <label><i class="fa fa-mouse-pointer"></i> Seleccionar receta <strong class="text-danger">*</strong></label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
+                            </div>
+                            <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" required autofocus>
+                              <option hidden value="{{old('recipe_id')}}"> -- Seleccione una receta -- </option>
+                              @foreach ($recipe as $recipes)
+                              <option value="{{$recipes->id}}">{{$recipes->recipe_name}}</option>
+                                @endforeach
+                            </select>
+                            <strong class="invalid-feedback">{{$errors->first('recipe_id')}}</strong>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label style="font-size: 18px"><i class="fas fa-list-ul"></i> Materiales</label>
+                        </div>
+                        <div class="d-flex justify-content-end form-group col-md-6 col-lg-6">
+                            <a id="addProductAndUnit" onclick="addProducts()" class="btn btn-info text-light"><li class="fa fa-plus"></li></a>
+                        </div>
+                      </div>
+                      <hr>
+                        <div id="expand">
+                      <div class="row" id="copy">
+                        <div class="form-group col-lg-4">
+                          <label><i class="fa fa-edit"></i> Insumo <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
+                            </div>
+                          <select class="form-control {{$errors->has('product_id') ? 'is-invalid' : ''}}" name="product_id[]" id="product_id" required autocomplete="off" onchange="getMeasure()" autofocus>
+                              <option hidden value="{{old('product_id')}}">-- Seleccione un producto --</option>
+                              @foreach ($product as $products)
+                            <option value="{{$products->id}}">{{$products->product_name}}</option>
+                              @endforeach
+                            </select>
+                            <strong class="invalid-feedback">{{$errors->first('product')}}</strong>
+                          </div>
+                        </div>
+    
+                        <div class="form-group col-lg-4">
+                          <label><i class="fa fa-edit"></i> unidad de medida <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
+                            </div>
+                          <input class="form-control {{$errors->has('id_measure_unit') ? 'is-invalid' : ''}}" name="id_measure_unit" id="id_measure_unit" required autocomplete="off" readonly>
+                            
+                            <strong class="invalid-feedback">{{$errors->first('id_measure_unit')}}</strong>
+                          </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                              <label><i class="fa fa-edit"></i> cantidad <strong class="text-danger" style="font-size: 23px">*</strong></label>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
+                                </div>
+                              <input class="form-control {{$errors->has('quantity') ? 'is-invalid' : ''}}" value="{{old('quantity')}}" name="quantity" id="quantity" required autocomplete="off">
+                                <strong class="invalid-feedback">{{$errors->first('quantity')}}</strong>
+                              </div>
+                            </div>
+                      </div>
+                      </div>
+                      <div class="d-flex justify-content-end col-md-12 col-lg-12">
+                          <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+                      </div>
+                      </form>
+                    </div>
+                  </div>
+            </div>
           <!--Fin del contenido-->
 
         @include('recipes.create')
@@ -205,6 +287,17 @@
       $('input[name=_method]').val('POST');
       $("#recipes-form form")[0].reset();
       $('#recipes-form').modal('show');
+    }
+
+    function addFormRecipe() {
+      $('input[name=_method]').val('POST');
+      $("#recipes-info-form form")[0].reset();
+      $('#recipes-info-form').modal('show');
+    }
+
+    function addProducts()
+    {  
+      $('#expand').append('<div class="row">'+$('#copy').html()+'</div>'); 
     }
 
     $(function() {
@@ -264,6 +357,17 @@
           toastr.warning('No hay datos!');
         }
       });
+    }
+
+    function getMeasure(){
+      var id = $( "#product_id option:selected" ).val();
+      $.ajax({
+        url: "{{ url('panel') }}/getMeasure/"+id,
+        type: "GET",
+        dataType: "JSON",
+      }).done(function(data) {
+          $('#id_measure_unit').val(data);
+       })
     }
     </script>
 @endsection

@@ -6,9 +6,7 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 //Ruta vista administrador
-Route::get('panel', function () {
-  return view('administrator.panel');
-})->middleware('auth', 'administrator' or 'executive');
+Route::get('panel', 'AdministratorController@panel')->middleware('auth', 'administrator' or 'executive');
 
 //Ruta para configuraciones (maestras)
 Route::get('configurations', 'AdministratorController@configurations')->middleware('auth', 'admin' or 'executive');
@@ -50,9 +48,11 @@ Route::resource('programs', 'ProgramController', ['except' => 'index', 'create',
 Route::get('/storages/get', 'StorageController@storagesList');
 Route::resource('storages', 'StorageController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+// Rutas para recetas
 Route::get('/recipes/get', 'RecipeController@recipesList');
 Route::get('/recipes/status/{id}/{status}', 'RecipeController@status');
 Route::resource('recipes', 'RecipeController', ['except' => 'index', 'create', 'show', 'destroy']);
+Route::get('/panel/getMeasure/{id}', 'AdministratorController@getMeasure');
 
 Route::get('/measures/get', 'MeasureUnitController@measuresList');
 Route::resource('measures', 'MeasureUnitController', ['except' => 'index', 'create', 'show', 'destroy']);

@@ -8,6 +8,8 @@ use App\Models\Program;
 use App\Models\Characterization;
 use App\Models\Competence;
 use App\Models\Location;
+use App\Models\Recipe;
+use App\Models\Product;
 
 class AdministratorController extends Controller
 {
@@ -21,7 +23,25 @@ class AdministratorController extends Controller
     $complex = Complex::all();
     $location = Location::all();
 
-    return view('configurations.index', compact('region','program','characterization','competence', 'complex', 'location'));
+    return view('configurations.index', compact('region','program','characterization','competence', 'complex', 'location','recipe','product'));
+  }
+
+  public function panel()
+  {
+    $recipe = Recipe::all();
+    $product = Product::all();
+
+
+    return view('administrator.panel', compact('recipe','product'));
+  }
+
+  public function getMeasure($id)
+  {
+   
+    $measureUnit = Product::measureUnit($id);
+    return response()->json([$measureUnit]);
+      
+    
   }
 
 }
