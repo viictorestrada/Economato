@@ -46,10 +46,10 @@
       <tr>
         <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => '-- Seleccione Producto --', 'onchange="chargeMeasureUnit(this)"']) }}</td>
         <td class="tdUnit"><input type="text" class="form-control unidad" readonly></td>
-        <td><input type="text" name="quantity[]" onkeypress="onlyNumbers()" class="form-control cantidad" placeholder="Cantidad" onchange="calculations()"></td>
-        <td><input type="number" name="unit_price[]" class="form-control precio_unitario" onkeypress="onlyNumbers()" onchange="calculations()"></td>
+        <td><input type="text" name="quantity[]" onkeypress="onlyNumbers()" class="form-control cantidad" placeholder="Cantidad" onchange="calculations(this)"></td>
+        <td><input type="number" name="unit_price[]" class="form-control precio_unitario" onkeypress="onlyNumbers()" onchange="calculations(this)"></td>
         <td><input type="number" name="total_with_tax[]" class="form-control subtotal" readonly></td>
-        <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control tax']) }}</td>
+        <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control tax', 'onchange' => "calculations(this)", 'placeholder' => 'IVA' ]) }}</td>
         <td><input type="number" name="tax_value[]" class="form-control valor_iva" readonly></td>
         <td><input type="number" name="total[]" class="form-control total" readonly></td>
       </tr>
