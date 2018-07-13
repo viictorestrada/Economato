@@ -182,9 +182,8 @@
                 <div class="card border-secondary">
                     <h4 class="card-header bg-secondary text-light text-center">Ficha tecnica recetas</h4>
                     <div class="card-body">
-                      <form method="post" class="forms">
+                    <form action="{{ url('RecipeHasProducts')}}" method="post" class="forms">
                         @csrf
-
                         <div class="form-group col-md-6 col-lg-6">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar receta <strong class="text-danger">*</strong></label>
                             <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" required autofocus>
@@ -216,18 +215,17 @@
                             <tbody>
                               <tr>
                                 <td>
-                                  {{ Form::select('product_id', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
+                                  {{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
                                 </td>
                                 <td class="tdUnit">
                                   {{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}
                                 </td>
                                 <td>
-                                  {{ Form::number('quantity', null, ['class' => 'form-control']) }}
+                                  {{ Form::number('quantity[]', null, ['class' => 'form-control']) }}
                                 </td>
                               </tr>
                             </tbody>
-
-                          </table>
+                          </table> 
                       </div>
                       </div>
                       <div class="d-flex justify-content-end col-md-12 col-lg-12">
@@ -340,9 +338,9 @@
     $(document).ready(function(){
     $(document).on('click', '.addProducts', function(){
       var html = `<tr>
-          <td>{{ Form::select('product_id', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+          <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
           <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
-          <td>{{ Form::number('quantity', null, ['class' => 'form-control']) }}</td>
+          <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
         <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
       </tr>`;
       $('tbody').append(html);

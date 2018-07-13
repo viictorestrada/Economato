@@ -54,6 +54,8 @@ Route::get('/recipes/status/{id}/{status}', 'RecipeController@status');
 Route::resource('recipes', 'RecipeController', ['except' => 'index', 'create', 'show', 'destroy']);
 Route::get('/panel/getMeasure/{id}', 'AdministratorController@getMeasure');
 
+Route::resource('RecipeHasProducts' , 'RecipeHasProductController', ['except' => 'index', 'create', 'show', 'destroy']);
+
 Route::get('/measures/get', 'MeasureUnitController@measuresList');
 Route::resource('measures', 'MeasureUnitController', ['except' => 'index', 'create', 'show', 'destroy']);
 
