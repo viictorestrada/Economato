@@ -29,19 +29,18 @@ class AdministratorController extends Controller
   public function panel()
   {
     $recipe = Recipe::all();
-    $product = Product::all();
+    $product = Product::pluck('product_name', 'id');
 
 
     return view('administrator.panel', compact('recipe','product'));
   }
 
-  public function getMeasure($id)
+  public function getMeasure(Request $request, $id)
   {
-   
-    $measureUnit = Product::measureUnit($id);
-    return response()->json([$measureUnit]);
-      
-    
+    if($request->ajax()){
+      $measureUnit = Product::measureUnit($id);
+      return response()->json($measureUnit);
+    }
   }
 
 }

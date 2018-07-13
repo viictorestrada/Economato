@@ -4,7 +4,7 @@ function onlyNumbers() {
 }
 
 function chargeMeasureUnit(id) {
-    $.get(`measure_unit/${event.target.value}`, function(element) {
-        $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[1]);
+    $.get(`/contract/measure_unit/${event.target.value}`, function(element) {
+        $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
     });
 }

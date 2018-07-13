@@ -62,7 +62,7 @@ Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 
 
 //Rutas para crud de Contratos
 Route::get('/contracts/get', 'ContractController@contractsList');
-Route::get('measure_unit/{id}', 'ContractController@getMeasureUnit');
+Route::get('/contract/measure_unit/{id}', 'ContractController@getMeasureUnit');
 Route::resource('contracts', 'ContractController', ['except' => 'show', 'destroy']);
 
 //Rutas para crud de usuarios

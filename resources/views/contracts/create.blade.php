@@ -76,17 +76,26 @@
         }
       });
     });
+
+function calculations() {
+  var quantity = $('.cantidad').val();
+  var unit_price = $('.precio_unitario').val();
+  var total_without_tax = (quantity/1000)*unit_price;
+  var tax = $('.tax option:selected').val();
+  var tax_value = unit_price*(tax/100);
+  var total = (unit_price + tax_value)*quantity;
+}
   </script>
 
-<script type="text/javascript">
+<script>
   $(document).ready(function(){
     $(document).on('click', '.add', function(){
       var html = `<tr>
-        <td>{{ Form::select('product_id', $products, null, ['class' => 'form-control']) }}</td>
-        <td><input type="text" name="cantidad[]" onkeypress="soloNumeros()" class="form-control" readonly></td>
+        <td>{{ Form::select('product_id', $products, null, ['class' => 'form-control', 'onchange="(chargeMeasureUnit(this))"', 'placeholder' => '-- Seleccione Producto --']) }}</td>
+        <td class="tdUnit"><input type="text" name="quantity[]" onkeypress="soloNumeros()" class="form-control unidad" readonly></td>
         <td><input type="text" name="cantidad[]" onkeypress="soloNumeros()" class="form-control" placeholder="Cantidad"></td>
-        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio"></td>
-        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
+        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control"></td>
+        <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control" readonly></td>
         <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control']) }}</td>
         <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>
         <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio" readonly></td>

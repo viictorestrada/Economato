@@ -182,14 +182,11 @@
                 <div class="card border-secondary">
                     <h4 class="card-header bg-secondary text-light text-center">Ficha tecnica recetas</h4>
                     <div class="card-body">
-                      <form method="post">
+                      <form method="post" class="forms">
                         @csrf
-                        <div class="form-group col-md-12 col-lg-12">
+
+                        <div class="form-group col-md-6 col-lg-6">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar receta <strong class="text-danger">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
                             <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" required autofocus>
                               <option hidden value="{{old('recipe_id')}}"> -- Seleccione una receta -- </option>
                               @foreach ($recipe as $recipes)
@@ -197,67 +194,51 @@
                                 @endforeach
                             </select>
                             <strong class="invalid-feedback">{{$errors->first('recipe_id')}}</strong>
-                          </div>
                         </div>
-                        <div class="row">
+
                         <div class="form-group col-md-6 col-lg-6">
                             <label style="font-size: 18px"><i class="fas fa-list-ul"></i> Materiales</label>
-                        </div>
-                        <div class="d-flex justify-content-end form-group col-md-6 col-lg-6">
-                            <a id="addProductAndUnit" onclick="addProducts()" class="btn btn-info text-light"><li class="fa fa-plus"></li></a>
-                        </div>
                       </div>
                       <hr>
-                        <div id="expand">
-                      <div class="row" id="copy">
-                        <div class="form-group col-lg-4">
-                          <label><i class="fa fa-edit"></i> Insumo <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                          <select class="form-control {{$errors->has('product_id') ? 'is-invalid' : ''}}" name="product_id[]" id="product_id" required autocomplete="off" onchange="getMeasure()" autofocus>
-                              <option hidden value="{{old('product_id')}}">-- Seleccione un producto --</option>
-                              @foreach ($product as $products)
-                            <option value="{{$products->id}}">{{$products->product_name}}</option>
-                              @endforeach
-                            </select>
-                            <strong class="invalid-feedback">{{$errors->first('product')}}</strong>
-                          </div>
-                        </div>
-    
-                        <div class="form-group col-lg-4">
-                          <label><i class="fa fa-edit"></i> unidad de medida <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                            </div>
-                          <input class="form-control {{$errors->has('id_measure_unit') ? 'is-invalid' : ''}}" name="id_measure_unit" id="id_measure_unit" required autocomplete="off" readonly>
-                            
-                            <strong class="invalid-feedback">{{$errors->first('id_measure_unit')}}</strong>
-                          </div>
-                        </div>
-                        <div class="form-group col-lg-4">
-                              <label><i class="fa fa-edit"></i> cantidad <strong class="text-danger" style="font-size: 23px">*</strong></label>
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
-                                </div>
-                              <input class="form-control {{$errors->has('quantity') ? 'is-invalid' : ''}}" value="{{old('quantity')}}" name="quantity" id="quantity" required autocomplete="off">
-                                <strong class="invalid-feedback">{{$errors->first('quantity')}}</strong>
-                              </div>
-                            </div>
+                      <div class="table-responsive">
+
+                        <table class="table table-bordered table-sm">
+
+                            <thead>
+                                <tr class="text-center">
+                                  <th>Insumo</th>
+                                  <th>Unidad de medida</th>
+                                  <th>Cantidad</th>
+                                  <th><button type="button" class="btn btn-info addProducts"><i class="fa fa-plus-circle"></i></button></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                              <tr>
+                                <td>
+                                  {{ Form::select('product_id', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
+                                </td>
+                                <td class="tdUnit">
+                                  {{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}
+                                </td>
+                                <td>
+                                  {{ Form::number('quantity', null, ['class' => 'form-control']) }}
+                                </td>
+                              </tr>
+                            </tbody>
+
+                          </table>
                       </div>
                       </div>
                       <div class="d-flex justify-content-end col-md-12 col-lg-12">
                           <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
                       </div>
+                      <hr>
                       </form>
                     </div>
                   </div>
             </div>
           <!--Fin del contenido-->
-
         @include('recipes.create')
       </section>
     </div>
@@ -293,11 +274,6 @@
       $('input[name=_method]').val('POST');
       $("#recipes-info-form form")[0].reset();
       $('#recipes-info-form').modal('show');
-    }
-
-    function addProducts()
-    {  
-      $('#expand').append('<div class="row">'+$('#copy').html()+'</div>'); 
     }
 
     $(function() {
@@ -358,16 +334,29 @@
         }
       });
     }
-
-    function getMeasure(){
-      var id = $( "#product_id option:selected" ).val();
-      $.ajax({
-        url: "{{ url('panel') }}/getMeasure/"+id,
-        type: "GET",
-        dataType: "JSON",
-      }).done(function(data) {
-          $('#id_measure_unit').val(data);
-       })
-    }
     </script>
+
+    <script>
+    $(document).ready(function(){
+    $(document).on('click', '.addProducts', function(){
+      var html = `<tr>
+          <td>{{ Form::select('product_id', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+          <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
+          <td>{{ Form::number('quantity', null, ['class' => 'form-control']) }}</td>
+        <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+      </tr>`;
+      $('tbody').append(html);
+    });
+
+    $(document).on('click', '.remove', function(){
+      $(this).closest('tr').remove();
+    });
+  });
+
+  function getMeasure(id) {
+    $.get(`/panel/getMeasure/${event.target.value}`, function(element) {
+        $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
+    });
+}
+  </script>
 @endsection
