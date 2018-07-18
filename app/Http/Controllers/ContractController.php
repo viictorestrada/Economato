@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\Provider;
 use App\Models\Product;
+use App\Models\ProductsHasController;
 use App\Models\Tax;
+use App\Models\ProductsHasContracts;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveContractRequest;
 use DataTables;
+use DB;
 
 class ContractController extends Controller
 {
@@ -35,13 +38,26 @@ class ContractController extends Controller
     }
 
 
-    public function store(saveContractRequest $request)
+    public function store(Request $request)
     {
-      Contract::create($request->all());
+      $input=$request->all();
+      $contract=Contract::create(['provider_id' =>$input['provider_id'], 'contract_number'=>$input['contract_number'],
+      'contract_price'=>$input["contract_price"], 'start_date'=>$input['start_date'], 'finish_date'=>$input["finish_date"]
+      ]);
+        $contracts=Contract::all();
+        $var=$contracts->last();
+        $idContract=$var->id;
+      DB::transaction(function() use($input,$idContract){
+          foreach($input['products_id'] as $key => $value){
+            ProductsHasContracts::create(['products_id'=>$input['products_id'][$key], 'contracts_id'=>$idContract, 'quantity'=>$input['quantity'][$key],
+            'unit_price'=>$input['unit_price'][$key],'taxes_id'=>$input['taxes_id'][$key],
+            'total_with_tax'=>$input['total_with_tax'][$key], 'tax_value'=>$input['tax_value'][$key],
+            'total'=>$input['total'][$key], 'quantity_agreed'=>$input['quantity'][$key]]);
+          }
+    });
+
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
-
-
     public function edit($id)
     {
       $providers = Provider::pluck('provider_name', 'id');
