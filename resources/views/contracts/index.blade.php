@@ -17,7 +17,8 @@
                     <th>Código del contrato</th>
                     <th>Proveedor</th>
                     <th>Monto</th>
-                    <th>Fecha</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Final</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -46,7 +47,8 @@
             { data: 'contract_number', name: 'contract_number' },
             { data: 'provider_id', name: 'provider_id' },
             { data: 'contract_price', name: 'contract_price' },
-            { data: 'contract_date', name: 'contract_date' },
+            { data: 'start_date', name: 'start_date' },
+            { data: 'finish_date', name: 'finish_date' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]
     });
