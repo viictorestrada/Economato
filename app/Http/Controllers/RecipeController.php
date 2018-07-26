@@ -25,7 +25,6 @@ class RecipeController extends Controller
       $this->validate($request, $rules, $messages);
       Recipe::create($request->all());
     }
-
     public function edit($id)
     {
       $recipe = Recipe::findOrFail($id);
@@ -45,7 +44,8 @@ class RecipeController extends Controller
         {
           $button = '<a href="/recipes/status/'.$recipes->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>  ';
         }
-        return $button.'<a onclick="editRecipe('.$recipes->id.')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'<a onclick="editRecipe('.$recipes->id.')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>  '.
+        '<a onclick="showDetails('.$recipes->id.')" class="btn btn-md btn-info text-light"><i class="fa fa-eye"></i></a>  ';
       })->editColumn('status', function ($recipes) {
         return $recipes->status == 1 ? "Activo":"Inactivo";
       })

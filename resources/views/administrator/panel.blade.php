@@ -238,6 +238,7 @@
             </div>
           <!--Fin del contenido-->
         @include('recipes.create')
+        @include('recipes.index')
       </section>
     </div>
   </section>
@@ -331,6 +332,43 @@
           toastr.warning('No hay datos!');
         }
       });
+    }
+
+    function showDetails(id) {
+      $.ajax({
+        url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+          $('#fillDetails').empty();
+          var product_id;
+          var measure;
+          var quantity;
+          var recipe_cost;
+          $.each(data, function(i,a) { 
+            $.each(a, function(j,k) {
+              product_id = data[i].product_name;
+              measure = data[i].measure_name;
+              quantity = data[i].quantity;
+              recipe_cost = data[i].recipe_cost;
+            })
+            $('#fillDetails').append(
+              `<tr>
+                <td>`+product_id+`</td>
+                <td>`+measure+`</td>
+                <td>`+quantity+`</td>
+                <td>`+recipe_cost+`</td>
+                </tr>`
+            );
+              
+          })
+          $('#show-details').modal('show');
+        },
+        error: function() {
+          toastr.warning('No hay datos!');
+        }
+      });
+      
     }
     </script>
 

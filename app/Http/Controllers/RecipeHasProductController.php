@@ -7,6 +7,7 @@ use App\Models\RecipeHasProduct;
 use App\Models\ProductsHasContracts;
 use App\Models\Product;
 
+
 class RecipeHasProductController extends Controller
 {
     public function store(Request $request)
@@ -23,9 +24,20 @@ class RecipeHasProductController extends Controller
          return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
 
+    public function detailsShow($id)
+    {
+    
+      
+    }
+
     public function edit($id)
     {
-
+      $recipe = RecipeHasProduct::select('recipes_has_products.*','products.product_name','measure_unit.measure_name')
+      ->join('products','products.id', '=', 'recipes_has_products.product_id')
+      ->join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')
+      ->where('recipes_has_products.recipe_id',$id)->get()->all();
+      
+       return $recipe;
     }
 
     public function update(Request $request, $id)
