@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Contracts')
 @section('content')
   <div class="container-fluid">
     <div class="row mt-5">

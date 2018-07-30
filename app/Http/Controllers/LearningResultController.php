@@ -33,7 +33,7 @@ class LearningResultController extends Controller
 
   public function edit($id)
   {
-    $learning_result = LearningResult::find($id);
+    $learning_result = LearningResult::findOrFail($id);
     return $learning_result;
   }
 
@@ -51,7 +51,7 @@ class LearningResultController extends Controller
 
   public function update(Request $request, $id)
   {
-    $learning_result = LearningResult::find($id);
+    $learning_result = LearningResult::findOrFail($id);
     $learning_result->update($request->all());
     return $learning_result;
   }

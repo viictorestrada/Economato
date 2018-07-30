@@ -32,7 +32,7 @@ class RoleController extends Controller
 
   public function edit($id)
   {
-    $role = Role::find($id);
+    $role = Role::findOrFail($id);
     return $role;
   }
 
@@ -50,7 +50,7 @@ class RoleController extends Controller
 
   public function update(Request $request, $id)
   {
-    $role = Role::find($id);
+    $role = Role::findOrFail($id);
     $role->update($request->all());
     return $role;
   }

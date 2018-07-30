@@ -30,7 +30,7 @@ class MeasureUnitController extends Controller
 
     public function edit($id)
     {
-        $measure = MeasureUnit::find($id);
+        $measure = MeasureUnit::findOrFail($id);
         return $measure;
     }
 
@@ -48,7 +48,7 @@ class MeasureUnitController extends Controller
 
     public function update(Request $request, $id)
     {
-      $measure = MeasureUnit::find($id);
+      $measure = MeasureUnit::findOrFail($id);
       $measure->update($request->all());
       return $measure;
     }

@@ -18,10 +18,16 @@ class RedirectIfAuthenticated
   public function handle($request, Closure $next, $guard = null)
   {
     if (Auth::guard($guard)->check()) {
-      if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2){
+      if (Auth::user()->rol_id == 1){
         return redirect('/panel');
-      }else{
-        return redirect('/orders');
+      }else if (Auth::user()->rol_id == 2) {
+        return redirect('reports');
+      } else if (Auth::user()->rol_id == 3) {
+        return redirect('orders');
+      }else if (Auth::user()->rol_id == 4) {
+        return redirect('/panel');
+      }else if (Auth::user()->rol_id == 5) {
+        return redirect('ordersProduction');
       }
     }else{
       return $next($request);

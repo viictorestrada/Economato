@@ -44,7 +44,7 @@ class ComplexController extends Controller
 
     public function edit($id)
     {
-        $complex = Complex::find($id);
+        $complex = Complex::findOrFail($id);
         return $complex;
     }
 
@@ -64,7 +64,7 @@ class ComplexController extends Controller
       // ];
 
       // $this->validate($request, $rules, $messages);
-      $complex = Complex::find($id);
+      $complex = Complex::findOrFail($id);
       $complex->update($request->all());
        return $complex;
       //redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);

@@ -30,7 +30,7 @@ class RegionController extends Controller
 
   public function edit($id)
   {
-    $region = Region::find($id);
+    $region = Region::findOrFail($id);
     return $region;
   }
 
@@ -46,7 +46,7 @@ class RegionController extends Controller
 
   public function update(Request $request, $id)
   {
-    $region = Region::find($id);
+    $region = Region::findOrFail($id);
     $region->update($request->all());
     return $region;
   }

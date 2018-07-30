@@ -10,6 +10,7 @@ use App\Models\Competence;
 use App\Models\Location;
 use App\Models\Recipe;
 use App\Models\Product;
+use App\Models\RecipeHasProduct;
 
 class AdministratorController extends Controller
 {
@@ -30,7 +31,6 @@ class AdministratorController extends Controller
   {
     $recipe = Recipe::all();
     $product = Product::pluck('product_name', 'id');
-
 
     return view('administrator.panel', compact('recipe','product'));
   }

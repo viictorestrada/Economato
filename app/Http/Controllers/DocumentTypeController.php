@@ -30,7 +30,7 @@ class DocumentTypeController extends Controller
 
   public function edit($id)
   {
-    $documentType = DocumentType::find($id);
+    $documentType = DocumentType::findOrFail($id);
     return $documentType;
   }
 
@@ -48,7 +48,7 @@ class DocumentTypeController extends Controller
 
   public function update(Request $request,  $id)
   {
-    $document = DocumentType::find($id);
+    $document = DocumentType::findOrFail($id);
     $document->update($request->all());
     return $document;
   }

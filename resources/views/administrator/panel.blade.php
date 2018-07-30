@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Panel')
 @section('content')
   <section class="container-fluid mt-1">
 
@@ -42,7 +43,7 @@
           <div class="card-body">
             <div class="row">
               <!--Categorias de la seccion de usuarios-->
-              @if(Auth::user()->rol_id == 2)
+              @if(Auth::user()->rol_id == 1)
               <div class="col">
                 <a href="{{ url('users/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fa fa-users"></i></h1>
@@ -84,7 +85,7 @@
                 </a>
               </div>
 
-              @if (Auth::user()->rol_id == 2)
+              @if (Auth::user()->rol_id == 1)
               <div class="col">
                 <a href="{{ url('budgets/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fab fa-bitcoin"></i></h1>
@@ -183,10 +184,11 @@
                     <h4 class="card-header bg-secondary text-light text-center">Ficha tecnica recetas</h4>
                     <div class="card-body">
                     <form action="{{ url('RecipeHasProducts')}}" method="post" class="forms">
-                        @csrf
+                      @csrf
+                    {{-- {{ Form::model($product, ['url' => ['RecipeHasProducts', $product->id], 'class' => 'forms', 'method' => 'POST']) }} --}}
                         <div class="form-group col-md-6 col-lg-6">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar receta <strong class="text-danger">*</strong></label>
-                            <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" required autofocus>
+                            <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" onchange="loadRecipeProducts(this.value)" required autofocus>
                               <option hidden value="{{old('recipe_id')}}"> -- Seleccione una receta -- </option>
                               @foreach ($recipe as $recipes)
                               <option value="{{$recipes->id}}">{{$recipes->recipe_name}}</option>
@@ -212,7 +214,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="fillRecipeDetails">
                               <tr>
                                 <td>
                                   {{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
@@ -341,6 +343,7 @@
         dataType: "JSON",
         success: function(data) {
           if (data === null) {
+          console.log(data);
           $('#fillDetails').empty();
           var product_id;
           var measure;
@@ -382,6 +385,67 @@
         }
       });
 
+    }
+
+    function loadRecipeProducts(id) {
+      $.ajax({
+        url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
+        type: 'get',
+        datatype: "json",
+        success: function(data) {
+          $('#fillRecipeDetails').empty();
+          console.log(data.length);
+          if (data.length == 0) {
+            $('#fillRecipeDetails').append(
+              `<tr>
+                <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::number('quantity[]', null, ['class' => 'form-control',]) }}</td>
+              </tr>`
+            );
+          }
+          else {
+          console.log(data);
+          var product_id;
+          var measure;
+          var quantity;
+          $.each(data, function(a, b) {
+            $.each(b, function(c, d) {
+              product_name = data[a].product_name;
+              product_id = data[a].product_id;
+              measure = data[a].measure_name;
+              quantity = data[a].quantity;
+            })
+            if (a == 0) {
+              $('#fillRecipeDetails').append(
+              `<tr>
+                <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'id' => 'setSelect`+a+`', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              </tr>`
+            );
+            // $("#setSelect"+a+" option[value="+product_id+"]").prop('selected', true);
+            $("#setSelect"+a).val(product_id);
+            }
+            else{
+            $('#fillRecipeDetails').append(
+            `<tr>
+              <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelect`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+              <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+              <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            </tr>`
+            );
+            // $("#setSelect"+a+" option[value="+product_id+"]").prop('selected', true);
+            $("#setSelect"+a).val(product_id);
+            }
+          })
+        }
+        },
+        error: function() {
+
+        }
+      })
     }
     </script>
 

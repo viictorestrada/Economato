@@ -1,4 +1,5 @@
 @extends('layouts/layout')
+@section('title', 'Configurations')
 @section('content')
   {{-- Navegación lateral --}}
 <section class="container-fluid mt-1">
