@@ -14,11 +14,6 @@ class BudgetController extends Controller
 
   protected $addAditionalBudget;
 
-  public function __construct()
-  {
-    $this->middleware(['auth', 'executive']);
-  }
-
     public function index()
     {
       $budget = Budget::all();
