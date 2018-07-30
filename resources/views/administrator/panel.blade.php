@@ -43,7 +43,7 @@
           <div class="card-body">
             <div class="row">
               <!--Categorias de la seccion de usuarios-->
-              @if(Auth::user()->rol_id == 2)
+              @if(Auth::user()->rol_id == 1)
               <div class="col">
                 <a href="{{ url('users/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fa fa-users"></i></h1>
@@ -85,7 +85,7 @@
                 </a>
               </div>
 
-              @if (Auth::user()->rol_id == 2)
+              @if (Auth::user()->rol_id == 1)
               <div class="col">
                 <a href="{{ url('budgets/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fab fa-bitcoin"></i></h1>

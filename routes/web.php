@@ -5,63 +5,63 @@ Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-//Ruta vista administrador
-Route::get('panel', 'AdministratorController@panel')->middleware('auth', 'administrator' or 'executive');
 
-//Ruta para configuraciones (maestras)
-Route::get('configurations', 'AdministratorController@configurations')->middleware('auth', 'admin' or 'executive');
 
-//Rutas para crud de tablas maestras
+
+//ruta para pedidos
+Route::get('orders', function () {
+  return view('orders/ordersconfirm');
+});
+
+
+Route::group(['middleware' => ['auth', 'admin']], function () {
+
+//Ruta para resultados de aprendizaje
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
 Route::resource('learning_results', 'LearningResultController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Rutas para presentación del producto
 Route::get('/presentations/get', 'PresentationController@presentationsList');
 Route::resource('presentations', 'PresentationController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para competencias
 Route::get('/competences/get', 'CompetenceController@competencesList');
 Route::resource('competences', 'CompetenceController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para Roles
 Route::get('/roles/get', 'RoleController@rolesList');
 Route::resource('roles', 'RoleController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para tipos de documentos
 Route::get('/document_types/get', 'DocumentTypeController@documentTypesList');
 Route::resource('document_types', 'DocumentTypeController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para caracterizaciones
 Route::get('/characterizations/get', 'CharacterizationController@characterizationsList');
 Route::get('/characterizations/status/{id}/{status}', 'CharacterizationController@status');
 Route::resource('characterizations', 'CharacterizationController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para centros de formación
 Route::get('/locations/get', 'LocationController@locationsList');
 Route::get('/locations/status/{id}/{status}', 'LocationController@status');
 Route::resource('locations', 'LocationController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para regionales
 Route::get('/regions/get', 'RegionController@regionsList');
 Route::resource('regions', 'RegionController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para complejos
 Route::get('/complex/get', 'ComplexController@complexList');
 Route::resource('complex', 'ComplexController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para programas
 Route::get('/programs/get', 'ProgramController@programsList');
 Route::get('/programs/status/{id}/{status}', 'ProgramController@status');
 Route::resource('programs', 'ProgramController', ['except' => 'index', 'create', 'show', 'destroy']);
 
-Route::get('/storages/get', 'StorageController@storagesList');
-Route::resource('storages', 'StorageController', ['except' => 'index', 'create', 'show', 'destroy']);
-
-// Rutas para recetas
-Route::get('/recipes/get', 'RecipeController@recipesList');
-Route::get('/recipes/status/{id}/{status}', 'RecipeController@status');
-Route::resource('recipes', 'RecipeController', ['except' => 'index', 'create', 'show', 'destroy']);
-Route::get('/panel/getMeasure/{id}', 'AdministratorController@getMeasure');
-
-Route::resource('RecipeHasProducts' , 'RecipeHasProductController', ['except' => 'index', 'create', 'show', 'destroy']);
-Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
-
-Route::get('/measures/get', 'MeasureUnitController@measuresList');
-Route::resource('measures', 'MeasureUnitController', ['except' => 'index', 'create', 'show', 'destroy']);
-
-Route::get('/product_types/get', 'ProductTypeController@productTypesList');
-Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 'create', 'show', 'destroy']);
+//Ruta para iva
+Route::get('/taxes/get','TaxesController@taxesList');
+Route::resource('taxes', 'TaxesController', ['except' => 'show','destroy','create']);
 
 //Rutas para crud de Contratos
 Route::get('/contracts/get', 'ContractController@contractsList');
@@ -93,11 +93,35 @@ Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 Route::get('/providers/get', 'ProviderController@providersList');
 Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy']);
 
-//ruta para pedidos
-Route::get('orders', function () {
-  return view('orders/ordersconfirm');
+// Rutas para recetas
+Route::get('/recipes/get', 'RecipeController@recipesList');
+Route::get('/recipes/status/{id}/{status}', 'RecipeController@status');
+Route::resource('recipes', 'RecipeController', ['except' => 'index', 'create', 'show', 'destroy']);
+Route::get('/panel/getMeasure/{id}', 'AdministratorController@getMeasure');
+
+//Ruta vista administrador
+Route::get('panel', 'AdministratorController@panel');
+
+//Ruta para configuraciones (maestras)
+Route::get('configurations', 'AdministratorController@configurations');
+
+//Ruta para detalle recetas
+Route::resource('RecipeHasProducts' , 'RecipeHasProductController', ['except' => 'index', 'create', 'show', 'destroy']);
+Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
+
+//Ruta unidad de medida
+Route::get('/measures/get', 'MeasureUnitController@measuresList');
+Route::resource('measures', 'MeasureUnitController', ['except' => 'index', 'create', 'show', 'destroy']);
+
+//Ruta tipo de producto
+Route::get('/product_types/get', 'ProductTypeController@productTypesList');
+Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 'create', 'show', 'destroy']);
+
 });
 
-//ruta para iva
-Route::get('/taxes/get','TaxesController@taxesList');
-Route::resource('taxes', 'TaxesController', ['except' => 'show','destroy','create']);
+Route::group(['middleware' => ['auth', 'executive']], function () {
+
+  //Ruta vista administrador
+Route::get('reports', 'ReportsController@index');
+
+});
