@@ -34,7 +34,7 @@ class CompetenceController extends Controller
 
     public function edit($id)
     {
-      $competence = Competence::find($id);
+      $competence = Competence::findOrFail($id);
       return $competence;
     }
 
@@ -52,7 +52,7 @@ class CompetenceController extends Controller
 
     public function update(Request $request, $id)
     {
-      $competence = Competence::find($id);
+      $competence = Competence::findOrFail($id);
       $competence->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
     }

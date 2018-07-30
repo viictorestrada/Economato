@@ -58,21 +58,21 @@ class ProgramController extends Controller
 
   public function edit($id)
   {
-    $program = Program::find($id);
+    $program = Program::findOrFail($id);
     return $program;
   }
 
 
   public function update(Request $request, $id)
   {
-    $program = Program::find($id);
+    $program = Program::findOrFail($id);
     $program->update($request->all());
     return $program;
   }
 
   public function status($id, $status)
     {
-      $program = Program::find($id);
+      $program = Program::findOrFail($id);
       if ($program == null) {
       return redirect('configurations');
       }else {

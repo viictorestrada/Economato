@@ -44,14 +44,14 @@ class ProviderController extends Controller
 
     public function edit($id)
     {
-      $provider = Provider::find($id);
+      $provider = Provider::findOrFail($id);
       return view('providers.edit', compact('provider'));
     }
 
 
     public function update(updateProviderRequest $request, $id)
     {
-      $provider = Provider::find($id);
+      $provider = Provider::findOrFail($id);
       $provider->update($request->all());
       return redirect('providers')->with([swal()->autoclose(1500)->success('Actualización Exitosa!', 'Se ha actualizado el registro')]);
     }

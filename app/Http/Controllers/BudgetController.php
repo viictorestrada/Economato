@@ -36,9 +36,9 @@ class BudgetController extends Controller
       $budgetA=$request->input('aditional_budget');
       AditionalBudget::create($request->all());
       $budgetOrigin = Budget::select('budget')->get();
-      $budgetOrigin = Budget::find($budgetCode);
+      $budgetOrigin = Budget::findOrFail($budgetCode);
       $budgetFinal=$budgetOrigin->budget;
-      $budget = Budget::find($budgetCode);
+      $budget = Budget::findOrFail($budgetCode);
       $budget->update(['budget'=>$budgetFinal+$budgetA]);
     }
 
@@ -80,7 +80,7 @@ class BudgetController extends Controller
 
     public function edit($budget)
     {
-      $budget = Budget::find($budget);
+      $budget = Budget::findOrFail($budget);
       return view('budget.edit', compact('budget'));
     }
 
@@ -93,14 +93,14 @@ class BudgetController extends Controller
         'budget_begin_date' => 'required|date',
         'budget_finish_date' => 'required|date'
       ]);
-      $budget = Budget::find($id);
+      $budget = Budget::findOrFail($id);
       $budget->update($request->all());
       return redirect('budgets')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se actualizo el registro exitosamente!')]);
     }
 
     public function status($id, $status)
     {
-      $budget = Budget::find($id);
+      $budget = Budget::findOrFail($id);
       $budget->update(['status'=>$status]);
       return redirect('budgets')->with([swal()->autoclose(1500)->success('Cambio de estado!', 'El estado se actualizo correctamente')]);
     }

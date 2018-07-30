@@ -30,7 +30,7 @@ class PresentationController extends Controller
 
     public function edit($id)
     {
-      $presentation = Presentation::find($id);
+      $presentation = Presentation::findOrFail($id);
       return $presentation;
     }
 
@@ -48,7 +48,7 @@ class PresentationController extends Controller
 
     public function update(Request $request, $id)
     {
-      $presentations = Presentation::find($id);
+      $presentations = Presentation::findOrFail($id);
       $presentations->update($request->all());
       return $presentations;
     }
