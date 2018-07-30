@@ -119,9 +119,10 @@ Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 
 
 });
 
+// ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------
 Route::group(['middleware' => ['auth', 'executive']], function () {
 
-  //Ruta vista administrador
-Route::get('reports', 'ReportsController@index');
+  //Ruta de reportes
+Route::get('reports', 'ReportController@index');
 
 });
