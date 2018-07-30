@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-info text-light">
-          <h5 class="modal-title" id="exampleModalLabel">Registrar Receta</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Productos de la receta</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -16,8 +16,6 @@
                       <input type="hidden" id="id" name="id">
 
                       <div class="form-group" id="append">
-                        <label style="font-size: 18px"><i class="fas fa-list-ul"></i> Productos de la receta</label>
-                        <hr>
                         <div class="table-responsive">
                           <table class="table table-bordered">
                             <thead>
@@ -27,7 +25,7 @@
                               <th>precio</th>
                             </thead>
                             <tbody id="fillDetails">
-
+                              
                             </tbody>
                           </table>
                         </div>

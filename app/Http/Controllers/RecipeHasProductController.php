@@ -12,8 +12,10 @@ class RecipeHasProductController extends Controller
 {
     public function store(Request $request)
     {
-
         $input = $request->all();
+        if ($input['recipe_id'] != null) {
+            $recipe = RecipeHasProduct::where('recipe_id', $input['recipe_id'])->delete();    
+        }
         $recipe_cost = 0;
         foreach ($input['product_id'] as $key => $value) {
           $select = ProductsHasContracts::select('products_has_contracts.*')->where('products_has_contracts.products_id',$value)->get()->first();
