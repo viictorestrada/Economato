@@ -342,7 +342,7 @@
         type: "GET",
         dataType: "JSON",
         success: function(data) {
-          if (data === null) {
+          if (data.length != 0) {
           console.log(data);
           $('#fillDetails').empty();
           var product_id;
