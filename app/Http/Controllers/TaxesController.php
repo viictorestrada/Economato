@@ -29,14 +29,14 @@ class TaxesController extends Controller
 
     public function edit($id)
     {
-        $taxes=Tax::find($id);
+        $taxes=Tax::findOrFail($id);
         return $taxes;
     }
 
 
     public function update(Request $request, $id)
     {
-        $taxes=Tax::find($id);
+        $taxes=Tax::findOrFail($id);
         $taxes->update($request->all());
         return $taxes;
     }

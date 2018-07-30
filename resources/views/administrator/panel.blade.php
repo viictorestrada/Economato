@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Panel')
 @section('content')
   <section class="container-fluid mt-1">
 
@@ -225,7 +226,7 @@
                                 </td>
                               </tr>
                             </tbody>
-                          </table> 
+                          </table>
                       </div>
                       </div>
                       <div class="d-flex justify-content-end col-md-12 col-lg-12">
@@ -345,7 +346,7 @@
           var measure;
           var quantity;
           var recipe_cost;
-          $.each(data, function(i,a) { 
+          $.each(data, function(i,a) {
             $.each(a, function(j,k) {
               product_id = data[i].product_name;
               measure = data[i].measure_name;
@@ -360,7 +361,7 @@
                 <td>`+recipe_cost+`</td>
                 </tr>`
             );
-              
+
           })
           $('#show-details').modal('show');
         },
@@ -368,7 +369,7 @@
           toastr.warning('No hay datos!');
         }
       });
-      
+
     }
     </script>
 

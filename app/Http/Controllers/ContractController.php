@@ -58,12 +58,15 @@ class ContractController extends Controller
 
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
+
+
     public function edit($id)
     {
       $providers = Provider::pluck('provider_name', 'id');
       $contract = Contract::findOrFail($id);
       return view('contracts.edit', compact('providers', 'contract'));
     }
+
 
     public function contractsList(Request $request)
     {

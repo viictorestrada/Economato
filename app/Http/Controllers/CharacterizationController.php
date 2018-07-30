@@ -50,21 +50,21 @@ class CharacterizationController extends Controller
 
     public function edit($id)
     {
-        $characterization = Characterization::find($id);
+        $characterization = Characterization::findOrFail($id);
         return $characterization;
     }
 
 
     public function update(Request $request, $id)
     {
-      $characterization = Characterization::find($id);
+      $characterization = Characterization::findOrFail($id);
       $characterization->update($request->all());
       return $characterization;
     }
 
     public function status($id, $status)
     {
-      $characterization = Characterization::find($id);
+      $characterization = Characterization::findIOrFail($id);
       if ($characterization == null) {
       return redirect('configurations');
       } else {

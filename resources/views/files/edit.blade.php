@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Edit File')
 @section('content')
   <div class="container">
     <div class="row mt-5">
@@ -23,7 +24,7 @@
               </div>
 
             {{ Form::close() }}
-            
+
           </div>
         </div>
       </div>

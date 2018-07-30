@@ -32,7 +32,7 @@ class ProductTypeController extends Controller
 
     public function edit($id)
     {
-        $productType = ProductType::find($id);
+        $productType = ProductType::findOrFail($id);
         return $productType;
     }
 
@@ -49,8 +49,7 @@ class ProductTypeController extends Controller
 
     public function update(Request $request, $id)
     {
-
-      $productTypes = ProductType::find($id);
+      $productTypes = ProductType::findOrFail($id);
       $productTypes->update($request->all());
       return $productTypes;
     }

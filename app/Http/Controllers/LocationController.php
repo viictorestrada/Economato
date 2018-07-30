@@ -33,7 +33,7 @@ class LocationController extends Controller
 
   public function edit($id)
   {
-    $location = Location::find($id);
+    $location = Location::findOrFail($id);
     return $location;
   }
 
@@ -58,14 +58,14 @@ class LocationController extends Controller
 
   public function update(Request $request, $id)
   {
-      $location = Location::find($id);
+      $location = Location::findOrFail($id);
       $location->update($request->all());
       return $location;
   }
 
   public function status($id, $status)
     {
-      $location = Location::find($id);
+      $location = Location::findOrFail($id);
       if ($location == null) {
       return redirect('configurations');
       }else {

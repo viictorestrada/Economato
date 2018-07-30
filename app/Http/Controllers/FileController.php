@@ -56,7 +56,7 @@ class FileController extends Controller
 
   public function edit($id)
   {
-    $file = File::find($id);
+    $file = File::findOrFail($id);
     $programs = Program::pluck('program_name', 'id');
     $characterizations = Characterization::pluck('characterization_name', 'id');
     return view('files.edit', compact('file', 'programs', 'characterizations'));
@@ -65,7 +65,7 @@ class FileController extends Controller
 
   public function update(updateFileRequest $request,  $id)
   {
-    $file = File::find($id);
+    $file = File::findOrFail($id);
     $file->update($request->all());
     return redirect('files')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
   }
@@ -73,7 +73,7 @@ class FileController extends Controller
 
   public function status($id, $status)
   {
-    $file = File::find($id);
+    $file = File::findOrFail($id);
     if ($file == null) {
       alert()->autoclose(1500)->warning('Advertencia', 'No se encontraron datos!');
       return redirect('files');

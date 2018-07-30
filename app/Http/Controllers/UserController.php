@@ -62,14 +62,14 @@ class UserController extends Controller
   public function edit($id)
   {
     $roles = Role::pluck('role', 'id');
-    $user = User::find($id);
+    $user = User::findOrFail($id);
     return view('users.edit', compact('user', 'roles'));
   }
 
 
   public function update(updateUserRequest $request, $id)
   {
-    $user = User::find($id);
+    $user = User::findOrFail($id);
     $user->update($request->all());
     return redirect('users')->with([swal()->autoclose(1500)->success('Actualización Exitosa!', 'Se actualizo el usuario correctamente!')]);
   }
@@ -77,7 +77,7 @@ class UserController extends Controller
 
   public function status($id, $status)
   {
-    $user = User::find($id);
+    $user = User::findOrFail($id);
     if ($user == null) {
       alert()->autoclose(1000)->warning('Advertencia', 'No se encontraron datos!');
       return redirect('users');
