@@ -100,34 +100,14 @@ function calculations(id)
 
 <script>
 
-//  <tr>
-//         <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => '-- Seleccione Producto --', 'onchange="chargeMeasureUnit(this)"']) }}</td>
-//         <td class="tdUnit"><input type="text" class="form-control unidad" readonly></td>
-//         <td><input type="text" name="quantity[]" onkeypress="onlyNumbers()" class="form-control cantidad" placeholder="Cantidad" onchange="calculations(this)"></td>
-//         <td><input type="number" name="unit_price[]" class="form-control precio_unitario" onkeypress="onlyNumbers()" onchange="calculations(this)"></td>
-//         <td><input type="number" name="total_with_tax[]" class="form-control subtotal" readonly></td>
-//         <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control tax', 'onchange' => "calculations(this)", 'placeholder' => 'IVA' ]) }}</td>
-//         <td><input type="number" name="tax_value[]" class="form-control valor_iva" readonly></td>
-//         <td><input type="number" name="total[]" class="form-control total" readonly></td>
-//       </tr>
+      {{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => '-- Seleccione Producto --', 'onchange="chargeMeasureUnit(this)"']) }}
+      {{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control tax', 'onchange' => "calculations(this)", 'placeholder' => 'IVA' ]) }}
 
 
   $(document).ready(function(){
-    // $(document).on('click', '.add', function(){
-    //   var html = `<tr>
-    //     <td>{{ Form::select('product_id', $products, null, ['class' => 'form-control', 'onchange="(chargeMeasureUnit(this))"', 'placeholder' => '-- Seleccione Producto --']) }}</td>
-    //     <td class="tdUnit"><input type="text" name="quantity[]" onkeypress="onlyNumbers()" class="form-control unidad" readonly></td>
-    //     <td><input type="text" name="cantidad[]" onkeypress="onlyNumbers()" class="form-control cantidad"  placeholder="Cantidad" onchange="calculations(this)"></td>
-    //     <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control precio_unitario" onchange="calculations(this)"></td>
-    //     <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control" readonly></td>
-    //     <td>{{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control','onchange' => "calculations(this)", 'placeholder' => 'IVA']) }}</td>
-    //     <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control valor_iva" readonly></td>
-    //     <td class="tdprecio"><input type="number" name="ValoPres[]" class="form-control total" readonly></td>
-    //     <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
-    //   </tr>`;
-    //   $('tbody').append(html);
-    // });
-    $(document).on('click', '.remove', function(){
+      {{ Form::select('product_id', $products, null, ['class' => 'form-control', 'onchange="(chargeMeasureUnit(this))"', 'placeholder' => '-- Seleccione Producto --']) }}
+      {{ Form::select('taxes_id', $taxes, null, ['class' => 'form-control','onchange' => "calculations(this)", 'placeholder' => 'IVA']) }}
+      $(document).on('click', '.remove', function(){
       $(this).closest('tr').remove();
     });
 
