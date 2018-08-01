@@ -342,30 +342,38 @@
         type: "GET",
         dataType: "JSON",
         success: function(data) {
-          if (data === null) {
-          console.log(data);
+          if (data.length != 0) {
           $('#fillDetails').empty();
           var product_id;
           var measure;
           var quantity;
-          var recipe_cost;
+          var unit_price;
+          var recipes_cost;
           $.each(data, function(i,a) {
             $.each(a, function(j,k) {
               product_id = data[i].product_name;
               measure = data[i].measure_name;
               quantity = data[i].quantity;
-              recipe_cost = data[i].recipe_cost;
+              unit_price = data[i].unit_price;
+              recipes_cost = data[i].recipes_cost;
+
             })
             $('#fillDetails').append(
               `<tr>
                 <td>`+product_id+`</td>
                 <td>`+measure+`</td>
                 <td>`+quantity+`</td>
-                <td>`+recipe_cost+`</td>
+                <td>`+unit_price+`</td>
                 </tr>`
             );
 
           })
+          $('#fillDetails').append(
+              `<tr>
+                <td colspan="3">Costo total de la receta</td>
+                <td>`+recipes_cost+`</td>
+                </tr>`
+            );
           $('#show-details').modal('show');
         } else {
           toastr.options={
@@ -394,7 +402,6 @@
         datatype: "json",
         success: function(data) {
           $('#fillRecipeDetails').empty();
-          console.log(data.length);
           if (data.length == 0) {
             $('#fillRecipeDetails').append(
               `<tr>
@@ -405,7 +412,6 @@
             );
           }
           else {
-          console.log(data);
           var product_id;
           var measure;
           var quantity;
@@ -424,7 +430,6 @@
                 <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
             );
-            // $("#setSelect"+a+" option[value="+product_id+"]").prop('selected', true);
             $("#setSelect"+a).val(product_id);
             }
             else{
@@ -436,14 +441,12 @@
               <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
             </tr>`
             );
-            // $("#setSelect"+a+" option[value="+product_id+"]").prop('selected', true);
             $("#setSelect"+a).val(product_id);
             }
           })
         }
         },
         error: function() {
-
         }
       })
     }

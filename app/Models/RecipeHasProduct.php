@@ -9,7 +9,7 @@ class RecipeHasProduct extends Model
     protected $table = 'recipes_has_products';
 
     protected $fillable = [
-        'recipe_id', 'product_id', 'quantity' , 'recipe_cost'
+        'recipe_id', 'product_id', 'quantity'
     ];
 
     public $timestamps = false;

@@ -41,7 +41,7 @@
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('','IVA') }}
-  {{ Form::select('',$taxes,null,['class'=>'form-control tax', 'onchange'=>"calculations(this)", 'placeholder'=>'0']) }}
+  {{ Form::select('',$taxes,null,['class'=>'form-control tax', 'onchange'=>"calculations(this)"]) }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('' ,'Valor IVA' ) }}

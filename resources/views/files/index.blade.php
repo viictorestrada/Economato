@@ -20,6 +20,8 @@
                     <th>Número de Ficha</th>
                     <th>Ruta</th>
                     <th>Aprendices</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha Final</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
@@ -52,6 +54,8 @@
             { data: 'file_number', name: 'file_number' },
             { data: 'file_route', name: 'file_route' },
             { data: 'apprentices', name: 'apprentices' },
+            { data: 'start_date', name: 'start_date' },
+            { data: 'finish_date', name: 'finish_date' },
             { data: 'status', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]

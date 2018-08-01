@@ -12,7 +12,7 @@ class saveFileRequest extends FormRequest
         return true;
     }
 
-    
+
     public function rules()
     {
         return [
@@ -20,7 +20,9 @@ class saveFileRequest extends FormRequest
           'characterization_id' => 'required',
           'file_number' => 'required|string|max:45|unique:files',
           'file_route' => 'required|max:45',
-          'apprentices' => 'required|integer'
+          'apprentices' => 'required|integer',
+          'start_date' => 'required|date',
+          'finish_date' => 'required|date'
         ];
     }
 
@@ -35,7 +37,11 @@ class saveFileRequest extends FormRequest
         'file_route.required' => 'El campo Ruta es obligatorio',
         'file_route.max' => 'El campo Ruta debe contener máximo 45 caracteres',
         'apprentices.required' => 'El campo Aprendices es obligatorio',
-        'apprentices.integer' => 'El campo Aprendices debe ser un número entero'
+        'apprentices.integer' => 'El campo Aprendices debe ser un número entero',
+        'start_date.required' => 'El campo de la fecha de inicio es obligatorio.',
+        'start_date.date' => 'El campo debe contener un formato de fecha.',
+        'finish_date.required' => 'El campo de la fecha final es obligatorio.',
+        'finish_date.date' => 'El campo debe contener un formato de fecha.'
       ];
     }
 }

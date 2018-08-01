@@ -13,6 +13,12 @@ function chargeMeasureUnit(id) {
   $.get(`/contract/measure_unit/${event.target.value}`, function(element) {
     $('.unidad').val(element[0])
   });
+function chargeCharacterization(id){
+  console.log(id);
+  
+  // $.get(`orders/${event.target.value}`)
+}
+
 }
 $(document).ready(function () {
     $(document).on('click', '.add', function(){

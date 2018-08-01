@@ -4,145 +4,127 @@
     <div class="row mt-5">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header bg-secondary text-light text-center"><h4>Confirmación de Pedidos</h4></div>
+          <div class="card-header bg-secondary text-light text-center"><h4>Solicitud de Pedidos</h4></div>
           <div class="card-body">
             <div class="col-12 d-flex justify-content-end">
-              <div class="card-title"><h4>Lista de Pedidos</h4></div><hr>
-              {{-- <div><a type="button" href="{{ url('users/create') }}" class="btn btn-info "><span class="fa fa-user-plus"></span> Agregar Usuario</a></div> --}}
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-md" width="100%" id="users">
-                <thead>
-                  <tr>
-                    <th>Resultado de aprendizaje</th>
-                    <th>Instructor</th>
-                    <th>Correo</th>
-                    <th>Ficha</th>
-                    <th>Fecha de Pedido</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr id="1"  style="">
-                    <td>Cocinar</td>
-                    <td>Julián</td>
-                    <td>Jaflorez64@misena.edu.co</td>
-                    <td>1355170</td>
-                    <td>2018-06-24</td>
-                    <td>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1" onclick="confirmedOrder('1')"  data-toggle="tooltip"  title="Aceptar Pedido" >
-                            <label class="custom-control-label" for="customCheck1"></label>
-                          </div>
-                    </td>
-                    <td>
-                      <button onclick="detailsOrder()" id="fila1" class="btn btn-social-icon  btn-light"  data-toggle="tooltip"  title="Detalle Pedido" ><i class="fa fa-eye fa-lg" ></i></button>
-                    </td>
-                  </tr>
-                    <tr id="2" style="">
-                    <td>Cocinar</td>
-                    <td>Camilo</td>
-                    <td>ctabares06@misena.edu.co</td>
-                    <td>1355169</td>
-                    <td>2018-06-22</td>
-                    <td>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck" onclick="confirmedOrder('2')"  data-toggle="tooltip"  title="Aceptar Pedido" >
-                            <label class="custom-control-label" for="customCheck"></label>
-                          </div>
-                    </td>
-                    <td>
-                      <button onclick="detailsOrder()" id="fila2" class="btn btn-social-icon  btn-light"  data-toggle="tooltip"  title="Detalle Pedido" ><i class="fa fa-eye fa-lg" ></i></button>
-                    </td>
-                  </tr>
-                  <tr id="3" style="">
-                      <td>Cocinar</td>
-                      <td>Sergio</td>
-                      <td>sergio54@misena.edu.co</td>
-                      <td>1355169</td>
-                      <td>2018-06-23</td>
-                      <td>
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck3" onclick="confirmedOrder('3')"  data-toggle="tooltip"  title="Aceptar Pedido" >
-                              <label class="custom-control-label" for="customCheck3"></label>
-                            </div>
-                      </td>
-                      <td>
-                        <button onclick="detailsOrder()" id="fila2" class="btn btn-social-icon  btn-light"  data-toggle="tooltip"  title="Detalle Pedido" ><i class="fa fa-eye fa-lg" ></i></button>
-                      </td>
-                    </tr>
-                </tbody>
-              </table>
-            </div>
+              {{ Form::open(['url'=>'orders', 'method'=>'POST', 'name' => 'formulario1', 'class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
+              <div class="row">
+                
+                <div class="form-group col-md-6 col-lg-6">
+                  {{ Form::label('files_id','Ficha') }}
+                  {{ Form::select('files_id',$files,null,['class'=>'form-control','onchange'=>'chargeCharacterization(this.value)','placeholder'=>'--Seleccione una ficha--']) }}
+                  {{ $errors->has('files_id'  ? '' : '') }}
+                  <strong class="text-danger" >{{ $errors->first('files_id') }}</strong>
+                </div>
+
+                <div class="form-group col-md-6 col-lg-6">
+                  {{ Form::label('characterization' , 'Caracterización' ) }}
+                  {{ Form::text('characterization',null,['class'=>'form-control characterization', 'readonly']) }}
+                </div>
+
+                <div class="form-group col-md-6 col-lg-6">
+                  {{ Form::label('order_date', 'Fecha' ) }}
+                  {{ Form::date('order_date',null,[ 'class'=> 'form-control' ]) }}
+                </div>
+
+                <div class="form-group  col-md-6 col-lg-6">
+                  {{ Form::label('recipes_id','Taller') }}
+                  {{ Form::select('recipes_id',$recipes,null,['class'=>'form-control', 'onchange' =>'loadRecipeProducts(this.value)' ,'placeholder'=>'--Seleccione una Receta--']) }}
+                </div>
+
+                <hr class="style-two">
+
+                <div class="form-group col-md-10 col-lg-10 offset-md-1 offset-lg-1">
+                  <table class="table table-bordered">
+                    <thead class="text-center">
+                      <tr>
+                        <th>Producto</th>
+                        <th>Unidad de Medida</th>
+                        <th>Cantidad</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableOrder">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
+                  <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Solicitar Taller</button>
+              </div>
+              {{ Form::close() }}
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modalOrderDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <h3 style="text:align:center">Detalle de la receta</h3>
-
-              <br>
-              <h4>arroz con pollo</h4>
-              <br>
-              <table width="100%">
-                <thead>
-                  <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Presentación</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Arroz</td>
-                    <td>1</td>
-                    <td>Bolsa</td>
-                  </tr>
-                  <tr>
-                    <td>Pollo</td>
-                    <td>1</td>
-                    <td>Libra</td>
-                  </tr>
-                  <tr>
-                    <td>Aceite</td>
-                    <td>1</td>
-                    <td>Litro</td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>
 @endsection
 @section('script')
 <script>
-function detailsOrder(){
-  $("#modalOrderDetails").modal();
-}
 
-function  confirmedOrder(id) {
-  toastr.options = {
-    "positionClass": "toast-bottom-right"
+  function confirmOrder()
+  {
+    swal({
+      title: "Confirmando solicitud",
+      text: "¿Está seguro?",
+      type: "info",
+      showCancelButton: true,
+      confirmButtonClass: "btn-danger",
+      confirmButtonText: "Confirmar.",
+      cancelButtonText: "Cancelar.",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    }).then((result) => {
+      if (result.value) {
+      // swal("Solicitud realizada", "La solicitud se realizó con éxito.", "success").then(()=>{
+          document.formulario1.submit()
+        // });
+    } else {
+      swal("Solicitud Cancelada", "La solicitud fue cancelada.", "error");
+    }
+    })
+    return false;
   }
 
-  toastr.success("Pedido Aprobado");
-$("#"+id).css("display", "none");
+function chargeCharacterization(id){
+  $.get(`/order/${event.target.value}`,function(data){
+    $('.characterization').val(data);
+  });
 }
+
+ function loadRecipeProducts(id) {
+      $.ajax({
+        url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
+        type: 'get',
+        datatype: "json",
+        success: function(data) {
+          console.log('datos'+data)
+          $('#fillRecipeDetails').empty();
+          var product_name;
+          var measure;
+          var quantity;
+          $.each(data, function(a, b) {
+            $.each(b, function(c, d) {
+              product_name = data[a].product_name;
+              measure = data[a].measure_name;
+              quantity = data[a].quantity;
+            })
+              $('#tableOrder').append(
+              `<tr>
+                <td>{{ Form::text('product_id[]', '`+product_name+`', ['class' => 'form-control', 'readonly' ]) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control','readonly']) }}</td>
+              </tr>`
+            );
+          })
+        },
+        error: function(r) {
+          console.log("error"+r)
+        }
+      })
+    }
+    </script>
+
 
 </script>
 @endsection

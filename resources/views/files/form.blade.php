@@ -23,6 +23,16 @@
   {{ Form::number('apprentices', null, ['class' => 'form-control']) }}
 </div>
 
-<div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
+<div class="form-group col-lg-6 col-md-6">
+  {{ Form::label('start_date','Fecha de Incio') }}
+  {{ Form::date('start_date' ,null, ['class' => 'form-control'])}}
+</div>
+
+<div class="form-group col-lg-6 col-md-6">
+   {{ Form::label('finish_date','Fecha final') }}
+   {{ Form::date('finish_date',null,['class'=>'form-control']  ) }}
+</div>
+
+ <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
   <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
 </div>

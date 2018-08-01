@@ -9,10 +9,11 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 
 //ruta para pedidos
-Route::get('orders', function () {
-  return view('orders/ordersconfirm');
-});
+Route::resource('orders', 'OrderController');
+Route::get('/order/{id}','OrderController@getCharacterization');
 
+//Ruta para mostrar el detalle de la receta
+Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
@@ -107,7 +108,6 @@ Route::get('configurations', 'AdministratorController@configurations');
 
 //Ruta para detalle recetas
 Route::resource('RecipeHasProducts' , 'RecipeHasProductController', ['except' => 'index', 'create', 'show', 'destroy']);
-Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
 
 //Ruta unidad de medida
 Route::get('/measures/get', 'MeasureUnitController@measuresList');
