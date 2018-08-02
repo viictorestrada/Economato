@@ -8,6 +8,8 @@ use App\Models\Recipe;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\RecipeHasProduct;
+use Auth;
+
 
 
 class OrderController extends Controller
@@ -64,11 +66,11 @@ class OrderController extends Controller
       ];
 
       $this->validate($request,$rules,$messages);
-
       $createOrder=Order::create([
         'files_id' => $request['files_id'],
         'recipes_id' => $request['recipes_id'],
         'order_date' => $request['order_date'],
+        'user_name' => Auth::user()->name.' '.Auth::user()->last_name
       ]);
       return redirect('orders')->with([swal()->autoclose(2000)->success('Solicitud Exitosa','Se realizo la solicitud')]);
     }
