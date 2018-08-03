@@ -10,7 +10,7 @@
             </div>
               {{ Form::open(['url'=>'orders', 'method'=>'POST', 'name' => 'formulario1', 'class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
               <div class="row">
-                
+
                 <div class="form-group col-md-6 col-lg-6">
                   {{ Form::label('files_id','Ficha') }}
                   {{ Form::select('files_id',$files,null,['class'=>'form-control','onchange'=>'chargeCharacterization(this.value)','placeholder'=>'--Seleccione una ficha--']) }}
@@ -26,11 +26,15 @@
                 <div class="form-group col-md-6 col-lg-6">
                   {{ Form::label('order_date', 'Fecha' ) }}
                   {{ Form::date('order_date',null,[ 'class'=> 'form-control' ]) }}
+                  {{ $errors->has('order_date') ? '' : '' }}
+                <strong class="text-danger" >{{ $errors->first('order_date') }}</strong>
                 </div>
 
                 <div class="form-group  col-md-6 col-lg-6">
                   {{ Form::label('recipes_id','Taller') }}
                   {{ Form::select('recipes_id',$recipes,null,['class'=>'form-control', 'onchange' =>'loadRecipeProducts(this.value)' ,'placeholder'=>'--Seleccione una Receta--']) }}
+                  {{ $errors->has('recipes_id') }}
+                  <strong class="text-danger">{{ $errors->first('recipes_id') }}</strong>
                 </div>
 
                 <hr class="style-two">

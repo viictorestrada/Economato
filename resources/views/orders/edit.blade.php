@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" id="show-details" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="edit-order" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-info text-light">
@@ -22,20 +22,23 @@
                               <th>Insumos</th>
                               <th>Unidad de medida</th>
                               <th>Cantidad</th>
-                              <th>Precio</th>
+                              <th><button type="button" class="btn btn-info addProduct"><i class="fa fa-plus-circle"></i></button></th>
                             </thead>
-                            <tbody id="fillDetails">
-                              
+                            <tbody id="orderEditDetails">
+
                             </tbody>
                           </table>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-info btn-block" data-dismiss="modal">Cerrar</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info">Modificar</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         </div>
       </div>
     </div>

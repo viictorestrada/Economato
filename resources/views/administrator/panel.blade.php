@@ -113,30 +113,45 @@
             <div class="card-body">
               <!--Entrada de Busqueda de Regional para editar:-->
               <div class="row">
-                <div class="col-3 align-self-end">
-                  <label class="sr-only" for="inlineFormInputGroup">Búsqueda</label>
-                  <div class="input-group mb-2 mb-sm-0">
-                    <div class="input-group-addon bg-secondary">
-                      <span class="oi oi-magnifying-glass text-light"></span>
+                <div class="table-responsive">
+                <table class="table table-bordered table-md" width="100%" id="orders">
+                  <thead>
+                    <tr>
+                      <th>Usuario</th>
+                      <th>Fecha</th>
+                      <th>Ficha</th>
+                      <th>Programa de Formación</th>
+                      <th>Taller</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+                  {{-- <div class="col-3 align-self-end">
+                    <label class="sr-only" for="inlineFormInputGroup">Búsqueda</label>
+                    <div class="input-group mb-2 mb-sm-0">
+                      <div class="input-group-addon bg-secondary">
+                        <span class="oi oi-magnifying-glass text-light"></span>
+                      </div>
+                      <input type="text" class="form-control border-secondary" id="buscar" placeholder="Buscar">
                     </div>
-                    <input type="text" class="form-control border-secondary" id="buscar" placeholder="Buscar">
                   </div>
-                </div>
 
-                <div class="col-9">
-                  <div class="card border-success">
-                    <div class="card-body">
-                      <h4 class="card-title text-center">Información importante</h4><hr class="bg-success">
-                      <section id="tbl_prog">
-                        With supporting text below as a natural lead-in to additional content
-                      </section>
-                      <!--a href="#" class="btn btn-primary">Agregar Programa</a-->
+                  <div class="col-9">
+                    <div class="card border-success">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">Información importante</h4><hr class="bg-success">
+                        <section id="tbl_prog">
+                          With supporting text below as a natural lead-in to additional content
+                        </section>
+                        <!--a href="#" class="btn btn-primary">Agregar Programa</a-->
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </div> --}}
               </div><br>
               <div class="tabla_datos" id="resultado"></div><hr class="bg-success">
-              <a href="#" class="btn btn-primary">Solicitud a proveedores</a>
+              {{-- <a href="#" class="btn btn-primary">Solicitud a proveedores</a> --}}
             </div>
           </div>
         </div>
@@ -217,7 +232,7 @@
                             <tbody id="fillRecipeDetails">
                               <tr>
                                 <td>
-                                  {{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
+                                  {{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
                                 </td>
                                 <td class="tdUnit">
                                   {{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}
@@ -241,6 +256,7 @@
           <!--Fin del contenido-->
         @include('recipes.create')
         @include('recipes.index')
+        @include('orders.edit')
       </section>
     </div>
   </section>
@@ -260,9 +276,29 @@
         columns: [
           { data: 'recipe_name', name: 'recipe_name' },
           { data: 'status', name: 'status' },
-          { data: 'action', name: 'action', orderable: false, searchable: true },
+          { data: 'action', name: 'action', orderable: false, searchable: true }
         ]
     });
+
+      var table2 = $('#orders').DataTable({
+        destroy: true,
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        lenguage: {
+            "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/panel/getOrder',
+        columns: [
+          { data: 'user_name', name: 'user_name' },
+          { data: 'order_date', name: 'order_date' },
+          { data: 'file_number', name: 'file_number' },
+          { data: 'program_name', name: 'program_name' },
+          { data: 'recipe_name', name: 'recipe_name' },
+          { data: 'status', name: 'status' },
+          { data: 'action', name: 'action', orderable: false, searchable: true }
+        ]
+      });
 
     function addRecipe() {
       save_method = "add";
@@ -405,7 +441,7 @@
           if (data.length == 0) {
             $('#fillRecipeDetails').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::number('quantity[]', null, ['class' => 'form-control',]) }}</td>
               </tr>`
@@ -425,7 +461,7 @@
             if (a == 0) {
               $('#fillRecipeDetails').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'id' => 'setSelect`+a+`', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'setSelect`+a+`', 'onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
@@ -435,7 +471,7 @@
             else{
             $('#fillRecipeDetails').append(
             `<tr>
-              <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelect`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelect`+a+`']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
@@ -453,15 +489,33 @@
     </script>
 
     <script>
+      $(document).ready(function(){
+          $(document).on('click', '.addProduct', function(){
+            var html =
+             `<tr>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
+                <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            </tr>`;
+            $('#orderEditDetails').append(html);
+          });
+
+          $(document).on('click', '.remove', function(){
+            $(this).closest('tr').remove();
+          });
+        });
+
     $(document).ready(function(){
     $(document).on('click', '.addProducts', function(){
-      var html = `<tr>
-          <td>{{ Form::select('product_id[]', $product, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+      var html =
+      `<tr>
+          <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
           <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
           <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
-        <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+          <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
       </tr>`;
-      $('tbody').append(html);
+        $('#fillRecipeDetails').append(html);
     });
 
     $(document).on('click', '.remove', function(){
@@ -474,5 +528,52 @@
         $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
     });
 }
+  function modalEditOrder(id) {
+    $.ajax({
+        url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
+        type: 'get',
+        datatype: "json",
+        success: function(data) {
+          $('#orderEditDetails').empty();
+          var product_id;
+          var measure;
+          var quantity;
+          $.each(data, function(a, b) {
+            $.each(b, function(c, d) {
+              product_name = data[a].product_name;
+              product_id = data[a].product_id;
+              measure = data[a].measure_name;
+              quantity = data[a].quantity;
+            })
+            if (a == 0) {
+              $('#orderEditDetails').append(
+              `<tr>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'setSelected`+a+`', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              </tr>`
+            );
+            $("#setSelected"+a).val(product_id);
+            }
+            else{
+            $('#orderEditDetails').append(
+            `<tr>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelected`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+              <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+              <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            </tr>`
+            );
+            $("#setSelected"+a).val(product_id);
+            }
+
+          })
+          $('#edit-order').modal();
+        },
+        error: function() {
+        }
+      })
+
+  }
   </script>
 @endsection

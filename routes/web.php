@@ -11,6 +11,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 //ruta para pedidos
 Route::resource('orders', 'OrderController');
 Route::get('/order/{id}','OrderController@getCharacterization');
+Route::get('/panel/getOrder','AdministratorController@requestTable');
 
 //Ruta para mostrar el detalle de la receta
 Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');

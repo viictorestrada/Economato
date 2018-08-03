@@ -31,7 +31,7 @@ class RecipeController extends Controller
       return $recipe;
     }
 
-    public function recipesList(Request $request)
+    public function recipesList()
     {
       $recipes = Recipe::all();
       return DataTables::of($recipes)
