@@ -118,6 +118,12 @@ Route::resource('measures', 'MeasureUnitController', ['except' => 'index', 'crea
 Route::get('/product_types/get', 'ProductTypeController@productTypesList');
 Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 'create', 'show', 'destroy']);
 
+//Ruta para registrar la receta editada
+Route::resource('orderRecipeEdit','OrderRecipeController',['except '=> 'show','edit','update','destroy']);
+
+//Ruta pa modificar el estado de la orden
+Route::get('/orders/updateStatus/{id}/{status}','OrderController@updateStatus');
+Route::get('/orderRecipeEdit/updateQuantity/{id}','OrderRecipeController@updateQuantity' , ['except '=> 'show','edit','update','destroy']);
 });
 
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------

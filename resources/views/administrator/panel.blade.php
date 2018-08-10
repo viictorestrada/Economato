@@ -285,7 +285,7 @@
         responsive: true,
         processing: true,
         serverSide: true,
-        lenguage: {
+        language: {
             "url": '/DataTables/datatables-spanish.json'
         },
         ajax: '/panel/getOrder',
@@ -528,7 +528,9 @@
         $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
     });
 }
-  function modalEditOrder(id) {
+  function modalEditOrder(id,order) {
+    $("#idOrder").val(order),
+    $("#recipes_id").val(id)
     $.ajax({
         url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
         type: 'get',

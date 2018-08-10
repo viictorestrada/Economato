@@ -75,6 +75,13 @@ class OrderController extends Controller
       return redirect('orders')->with([swal()->autoclose(2000)->success('Solicitud Exitosa','Se realizo la solicitud')]);
     }
 
+    public function updateStatus($id,$status){
+      $updateStatus=Order::findOrfail($id)->update(["status" => $status]);
+      return response()->json($updateStatus);
+    }
+
+
+
     /**
      * Display the specified resource.
      *
@@ -119,4 +126,6 @@ class OrderController extends Controller
     {
         //
     }
+
+
 }

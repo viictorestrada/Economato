@@ -49,21 +49,35 @@ class AdministratorController extends Controller
     return DataTables::of($requestInstructor)
     ->addColumn('action', function ($id) {
       if ($id->status == 1) {
-        $bot = '<a onclick="modalEditOrder('.$id->recipes_id.')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a> <a href="/users/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a> <a href="/users/status/'.$id->id.'" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+        $bot = '<a onclick="modalEditOrder('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+        <a onclick="managmentOrder('.$id->id.', 2 )" data-outline-toggle="tooltip" title="Aprobar solicitud de taller." class="btn btn-md btn-outline-success text-success"><i class="fa fa-check-circle"></i></a>
+         <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+         return $bot;
       }
       else if ($id->status == 2)
       {
-        $bot = '<a onclick="modalEditOrder('.$id->recipes_id.')" class="btn btn-md btn-info text-light"><i class="fa fa-arrow-right"></i></a>';
+        $bot = '<a href="/orderRecipeEdit/updateQuantity/'.$id->id.'"  class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar Solicitud" ><i class="fa fa-arrow-right"></i></a>';
+        return $bot;
+      }else if(  $id->status==0){
+        $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud rechazada.">Rechazado</i></a>';
+        return $bot;
       }
-      else if ($id->status == 3) {
+      else if(  $id->status==3){
+        $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud entregada.">Entregado</i></a>';
+        return $bot;
+      }
 
-      }
-      else if ($id->status == 0) {
-
-      }
-      return $bot;
     })->editColumn('status', function ($id) {
-      return $id->status == 1 ? "Activo":"Inactivo";
+      if($id->status==1){
+        return "Solicitado";
+      }else if($id->status==2){
+        return  "Pedido";
+      }else if($id->status==3){
+        return "Entregado";
+      }else if($id->status==0){
+        return "Rechazado";
+      }
+      // return $id->status == 1 ? "Solicitud": $id->status == 2 ?  "Pedido" : "Entregado";
     })
     ->make(true);
   }

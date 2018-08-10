@@ -8,13 +8,14 @@
           </button>
         </div>
         <div class="modal-body">
+            {{ Form::open(['url'=>'orderRecipeEdit' , 'class'=>'form' , 'id'=>'form']) }}
           <div class="container">
             <div class="row">
               <div class="col-12">
                 <div class="card border-secondary">
                   <div class="card-body">
-                      <input type="hidden" id="id" name="id">
-
+                      <input type="hidden" id="idOrder" name="idOrder">
+                      <input type="hidden" id="recipes_id" name="recipe_id">
                       <div class="form-group" id="append">
                         <div class="table-responsive">
                           <table class="table table-bordered">
@@ -25,21 +26,26 @@
                               <th><button type="button" class="btn btn-info addProduct"><i class="fa fa-plus-circle"></i></button></th>
                             </thead>
                             <tbody id="orderEditDetails">
-
                             </tbody>
                           </table>
                         </div>
                       </div>
-                  </div>
+                      <div class="form-group d-flex justify-content-end">
+                        <div class="col-md-3">
+                          <input type="number" class="form-control" placeholder="N° Paquetes" name="package_number" id="package_number">
+                        </div>
+                    </div>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-info">Modificar</button>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-info">Modificar</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        {{ Form::close() }}
         </div>
       </div>
     </div>
   </div>
+</div>

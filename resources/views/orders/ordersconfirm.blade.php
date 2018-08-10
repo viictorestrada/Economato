@@ -66,68 +66,37 @@
 @section('script')
 <script>
 
-  function confirmOrder()
-  {
-    swal({
-      title: "Confirmando solicitud",
-      text: "¿Está seguro?",
-      type: "info",
-      showCancelButton: true,
-      confirmButtonClass: "btn-danger",
-      confirmButtonText: "Confirmar.",
-      cancelButtonText: "Cancelar.",
-      closeOnConfirm: false,
-      closeOnCancel: false
-    }).then((result) => {
-      if (result.value) {
-      // swal("Solicitud realizada", "La solicitud se realizó con éxito.", "success").then(()=>{
-          document.formulario1.submit()
-        // });
-    } else {
-      swal("Solicitud Cancelada", "La solicitud fue cancelada.", "error");
-    }
-    })
-    return false;
-  }
-
-function chargeCharacterization(id){
-  $.get(`/order/${event.target.value}`,function(data){
-    $('.characterization').val(data);
-  });
-}
-
- function loadRecipeProducts(id) {
-      $.ajax({
-        url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
-        type: 'get',
-        datatype: "json",
-        success: function(data) {
-          console.log('datos'+data)
-          $('#fillRecipeDetails').empty();
-          var product_name;
-          var measure;
-          var quantity;
-          $.each(data, function(a, b) {
-            $.each(b, function(c, d) {
-              product_name = data[a].product_name;
-              measure = data[a].measure_name;
-              quantity = data[a].quantity;
-            })
-              $('#tableOrder').append(
-              `<tr>
-                <td>{{ Form::text('product_id[]', '`+product_name+`', ['class' => 'form-control', 'readonly' ]) }}</td>
-                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
-                <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control','readonly']) }}</td>
-              </tr>`
-            );
+function loadRecipeProducts(id) {
+    $.ajax({
+      url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
+      type: 'get',
+      datatype: "json",
+      success: function(data) {
+        console.log('datos'+data)
+        $('#tableOrder').empty();
+        var product_name;
+        var measure;
+        var quantity;tableOrder
+        $.each(data, function(a, b) {
+          $.each(b, function(c, d) {
+            product_name = data[a].product_name;
+            measure = data[a].measure_name;
+            quantity = data[a].quantity;
           })
-        },
-        error: function(r) {
-          console.log("error"+r)
-        }
-      })
-    }
-    </script>
+            $('#tableOrder').append(
+            `<tr>
+              <td>{{ Form::text('product_id[]', '`+product_name+`', ['class' => 'form-control', 'readonly' ]) }}</td>
+              <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+              <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control','readonly']) }}</td>
+            </tr>`
+          );
+        })
+      },
+      error: function(r) {
+        console.log("error"+r)
+      }
+    })
+  }
 
 
 </script>
