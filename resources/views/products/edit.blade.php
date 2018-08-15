@@ -59,7 +59,7 @@
       product_code: {
         required: "El campo Código Producto es obligatorio",
         integer: "El campo Código Producto debe ser un número entero positivo",
-        minlength: "El campo Código Producto debe ser mínimo 1"
+        minlength: "El campo Código Producto debe contener mínimo 1 carácter"
       },
       id_product_type: {
         required: "El campo Tipo Producto es obligatorio"

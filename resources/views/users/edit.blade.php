@@ -53,6 +53,7 @@
             email: true,
           },
           password: {
+            required: true,
             minlength: 6,
             maxlength: 16
           },
@@ -74,12 +75,12 @@
             email: "Debe ingresar una dirección de correo valida."
           },
           password: {
-            required: "El campo Nombres es obligatorio.",
+            required: "El campo Contraseña es obligatorio.",
             minlength: "El campo Contraseña debe contener mínimo 6 caracteres.",
             maxlength: "El campo Contraseña debe contener máximo 16 caracteres."
           },
           password_confirmation: {
-            equalTo: "Confirmar contraseña"
+            equalTo: "La contraseña debe coincidir"
           }
         }
       });

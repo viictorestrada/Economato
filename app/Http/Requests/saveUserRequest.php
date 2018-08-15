@@ -42,6 +42,7 @@ class saveUserRequest extends FormRequest
         'last_name.max' => 'El campo Apellidos debe contener máximo 45 caracteres',
         'email.required' => 'El campo Correo electrónico es obligatorio',
         'email.email' => 'El campo Correo electrónico debe ser una dirección de correo valida',
+        'password.required' => 'El campo Contraseña es obligatorio',
         'password.min' => 'El campo Constraseña debe contener mínimo 6 caracteres',
         'password.max' => 'El campo Constraseña debe contener máximo 16 caracteres'
       ];
