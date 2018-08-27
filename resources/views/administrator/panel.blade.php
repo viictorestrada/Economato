@@ -198,13 +198,13 @@
                 <div class="card border-secondary">
                     <h4 class="card-header bg-secondary text-light text-center">Ficha tecnica recetas</h4>
                     <div class="card-body">
-                    <form action="{{ url('RecipeHasProducts')}}" method="post" class="forms">
+                    <form action="{{ url('RecipeHasProducts')}}" id="RecipeDetails" method="post" class="forms">
                       @csrf
                     {{-- {{ Form::model($product, ['url' => ['RecipeHasProducts', $product->id], 'class' => 'forms', 'method' => 'POST']) }} --}}
                         <div class="form-group col-md-6 col-lg-6">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar receta <strong class="text-danger">*</strong></label>
-                            <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" onchange="loadRecipeProducts(this.value)" required autofocus>
-                              <option hidden value="{{old('recipe_id')}}"> -- Seleccione una receta -- </option>
+                            <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" onchange="loadRecipeProducts(this.value)" autofocus>
+                              <option hidden value="0"> -- Seleccione una receta -- </option>
                               @foreach ($recipe as $recipes)
                               <option value="{{$recipes->id}}">{{$recipes->recipe_name}}</option>
                                 @endforeach
@@ -264,6 +264,21 @@
 
 @section('script')
     <script>
+      $(()=>{
+        $('#RecipeDetails').validate({
+          rules:{
+            recipe_id:{
+              min: 1
+            }
+          },
+          messages:{
+            recipe_id:{
+              min: "Seleccione una receta"
+            }
+          }
+        });
+      });
+
       var table = $('#recipes').DataTable({
         destroy: true,
         responsive: true,
@@ -441,7 +456,7 @@
           if (data.length == 0) {
             $('#fillRecipeDetails').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::number('quantity[]', null, ['class' => 'form-control',]) }}</td>
               </tr>`

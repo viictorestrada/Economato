@@ -13,11 +13,11 @@
 </div>
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('start_date', 'Fecha inicial') }}
-  {{ Form::date('start_date', null, ['class' => 'form-control'], 'd/m/Y') }}
+  {{ Form::date('start_date', null, ['class' => 'form-control', 'id' => 'start_date'], 'd/m/Y') }}
 </div>
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('finish_date', 'Fecha final') }}
-  {{ Form::date('finish_date', null, ['class' => 'form-control'], 'd/m/Y') }}
+  {{ Form::date('finish_date', null, ['class' => 'form-control',  'id' => 'final_date'], 'd/m/Y') }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('', 'Productos') }}
@@ -25,7 +25,7 @@
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('', 'Unidad de Medida' ) }}
-  {{ Form::text('', null , ['class'=>'form-control unidad','readonly']) }}
+  {{ Form::text('', null , ['class'=>'form-control unidad','readonly', 'placeholder' => 'Unidad de medida']) }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('','Cantidad')}}
@@ -33,11 +33,11 @@
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('','Valor Unitario') }}
-  {{ Form::number('',null,['class'=>'form-control precio_unitario', 'onchange'=>'calculations(this)', 'onkeypress'=>'onlyNumbers()' ] ) }}
+  {{ Form::number('',null,['class'=>'form-control precio_unitario', 'onchange'=>'calculations(this)', 'onkeypress'=>'onlyNumbers()' , 'placeholder' => 'Valor unitario'  ] ) }}
 </div>
 <div class="form-group col-md-3 col-lg-3">
   {{ Form::label('','Sub Total') }}
-  {{ Form::number('',null,['class'=>'form-control subtotal', 'readonly']) }}
+  {{ Form::number('',null,['class'=>'form-control subtotal', 'readonly', 'placeholder' => 'Sub total']) }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('','IVA') }}
@@ -45,11 +45,11 @@
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('' ,'Valor IVA' ) }}
-  {{ Form::text('',null,['class'=>'form-control valor_iva','readonly']) }}
+  {{ Form::text('',null,['class'=>'form-control valor_iva','readonly', 'placeholder' => 'Valor IVA']) }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
     {{ Form::label('' ,'Total' ) }}
-    {{ Form::text('', null ,['class'=>'form-control total', 'readonly'] ) }}
+    {{ Form::text('', null ,['class'=>'form-control total', 'readonly', 'placeholder' => 'Total'] ) }}
 </div>
 <hr class="bg-dark">
 

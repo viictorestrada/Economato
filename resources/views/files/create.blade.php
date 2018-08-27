@@ -58,6 +58,14 @@
             digits: true,
             maxlength: 25
           },
+          start_date:{
+            required: true,
+            date: true
+          },
+          finish_date:{
+            required: true,
+            date: true
+          }
         },
         messages: {
           program_id: {
@@ -67,19 +75,27 @@
             required: "Debes elegir una Caracterización.",
           },
           file_number: {
-            required: "El campo Número de Ficha debe existir.",
+            required: "El campo Número de Ficha es obligatorio.",
             digits: "El campo Número de Ficha debe ser numérico.",
             maxlength: "El campo Número de Ficha debe contener máximo 25 caracteres."
           },
           file_route: {
-            required: "El campo Ruta de Aprendizaje debe existir.",
+            required: "El campo Ruta de Aprendizaje es obligatorio.",
             maxlength: "El campo Ruta de Aprendizaje debe contener máximo 30 caracteres."
           },
           apprentices: {
-            required: "El campo Aprendices debe existir.",
+            required: "El campo Aprendices es obligatorio.",
             digits: "El campo Aprendices debe ser numérico.",
             maxlength: "El campo Aprendices debe contener máximo 25 caracteres."
           },
+          start_date:{
+            required: "El campo fecha de inicio es obligatorio",
+            date: "Ingrese una fecha valida"
+          },
+          finish_date:{
+            required: "El campo fecha final es obligatorio",
+            date: "ingrese una fecha valida"
+          }
         }
       });
     });

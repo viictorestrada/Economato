@@ -35,7 +35,21 @@
 
 @section('script')
   <script>
+    var initial_date = 0
+    var final_date = 0
+    $('#start_date').change(function(){
+         initial_date = $('#start_date').val();
+    });
+
+    $('#final_date').change(function(){
+         final_date = $('#final_date').val();
+         
+    });
+
     $(() => {
+      $.validator.addMethod('fechas', function (value, element) {
+        return this.optional(element) || moment(initial_date).isBefore(final_date);
+      });
       $('#createContracts').validate({
         rules: {
           provider_id: {
@@ -51,9 +65,14 @@
             number: true,
             maxlength: 25
           },
-          contract_date: {
+          start_date: {
             required: true,
-            date: true
+            date: true,
+          },
+          finish_date: {
+            required: true,
+            date: true,
+            fechas: true
           },
         },
         messages: {
@@ -70,10 +89,15 @@
             digits: "El campo Valor Contrato debe ser numerico.",
             maxlength: "El campo Valor Contrato debe contener máximo 25 caracteres."
           },
-          contract_date: {
-            required: "El campo Fecha es obligatorio.",
-            date: "El campo debe ser una fecha válida."
+          start_date: {
+            required: "El campo Fecha inicial es obligatorio.",
+            date: "El campo debe ser una fecha válida.",
           },
+          finish_date: {
+            required: "El campo Fecha final es obligatorio.",
+            date: "El campo debe ser una fecha válida.",
+            fechas: "La fecha inicial es mayor o igual a la final."
+          }
         }
       });
     });

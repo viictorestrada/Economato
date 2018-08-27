@@ -41,6 +41,9 @@ class ContractController extends Controller
     public function store(Request $request)
     {
       $input=$request->all();
+      if (count($input)<7) {
+        return redirect('contracts/create')->with([swal()->autoclose(1500)->error('Registro Fallido', 'No se han agregado productos!')]);
+      }
       $contract=Contract::create(['provider_id' =>$input['provider_id'], 'contract_number'=>$input['contract_number'],
       'contract_price'=>$input["contract_price"], 'start_date'=>$input['start_date'], 'finish_date'=>$input["finish_date"]
       ]);

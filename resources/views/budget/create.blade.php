@@ -16,7 +16,7 @@
               </div>
             </div><hr>
 
-            {{ Form::open(['url' => 'budgets', 'class' => 'forms']) }}
+            {{ Form::open(['url' => 'budgets', 'class' => 'forms', 'id' => 'BudgetCreate']) }}
 
               @csrf
               <div class="row">
@@ -30,4 +30,45 @@
       </div>
     </div>
   </div>
+@endsection
+@section('script')
+<script>
+  $(()=>{
+    $('#BudgetCreate').validate({
+      rules:{
+        budget:{
+          required: true
+        },
+        budget_code:{
+          required: true
+        },
+        budget_begin_date:{
+          required: true,
+          date: true
+        },
+        budget_finish_date:{
+          required: true,
+          date: true
+        }
+      },
+        messages:{
+          budget:{
+            required: "El campo Presupuesto es obligatorio"
+          },
+          budget_code:{
+          required: "El campo Código es obligatorio"
+         },
+         budget_begin_date:{
+          required: "El campo fecha de inicio es obligatorio",
+          date: "Ingrese una fecha valida"
+        },
+        budget_finish_date:{
+          required: "El campo fecha final es obligatorio",
+          date: "Ingrese una fecha valida"
+        }
+        
+      }
+    });
+  });
+</script>
 @endsection

@@ -78,6 +78,7 @@
   <script src="{{ asset('datatables/js/dataTables.responsive.min.js') }}"></script>
   <script src="{{ asset('datatables/js/responsive.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('js/functions.js') }}"></script>
+  <script src="{{ asset('js/moment.js') }}"></script>
   @yield('script')
   @include('sweetalert::cdn')
   @include('sweetalert::view')

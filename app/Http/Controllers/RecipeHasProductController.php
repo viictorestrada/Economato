@@ -14,6 +14,10 @@ class RecipeHasProductController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        if ($input['product_id'][0] == null || $input['quantity'][0] == null) {
+            return back()->with([swal()->autoclose(1500)->error('Registro fallido', 'No se pudo agregar la receta!')]);
+        }
+        else{
         if ($input['recipe_id'] != null) {
             $recipe = RecipeHasProduct::where('recipe_id', $input['recipe_id'])->delete();
         }
@@ -26,6 +30,7 @@ class RecipeHasProductController extends Controller
         }
         $updateRecipeCost=Recipe::where('id',$input['recipe_id'])->update(['recipes_cost' => $recipe_cost]);
          return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+        }
     }
 
     public function detailsShow($id)
