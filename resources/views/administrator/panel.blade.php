@@ -521,17 +521,17 @@
           });
         });
 
-    $(document).ready(function(){
-    $(document).on('click', '.addProducts', function(){
-      var html =
-      `<tr>
-          <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
-          <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
-          <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
-          <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
-      </tr>`;
-        $('#fillRecipeDetails').append(html);
-    });
+      $(document).ready(function(){
+      $(document).on('click', '.addProducts', function(){
+        var html =
+        `<tr>
+            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+            <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
+            <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
+            <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+        </tr>`;
+          $('#fillRecipeDetails').append(html);
+      });
 
     $(document).on('click', '.remove', function(){
       $(this).closest('tr').remove();
@@ -547,11 +547,12 @@
     $("#idOrder").val(order),
     $("#recipes_id").val(id)
     $.ajax({
-        url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
+        url: "{{ url('RecipeHasProduct') }}" + '/' + id + '/' + order + "/details",
         type: 'get',
         datatype: "json",
         success: function(data) {
           $('#orderEditDetails').empty();
+          $('#package_number').val(null);
           var product_id;
           var measure;
           var quantity;
@@ -562,6 +563,7 @@
               measure = data[a].measure_name;
               quantity = data[a].quantity;
             })
+              $('#package_number').val(b['package_number']);
             if (a == 0) {
               $('#orderEditDetails').append(
               `<tr>
@@ -589,7 +591,7 @@
         },
         error: function() {
         }
-      })
+    })
 
   }
   </script>

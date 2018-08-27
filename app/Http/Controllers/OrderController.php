@@ -8,6 +8,7 @@ use App\Models\Recipe;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\RecipeHasProduct;
+use App\Models\OrderRecipe;
 use Auth;
 
 
@@ -76,8 +77,12 @@ class OrderController extends Controller
     }
 
     public function updateStatus($id,$status){
-      $updateStatus=Order::findOrfail($id)->update(["status" => $status]);
-      return response()->json($updateStatus);
+      $validationModify=OrderRecipe::where('order_id', $id)->first();
+      dump($validationModify);
+      if($validationModify != null){
+         $updateStatus=Order::findOrfail($id)->update(["status" => $status]);
+      }
+       return response()->json($updateStatus);
     }
 
 
