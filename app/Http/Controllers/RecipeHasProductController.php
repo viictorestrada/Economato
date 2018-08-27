@@ -7,12 +7,14 @@ use App\Models\RecipeHasProduct;
 use App\Models\ProductsHasContracts;
 use App\Models\Product;
 use App\Models\Recipe;
-
+use App\Models\Order;
+use App\Models\OrderRecipe;
 
 class RecipeHasProductController extends Controller
 {
     public function store(Request $request)
     {
+
         $input = $request->all();
         if ($input['recipe_id'] != null) {
             $recipe = RecipeHasProduct::where('recipe_id', $input['recipe_id'])->delete();
@@ -36,6 +38,7 @@ class RecipeHasProductController extends Controller
 
     public function edit($id)
     {
+
       $recipe = RecipeHasProduct::select('recipes_has_products.*','products.product_name','measure_unit.measure_name','products_has_contracts.unit_price','recipes.recipes_cost')
       ->join('products','products.id', '=', 'recipes_has_products.product_id')
       ->join('products_has_contracts', 'products.id', '=' , 'products_has_contracts.products_id')
@@ -43,7 +46,29 @@ class RecipeHasProductController extends Controller
       ->join('recipes','recipes.id', '=' , 'recipes_has_products.recipe_id')
       ->where('recipes_has_products.recipe_id',$id)->get()->all();
 
+
        return $recipe;
+    }
+
+
+    public function show($id,$order){
+
+      $status=Order::findOrfail($order);
+       if ($status->status == 1 )
+       {
+          $recipe=RecipeHasProductController::edit($id);
+        }
+        else if($status->status==0)
+        {
+          $recipe = OrderRecipe::select('orders_recipes.*','products.product_name','measure_unit.measure_name','orders_recipes.quantity')
+          ->join('products','products.id', '=', 'orders_recipes.product_id')
+          ->join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')
+          ->join('recipes','recipes.id', '=' , 'orders_recipes.recipe_id')
+          ->where('orders_recipes.order_id',$order)
+          ->get()->all();
+       }
+       return $recipe;
+
     }
 
     public function update(Request $request, $id)

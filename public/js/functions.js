@@ -21,9 +21,9 @@ function managmentOrder(id,status)
   }).then((result) => {
     if (result.value) {
         $.get(`/orders/updateStatus/${id}/${status}`, function(data){
-           swal('Pedido Realizado','El taller ha sido solicitado.','success').then(function (){
-            location.reload();
-           });
+          //  swal('Pedido Realizado','El taller ha sido solicitado.','success').then(function (){
+          //   location.reload();
+          //  });
         });
       } else {
         swal("Solicitud Cancelada", "La solicitud no se realizo correctamente.", "error");

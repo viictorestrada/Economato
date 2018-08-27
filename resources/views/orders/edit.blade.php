@@ -32,7 +32,7 @@
                       </div>
                       <div class="form-group d-flex justify-content-end">
                         <div class="col-md-3">
-                          <input type="number" class="form-control" placeholder="N° Paquetes" name="package_number" id="package_number">
+                          <input type="number" class="form-control package_number" placeholder="N° Paquetes" name="package_number" id="package_number">
                         </div>
                     </div>
                     </div>

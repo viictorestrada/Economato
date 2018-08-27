@@ -48,7 +48,7 @@ class AdministratorController extends Controller
     ->get();
     return DataTables::of($requestInstructor)
     ->addColumn('action', function ($id) {
-      if ($id->status == 1) {
+      if ($id->status == 1 || $id->status== 0) {
         $bot = '<a onclick="modalEditOrder('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
         <a onclick="managmentOrder('.$id->id.', 2 )" data-outline-toggle="tooltip" title="Aprobar solicitud de taller." class="btn btn-md btn-outline-success text-success"><i class="fa fa-check-circle"></i></a>
          <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
@@ -71,11 +71,11 @@ class AdministratorController extends Controller
       if($id->status==1){
         return "Solicitado";
       }else if($id->status==2){
-        return  "Pedido";
+        return  "Pedido proveedor";
       }else if($id->status==3){
         return "Entregado";
       }else if($id->status==0){
-        return "Rechazado";
+        return "Modificado";
       }
       // return $id->status == 1 ? "Solicitud": $id->status == 2 ?  "Pedido" : "Entregado";
     })

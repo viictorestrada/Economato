@@ -15,6 +15,7 @@ Route::get('/panel/getOrder','AdministratorController@requestTable');
 
 //Ruta para mostrar el detalle de la receta
 Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
+Route::get('RecipeHasProduct/{id}/{order}/details','RecipeHasProductController@show');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 

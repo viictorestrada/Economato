@@ -47,7 +47,13 @@ class BudgetController extends Controller
         'budget_begin_date' => 'required|date',
         'budget_finish_date' => 'required|date'
       ]);
-      Budget::create($request->all());
+      Budget::create([
+        'initial_budget'=>$request['budget'],
+        'budget'=>$request['budget'],
+        'budget_code'=>$request['budget_code'],
+        'budget_begin_date'=>$request['budget_begin_date'],
+        'budget_finish_date'=>$request['budget_finish_date']
+      ]);
       return redirect('budgets')->with([swal()->autoclose(1500)->success('Registro Existoso', 'Se agrego un nuevo registro')]);
     }
 
