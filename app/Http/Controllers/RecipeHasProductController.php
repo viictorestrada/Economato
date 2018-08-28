@@ -35,12 +35,6 @@ class RecipeHasProductController extends Controller
         }
     }
 
-    public function detailsShow($id)
-    {
-
-
-    }
-
     public function edit($id)
     {
 
@@ -76,13 +70,5 @@ class RecipeHasProductController extends Controller
 
     }
 
-    public function update(Request $request, $id)
-    {
 
-    }
-
-    public function status(Type $var = null)
-    {
-
-    }
 }

@@ -11,25 +11,6 @@ use DB;
 // use App\Http\Controllers\OrderController;
 class OrderRecipeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        echo "index";
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        echo "create";
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,7 +37,6 @@ class OrderRecipeController extends Controller
             return redirect('panel')->with([swal()->autoclose(3500)->error('Producto agotado.','La cantidad de '.$data->product_name.' no se encuentran disponible en el contrato.')]);
          }
         }
-        dump($countValidationArrays);
         if ($countValidationArrays==count($request['product_id'])){
           foreach($request['product_id']  as $key => $value){
             $createRecipeOrder = OrderRecipe::create([ 'recipe_id' => $request['recipe_id'],
@@ -68,7 +48,7 @@ class OrderRecipeController extends Controller
           }
         $order=Order::findOrfail($request['idOrder'])->update(['status' => '0']);
         // });
-        // return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
+        return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
       }
 
 
@@ -94,48 +74,5 @@ class OrderRecipeController extends Controller
       return redirect('panel')->with([swal()->autoclose(1500)->success('Entrega exitosa.','La entrega ha sido exitosa.')]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        echo "ingreso show";
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-      echo "ingreso edit";
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        echo "hola";
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        echo "ingreso destroy";
-    }
 }
