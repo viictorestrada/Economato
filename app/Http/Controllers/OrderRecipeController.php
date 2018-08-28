@@ -44,29 +44,33 @@ class OrderRecipeController extends Controller
           $deleteDetails = OrderRecipe::where('order_id', '=' ,$request['idOrder'])->delete();
         }
 
-        foreach($request['product_id']  as $key => $value){
+        $countValidationArrays=0;
 
+        foreach($request['product_id']  as $key => $value){
           $quantityContract = ProductsHasContracts::where('products_id', $request['product_id'][$key])
           ->select('quantity')->first();
-
-          if(( $request['quantity'][$key] * $request['package_number']) < $quantityContract->quantity){
-
-          $createRecipeOrder = OrderRecipe::create([ 'recipe_id' => $request['recipe_id'],
-          'product_id' => $request['product_id'][$key],
-          'order_id' => $request['idOrder'],
-          'quantity' =>$request['quantity'][$key],
-          'package_number' => $request['package_number']]);
-        }else{
-
-          $data = Product::findOrfail($request["product_id"][$key]);
-          return redirect('panel')->with([swal()->autoclose(3500)->error('Producto agotado.','La cantidad de '.$data->product_name.' no se encuentran disponible en el contrato.')]);
-       }
-
-      }
+          if(( $request['quantity'][$key] * $request['package_number']) <= $quantityContract->quantity){
+            $countValidationArrays +=1;
+          }else{
+            $data = Product::findOrfail($request["product_id"][$key]);
+            return redirect('panel')->with([swal()->autoclose(3500)->error('Producto agotado.','La cantidad de '.$data->product_name.' no se encuentran disponible en el contrato.')]);
+         }
+        }
+        dump($countValidationArrays);
+        if ($countValidationArrays==count($request['product_id'])){
+          foreach($request['product_id']  as $key => $value){
+            $createRecipeOrder = OrderRecipe::create([ 'recipe_id' => $request['recipe_id'],
+              'product_id' => $request['product_id'][$key],
+              'order_id' => $request['idOrder'],
+              'quantity' =>$request['quantity'][$key],
+              'package_number' => $request['package_number']]);
+            }
+          }
         $order=Order::findOrfail($request['idOrder'])->update(['status' => '0']);
-      // });
-      return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
-    }
+        // });
+        // return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
+      }
+
 
     public function updateQuantity($id){
 

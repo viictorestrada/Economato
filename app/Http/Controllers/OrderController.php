@@ -78,11 +78,13 @@ class OrderController extends Controller
 
     public function updateStatus($id,$status){
       $validationModify=OrderRecipe::where('order_id', $id)->first();
-      dump($validationModify);
       if($validationModify != null){
          $updateStatus=Order::findOrfail($id)->update(["status" => $status]);
+          $array = array('status' => 'updateTrue' );
+      }else{
+          $array = array('status' => 'updateFalse');
       }
-       return response()->json($updateStatus);
+       return response()->json($array);
     }
 
 

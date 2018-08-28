@@ -21,12 +21,17 @@ function managmentOrder(id,status)
   }).then((result) => {
     if (result.value) {
         $.get(`/orders/updateStatus/${id}/${status}`, function(data){
-          //  swal('Pedido Realizado','El taller ha sido solicitado.','success').then(function (){
-          //   location.reload();
-          //  });
+          if(data.status==="updateTrue")
+           swal('Pedido Realizado','El taller ha sido solicitado.','success').then(function (){
+            location.reload();
+           })
+          else if(data.status==="updateFalse") {
+            swal('Modifique la solicitud','Por favor modifique la solicitud para conocer el número de paquetes por receta.','error')
+            // .then(function (){
+              // location.reload();
+            //  })
+          }
         });
-      } else {
-        swal("Solicitud Cancelada", "La solicitud no se realizo correctamente.", "error");
       }
     })
 }else if(status==0){
@@ -96,7 +101,7 @@ $(document).ready(function () {
                   <td><input type="number" name="total[]" class="form-control" value="`+$(".total").val()+`" readonly></td>
 
                   </tr>`
-                ); 
+                );
                 $(".unidad").val('');
                 $(".cantidad").val('');
                 $(".precio_unitario").val('');
