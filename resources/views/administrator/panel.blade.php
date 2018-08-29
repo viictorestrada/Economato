@@ -108,6 +108,11 @@
 
         <!--Contenido de Solicitudes-->
         <div class="tab-pane fade" id="v-pills-solicitudes" role="tabpanel" aria-labelledby="v-pills-solicitudes-tab">
+          {{-- <div>
+          <a href="{{ url('pdf/orders') }}" style="text-decoration : none; color:black">  Nuevas solicitudes,  Descargar PDF. <i class="far fa-file-pdf fa-2x" style="color:red"></i>
+          </a>
+          </div> --}}
+          <br>
           <div class="card border-secondary">
             <h4 class="card-header bg-secondary text-light">Solicitudes</h4>
             <div class="card-body">
@@ -162,9 +167,24 @@
           <div class="card border-secondary">
             <h4 class="card-header bg-secondary text-light">Entregas</h4>
             <div class="card-body">
-              <h4 class="card-title">Special title treatment</h4>
+              {{-- <h4 class="card-title">Special title treatment</h4>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+              <div class="responsive">
+              <table class="table table-bordered table-md" id="entregas" width="100%">
+                <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                    <th>Ficha</th>
+                    <th>Programa de Formación</th>
+                    <th>Taller</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
             </div>
            </div>
           </div>
@@ -314,6 +334,26 @@
           { data: 'action', name: 'action', orderable: false, searchable: true }
         ]
       });
+
+      var table3= $('#entregas').DataTable({
+        responsive:true,
+        destroy:true,
+        processing:true,
+        serverSide:true,
+        language: {
+          "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/panel/getOrderFinished',
+        columns: [
+          { data: 'user_name', name: 'user_name' },
+          { data: 'order_date', name: 'order_date' },
+          { data: 'file_number', name: 'file_number' },
+          { data: 'program_name', name: 'program_name' },
+          { data: 'recipe_name', name: 'recipe_name' },
+          { data: 'status', name: 'status' },
+          { data: 'action', name: 'action', orderable: false, searchable: true }
+        ]
+      })
 
     function addRecipe() {
       save_method = "add";

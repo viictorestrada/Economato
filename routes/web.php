@@ -12,6 +12,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::resource('orders', 'OrderController');
 Route::get('/order/{id}','OrderController@getCharacterization');
 Route::get('/panel/getOrder','AdministratorController@requestTable');
+Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
 
 //Ruta para mostrar el detalle de la receta
 Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
@@ -125,6 +126,9 @@ Route::resource('orderRecipeEdit','OrderRecipeController',['except '=> 'show','e
 //Ruta pa modificar el estado de la orden
 Route::get('/orders/updateStatus/{id}/{status}','OrderController@updateStatus');
 Route::get('/orderRecipeEdit/updateQuantity/{id}','OrderRecipeController@updateQuantity' , ['except '=> 'show','edit','update','destroy']);
+
+//ruta para generar pdf de las nuevas ordenes al proveedor
+Route::get('pdf/products', 'ProductController@pdf' );
 });
 
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------

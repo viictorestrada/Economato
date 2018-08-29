@@ -9,6 +9,7 @@ use App\Models\Presentation;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveProductRequest;
 use App\Http\Requests\updateProductRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use DataTables;
 
 class ProductController extends Controller
@@ -18,6 +19,16 @@ class ProductController extends Controller
   {
     $products = Product::all();
     return view('products.index', compact('products'));
+  }
+
+  public function pdf()
+  {
+
+      $products = Product::all();
+
+      $pdf = PDF::loadView('products.pdf', compact('products'));
+
+      return $pdf->download('listado.pdf');
   }
 
 
@@ -84,5 +95,6 @@ class ProductController extends Controller
     $product->update(["status"=>$status]);
     return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
   }
+
 
 }
