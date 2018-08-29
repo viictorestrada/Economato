@@ -57,7 +57,7 @@ class RecipeHasProductController extends Controller
        {
           $recipe=RecipeHasProductController::edit($id);
         }
-        else if($status->status==0)
+        else if($status->status==4)
         {
           $recipe = OrderRecipe::select('orders_recipes.*','products.product_name','measure_unit.measure_name','orders_recipes.quantity')
           ->join('products','products.id', '=', 'orders_recipes.product_id')

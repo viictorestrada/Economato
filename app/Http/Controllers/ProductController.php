@@ -21,7 +21,7 @@ class ProductController extends Controller
     return view('products.index', compact('products'));
   }
 
-  public function pdf()
+  public function pdf($id)
   {
 
       $products = Product::all();

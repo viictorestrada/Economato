@@ -31,7 +31,8 @@
                         </div>
                       </div>
                       <div class="form-group d-flex justify-content-end">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                            <label for="">Numéro de paquetes:</label>
                           <input type="number" class="form-control package_number" placeholder="N° Paquetes" name="package_number" id="package_number">
                         </div>
                     </div>

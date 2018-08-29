@@ -41,11 +41,13 @@ class AdministratorController extends Controller
 
   public function requestTable()
   {
-    $requestInstructor=Order::select('orders.*','recipes.recipe_name','files.file_number','programs.program_name')
+    $requestInstructor=Order::where('orders.status' ,'=', '1')
+    ->orWhere('orders.status' ,'=', '2')
+    ->orWhere('orders.status' ,'=', '4')
+    ->select('orders.*','recipes.recipe_name','files.file_number','programs.program_name')
     ->join('recipes', 'orders.recipes_id','=','recipes.id')
     ->join('files', 'orders.files_id' , '=' , 'files.id')
     ->join('programs' , 'files.program_id', '=' ,'programs.id')
-    ->where('order.status' , '=' , '1' )
     ->get();
     return DataTables::of($requestInstructor)
     ->addColumn('action', function ($id) {
@@ -57,7 +59,7 @@ class AdministratorController extends Controller
       }
       else if ($id->status == 2)
       {
-        $bot = '<a href="{{ url("pdf/products") }}" style="text-decoration : none; color:black"><i class="far fa-file-pdf fa-2x" style="color:red"></i>
+        $bot = '<a href="pdf/products/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar orden." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
         </a>
         <a href="/orderRecipeEdit/updateQuantity/'.$id->id.'"  class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar Solicitud" ><i class="fa fa-arrow-right"></i></a>';
         return $bot;
@@ -70,32 +72,21 @@ class AdministratorController extends Controller
       }else if($id->status==4){
         return "Modificado";
       }
-      // return $id->status == 1 ? "Solicitud": $id->status == 2 ?  "Pedido" : "Entregado";
     })
     ->make(true);
   }
 
   public function requestTableFinished(){
-    $requestInstructor=Order::select('orders.*','recipes.recipe_name','files.file_number','programs.program_name')
+    $requestInstructor=Order::where('orders.status' ,'=', '3')
+    ->orWhere('orders.status' ,'=', '0')
+    ->select('orders.*','recipes.recipe_name','files.file_number','programs.program_name')
     ->join('recipes', 'orders.recipes_id','=','recipes.id')
     ->join('files', 'orders.files_id' , '=' , 'files.id')
     ->join('programs' , 'files.program_id', '=' ,'programs.id')
     ->get();
     return DataTables::of($requestInstructor)
     ->addColumn('action' , function($id){
-      if ($id->status == 1 || $id->status== 4) {
-        $bot = '<a onclick="modalEditOrder('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
-        <a onclick="managmentOrder('.$id->id.', 2 )" data-outline-toggle="tooltip" title="Aprobar solicitud de taller." class="btn btn-md btn-outline-success text-success"><i class="fa fa-check-circle"></i></a>
-         <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
-         return $bot;
-      }
-      else if ($id->status == 2)
-      {
-        $bot = '<a href="{{ url("pdf/products") }}" style="text-decoration : none; color:black"><i class="far fa-file-pdf fa-2x" style="color:red"></i>
-        </a>
-        <a href="/orderRecipeEdit/updateQuantity/'.$id->id.'"  class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar Solicitud" ><i class="fa fa-arrow-right"></i></a>';
-        return $bot;
-      }else if(  $id->status==0){
+     if(  $id->status==0){
         $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud rechazada.">Rechazado</i></a>';
         return $bot;
       }
@@ -104,18 +95,11 @@ class AdministratorController extends Controller
         return $bot;
       }
     })->editColumn('status', function ($id) {
-      if($id->status==1){
-        return "Solicitado";
-      }else if($id->status==2){
-        return  "Pedido proveedor";
-      }else if($id->status==3){
+      if($id->status==3){
         return "Entregado";
       }else if($id->status==0){
         return "Cancelado";
-      }else if($id->status==4){
-        return "Modificado";
       }
-      // return $id->status == 1 ? "Solicitud": $id->status == 2 ?  "Pedido" : "Entregado";
     })
     ->make(true);
   }
