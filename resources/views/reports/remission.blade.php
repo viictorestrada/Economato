@@ -13,8 +13,20 @@
     </style>
 </head>
 <body>
-  <h1>Page 1</h1>
-  <div class="page-break"></div>
-  <h1>Page 2</h1>
+{{
+  dump($products)
+}}
+  @foreach($products as $key => $value){
+    <table>
+      <thead>
+        <th>Producto</th>
+        <th>Unidad de Medida</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+        <th>Iva</th>
+        <th>Total</th>
+      </thead>
+    </table>
+  }
 </body>
 </html>
