@@ -46,6 +46,7 @@ class OrderRecipeController extends Controller
               'package_number' => $request['package_number']]);
             }
           }
+
         $order=Order::findOrfail($request['idOrder'])->update(['status' => '4']);
         // });
         return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
