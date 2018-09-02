@@ -41,7 +41,7 @@
     </li>
 
     <li class="nav-item">
-        <a href="{{ url('orders') }}" class="nav-link" style="color: white"><i class="fa fa-bell fa-lg"></i> Notificaciones</a>
+        <a href="{{ url('orders') }}" class="nav-link" style="color: white"><i class="fa fa-bell fa-lg"></i> Gestion de pedidos</a>
     </li>
 
     <li class="nav-item">

@@ -59,7 +59,7 @@ class AdministratorController extends Controller
       }
       else if ($id->status == 2)
       {
-        $bot = '<a href="pdf/products/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar orden." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
+        $bot = '<a href="pdf/orderProvider/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
         </a>
         <a href="/orderRecipeEdit/updateQuantity/'.$id->id.'"  class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar Solicitud" ><i class="fa fa-arrow-right"></i></a>';
         return $bot;
