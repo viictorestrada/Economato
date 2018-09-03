@@ -29,7 +29,8 @@ class OrderRecipeController extends Controller
         $product_price=0;
         foreach($request['product_id']  as $key => $value){
           $quantityContract = ProductsHasContracts::where('products_id', $request['product_id'][$key])
-          ->select('quantity')->first();
+          ->select('quantity')
+          ->first();
           if(( $request['quantity'][$key] * $request['package_number']) <= $quantityContract->quantity){
             $countValidationArrays +=1;
             $priceProduct=Product::where('products.id',$request['product_id'][$key])
@@ -55,6 +56,7 @@ class OrderRecipeController extends Controller
               'cost' => $costRecipe ]);
             }
           }
+
         $order=Order::findOrfail($request['idOrder'])->update(['status' => '4']);
         // });
         // return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
