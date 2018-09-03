@@ -27,7 +27,7 @@ class RedirectIfAuthenticated
       }else if (Auth::user()->rol_id == 4) {
         return redirect('/panel');
       }else if (Auth::user()->rol_id == 5) {
-        return redirect('ordersProduction');
+        return redirect('Production_orders');
       }
     }else{
       return $next($request);
