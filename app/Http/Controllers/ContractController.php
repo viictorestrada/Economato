@@ -44,21 +44,28 @@ class ContractController extends Controller
       if (count($input)<7) {
         return redirect('contracts/create')->with([swal()->autoclose(1500)->error('Registro Fallido', 'No se han agregado productos!')]);
       }
-      $contract=Contract::create(['provider_id' =>$input['provider_id'], 'contract_number'=>$input['contract_number'],
-      'contract_price'=>$input["contract_price"], 'start_date'=>$input['start_date'], 'finish_date'=>$input["finish_date"]
+      $contract=Contract::create(['provider_id' =>$input['provider_id'],
+      'contract_number'=>$input['contract_number'],
+      'contract_price'=>$input["contract_price"],
+      'start_date'=>$input['start_date'],
+      'finish_date'=>$input["finish_date"]
       ]);
         $contracts=Contract::all();
         $var=$contracts->last();
         $idContract=$var->id;
       DB::transaction(function() use($input,$idContract){
           foreach($input['products_id'] as $key => $value){
-            ProductsHasContracts::create(['products_id'=>$input['products_id'][$key], 'contracts_id'=>$idContract, 'quantity'=>$input['quantity'][$key],
-            'unit_price'=>$input['unit_price'][$key],'taxes_id'=>$input['taxes_id'][$key],
-            'total_with_tax'=>$input['total_with_tax'][$key], 'tax_value'=>$input['tax_value'][$key],
-            'total'=>$input['total'][$key], 'quantity_agreed'=>$input['quantity'][$key]]);
+            ProductsHasContracts::create(['products_id'=>$input['products_id'][$key],
+            'contracts_id'=>$idContract,
+            'quantity'=>$input['quantity'][$key],
+            'unit_price'=>$input['unit_price'][$key],
+            'taxes_id'=>$input['taxes_id'][$key],
+            'total_with_tax'=>$input['total_with_tax'][$key],
+            'tax_value'=>$input['tax_value'][$key],
+            'total'=>$input['total'][$key],
+            'quantity_agreed'=>$input['quantity'][$key]]);
           }
     });
-
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
 

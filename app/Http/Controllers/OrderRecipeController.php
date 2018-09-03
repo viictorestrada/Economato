@@ -51,7 +51,8 @@ class OrderRecipeController extends Controller
               'product_id' => $request['product_id'][$key],
               'order_id' => $request['idOrder'],
               'quantity' =>$request['quantity'][$key],
-              'package_number' => $request['package_number']]);
+              'package_number' => $request['package_number'],
+              'cost' => $costRecipe ]);
             }
           }
         $order=Order::findOrfail($request['idOrder'])->update(['status' => '4']);
