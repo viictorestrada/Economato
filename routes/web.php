@@ -129,7 +129,7 @@ Route::get('/orders/updateStatus/{id}/{status}','OrderController@updateStatus');
 Route::get('/orderRecipeEdit/updateQuantity/{id}','OrderRecipeController@updateQuantity' , ['except '=> 'show','edit','update','destroy']);
 
 //ruta para generar pdf de las nuevas ordenes al proveedor
-Route::get('pdf/products', 'ProductController@pdf' );
+Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );
 });
 
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------
