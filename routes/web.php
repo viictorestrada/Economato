@@ -71,6 +71,7 @@ Route::resource('taxes', 'TaxesController', ['except' => 'show','destroy','creat
 Route::get('/contracts/get', 'ContractController@contractsList');
 Route::get('/contract/measure_unit/{id}', 'ContractController@getMeasureUnit');
 Route::resource('contracts', 'ContractController', ['except' => 'show', 'destroy']);
+Route::get('contract/pdf', 'ContractController@generatePDF');
 
 //Rutas para crud de usuarios
 Route::get('/users/get', 'UserController@usersList');
@@ -137,4 +138,9 @@ Route::group(['middleware' => ['auth', 'executive']], function () {
   //Ruta de reportes
 Route::get('reports', 'ReportController@index');
 
+});
+
+Route::group(['middleware' => ['auth', 'leader']], function ()
+{
+  Route::resource('Production_orders','ProductionOrdersController', ['except' => 'show','edit','update','destroy']);
 });

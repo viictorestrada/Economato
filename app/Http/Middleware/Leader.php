@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class Leader
 {
@@ -15,6 +16,10 @@ class Leader
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (Auth::user()->rol_id != 5) {
+            return redirect('/');
+          }else{
+            return $next($request);
+          }
     }
 }
