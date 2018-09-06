@@ -93,9 +93,11 @@ class AdministratorController extends Controller
       }
       else if(  $id->status==3){
         $bot = '<a class="btn btn-md btn-outline-info text-info entregado"  data-toggle="tooltip" title="Solicitud entregada.">Entregado</i></a>
-        <a class="btn btn-outline-dark">
+        <a class="btn">
         <input type="checkbox" id="checkbox" class="checkbox"  name="factura[]" value="'.$id->id.'" />
         <label for="checkbox"><span></span></label>
+        </a>
+        <a href="pdf/orderProvider/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
         </a>';
         return $bot;
       }

@@ -30,11 +30,10 @@ class RecipeHasProductController extends Controller
           ->get()->first();
           $measure = Product::measureUnit($value);
           $recipe_cost = $recipe_cost + $input['quantity'][$key] * ( $select->unit_price + (($select->unit_price*$select->tax)/100) );
-          dd($input['quantity'][$key]);
-          // RecipeHasProduct::create(['recipe_id' => $input['recipe_id'], 'product_id'=>$value , 'quantity' =>$input['quantity'][$key]]);
+          RecipeHasProduct::create(['recipe_id' => $input['recipe_id'], 'product_id'=>$value , 'quantity' =>$input['quantity'][$key]]);
         }
         $updateRecipeCost=Recipe::where('id',$input['recipe_id'])->update(['recipes_cost' => $recipe_cost]);
-         return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+         return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado una nueva receta.')]);
         }
     }
 
@@ -48,18 +47,7 @@ class RecipeHasProductController extends Controller
       ->join('recipes','recipes.id', '=' , 'recipes_has_products.recipe_id')
       ->where('recipes_has_products.recipe_id',$id)->get()->all();
 
-      // foreach($recipe as $key => $value){
-      //    $price=($value->unit_price*$value->tax)/100+$value->unit_price;
-
-      //    dump($price);
-      //   }
-        // return response()->json([ 'price' => $price]);
-        // if($request->ajax()){
-      //   dump($price);
-      // }else{
-        // dd($recipe);
-        return $recipe;
-      // }
+      return $recipe;
 
     }
 
