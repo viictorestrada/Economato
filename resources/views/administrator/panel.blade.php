@@ -193,6 +193,9 @@
 
           <div class="card border-secondary">
             <h4 class="card-header bg-secondary text-light">Entregas</h4>
+            <form action="/panel/updateBudget" id="formCheck" name="formCheck" method="POST" onsubmit="return checkOrder()" >
+              @csrf
+            <button type="submit"  style="width:100%" class="btn btn-info  justify-content-end"><i class="fa fa-clipboard-list"></i> Facturar ordenes seleccionadas.</button>
             <div class="card-body">
               {{-- <h4 class="card-title">Special title treatment</h4>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -211,6 +214,7 @@
                   </tr>
                 </thead>
               </table>
+            </form>
             </div>
             </div>
            </div>
@@ -310,6 +314,7 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('js/functions.js') }}"></script>
     <script>
       $(()=>{
         $('#RecipeDetails').validate({
@@ -358,7 +363,8 @@
           { data: 'program_name', name: 'program_name' },
           { data: 'recipe_name', name: 'recipe_name' },
           { data: 'status', name: 'status' },
-          { data: 'action', name: 'action', orderable: false, searchable: true }
+          { data: 'action', name: 'action', orderable: false, searchable: true },
+
         ]
       });
 
@@ -487,6 +493,7 @@
           var quantity;
           var unit_price;
           var recipes_cost;
+          var tax;
           $.each(data, function(i,a) {
             $.each(a, function(j,k) {
               product_id = data[i].product_name;
@@ -494,21 +501,21 @@
               quantity = data[i].quantity;
               unit_price = data[i].unit_price;
               recipes_cost = data[i].recipes_cost;
-
+              tax = data[i].tax;
             })
             $('#fillDetails').append(
               `<tr>
                 <td>`+product_id+`</td>
-                <td>`+measure+`</td>
                 <td>`+quantity+`</td>
-                <td>`+unit_price+`</td>
+                <td>`+measure+`</td>
+                <td>`+(parseInt(unit_price)+parseInt((unit_price*tax)/100))+`</td>
+                <td>`+((parseInt(unit_price)+parseInt((unit_price*tax)/100))*quantity)+`</td>
                 </tr>`
             );
-
           })
           $('#fillDetails').append(
               `<tr>
-                <td colspan="3">Costo total de la receta</td>
+                <td colspan="4">Costo total de la receta (IVA incluido).</td>
                 <td>`+recipes_cost+`</td>
                 </tr>`
             );
@@ -539,6 +546,7 @@
         type: 'get',
         datatype: "json",
         success: function(data) {
+          console.log(data);
           $('#fillRecipeDetails').empty();
           if (data.length == 0) {
             $('#fillRecipeDetails').append(
@@ -655,6 +663,7 @@
         type: 'get',
         datatype: "json",
         success: function(data) {
+          // console.log(data['price'])
           $('#orderEditDetails').empty();
           $('#package_number').val(null);
           var product_id;

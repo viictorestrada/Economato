@@ -16,9 +16,9 @@ class ReportController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        // $products = Product::all();
 
-        return view('products', compact('products'));
+        // return view('products');
     }
 
     public function pdf()

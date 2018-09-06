@@ -20,12 +20,13 @@
                           <table class="table table-bordered">
                             <thead>
                               <th>Insumos</th>
-                              <th>Unidad de medida</th>
                               <th>Cantidad</th>
-                              <th>Precio</th>
+                              <th>Unidad de medida</th>
+                              <th>Precio Unitario</th>
+                              <th>Total </th>
                             </thead>
                             <tbody id="fillDetails">
-                              
+
                             </tbody>
                           </table>
                         </div>

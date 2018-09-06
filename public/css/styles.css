@@ -1,3 +1,4 @@
+
 .signIn {
     display: flex;
     background-color: #FFF;
@@ -5,7 +6,7 @@
     max-width: 100%;
     width: 340px;
     height: auto;
-    box-shadow: 0.5px 1px;
+    box-shadow: 3px 3px 17px #d0d0d0;
 }
 
 .signIn form input {
@@ -79,4 +80,22 @@ input.error:focus {
 button,
 html [type=button] {
     -webkit-appearance: none;
+}
+
+input[type="checkbox"] {
+  display:none;
+}
+
+input[type="checkbox"] + label span {
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin:-1px 4px 0 0;
+  vertical-align:middle;
+  background:url(../images/checkbox-01.png) left top no-repeat;
+  cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+  background:url(../images/checkbox-01.png) -20px top no-repeat;
 }

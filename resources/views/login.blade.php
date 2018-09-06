@@ -41,9 +41,8 @@
               </div>
 
               <div class="form-group">
-                <label>
-                  <input type="checkbox" name="remember_token"> Recordarme
-                </label>
+                <input type="checkbox" id="checkbox" name="remember_token"> Recordarme
+                <label for="checkbox"><span></span></label>
               </div>
 
               <div class="form-group">

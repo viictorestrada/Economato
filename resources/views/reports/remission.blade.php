@@ -13,17 +13,16 @@
     </style>
 </head>
 <body>
-{{
-  dump($products)
-}}
+{{-- {{ dd($orderCost[0]) }} --}}
     <table class="table table-bordered">
       <thead>
       <tr>
         <th>Producto</th>
-        <th>Unidad de Medida</th>
         <th>Cantidad</th>
+        <th>Unidad de Medida</th>
         <th>Precio unitario</th>
         <th>Iva</th>
+        <th>Precio con IVA</th>
         <th>Total</th>
       </tr>
       </thead>
@@ -31,14 +30,18 @@
   @foreach($products as $key => $value)
         <tr>
         <td>{{ $value['product_name'] }}</td>
-        <td>{{ $value['measure_name'] }}</td>
         <td>{{ $value['quantity'] }}</td>
+        <td>{{ $value['measure_name'] }}</td>
         <td>{{ $value['unit_price'] }}</td>
         <td>{{ $value['tax']}}</td>
-        <td>1000</td>
+        <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
+        <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
         </tr>
   @endforeach
       </tbody>
     </table>
+
+  <h4>Costo de la orden: {{ $orderCost[0] }}</h4>
+    <h1></h1>
 </body>
 </html>
