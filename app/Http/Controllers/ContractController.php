@@ -84,7 +84,7 @@ class ContractController extends Controller
       return DataTables::of($contract)
       ->addColumn('action', function($id) {
         $button=" ";
-        return $button.'  <a href="/contracts/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+        return $button.'  <a href="/contracts/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
       })->make(true);
     }
 

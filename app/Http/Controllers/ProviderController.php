@@ -36,7 +36,7 @@ class ProviderController extends Controller
       return DataTables::of($providers)
       ->addColumn('action', function($id){
         $button = " ";
-        return $button.' <a href="/providers/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+        return $button.' <a href="/providers/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
       })
       ->make(true);
     }

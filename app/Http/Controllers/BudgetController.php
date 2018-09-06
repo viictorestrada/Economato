@@ -68,12 +68,12 @@ class BudgetController extends Controller
         $button = " ";
         if($budgets->status == 1)
         {
-          $button = '<a href="/budgets/status/'.$budgets->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>  ';
+          $button = '<a href="/budgets/status/'.$budgets->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>  ';
         }else{
-          $button = '<a href="/budgets/status/'.$budgets->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>  ';
+          $button = '<a href="/budgets/status/'.$budgets->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>  ';
         }
-        return $button.'<a href="/budgets/'.$budgets->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>  '.
-        '<a onclick="aditionalBudget('.$budgets->id.')" class="btn btn-md btn-info text-light" data-toggle="tooltip" title="Adicionar Presupuesto"><i class="fa fa-plus-circle"></i></a>';
+        return $button.'<a href="/budgets/'.$budgets->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>  '.
+        '<button onclick="aditionalBudget('.$budgets->id.')" class="btn btn-md btn-outline-info" data-toggle="tooltip" title="Adicionar Presupuesto"><i class="fa fa-plus-circle"></i></button>';
       })->editColumn('status', function ($budgets) {
         return $budgets->status == 1 ? "Activo":"Inactivo";
       })

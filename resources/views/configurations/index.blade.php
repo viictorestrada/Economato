@@ -70,7 +70,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addRegion()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Regional</a>
+                      <button onclick="addRegion()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Regional</button>
                     </div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addComplex()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Complejo</a>
+                      <button onclick="addComplex()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Complejo</button>
                     </div>
                   </div>
                 </div>
@@ -138,7 +138,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addLocation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Centro de formación</a>
+                      <button onclick="addLocation()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Centro de formación</button>
                     </div>
                   </div>
                 </div>
@@ -166,7 +166,7 @@
                       </section>
                       <div>
                         <hr class="bg-info">
-                      <a onclick="addProgram()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Programa de formación</a>
+                      <button onclick="addProgram()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Programa de formación</button>
                       </div>
                     </div>
                   </div>
@@ -203,7 +203,7 @@
                         </div>
                       </section>
                       <hr  class="bg-info">
-                      <a onclick="addCompetence()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Competencia</a>
+                      <button onclick="addCompetence()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Competencia</button>
                     </div>
                   </div>
                 </div>
@@ -227,7 +227,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addLearningResult()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Competencia</a>
+                      <button onclick="addLearningResult()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Competencia</button>
                     </div>
                   </div>
                 </div>
@@ -263,7 +263,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addProductType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Tipo de Producto</a>
+                      <button onclick="addProductType()" class="btn btn-outline-info "><i class="fa fa-plus-circle fa-lg"></i> Agregar Tipo de Producto</button>
                     </div>
                   </div>
                 </div>
@@ -287,7 +287,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addPresentation()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Presentación</a>
+                      <button onclick="addPresentation()" class="btn btn-outline-info "><i class="fa fa-plus-circle fa-lg"></i> Agregar Presentación</button>
                     </div>
                   </div>
                 </div>
@@ -321,7 +321,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addMeasure()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Unidad de Medida</a>
+                      <button onclick="addMeasure()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Unidad de Medida</button>
                     </div>
                   </div>
                 </div>
@@ -344,7 +344,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addDocumentType()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Tipo de Documento</a>
+                      <button onclick="addDocumentType()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Tipo de Documento</button>
                     </div>
                   </div>
                 </div>
@@ -378,7 +378,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addCharacterization()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Caracterización</a>
+                      <button onclick="addCharacterization()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Caracterización</button>
                     </div>
                   </div>
                 </div>
@@ -401,7 +401,7 @@
                         </div>
                       </section>
                       <hr class="bg-info">
-                      <a onclick="addRole()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar Roles</a>
+                      <button onclick="addRole()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar Roles</button>
                     </div>
                   </div>
                 </div>
@@ -433,7 +433,7 @@
                           </div>
                         </section>
                         <hr class="bg-info">
-                        <a onclick="addTaxes()" class="btn btn-info text-light"><i class="fa fa-plus-circle fa-lg"></i> Agregar IVA</a>
+                        <button onclick="addTaxes()" class="btn btn-outline-info"><i class="fa fa-plus-circle fa-lg"></i> Agregar IVA</button>
                       </div>
                     </div>
                   </div>

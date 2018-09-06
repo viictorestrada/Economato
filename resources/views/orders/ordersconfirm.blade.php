@@ -54,7 +54,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
-                  <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Solicitar Taller</button>
+                  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Solicitar Taller</button>
               </div>
               {{ Form::close() }}
           </div>

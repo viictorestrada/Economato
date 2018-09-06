@@ -42,7 +42,7 @@ class ProductTypeController extends Controller
       return DataTables::of($productTypes)
       ->addColumn('action', function($productType) {
         $button=" ";
-        return $button.'<a onclick="editProductType('. $productType->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'<button onclick="editProductType('. $productType->id .')" class="btn btn-md btn-outline-info "><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 

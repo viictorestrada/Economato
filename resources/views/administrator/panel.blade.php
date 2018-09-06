@@ -17,6 +17,10 @@
             <a class="nav-link" id="v-pills-solicitudes-tab" data-toggle="pill" href="#v-pills-solicitudes" role="tab" aria-controls="v-pills-solicitudes" aria-selected="false" style="color: #fff">Solicitudes</a>
           </li>
 
+          <li class="nav-item" style="background-color: none;">
+            <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false" style="color: #fff">Entregas</a>
           </li>
@@ -160,7 +164,30 @@
             </div>
           </div>
         </div>
+        {{-- producción de centro --}}
+        <div class="tab-pane fade" id="v-pills-produccion" role="tabpanel" aria-labelledby="v-pills-produccion-tab">
 
+          <div class="card border-secondary">
+            <h4 class="card-header bg-secondary text-light">Producción de centro</h4>
+            <div class="card-body">
+              <div class="responsive">
+              <table class="table table-bordered table-md" width="100%" id="orderProduction">
+                <thead>
+                  <tr>
+                    <th>Titulo</th>
+                    <th>Descripción</th>
+                    <th>Asistentes</th>
+                    <th>Usario</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            </div>
+           </div>
+          </div>
         <!--Contenido de Entregas-->
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
 
@@ -224,7 +251,6 @@
                     <div class="card-body">
                     <form action="{{ url('RecipeHasProducts')}}" id="RecipeDetails" method="post" class="forms">
                       @csrf
-                    {{-- {{ Form::model($product, ['url' => ['RecipeHasProducts', $product->id], 'class' => 'forms', 'method' => 'POST']) }} --}}
                         <div class="form-group col-md-6 col-lg-6">
                           <label><i class="fa fa-mouse-pointer"></i> Seleccionar receta <strong class="text-danger">*</strong></label>
                             <select class="form-control {{$errors->has('recipe_id') ? 'is-invalid' : ''}}" name="recipe_id" id="recipe_id" onchange="loadRecipeProducts(this.value)" autofocus>
@@ -249,7 +275,7 @@
                                   <th>Insumo</th>
                                   <th>Unidad de medida</th>
                                   <th>Cantidad</th>
-                                  <th><button type="button" class="btn btn-info addProducts"><i class="fa fa-plus-circle"></i></button></th>
+                                  <th><button type="button" class="btn btn-outline-info addProducts"><i class="fa fa-plus-circle"></i></button></th>
                                 </tr>
                             </thead>
 
@@ -270,7 +296,7 @@
                       </div>
                       </div>
                       <div class="d-flex justify-content-end col-md-12 col-lg-12">
-                          <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+                          <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
                       </div>
                       <hr>
                       </form>
@@ -281,6 +307,7 @@
         @include('recipes.create')
         @include('recipes.index')
         @include('orders.edit')
+        @include('orders.productionOrderModal')
       </section>
     </div>
   </section>
@@ -341,7 +368,7 @@
         ]
       });
 
-      var table3= $('#entregas').DataTable({
+      var table3  = $('#entregas').DataTable({
         responsive:true,
         destroy:true,
         processing:true,
@@ -359,7 +386,27 @@
           { data: 'status', name: 'status' },
           { data: 'action', name: 'action', orderable: false, searchable: true }
         ]
-      })
+      });
+
+      var table4 = $('#orderProduction').DataTable({
+        responsive:true,
+        destroy:true,
+        processing:true,
+        serverSide:true,
+        laguage: {
+          "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/OrderProduction/getProductionOrder',
+        columns: [
+          { data:'title', name:'title'},
+          { data:'description', name:'description'},
+          { data:'pax', name:'pax'},
+          { data:'user_name', name:'user_name'},
+          { data:'order_date', name:'order_date'},
+          { data:'status', name:'status'},
+          { data: 'action', name: 'action', orderable: false, searchable: true }
+        ]
+      });
 
     function addRecipe() {
       save_method = "add";
@@ -537,7 +584,7 @@
               <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelect`+a+`']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
-              <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+              <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
             </tr>`
             );
             $("#setSelect"+a).val(product_id);
@@ -559,7 +606,7 @@
                 <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
-                <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+                <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
             </tr>`;
             $('#orderEditDetails').append(html);
           });
@@ -576,9 +623,26 @@
             <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
             <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
             <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
-            <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
         </tr>`;
           $('#fillRecipeDetails').append(html);
+      });
+
+    $(document).on('click', '.remove', function(){
+      $(this).closest('tr').remove();
+    });
+  });
+
+  $(document).ready(function(){
+      $(document).on('click', '#addColumns', function(){
+        var html =
+        `<tr>
+            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+            <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
+            <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
+            <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
+        </tr>`;
+          $('#fillProductionOrder').append(html);
       });
 
     $(document).on('click', '.remove', function(){
@@ -629,7 +693,7 @@
               <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelected`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
-              <td><button type="button" name="remove" class="btn btn-danger remove"><i class="fa fa-times-circle"></i></button></td>
+              <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
             </tr>`
             );
             $("#setSelected"+a).val(product_id);
@@ -642,6 +706,18 @@
         }
     })
 
+  }
+
+  function productionOrderModal(id) {
+    $('#fillProductionOrder').empty();
+    $('#fillProductionOrder').append(`
+      <tr>
+     <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
+      <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
+      <td>{{Form::number('quantity[]', null, ['class' => 'form-control'])}}</td>
+      </tr>`);
+    $('#idProduction').val(id);
+    $('#productionOrderModal').modal();
   }
   </script>
 @endsection

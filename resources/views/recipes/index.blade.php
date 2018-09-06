@@ -31,7 +31,7 @@
                           </table>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-info btn-block" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-outline-info btn-block" data-dismiss="modal">Cerrar</button>
                   </div>
                 </div>
               </div>

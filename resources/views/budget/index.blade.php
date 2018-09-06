@@ -10,7 +10,7 @@
             <div class="col-12 d-flex justify-content-end">
               <div class="card-title"><h4>Presupuestos</h4></div><hr>
               <div>
-                <a type="button" href="{{ url('budgets/create') }}" class="btn btn-info "><span class="fa fa-plus-circle"></span> Registrar Nuevo</a>
+                <a type="button" href="{{ url('budgets/create') }}" class="btn btn-outline-info "><span class="fa fa-plus-circle"></span> Registrar Nuevo</a>
               </div>
             </div>
             <div class="table-responsive">

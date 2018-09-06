@@ -12,7 +12,7 @@
                 <h4>Modificar Presupuesto</h4>
               </div>
               <div class="">
-                <a href="{{ url('budgets') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar todos</a>
+                <a href="{{ url('budgets') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar todos</a>
               </div>
             </div><hr>
 

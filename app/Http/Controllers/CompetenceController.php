@@ -45,7 +45,7 @@ class CompetenceController extends Controller
       return DataTables::of($competence)
       ->addColumn('action', function($competences) {
         $button=" ";
-        return $button.'  <a onclick="editCompetence('. $competences->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editCompetence('. $competences->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 

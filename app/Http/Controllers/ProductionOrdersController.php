@@ -6,6 +6,7 @@ use App\Models\productionOrders;
 use App\Models\Characterization;
 use Illuminate\Http\Request;
 use Auth;
+use DataTables;
 
 class ProductionOrdersController extends Controller
 {
@@ -60,9 +61,47 @@ class ProductionOrdersController extends Controller
      * @param  \App\Models\productionOrders  $productionOrders
      * @return \Illuminate\Http\Response
      */
-    public function show(productionOrders $productionOrders)
+    public function dataTable()
     {
-        //
+       $data = ProductionOrders::select('center_production_orders.*')->get();
+       return DataTables::of($data)->editColumn('status', function ($id)
+       {
+        if ($id->status == 1) {
+            return "Solicitado";
+        }
+        else if($id->status == 2){
+            return "Modificado";
+        }
+        else if($id->status == 3){
+            return "Solicitado al proveedor";
+        }
+        else if ($id->status == 4) {
+            return "Entregado";
+        }
+       })->addColumn('action', function ($id)
+       {
+           if ($id->status == 1) {
+               $bot = '<a onclick="productionOrderModal('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+               <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+           }
+           if ($id->status == 2) {
+               $bot = '<a onclick="productionOrderModal('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+               <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+           }
+           if ($id->status == 3) {
+               $bot = '<a onclick="productionOrderModal('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+               <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+           }
+           if ($id->status == 4) {
+               $bot = '<a onclick="productionOrderModal('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+               <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+           }
+           if ($id->status == 0) {
+               $bot = '<a onclick="productionOrderModal('.$id->recipes_id.' , '.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+               <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+           }
+           return $bot;
+       })->make(true); 
     }
 
     /**

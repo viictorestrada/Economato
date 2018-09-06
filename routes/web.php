@@ -13,6 +13,7 @@ Route::resource('orders', 'OrderController');
 Route::get('/order/{id}','OrderController@getCharacterization');
 Route::get('/panel/getOrder','AdministratorController@requestTable');
 Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
+Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
 
 //Ruta para mostrar el detalle de la receta
 Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
@@ -125,9 +126,12 @@ Route::resource('product_types', 'ProductTypeController', ['except' => 'index', 
 //Ruta para registrar la receta editada
 Route::resource('orderRecipeEdit','OrderRecipeController',['except '=> 'show','edit','update','destroy']);
 
-//Ruta pa modificar el estado de la orden
+//Ruta para modificar el estado de la orden
 Route::get('/orders/updateStatus/{id}/{status}','OrderController@updateStatus');
 Route::get('/orderRecipeEdit/updateQuantity/{id}','OrderRecipeController@updateQuantity' , ['except '=> 'show','edit','update','destroy']);
+
+// Ruta para registrar la orden de producción de centro con detalles a productos.
+Route::resource('productionHasProducts','ProductionHasProductsController',['except '=> 'show','edit','update','destroy']);
 
 //ruta para generar pdf de las nuevas ordenes al proveedor
 Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );

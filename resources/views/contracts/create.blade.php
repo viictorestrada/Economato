@@ -12,7 +12,7 @@
                 <h4>Registro de Contrato</h4>
               </div>
               <div class="">
-                <a href="{{ url('contracts') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar Contratos</a>
+                <a href="{{ url('contracts') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar Contratos</a>
               </div>
             </div><hr>
 

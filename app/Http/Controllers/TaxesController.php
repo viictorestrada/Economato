@@ -49,7 +49,7 @@ class TaxesController extends Controller
       return DataTables::of($taxes)
       ->addColumn('action', function($taxes) {
         $button=" ";
-        return $button.'  <a onclick="editTaxes('. $taxes->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editTaxes('. $taxes->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 
