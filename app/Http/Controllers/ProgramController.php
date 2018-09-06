@@ -43,13 +43,13 @@ class ProgramController extends Controller
     ->addColumn('action', function ($programs) {
       $button = " ";
       if ($programs->status == 1) {
-        $button = '<a href="/programs/status/'.$programs->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+        $button = '<a href="/programs/status/'.$programs->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>';
       }
       else
       {
-        $button = '<a href="/programs/status/'.$programs->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
+        $button = '<a href="/programs/status/'.$programs->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>';
       }
-      return $button.'  <a onclick="editProgram('. $programs->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+      return $button.'  <button onclick="editProgram('. $programs->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
     })->editColumn('status',function($programs){
       return $programs->status == 1 ? "Activo":"Inactivo";
     })->make(true);

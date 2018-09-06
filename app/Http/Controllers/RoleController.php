@@ -43,7 +43,7 @@ class RoleController extends Controller
     return DataTables::of($roles)
     ->addColumn('action', function($role) {
       $button=" ";
-      return $button.'  <a onclick="editRole('. $role->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+      return $button.'  <button onclick="editRole('. $role->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
     })->make(true);
   }
 

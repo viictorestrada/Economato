@@ -9,7 +9,7 @@
           <div class="card-body">
             <div class="col-12 d-flex justify-content-end">
               <div class="card-title"><h4>Lista de Usuarios</h4></div><hr>
-              <div><a type="button" href="{{ url('users/create') }}" class="btn btn-info "><span class="fa fa-user-plus"></span> Agregar Usuario</a></div>
+              <div><a type="button" href="{{ url('users/create') }}" class="btn btn-outline-info "><span class="fa fa-user-plus"></span> Agregar Usuario</a></div>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-md" width="100%" id="users">

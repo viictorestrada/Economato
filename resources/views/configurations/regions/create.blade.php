@@ -28,7 +28,7 @@
                       </div>
                     </div>
 
-                    <button type="submit" class="btn btn-info btn-block">Agregar</button>
+                    <button type="submit" class="btn btn-outline-info btn-block">Agregar</button>
 
                   </form>
                 </div>

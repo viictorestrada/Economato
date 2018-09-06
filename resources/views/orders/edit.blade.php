@@ -23,7 +23,7 @@
                               <th>Insumos</th>
                               <th>Unidad de medida</th>
                               <th>Cantidad</th>
-                              <th><button type="button" class="btn btn-info addProduct"><i class="fa fa-plus-circle"></i></button></th>
+                              <th><button type="button" class="btn btn-outline-info addProduct"><i class="fa fa-plus-circle"></i></button></th>
                             </thead>
                             <tbody id="orderEditDetails">
                             </tbody>
@@ -42,8 +42,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-info">Modificar</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-outline-info">Modificar</button>
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
         {{ Form::close() }}
         </div>
       </div>

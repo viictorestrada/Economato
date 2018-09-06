@@ -40,7 +40,7 @@ class RegionController extends Controller
     return DataTables::of($regions)
     ->addColumn('action', function($region) {
       $button = ' ';
-      return $button.'<a onclick="editRegion('. $region->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+      return $button.'<button onclick="editRegion('. $region->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
     })->make(true);
   }
 

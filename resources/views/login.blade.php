@@ -47,7 +47,7 @@
               </div>
 
               <div class="form-group">
-                <button type="submit" class="btn btn-info btn-block">Ingresar</button>
+                <button type="submit" class="btn btn-outline-info btn-block">Ingresar</button>
               </div>
 
             </form>

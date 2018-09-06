@@ -41,7 +41,7 @@ class DocumentTypeController extends Controller
     return DataTables::of($documentTypes)
     ->addColumn('action', function($documentType) {
       $button=" ";
-      return $button.'<a onclick="editDocumentType('. $documentType->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+      return $button.'<button onclick="editDocumentType('. $documentType->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
     })->make(true);
   }
 

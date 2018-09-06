@@ -55,7 +55,7 @@
                           </div>
                         </div>
 
-                      <button type="submit" id="addAditionalBudget" class="btn btn-info btn-block">Agregar</button>
+                      <button type="submit" id="addAditionalBudget" class="btn btn-outline-info btn-block">Agregar</button>
 
                     </form>
                   </div>

@@ -41,7 +41,7 @@ class PresentationController extends Controller
       return DataTables::of($presentations)
       ->addColumn('action', function($presentation) {
         $button=" ";
-        return $button.'  <a onclick="editPresentation('. $presentation->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editPresentation('. $presentation->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 

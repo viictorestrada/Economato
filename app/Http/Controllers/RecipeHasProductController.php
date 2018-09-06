@@ -25,13 +25,14 @@ class RecipeHasProductController extends Controller
         }
         $recipe_cost = 0;
         foreach ($input['product_id'] as $key => $value) {
-          $select = ProductsHasContracts::select('products_has_contracts.*')->where('products_has_contracts.products_id',$value)->get()->first();
-          $measure = Product::measureUnit($value);
-          $recipe_cost = $recipe_cost + $input['quantity'][$key]*$select->unit_price;
-           RecipeHasProduct::create(['recipe_id' => $input['recipe_id'], 'product_id'=>$value , 'quantity' =>$input['quantity'][$key]]);
+            $select = ProductsHasContracts::select('products_has_contracts.*','taxes.tax')->where('products_has_contracts.products_id',$value)->
+                join('taxes','taxes.id', '=' , 'products_has_contracts.taxes_id')->get()->first();
+            $measure = Product::measureUnit($value);
+            $recipe_cost = $recipe_cost + $input['quantity'][$key]*($select->unit_price+($select->unit_price*$select->tax)/100);
+            RecipeHasProduct::create(['recipe_id' => $input['recipe_id'], 'product_id'=>$value , 'quantity' =>$input['quantity'][$key]]);
         }
         $updateRecipeCost=Recipe::where('id',$input['recipe_id'])->update(['recipes_cost' => $recipe_cost]);
-         return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+            return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
         }
     }
 

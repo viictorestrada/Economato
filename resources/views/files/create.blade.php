@@ -12,7 +12,7 @@
                 <h4>Registro de Fichas</h4>
               </div>
               <div class="">
-                <a href="{{ url('files') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar Fichas</a>
+                <a href="{{ url('files') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar Fichas</a>
               </div>
             </div><hr>
 

@@ -12,7 +12,7 @@
                 <h4>Editar Contrato</h4>
               </div>
               <div class="">
-                <a href="{{ url('files') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar Contrato</a>
+                <a href="{{ url('files') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar Contrato</a>
               </div>
             </div><hr>
 

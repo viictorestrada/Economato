@@ -67,7 +67,7 @@
         <th>IVA %</th>
         <th>Valor IVA</th>
         <th>Total</th>
-        <th><button type="button" class="btn btn-info add"><i class="fa fa-plus-circle"></i></button></th>
+        <th><button type="button" class="btn btn-outline-info add"><i class="fa fa-plus-circle"></i></button></th>
       </tr>
     </thead>
     <tbody id="tableContracts">
@@ -77,6 +77,6 @@
 </div>
 
 <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
-  <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
 </div>
 

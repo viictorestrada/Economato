@@ -30,5 +30,5 @@
 </div>
 
 <div class="d-flex justify-content-end form-group col-md-12 col-lg-12">
-  <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
 </div>

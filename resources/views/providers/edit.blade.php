@@ -12,7 +12,7 @@
                 <h4>Editar Proveedor</h4>
               </div>
               <div class="">
-                <a href="{{ url('providers') }}" class="btn btn-info"><i class="fa fa-eye"></i> Mostrar todos</a>
+                <a href="{{ url('providers') }}" class="btn btn-outline-info"><i class="fa fa-eye"></i> Mostrar todos</a>
               </div>
             </div><hr>
 
