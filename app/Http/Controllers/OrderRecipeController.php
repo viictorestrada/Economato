@@ -39,27 +39,26 @@ class OrderRecipeController extends Controller
             ->join  ('taxes', 'taxes.id' , '=' , 'products_has_contracts.taxes_id')
             ->get()
             ->first();
-            $product_price=($priceProduct->unit_price*$priceProduct->tax)/100+$priceProduct->unit_price;
+            $product_price=(($priceProduct->unit_price*$priceProduct->tax)/100+$priceProduct->unit_price)*$request['quantity'][$key];
             $costRecipe +=$product_price;
           }else{
             $data = Product::findOrfail($request["product_id"][$key]);
             return redirect('panel')->with([swal()->autoclose(3500)->error('Producto agotado.','La cantidad de '.$data->product_name.' no se encuentran disponible en el contrato.')]);
          }
         }
+        $costOrder= $costRecipe*$request['package_number'];
         if ($countValidationArrays==count($request['product_id'])){
           foreach($request['product_id']  as $key => $value){
             $createRecipeOrder = OrderRecipe::create([ 'recipe_id' => $request['recipe_id'],
               'product_id' => $request['product_id'][$key],
               'order_id' => $request['idOrder'],
               'quantity' =>$request['quantity'][$key],
-              'package_number' => $request['package_number'],
-              'cost' => $costRecipe ]);
+              'package_number' => $request['package_number']]);
             }
+            $order=Order::findOrfail($request['idOrder'])->update(['status' => '4', 'cost' => $costOrder]);
           }
-
-        $order=Order::findOrfail($request['idOrder'])->update(['status' => '4']);
         // });
-        // return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
+         return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
       }
 
 
@@ -83,6 +82,12 @@ class OrderRecipeController extends Controller
       $updateStatus=Order::findOrfail($id)->update(["status" => '3']);
 
       return redirect('panel')->with([swal()->autoclose(1500)->success('Entrega exitosa.','La entrega ha sido exitosa.')]);
+    }
+
+    public function updateBudget(Request $request){
+      foreach ($request['factura'] as $key => $value) {
+        dump($request['factura'][$key]);
+      }
     }
 
 

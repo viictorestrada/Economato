@@ -47,8 +47,10 @@ class BudgetController extends Controller
         'budget_begin_date' => 'required|date',
         'budget_finish_date' => 'required|date'
       ]);
+
+      dump($request['budget']);
       Budget::create([
-        'initial_budget'=>$request['budget'],
+        'initial_budget' => $request['budget'],
         'budget'=>$request['budget'],
         'budget_code'=>$request['budget_code'],
         'budget_begin_date'=>$request['budget_begin_date'],

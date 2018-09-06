@@ -61,7 +61,8 @@ class AdministratorController extends Controller
       {
         $bot = '<a href="pdf/orderProvider/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
         </a>
-        <a href="/orderRecipeEdit/updateQuantity/'.$id->id.'"  class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar Solicitud" ><i class="fa fa-arrow-right"></i></a>';
+        <a href="/orderRecipeEdit/updateQuantity/'.$id->id.'"  class="btn btn-md btn-outline-info text-info" data-toggle="tooltip"
+         title="Entregar Solicitud" ><i class="fa fa-arrow-right"></i></a>';
         return $bot;
       }
     })->editColumn('status', function ($id) {
@@ -91,7 +92,11 @@ class AdministratorController extends Controller
         return $bot;
       }
       else if(  $id->status==3){
-        $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud entregada.">Entregado</i></a>';
+        $bot = '<a class="btn btn-md btn-outline-info text-info entregado"  data-toggle="tooltip" title="Solicitud entregada.">Entregado</i></a>
+        <a class="btn btn-outline-dark">
+        <input type="checkbox" id="checkbox" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+        <label for="checkbox"><span></span></label>
+        </a>';
         return $bot;
       }
     })->editColumn('status', function ($id) {

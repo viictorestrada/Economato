@@ -9,14 +9,14 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+  <!-- Main styles -->
+  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('datatables/css/dataTables.bootstrap4.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('datatables/css/responsive.bootstrap4.min.css') }}">
   <!-- fontawesome -->
   <link rel="stylesheet" href="{{ asset('fontawesome/web-fonts-with-css/css/fontawesome-all.min.css') }}">
-  <!-- Main styles -->
-  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- Icono -->
   <link rel="icon" href="{{ asset('images/logo.png') }}">
 

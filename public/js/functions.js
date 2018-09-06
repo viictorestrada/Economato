@@ -59,6 +59,30 @@ function managmentOrder(id,status)
   }
 }
 
+function checkOrder()
+{
+
+  swal({
+    title: "Confirmar Facturación.",
+    text: "¿Está seguro de facturar estas ordenes?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonClass: "btn-danger",
+    confirmButtonText: "Confirmar.",
+    cancelButtonText: "Cancelar.",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  }).then((result) => {
+    if (result.value) {
+      document.formCheck.submit();
+    }else{
+      // var items=$('.factura');
+      // console.log(items)
+    }
+    })
+    return false;
+}
+
 // function chargeMeasureUnit(id) {
 //     $.get(`/contract/measure_unit/${event.target.value}`, function(element) {
 //         $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
