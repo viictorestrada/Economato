@@ -30,10 +30,11 @@ class RecipeHasProductController extends Controller
           ->get()->first();
           $measure = Product::measureUnit($value);
           $recipe_cost = $recipe_cost + $input['quantity'][$key] * ( $select->unit_price + (($select->unit_price*$select->tax)/100) );
-           RecipeHasProduct::create(['recipe_id' => $input['recipe_id'], 'product_id'=>$value , 'quantity' =>$input['quantity'][$key]]);
+          dd($input['quantity'][$key]);
+          // RecipeHasProduct::create(['recipe_id' => $input['recipe_id'], 'product_id'=>$value , 'quantity' =>$input['quantity'][$key]]);
         }
-        $updateRecipeCost=Recipe::where('id',$input['recipe_id'])->update(['recipes_cost' => $recipe_cost]);
-         return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+        // $updateRecipeCost=Recipe::where('id',$input['recipe_id'])->update(['recipes_cost' => $recipe_cost]);
+        //  return back()->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
         }
     }
 
