@@ -45,14 +45,13 @@
           },
           nit: {
             required: true,
-            digits: true,
             maxlength: 25,
             minlength: 8
           },
           phone: {
             required: true,
             digits: true,
-            maxlength: 25,
+            maxlength: 10,
             minlength: 7
           },
           address: {
@@ -76,14 +75,13 @@
           },
           nit: {
             required: "El campo NIT es obligatorio.",
-            digits: "El campo NIT debe ser numérico.",
             maxlength: "El campo NIT debe contener máximo 25 caracteres.",
             maxlength: "El campo NIT debe contener mínimo 8 caracteres."
           },
           phone: {
             required: "El campo Teléfono es obligatorio.",
             digits: "El campo Teléfono debe ser numérico.",
-            maxlength: "El campo Teléfono debe contener máximo 25 caracteres.",
+            maxlength: "El campo Teléfono debe contener máximo 10 caracteres.",
             minlength: "El campo Teléfono debe contener mínimo 7 caracteres."
           },
           address: {

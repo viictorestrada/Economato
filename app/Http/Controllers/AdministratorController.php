@@ -35,7 +35,6 @@ class AdministratorController extends Controller
     $product=Product::select('products.id','products.product_name')
     ->join('products_has_contracts','products.id' , '=' , 'products_has_contracts.products_id')->get();
     $products = $product->pluck('product_name', 'id');
-
     return view('administrator.panel', compact('recipe','products'));
   }
 
@@ -87,15 +86,18 @@ class AdministratorController extends Controller
     ->get();
     return DataTables::of($requestInstructor)
     ->addColumn('action' , function($id){
+      // $cont=0;
      if(  $id->status==0){
         $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud rechazada.">Rechazado</i></a>';
         return $bot;
       }
       else if(  $id->status==3){
         $bot = '<a class="btn btn-md btn-outline-info text-info entregado"  data-toggle="tooltip" title="Solicitud entregada.">Entregado</i></a>
-        <a class="btn btn-outline-dark">
-        <input type="checkbox" id="checkbox" class="checkbox"  name="factura[]" value="'.$id->id.'" />
-        <label for="checkbox"><span></span></label>
+        <a class="btn">
+        <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+        <label for="checkbox'.$id->id.'"><span></span></label>
+        </a>
+        <a href="pdf/orderProvider/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
         </a>';
         return $bot;
       }

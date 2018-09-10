@@ -43,7 +43,7 @@ class OrderController extends Controller
         // $products = Product::all();
 
         $products = OrderRecipe::where('orders_recipes.order_id',$id)
-        ->select('orders.order_date','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
+        ->select('orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
         ->join('orders', 'orders.id','=','orders_recipes.order_id')
         ->join('products','products.id','=','orders_recipes.product_id')
         ->join('measure_unit','products.id_measure_unit','=','measure_unit.id')
@@ -52,8 +52,8 @@ class OrderController extends Controller
         ->get();
         $orderCost = $products->pluck('cost');
         $pdf = PDF::loadView('reports.remission', compact('products','orderCost'));
-
-         return $pdf->download('Remisión.pdf');
+        return $pdf->stream();
+        //  return $pdf->download('Remisión.pdf');
     }
 
     /**

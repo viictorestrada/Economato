@@ -63,8 +63,8 @@ function checkOrder()
 {
 
   swal({
-    title: "Confirmar Facturación.",
-    text: "¿Está seguro de facturar estas ordenes?",
+    title: "Consultando el valor a facturar.",
+    text: "¿Esta seguro de solicitar el valor a facturar de estas ordenes?",
     type: "info",
     showCancelButton: true,
     confirmButtonClass: "btn-danger",
@@ -74,7 +74,9 @@ function checkOrder()
     closeOnCancel: false
   }).then((result) => {
     if (result.value) {
-      document.formCheck.submit();
+      swal('Consultando valor','En la ventana de entregas encontrará el valor a facturar.','info').then(function () {
+        document.formCheck.submit();
+      });
     }else{
       // var items=$('.factura');
       // console.log(items)

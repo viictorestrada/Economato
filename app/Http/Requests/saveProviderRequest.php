@@ -32,10 +32,10 @@ class saveProviderRequest extends FormRequest
         'provider_name.max' => 'El campo Nombre del Provedor debe contener máximo 70 caracteres.',
         'provider_name.unique' => 'El Provedor ya existe.',
         'nit.required' => 'El campo Nit es obligatorio.',
-        'nit.alpha_dash' => 'El campo de Nit solo debe contener numeros y un gion.',
+        'nit.alpha_dash' => 'El campo de Nit solo debe contener numeros y un guión.',
         'nit.unique' => 'El Nit ya existe.',
         'phone.required' => 'El campo Teléfono es obligarotio.',
-        'phone.numeric' => 'El campo Teléfono debe ser numerico.',
+        'phone.numeric' => 'El campo Teléfono debe ser numérico.',
         'address.max' => 'El campo Dirección debe contenter máximo 70 caracteres.',
         'contact_name.max' => 'el campo Nombre Contacto debe contener máximo 45 caracteres',
         'contact_last_name.max' => 'El campo Apellido Contacto debe contener máximo 45 caracteres'

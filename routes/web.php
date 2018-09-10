@@ -95,7 +95,8 @@ Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
 ROute::get('budgets/status/{id}/{status}', 'BudgetController@status');
 Route::get('/budgets/get', 'BudgetController@budgetsList');
 Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
-Route::post('/panel/updateBudget', 'OrderRecipeController@updateBudget');
+Route::post('/panel/updateBudget', 'OrderRecipeController@checkValue');
+Route::get('/panel/check/','OrderRecipeController@update');
 
 //Rutas para Proveedores
 Route::get('/providers/get', 'ProviderController@providersList');

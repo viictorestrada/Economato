@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use App\Models\OrderRecipe;
 use App\Models\ProductsHasContracts;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Budget;
+use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 // use App\Http\Controllers\OrderController;
 class OrderRecipeController extends Controller
@@ -59,6 +62,8 @@ class OrderRecipeController extends Controller
           }
         // });
          return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
+
+
       }
 
 
@@ -84,10 +89,57 @@ class OrderRecipeController extends Controller
       return redirect('panel')->with([swal()->autoclose(1500)->success('Entrega exitosa.','La entrega ha sido exitosa.')]);
     }
 
-    public function updateBudget(Request $request){
+    public function checkValue(Request $request){
+      $valueCheck=0;
+      $items = '';
+      if($request['factura'] != null)
       foreach ($request['factura'] as $key => $value) {
-        dump($request['factura'][$key]);
+         $costOrderRecipe=Order::whereid($request['factura'][$key])->value('cost');
+        $valueCheck +=$costOrderRecipe;
+      }else{
+        return redirect('panel')->with([swal()->autoclose(3000)->warning('Seleccione las facturas.','No se encuentran facturas seleccionadas.')]);
       }
+     $items=implode(", ", $request['factura']);
+     Session::put('value', $valueCheck);
+     Session::put('remission', $request['factura']);
+      return redirect('panel')->with('message', 'El valor a facturar por las remisiones '. $items .' es: '.$valueCheck.'');
+
+
+      // OrderRecipeController::update($valueCheck);
+
+
+    }
+
+    public function update(Request $request){
+      if(Session::has('value')){
+        $budget=Budget::select('budget.*')->first();
+        if($budget->budget >= Session::get('value')){
+        $budgetUpdate=Budget::findOrfail($budget->id)->update(['budget' =>  $budget->budget-Session::get('value')]);
+        if($budgetUpdate){
+          foreach(Session::get('remission') as $remission){
+            // Check::create([
+            //   'created_at' => date('y-m-d'),
+            //   'net_total' => Session::get('value'),
+            //   'orders_id' => $remission
+            // ]);
+            $remission;
+          }
+          return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
+        }
+      }
+      else{
+        return redirect('panel')->With([swal()->autoclose(3000)->info('No hay presupuesto disponible para facturar el monto de las remisiones.')]);
+      }
+      }else{
+        dd('no existe la session con los valores a requeridos'. Session::get('value'));
+      }
+
+      // $budget=Budget::select('budget.*')->first();
+      // $budgetUpdate=Budget::findOrfail($budget->id)->update(['budget' =>  $budget->budget-$valueCheck]);
+      // if($budgetUpdate){
+        // }
+          // return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total ')]);
+
     }
 
 

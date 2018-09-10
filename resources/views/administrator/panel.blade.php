@@ -22,7 +22,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false" style="color: #fff">Entregas</a>
+            <a class="nav-link" id="v-pills-messages-tab entregas" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false" style="color: #fff">Entregas</a>
           </li>
 
           <li class="nav-item">
@@ -190,12 +190,21 @@
           </div>
         <!--Contenido de Entregas-->
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-
+          @if(Session::has('message'))
+          <form action="/panel/check/" method="POST">
+            <div class="alert alert-primary" role="alert">
+                {{ Session::get('message') }}
+                {{-- <a href="/panel/check/{{ Session::get('message') }}" class="btn btn-outline-info">Facturar</a> --}}
+                <button type="submit" class="btn btn-outline-info">Facturar</button>
+                <a href="" onclick="reload()" class="btn btn-outline-info">Eliminar</a>
+              </div>
+            </form>
+         @endif
           <div class="card border-secondary">
             <h4 class="card-header bg-secondary text-light">Entregas</h4>
-            <form action="/panel/updateBudget" id="formCheck" name="formCheck" method="POST" onsubmit="return checkOrder()" >
+            <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
               @csrf
-            <button type="submit"  style="width:100%" class="btn btn-info  justify-content-end"><i class="fa fa-clipboard-list"></i> Facturar ordenes seleccionadas.</button>
+            <button type="submit"  style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end"><i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
             <div class="card-body">
               {{-- <h4 class="card-title">Special title treatment</h4>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -682,7 +691,7 @@
               `<tr>
                 <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'setSelected`+a+`', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
-                <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+                <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
             );
             $("#setSelected"+a).val(product_id);
@@ -692,7 +701,7 @@
             `<tr>
               <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelected`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
-              <td>{{ Form::number('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
             </tr>`
             );
