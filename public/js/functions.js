@@ -164,5 +164,94 @@ $.get(`/order/${event.target.value}`,function(data){
 });
 }
 
+function changeStatusProductionOrder(id,status)
+{
+  if(status==3){
+  swal({
+    title: "Confirmar Solicitud.",
+    text: "¿Está seguro de realizar el pedido al proveedor?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonClass: "btn-outline-danger",
+    confirmButtonText: "Confirmar.",
+    cancelButtonText: "Cancelar.",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  }).then((result) => {
+    if (result.value) {
+        $.get(`/ProductionOrders/update/${id}/${status}`, function(data){
+          if(data.status){
+           swal('Pedido Realizado','El pedido ha sido solicitado al porveedor.','success').then(function (){
+            location.reload();
+           })
+          }
+          else{
+            swal('Pedido Fallido','No se pudo realizar el pedido al proveedor.','error');
+          }
+        });
+      }
+      else{
+        swal('Pedido Fallido','No se pudo realizar el pedido al proveedor.','error');
+      }
+    })
+}else if(status==0){
+  swal({
+    title: "Rechazar Solicitud.",
+    text: "¿Está seguro de rechazar la solicitud?",
+    type: "error",
+    showCancelButton: true,
+    confirmButtonClass: "btn-outline-danger",
+    confirmButtonText: "Confirmar.",
+    cancelButtonText: "Cancelar.",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  }).then((result) => {
+    if (result.value) {
+        $.get(`/ProductionOrders/update/${id}/${status}`, function(data){
+          if (data.status) {
+            swal('Pedido Rechazado','El taller ha sido rechazado.','success').then(function (){
+              // location.reload();
+              console.log(data.status);
+             });
+          }
+          else {
+            swal('Solicitud Fallida','No se pudo cambiar el estado.','error');
+          }
+           
+        });
+      } else {
+        swal("Solicitud Cancelada", "La solicitud fue cancelada.", "success");
+      }
+    })
+  }
+  if(status==4){
+    swal({
+      title: "Confirmar Solicitud.",
+      text: "¿El proveedor entregó el pedido?",
+      type: "info",
+      showCancelButton: true,
+      confirmButtonClass: "btn-outline-success",
+      confirmButtonText: "Confirmar.",
+      cancelButtonText: "Cancelar.",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    }).then((result) => {
+      if (result.value) {
+          $.get(`/ProductionOrders/update/${id}/${status}`, function(data){
+            if(data.status)
+             swal('Pedido Realizado','El pedido ha sido entregado.','success').then(function (){
+              location.reload();
+             })
+          });
+        }
+        else{
+          swal('Pedido Fallido','Aún no se ha entregado el pedido.','error')
+        }
+      })
+  
+        
+  }
+}
+
 
 

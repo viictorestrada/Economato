@@ -14,6 +14,7 @@ Route::get('/order/{id}','OrderController@getCharacterization');
 Route::get('/panel/getOrder','AdministratorController@requestTable');
 Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
 Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
+Route::get('/ProductionOrders/update/{id}/{status}','ProductionOrdersController@update');
 
 //Ruta para mostrar el detalle de la receta
 Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
@@ -98,6 +99,7 @@ Route::post('/panel/updateBudget', 'OrderRecipeController@updateBudget');
 
 //Rutas para Proveedores
 Route::get('/providers/get', 'ProviderController@providersList');
+Route::get('/providers/status/{id}/{status}', 'ProviderController@status');
 Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy']);
 
 // Rutas para recetas
