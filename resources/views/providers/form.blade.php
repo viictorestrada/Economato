@@ -6,7 +6,8 @@
 
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('nit', 'Nit') }}
-  {{ Form::text('nit', null, ['class' => 'form-control']) }}
+  {{ Form::text('nit', null, ['class' => 'form-control']) }} {{ $errors->has('nit') ? '' : '' }}
+<strong class="text-danger">{{ $errors->first('nit') }}</strong>
 </div>
 
 <div class="form-group col-lg-6 col-md-6">

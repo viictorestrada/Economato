@@ -52,8 +52,8 @@ class OrderController extends Controller
         ->get();
         $orderCost = $products->pluck('cost');
         $pdf = PDF::loadView('reports.remission', compact('products','orderCost'));
-
-         return $pdf->download('Remisión.pdf');
+        return $pdf->stream();
+        //  return $pdf->download('Remisión.pdf');
     }
 
     /**
