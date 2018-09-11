@@ -62,7 +62,7 @@ class OrderRecipeController extends Controller
           }
         // });
          return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
-
+          // return redirect()->back(controlador@function);
 
       }
 
@@ -92,6 +92,7 @@ class OrderRecipeController extends Controller
     public function checkValue(Request $request){
       $valueCheck=0;
       $items = '';
+      Session::flash('navigation','Hello Julián');
       if($request['factura'] != null)
       foreach ($request['factura'] as $key => $value) {
          $costOrderRecipe=Order::whereid($request['factura'][$key])->value('cost');
@@ -102,7 +103,7 @@ class OrderRecipeController extends Controller
      $items=implode(", ", $request['factura']);
      Session::put('value', $valueCheck);
      Session::put('remission', $request['factura']);
-      return redirect('panel')->with('message', 'El valor a facturar por las remisiones '. $items .' es: '.$valueCheck.'');
+    return redirect('panel')->with('message', 'El valor a facturar por las remisiones '. $items .' es: '.$valueCheck.'');
 
 
       // OrderRecipeController::update($valueCheck);

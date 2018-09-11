@@ -1,4 +1,16 @@
 
+.rojo{
+  width: 100px;
+  height: 100px;
+  background: red !important;
+}
+
+#verde{
+  width: 100px;
+  height: 100px;
+  background: green;
+}
+
 .signIn {
     display: flex;
     background-color: #FFF;
