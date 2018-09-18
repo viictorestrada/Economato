@@ -21,6 +21,7 @@
                     <th>Dirección</th>
                     <th>Nombre Contacto</th>
                     <th>Apellido Contacto</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -51,6 +52,7 @@
             { data: 'address', name: 'address' },
             { data: 'contact_name', name: 'contact_name' },
             { data: 'contact_last_name', name: 'contact_last_name' },
+            { data: 'status', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]
     });</script>

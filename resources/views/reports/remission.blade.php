@@ -7,15 +7,23 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Document</title>
   <style>
-    .page-break {w
+    .page-break {
         page-break-after: always;
     }
+    /* @page {
+      padding-top:15px; */
+      /* @page {tamaño: 3600pt 4000pt; } */
+      /* margin: 160px 50px;   */
+    /* } */
 
+    html{
+      padding:50px
+    }
     body {
       width: 100%;
       margin: 0px !important;
       padding: 0px !important;
-      background-image: url("/images/sin_firma.png");
+      background-image: url("/images/sinlogo.png");
     }
 
     .info-pdf{
@@ -70,10 +78,9 @@
     }
 
     .contenedor{
-      padding-top: 25%;
+      padding-top: 30%;
       padding-right:30px;
       padding-left:30px;
-
     }
 
     .contenedorDatos{
@@ -87,7 +94,7 @@
     }
 
     .columna1{
-    margin-top:25px;
+    margin-top:0px;
     }
 
     .columna2{
@@ -98,6 +105,18 @@
       padding-top: -15%;
       width: 100%;
       display: inline-block;
+      clear: both;
+    }
+
+    .greyGridTable2{
+      margin-top: 5%;
+    }
+
+    .imgLogo{
+      position: absolute;
+      top: 70px;
+      right: 0px;
+      left: 0px;
     }
 
 
@@ -107,6 +126,9 @@
 <body>
   <div class="title-pdf contenedor">
     <div class="contenedorDatos">
+      <div class="imgLogo">
+        <img src="{{asset('images/logo.png')}}" alt="">
+      </div>
       <div class="columna1 columnas">
         <p>Usuario: </p>
         <p>CC: </p>
@@ -118,8 +140,66 @@
         <p>Taller: </p>
       </div>
     </div>
-    <div class="contenedorTabla">
-    <table class="greyGridTable">
+    <div class="contenedorTabla" >
+        <table class="greyGridTable">
+          <thead>
+            <tr>
+                <th></th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Unidad de Medida</th>
+                <th>Precio unitario</th>
+                <th>Iva</th>
+                <th>Precio con IVA</th>
+                <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+        @for($i=0; $i<22 ; $i++ )
+            <tr>
+              <td>{{ $i }}</td>
+              <td>{{ $products[$i]['product_name'] }}</td>
+              <td>{{ $products[$i]['quantity'] }}</td>
+              <td>{{ $products[$i]['measure_name'] }}</td>
+              <td>{{ $products[$i]['unit_price'] }}</td>
+              <td>{{ $products[$i]['tax']}}</td>
+              <td>{{ $products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)}}</td>
+              <td>{{ $products[$i]['quantity']*($products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)) }} </td>
+            </tr>
+        @endfor
+          </tbody>
+        </table>
+        <div style="width:100%;heigth:20px"></div>
+            </div>
+              <table class="greyGridTable" style="margin-top:80px">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Unidad de Medida</th>
+                      <th>Precio unitario</th>
+                      <th>Iva</th>
+                      <th>Precio con IVA</th>
+                      <th>Total</th>
+                    </tr>
+                    </thead>
+                  <tbody>
+                  @for($i=22; $i<count($products) ; $i++ )
+                  <tr>
+                        <td>{{ $i}}</td>
+                        <td>{{ $products[$i]['product_name'] }}</td>
+                        <td>{{ $products[$i]['quantity'] }}</td>
+                        <td>{{ $products[$i]['measure_name'] }}</td>
+                        <td>{{ $products[$i]['unit_price'] }}</td>
+                        <td>{{ $products[$i]['tax']}}</td>
+                        <td>{{ $products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)}}</td>
+                        <td>{{ $products[$i]['quantity']*($products[$i]['unit_price']+(($products[$i]['unit_price']*$i['tax'])/100)) }} </td>
+                  </tr>
+                  @endfor
+                  </tbody>
+                </table>
+    {{-- <table class="greyGridTable">
       <thead>
       <tr>
         <th>Producto</th>
@@ -144,10 +224,9 @@
         </tr>
   @endforeach
       </tbody>
-    </table>
-
+    </table> --}}
         <h4>Costo de la orden: {{ $orderCost[0] }}</h4>
-    </div>
+    {{-- </div> --}}
   </div>
 </body>
 </html>

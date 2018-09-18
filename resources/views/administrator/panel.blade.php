@@ -56,7 +56,6 @@
                 </a>
               </div>
               @endif
-
               <div class="col">
                 <a href="{{ url('products/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fa fa-shopping-cart"></i></h1>
@@ -90,14 +89,13 @@
                 </a>
               </div>
 
-              @if (Auth::user()->rol_id == 1)
+
               <div class="col">
                 <a href="{{ url('budgets/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fab fa-bitcoin"></i></h1>
                   <p class="text-center">Presupuesto</p>
                 </a>
               </div>
-              @endif
 
               <div class="col">
                 <a href="{{ url('files/create') }}" class="text-secondary text-center" style="text-decoration: none;">
@@ -149,15 +147,19 @@
 
           <div class="card border-secondary">
             <h4 class="card-header bg-secondary text-light">Producción de centro</h4>
+            {{Form::open(['url' => 'productionCenter/allRemisions', 'class' => 'forms']) }}
+            <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
+              <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
             <div class="card-body">
               <div class="responsive">
-              <table class="table table-bordered table-md" width="100%" id="orderProduction">
+              <table class="table table-bordered" width="100%" id="orderProduction">
                 <thead>
                   <tr>
                     <th>Titulo</th>
                     <th>Descripción</th>
                     <th>Asistentes</th>
                     <th>Usario</th>
+                    <th>Ficha</th>
                     <th>Fecha</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -165,51 +167,81 @@
                 </thead>
               </table>
             </div>
+            {{Form::close()}}
             </div>
            </div>
           </div>
 
         <!--Contenido de Entregas-->
+
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
           @if(Session::has('message'))
           <form action="/panel/check/" method="POST">
             <div class="alert alert-primary" role="alert">
-                {{ Session::get('message') }}
-                {{-- <a href="/panel/check/{{ Session::get('message') }}" class="btn btn-outline-info">Facturar</a> --}}
-                <button type="submit" class="btn btn-outline-info">Facturar</button>
-                <a href="" onclick="reload()" class="btn btn-outline-info">Eliminar</a>
+              {{ Session::get('message') }}
+              <button type="submit" class="btn btn-outline-info">Facturar</button>
+              <a href="" onclick="reload()" class="btn btn-outline-info">Eliminar</a>
+            </div>
+          </form>
+         @endif
+          <ul class="nav d-flex justify-content-between nav-pills nav-fill bg-secondary admin" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
+            <li class="nav-item">
+              <a class="nav-link active" id="v-pills-entregas2-tab" data-toggle="pill" href="#v-pills-entregas2" role="tab" aria-controls="v-pills-entregas2" aria-selected="true" style="color: #fff">Entregas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="v-pills-facturas-tab" data-toggle="pill" href="#v-pills-facturas" role="tab" aria-controls="v-pills-facturas" aria-selected="true" style="color: #fff">Facturas</a>
+            </li>
+          </ul>
+          <div class="tab-pane fade show active" id="v-pills-entregas2" role="tabpanel" aria-labelledby="v-pills-entregas2-tab">
+            <div class="card border-secondary">
+              <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
+                @csrf
+              <div class="card-body">
+                <div class="responsive">
+                  <table class="table table-bordered table-md" id="entregas" width="100%">
+                    <thead>
+                      <tr>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Ficha</th>
+                        <th>Programa de Formación</th>
+                        <th>Taller</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
               </div>
             </form>
-         @endif
-          <div class="card border-secondary">
-            <h4 class="card-header bg-secondary text-light">Entregas</h4>
-            <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
-              @csrf
-            <button type="submit"  style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end"><i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
-            <div class="card-body">
-              {{-- <h4 class="card-title">Special title treatment</h4>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-              <div class="responsive">
-              <table class="table table-bordered table-md" id="entregas" width="100%">
-                <thead>
-                  <tr>
-                    <th>Usuario</th>
-                    <th>Fecha</th>
-                    <th>Ficha</th>
-                    <th>Programa de Formación</th>
-                    <th>Taller</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-              </table>
-            </form>
-            </div>
-            </div>
-           </div>
           </div>
-
+        </div>
+        <div class="tab-pane fade" id="v-pills-facturas" role="tabpanel" aria-labelledby="v-pills-facturas-tab">
+          <div class="card border-secondary">
+            <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
+                @csrf
+              <div class="card-body">
+                <div class="responsive">
+                  <h1>Holaaaaa</h1>
+                  <table class="table table-bordered table-md"  width="100%">
+                    <thead>
+                      <tr>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Ficha</th>
+                        <th>Programa de Formación</th>
+                        <th>Taller</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
           <!--Contenido de Recetas-->
           <div class="tab-pane fade" id="v-pills-recetas" role="tabpanel" aria-labelledby="v-pills-recetas-tab">
             <div class="card border-secondary">
@@ -333,8 +365,7 @@
             }
           }
         });
-      });
-
+      })
       var table = $('#recipes').DataTable({
         destroy: true,
         responsive: true,
@@ -406,6 +437,7 @@
           { data:'description', name:'description'},
           { data:'pax', name:'pax'},
           { data:'user_name', name:'user_name'},
+          { data:'file_number', name:'file_number'},
           { data:'order_date', name:'order_date'},
           { data:'status', name:'status'},
           { data: 'action', name: 'action', orderable: false, searchable: true }
@@ -443,13 +475,13 @@
               if(save_method == 'add'){
                 toastr.options = {
                   'positionClass': 'toast-bottom-right'
-                }
+                };
                 toastr.success('Se ha agredado un nuevo registro!');
               }
               else{
                 toastr.options = {
                   'positionClass': 'toast-bottom-right'
-                }
+                };
                 toastr.success('El registro se ha actualizado con éxito!');
               }
               $('#recipes-form').modal('hide');
@@ -506,7 +538,7 @@
               unit_price = data[i].unit_price;
               recipes_cost = data[i].recipes_cost;
               tax = data[i].tax;
-            })
+            });
             $('#fillDetails').append(
               `<tr>
                 <td>`+product_id+`</td>
@@ -516,7 +548,7 @@
                 <td>`+((parseInt(unit_price)+parseInt((unit_price*tax)/100))*quantity)+`</td>
                 </tr>`
             );
-          })
+          });
           $('#fillDetails').append(
               `<tr>
                 <td colspan="4">Costo total de la receta (IVA incluido).</td>
@@ -571,7 +603,7 @@
               product_id = data[a].product_id;
               measure = data[a].measure_name;
               quantity = data[a].quantity;
-            })
+            });
             if (a == 0) {
               $('#fillRecipeDetails').append(
               `<tr>
@@ -661,7 +693,7 @@
 }
   function modalEditOrder(id,order) {
     $("#idOrder").val(order),
-    $("#recipes_id").val(id)
+    $("#recipes_id").val(id);
     $.ajax({
         url: "{{ url('RecipeHasProduct') }}" + '/' + id + '/' + order + "/details",
         type: 'get',
@@ -679,7 +711,7 @@
               product_id = data[a].product_id;
               measure = data[a].measure_name;
               quantity = data[a].quantity;
-            })
+            });
               $('#package_number').val(b['package_number']);
             if (a == 0) {
               $('#orderEditDetails').append(
@@ -703,7 +735,7 @@
             $("#setSelected"+a).val(product_id);
             }
 
-          })
+          });
           $('#edit-order').modal();
         },
         error: function() {
@@ -713,15 +745,63 @@
   }
 
   function productionOrderModal(id) {
-    $('#fillProductionOrder').empty();
-    $('#fillProductionOrder').append(`
-      <tr>
-     <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
-      <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
-      <td>{{Form::number('quantity[]', null, ['class' => 'form-control'])}}</td>
-      </tr>`);
-    $('#idProduction').val(id);
-    $('#productionOrderModal').modal();
+    $.ajax({
+      url: 'productionCenter/ajaxtable/'+id,
+      type: 'get',
+      datatype: 'json',
+      success: function (data) {
+        $('#fillProductionOrder').empty();
+        if (data.length == 0) 
+        {
+          $('#idProduction').val(id);
+          $('#fillProductionOrder').append(`
+            <tr>
+             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
+              <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
+              <td>{{Form::number('quantity[]', null, ['class' => 'form-control'])}}</td>
+             </tr>`);
+          $('#productionOrderModal').modal();
+        }
+        else
+        {
+          $.each(data, function(a, b) {
+            $.each(b, function(c, d) {
+              product_name = data[a].product_name;
+              product_id = data[a].products_id;
+              measure = data[a].measure_name;
+              quantity = data[a].quantity;
+            })
+              $('#package_number').val(b['package_number']);
+            if (a == 0) {
+              $('#fillProductionOrder').append(
+              `<tr>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              </tr>`
+            );
+            $("#set"+a).val(product_id);
+            }
+            else{
+            $('#fillProductionOrder').append(
+            `<tr>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
+              <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+              <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            </tr>`
+            );
+            $("#set"+a).val(product_id);
+            }
+
+          })
+          $('#idProduction').val(id);
+          $('#productionOrderModal').modal();
+        }
+      }
+    })
+    
+    
   }
   </script>
 @endsection

@@ -24,6 +24,7 @@ class OrderRecipeController extends Controller
     public function store(Request $request)
     {
         // DB::transaction(function() use($request) {
+
         if($request['idOrder'] != null  ){
           $deleteDetails = OrderRecipe::where('order_id', '=' ,$request['idOrder'])->delete();
         }
@@ -92,7 +93,8 @@ class OrderRecipeController extends Controller
     public function checkValue(Request $request){
       $valueCheck=0;
       $items = '';
-      Session::flash('navigation','Hello Julián');
+
+
       if($request['factura'] != null)
       foreach ($request['factura'] as $key => $value) {
          $costOrderRecipe=Order::whereid($request['factura'][$key])->value('cost');
@@ -123,9 +125,9 @@ class OrderRecipeController extends Controller
             //   'net_total' => Session::get('value'),
             //   'orders_id' => $remission
             // ]);
-            $remission;
-          }
-          return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
+            $remissionUpdate=Order::findOrfail($remission)->update(["status" => "5"]);
+             }
+          // return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
         }
       }
       else{

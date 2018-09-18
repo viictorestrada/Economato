@@ -27,8 +27,11 @@
                                 <tbody id="fillProductionOrder">
                                   
                                 </tbody>
-                                
                               </table>
+                            </div>
+                            <div class="form-group">
+                                {{Form::label('files_id', 'Ficha asociada')}}
+                                {{ Form::select('files_id', $file, null, ['class' => 'form-control'])}}
                             </div>
                           </div> 
                       </div>
