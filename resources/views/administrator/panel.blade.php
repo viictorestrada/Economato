@@ -168,6 +168,7 @@
             </div>
            </div>
           </div>
+
         <!--Contenido de Entregas-->
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
           @if(Session::has('message'))
