@@ -169,15 +169,19 @@
 
           <div class="card border-secondary">
             <h4 class="card-header bg-secondary text-light">Producción de centro</h4>
+            {{Form::open(['url' => 'productionCenter/allRemisions', 'class' => 'forms']) }}
+            <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
+              <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
             <div class="card-body">
               <div class="responsive">
-              <table class="table table-bordered table-md" width="100%" id="orderProduction">
+              <table class="table table-bordered" width="100%" id="orderProduction">
                 <thead>
                   <tr>
                     <th>Titulo</th>
                     <th>Descripción</th>
                     <th>Asistentes</th>
                     <th>Usario</th>
+                    <th>Ficha</th>
                     <th>Fecha</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -185,6 +189,7 @@
                 </thead>
               </table>
             </div>
+            {{Form::close()}}
             </div>
            </div>
           </div>
@@ -411,6 +416,7 @@
           { data:'description', name:'description'},
           { data:'pax', name:'pax'},
           { data:'user_name', name:'user_name'},
+          { data:'file_number', name:'file_number'},
           { data:'order_date', name:'order_date'},
           { data:'status', name:'status'},
           { data: 'action', name: 'action', orderable: false, searchable: true }
@@ -718,15 +724,63 @@
   }
 
   function productionOrderModal(id) {
-    $('#fillProductionOrder').empty();
-    $('#fillProductionOrder').append(`
-      <tr>
-     <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
-      <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
-      <td>{{Form::number('quantity[]', null, ['class' => 'form-control'])}}</td>
-      </tr>`);
-    $('#idProduction').val(id);
-    $('#productionOrderModal').modal();
+    $.ajax({
+      url: 'productionCenter/ajaxtable/'+id,
+      type: 'get',
+      datatype: 'json',
+      success: function (data) {
+        $('#fillProductionOrder').empty();
+        if (data.length == 0) 
+        {
+          $('#idProduction').val(id);
+          $('#fillProductionOrder').append(`
+            <tr>
+             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
+              <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
+              <td>{{Form::number('quantity[]', null, ['class' => 'form-control'])}}</td>
+             </tr>`);
+          $('#productionOrderModal').modal();
+        }
+        else
+        {
+          $.each(data, function(a, b) {
+            $.each(b, function(c, d) {
+              product_name = data[a].product_name;
+              product_id = data[a].products_id;
+              measure = data[a].measure_name;
+              quantity = data[a].quantity;
+            })
+              $('#package_number').val(b['package_number']);
+            if (a == 0) {
+              $('#fillProductionOrder').append(
+              `<tr>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              </tr>`
+            );
+            $("#set"+a).val(product_id);
+            }
+            else{
+            $('#fillProductionOrder').append(
+            `<tr>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
+              <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+              <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            </tr>`
+            );
+            $("#set"+a).val(product_id);
+            }
+
+          })
+          $('#idProduction').val(id);
+          $('#productionOrderModal').modal();
+        }
+      }
+    })
+    
+    
   }
   </script>
 @endsection

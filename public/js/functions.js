@@ -182,7 +182,7 @@ function changeStatusProductionOrder(id,status)
   }).then((result) => {
     if (result.value) {
         $.get(`/ProductionOrders/update/${id}/${status}`, function(data){
-          if(data.status){
+          if(data){
            swal('Pedido Realizado','El pedido ha sido solicitado al porveedor.','success').then(function (){
             location.reload();
            })
@@ -210,10 +210,9 @@ function changeStatusProductionOrder(id,status)
   }).then((result) => {
     if (result.value) {
         $.get(`/ProductionOrders/update/${id}/${status}`, function(data){
-          if (data.status) {
+          if (data) {
             swal('Pedido Rechazado','El taller ha sido rechazado.','success').then(function (){
-              // location.reload();
-              console.log(data.status);
+              location.reload();
              });
           }
           else {
@@ -240,12 +239,16 @@ function changeStatusProductionOrder(id,status)
     }).then((result) => {
       if (result.value) {
           $.get(`/ProductionOrders/update/${id}/${status}`, function(data){
-            if(data.status)
+            if(data){
              swal('Pedido Realizado','El pedido ha sido entregado.','success').then(function (){
               location.reload();
              })
-          });
+            }else
+            {
+              swal('Solicitud fallida','No se pudo realizar la solicitud.','error')
         }
+      })
+    }
         else{
           swal('Pedido Fallido','Aún no se ha entregado el pedido.','error')
         }

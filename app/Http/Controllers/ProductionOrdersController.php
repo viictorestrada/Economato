@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\productionOrders;
+use App\Models\ProductionOrders;
+use App\Models\ProductionHasProducts;
 use App\Models\Characterization;
+use App\Models\ProductsHasContracts;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
 use Auth;
 use DataTables;
 
@@ -63,7 +66,10 @@ class ProductionOrdersController extends Controller
      */
     public function dataTable()
     {
-       $data = ProductionOrders::select('center_production_orders.*')->get();
+
+       $data = ProductionOrders::select('center_production_orders.*')->
+       
+       get();
        return DataTables::of($data)->editColumn('status', function ($id)
        {
         if ($id->status == 1) {
@@ -78,6 +84,20 @@ class ProductionOrdersController extends Controller
         else if ($id->status == 4) {
             return "Entregado";
         }
+        else if ($id->status == 0){
+            return "Rechazado";
+        }
+       })->editColumn('file_number', function ($id)
+       {
+        if ($id->files_id == null) {
+
+            return "sin asignar";
+        }
+        else {
+            $data2 = ProductionOrders::select('center_production_orders.*','files.file_number')->
+            join('files','files.id','=','center_production_orders.files_id')->get();
+            return $data2[0]['file_number'];
+        }
        })->addColumn('action', function ($id)
        {
            if ($id->status == 1) {
@@ -85,16 +105,20 @@ class ProductionOrdersController extends Controller
                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
            }
            if ($id->status == 2) {
+
                $bot = '<a onclick="productionOrderModal('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
                <a  onclick="changeStatusProductionOrder('.$id->id.', 3 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Solicitar al proveedor."><i class="fa fa-check-circle"></i></a>
                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
            }
            if ($id->status == 3) {
-               $bot = '<a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa-check-circle"></i></a>
-               <a  onclick="managmentOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+               $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i> </a>
+               <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa-check-circle"></i></a>
+               <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
            }
            if ($id->status == 4) {
-               $bot = '';
+               $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
+               </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+               <label for="checkbox'.$id->id.'"><span></span></label>';
            }
            if ($id->status == 0) {
                $bot = '';
@@ -125,7 +149,18 @@ class ProductionOrdersController extends Controller
     public function update($id, $status)
     {
         $validate = productionOrders::whereid($id)->update(["status" => $status]); 
-        // dd($validate,$status);
+        if ($status == 4) {
+            $var =  ProductionHasProducts::select('center_production_has_products.*')->where('center_production_orders_id',$id)->get();
+            $var->groupBy('products_id')->each(function ($key)
+            {
+                $stockQuantity = ProductsHasContracts::where('products_id',$key[0]['products_id'])
+                ->select('quantity')
+                ->first();
+                $newQuantity = $stockQuantity['quantity']-$key[0]['quantity'];
+                ProductsHasContracts::where('products_id',$key[0]['products_id'])->update(['quantity'=>$newQuantity]);
+            });
+        }
+       
         return response()->json($validate);
     }
 
@@ -135,8 +170,52 @@ class ProductionOrdersController extends Controller
      * @param  \App\Models\productionOrders  $productionOrders
      * @return \Illuminate\Http\Response
      */
-    public function destroy(productionOrders $productionOrders)
+    public function orderRemission($id)
     {
-        //
+        $query = ProductionOrders::where('center_production_orders.id',$id)->
+        select('center_production_orders.*','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
+        join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
+        join('products','products.id', '=' , 'center_production_has_products.products_id')->
+        join('measure_unit','products.id_measure_unit','=','measure_unit.id')->
+        join('products_has_contracts','products_has_contracts.products_id','=','products.id')->
+        join('taxes','taxes.id','=','products_has_contracts.taxes_id')->
+        get();
+        // dd($query);
+        $cost = $query->pluck('cost');
+        $pdf = PDF::loadView('reports.productionRemission', compact('query','cost'));
+        return $pdf->stream();
+        
     }
+
+    public function selectedOrderRemission(Request $request)
+    {   
+        
+        $array = collect([]);
+        $totalCost = 0;
+        foreach ($request['factura'] as $key => $value) 
+        {
+            
+            $query = ProductionOrders::where('center_production_orders.id',$value)->
+            select('center_production_orders.cost','products.id','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
+            join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
+            join('products','products.id', '=' , 'center_production_has_products.products_id')->
+            join('measure_unit','products.id_measure_unit','=','measure_unit.id')->
+            join('products_has_contracts','products_has_contracts.products_id','=','products.id')->
+            join('taxes','taxes.id','=','products_has_contracts.taxes_id')->
+            get();
+            
+            foreach ($query as $key => $value) {
+                $array->push(['product_name' => $query[$key]['product_name'], 'quantity' => $query[$key]['quantity'],'measure' => $query[$key]['measure_name'], 'unit_price' => $query[$key]['unit_price'], 'tax' => $query[$key]['tax']]);
+            }
+           $totalCost += $query[0]['cost'];
+        }
+
+        dd($array->groupBy('product_name'));
+        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('array','totalCost'));
+        return $pdf->stream();
+        
+        
+        
+    }
+
 }

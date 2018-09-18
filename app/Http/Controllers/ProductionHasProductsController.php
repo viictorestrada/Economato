@@ -37,6 +37,10 @@ class ProductionHasProductsController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request["product_id"][0] == "") {
+        return back()->with([swal()->autoclose(1500)->error('Modificación fallida','Debe llenar todos los campos y elegir una ficha')]);
+    }
+    else {
         ProductionHasProducts::where('center_production_orders_id', $request['center_production_orders_id'])->delete();
         $center_id = $request['center_production_orders_id'];
         $cost = 0;
@@ -50,10 +54,24 @@ class ProductionHasProductsController extends Controller
                 'quantity' => $request['quantity'][$key]
                 ]);  
         }
-        ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2]); 
+        ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2,'files_id' => $request->files_id]);
         return back()->with([swal()->autoclose(1500)->success('Modificación exitosa!','Se ha modificado el pedido con exito')]);
+        
+    }
 
         
+    }
+
+    public function ajaxModal(Request $request, $id)
+    {
+        
+          $recipe = ProductionHasProducts::select('center_production_has_products.*','products.product_name','measure_unit.measure_name')->
+          join('products','products.id', '=', 'center_production_has_products.products_id')->
+          join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')->
+          where('center_production_has_products.center_production_orders_id',$id)->
+          get();
+        
+        return $recipe;
     }
 
     /**
