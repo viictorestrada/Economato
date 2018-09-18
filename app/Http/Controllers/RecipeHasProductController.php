@@ -39,21 +39,20 @@ class RecipeHasProductController extends Controller
 
     public function edit(Request $request,$id)
     {
-      $recipe = RecipeHasProduct::select('recipes_has_products.*','taxes.tax','products.product_name','measure_unit.measure_name','products_has_contracts.unit_price','recipes.recipes_cost')
+      $recipe = RecipeHasProduct::select('recipes_has_products.*','taxes.tax','products.product_name',
+      'measure_unit.measure_name','products_has_contracts.unit_price','recipes.recipes_cost')
       ->join('products','products.id', '=', 'recipes_has_products.product_id')
       ->join('products_has_contracts', 'products.id', '=' , 'products_has_contracts.products_id')
       ->join('taxes', 'taxes.id' , '=' , 'products_has_contracts.taxes_id' )
       ->join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')
       ->join('recipes','recipes.id', '=' , 'recipes_has_products.recipe_id')
-      ->where('recipes_has_products.recipe_id',$id)->get()->all();
-
+      ->where('recipes_has_products.recipe_id',$id)->get();
       return $recipe;
 
     }
 
 
     public function show(Request $request,$id,$order){
-
       $status=Order::findOrfail($order);
        if ($status->status == 1 )
        {

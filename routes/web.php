@@ -7,6 +7,9 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 
 
+Route::get('reports', 'ReportController@index');
+Route::get('/panel/reports', 'ReportController@reportProducts');
+
 
 //ruta para pedidos
 Route::resource('orders', 'OrderController');
@@ -14,12 +17,14 @@ Route::get('/order/{id}','OrderController@getCharacterization');
 Route::get('/panel/getOrder','AdministratorController@requestTable');
 Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
 Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
+Route::get('/ProductionOrders/update/{id}/{status}','ProductionOrdersController@update');
 
 //Ruta para mostrar el detalle de la receta
 Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
 Route::get('RecipeHasProduct/{id}/{order}/details','RecipeHasProductController@show');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
+
 
 //Ruta para resultados de aprendizaje
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
@@ -99,6 +104,7 @@ Route::get('/panel/check/','OrderRecipeController@update');
 
 //Rutas para Proveedores
 Route::get('/providers/get', 'ProviderController@providersList');
+Route::get('/providers/status/{id}/{status}', 'ProviderController@status');
 Route::resource('providers', 'ProviderController', ['except' => 'show', 'destroy']);
 
 // Rutas para recetas
@@ -133,16 +139,22 @@ Route::get('/orderRecipeEdit/updateQuantity/{id}','OrderRecipeController@updateQ
 
 // Ruta para registrar la orden de producción de centro con detalles a productos.
 Route::resource('productionHasProducts','ProductionHasProductsController',['except '=> 'show','edit','update','destroy']);
-
+Route::get('productionCenter/remission/{id}', 'ProductionOrdersController@orderRemission');
+Route::get('productionCenter/ajaxtable/{id}', 'ProductionHasProductsController@ajaxModal');
+Route::post('productionCenter/allRemisions', 'ProductionOrdersController@selectedOrderRemission');
 //ruta para generar pdf de las nuevas ordenes al proveedor
 Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );
+
+
+// Route::resource('reports', );
+
 });
 
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------
 Route::group(['middleware' => ['auth', 'executive']], function () {
 
   //Ruta de reportes
-Route::get('reports', 'ReportController@index');
+// Route::get('reports', 'ReportController@index');
 
 });
 

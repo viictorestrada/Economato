@@ -16,7 +16,8 @@
               </div>
             </div><hr>
 
-            {{ Form::model($contract, ['url' => ['contracts', $contract->id], 'class' => 'forms', 'method' => 'PATCH']) }}
+            {{ Form::model($contract, ['url' => ['contracts', $contract->id], 'class' => 'forms', 'method' => '
+            ']) }}
 
               @csrf
               <div class="row">

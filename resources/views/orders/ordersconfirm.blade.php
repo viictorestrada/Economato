@@ -72,17 +72,18 @@ function loadRecipeProducts(id) {
       type: 'get',
       datatype: "json",
       success: function(data) {
-        console.log('datos'+data)
+        // console.log(data)
+        console.log(data);
         $('#tableOrder').empty();
         var product_name;
         var measure;
-        var quantity;tableOrder
+        var quantity;tableOrder;
         $.each(data, function(a, b) {
           $.each(b, function(c, d) {
             product_name = data[a].product_name;
             measure = data[a].measure_name;
             quantity = data[a].quantity;
-          })
+          });
             $('#tableOrder').append(
             `<tr>
               <td>{{ Form::text('product_id[]', '`+product_name+`', ['class' => 'form-control', 'readonly' ]) }}</td>
