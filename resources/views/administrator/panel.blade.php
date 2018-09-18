@@ -41,6 +41,7 @@
     <div class="tab-content" id="v-pills-tabContent">
 
       <!--Contenido de General!-->
+
       <div class="tab-pane fade show active" id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab">
         <div class="card border-secondary">
           <h4 class="card-header bg-secondary text-light text-center">Gestión</h4>
@@ -137,27 +138,6 @@
                   </thead>
                 </table>
               </div>
-                  {{-- <div class="col-3 align-self-end">
-                    <label class="sr-only" for="inlineFormInputGroup">Búsqueda</label>
-                    <div class="input-group mb-2 mb-sm-0">
-                      <div class="input-group-addon bg-secondary">
-                        <span class="oi oi-magnifying-glass text-light"></span>
-                      </div>
-                      <input type="text" class="form-control border-secondary" id="buscar" placeholder="Buscar">
-                    </div>
-                  </div>
-
-                  <div class="col-9">
-                    <div class="card border-success">
-                      <div class="card-body">
-                        <h4 class="card-title text-center">Información importante</h4><hr class="bg-success">
-                        <section id="tbl_prog">
-                          With supporting text below as a natural lead-in to additional content
-                        </section>
-                        <!--a href="#" class="btn btn-primary">Agregar Programa</a-->
-                      </div>
-                    </div>
-                  </div> --}}
               </div><br>
               <div class="tabla_datos" id="resultado"></div><hr class="bg-success">
               {{-- <a href="#" class="btn btn-primary">Solicitud a proveedores</a> --}}
@@ -325,8 +305,22 @@
       </section>
     </div>
   </section>
-@endsection
 
+{{-- @if(Session::has('navigation'))
+
+<script>
+  $(document).ready(function() {
+    console.log('funciona');
+    $("#v-pills-general").removeClass("show active");
+    $("#v-pills-general-tap").removeClass("active");
+    $("#v-pills-messages").addClass("show active");
+    $("#v-pills-messages-tab").addClass("active");
+    });
+
+</script>
+@endif --}}
+
+@endsection
 @section('script')
 <script src="{{ asset('js/functions.js') }}"></script>
     <script>

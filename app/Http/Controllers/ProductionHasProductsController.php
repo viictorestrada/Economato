@@ -52,7 +52,7 @@ class ProductionHasProductsController extends Controller
                 'center_production_orders_id' => $center_id,
                 'products_id' => $value,
                 'quantity' => $request['quantity'][$key]
-                ]);  
+                ]);
         }
         ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2,'files_id' => $request->files_id]);
         return back()->with([swal()->autoclose(1500)->success('Modificación exitosa!','Se ha modificado el pedido con exito')]);
@@ -72,6 +72,7 @@ class ProductionHasProductsController extends Controller
           get();
         
         return $recipe;
+
     }
 
     /**

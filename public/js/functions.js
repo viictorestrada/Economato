@@ -74,7 +74,9 @@ function checkOrder()
     closeOnCancel: false
   }).then((result) => {
     if (result.value) {
-      swal('Consultando valor','En la ventana de entregas encontrará el valor a facturar.','info').then(function () {
+
+      swal('Consultando valor','En la ventana de entregas encontrará el valor a facturar.','info').
+      then(function () {
         document.formCheck.submit();
       });
     }else{
