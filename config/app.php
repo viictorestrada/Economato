@@ -164,6 +164,11 @@ return [
         *Package pdf reports
         */
         Barryvdh\DomPDF\ServiceProvider::class,
+      /*
+        *Package charts
+        */
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+
     ],
 
     /*
@@ -213,7 +218,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
     ],
 
 ];

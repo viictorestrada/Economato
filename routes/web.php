@@ -7,6 +7,9 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 
 
+Route::get('reports', 'ReportController@index');
+Route::get('/panel/reports', 'ReportController@reportProducts');
+
 
 //ruta para pedidos
 Route::resource('orders', 'OrderController');
@@ -20,6 +23,7 @@ Route::get('RecipeHasProduct/{id}/show' , 'RecipeHasProductController@edit');
 Route::get('RecipeHasProduct/{id}/{order}/details','RecipeHasProductController@show');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
+
 
 //Ruta para resultados de aprendizaje
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
@@ -136,13 +140,17 @@ Route::resource('productionHasProducts','ProductionHasProductsController',['exce
 
 //ruta para generar pdf de las nuevas ordenes al proveedor
 Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );
+
+
+// Route::resource('reports', );
+
 });
 
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------
 Route::group(['middleware' => ['auth', 'executive']], function () {
 
   //Ruta de reportes
-Route::get('reports', 'ReportController@index');
+// Route::get('reports', 'ReportController@index');
 
 });
 
