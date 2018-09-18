@@ -13,6 +13,7 @@ use App\Models\Recipe;
 use App\Models\Product;
 use App\Models\RecipeHasProduct;
 use App\Models\Order;
+use App\Models\File;
 use DataTables;
 
 class AdministratorController extends Controller
@@ -30,14 +31,16 @@ class AdministratorController extends Controller
         return view('configurations.index', compact('region', 'program', 'characterization', 'competence', 'complex', 'location', 'recipe', 'product'));
     }
 
-    public function panel()
-    {
-        $recipe = Recipe::all();
-        $product = Product::select('products.id', 'products.product_name')
-            ->join('products_has_contracts', 'products.id', '=', 'products_has_contracts.products_id')->get();
-        $products = $product->pluck('product_name', 'id');
-        return view('administrator.panel', compact('recipe', 'products'));
-    }
+  public function panel()
+  {
+    $recipe = Recipe::all();
+    $product=Product::select('products.id','products.product_name')
+    ->join('products_has_contracts','products.id' , '=' , 'products_has_contracts.products_id')->get();
+    $products = $product->pluck('product_name', 'id');
+    $files = File::where('characterization_id',2)->get();
+    $file = $files->pluck('file_number', 'id');
+    return view('administrator.panel', compact('recipe','products','file'));
+  }
 
     public function requestTable()
     {
