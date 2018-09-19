@@ -82,7 +82,6 @@ class AdministratorController extends Controller
     {
         $requestInstructor = Order::where('orders.status', '=', '3')
             ->orWhere('orders.status', '=', '0')
-            ->orWhere('orders.status', '=', '5')
             ->select('orders.*', 'recipes.recipe_name', 'files.file_number', 'programs.program_name')
             ->join('recipes', 'orders.recipes_id', '=', 'recipes.id')
             ->join('files', 'orders.files_id', '=', 'files.id')
@@ -90,7 +89,6 @@ class AdministratorController extends Controller
             ->get();
         return DataTables::of($requestInstructor)
             ->addColumn('action', function ($id) {
-                // dd($id);
                 if ($id->status == 0) {
                     $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud rechazada.">Rechazado</i></a>';
                     return $bot;
@@ -103,6 +101,31 @@ class AdministratorController extends Controller
                     <a href="pdf/orderProvider/' . $id->id . '" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
                     </a>';
                     return $bot;
+                }
+
+            })->editColumn('status', function ($id) {
+                if ($id->status == 3) {
+                    return "Entregado";
+                } else if ($id->status == 0) {
+                    return "Cancelado";
+                }
+
+            })
+            ->make(true);
+    }
+    public function requestTableCheck()
+    {
+        $requestInstructor = Order::where('orders.status', '=', '5')
+            ->select('orders.*', 'recipes.recipe_name', 'files.file_number', 'programs.program_name')
+            ->join('recipes', 'orders.recipes_id', '=', 'recipes.id')
+            ->join('files', 'orders.files_id', '=', 'files.id')
+            ->join('programs', 'files.program_id', '=', 'programs.id')
+            ->get();
+        return DataTables::of($requestInstructor)
+            ->addColumn('action', function ($id) {
+                if ($id->status == 0) {
+                    $bot = '<a class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitud rechazada.">Rechazado</i></a>';
+                    return $bot;
                 } else if ($id->status == 5) {
                     $bot = '<a class="btn btn-md btn-outline-info text-info entregado"  data-toggle="tooltip" title="Solicitud Facturada.">Facturado</i></a>
                       <a href="pdf/orderProvider/' . $id->id . '" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
@@ -110,9 +133,7 @@ class AdministratorController extends Controller
                     return $bot;
                 }
             })->editColumn('status', function ($id) {
-                if ($id->status == 3) {
-                    return "Entregado";
-                } else if ($id->status == 0) {
+                if ($id->status == 0) {
                     return "Cancelado";
                 } else if ($id->status == 5) {
                     return "Facturado";
@@ -120,7 +141,6 @@ class AdministratorController extends Controller
             })
             ->make(true);
     }
-
     public function getMeasure(Request $request, $id)
     {
         if ($request->ajax()) {

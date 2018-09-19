@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use DataTables;
+use Auth;
 use App\Models\Product;
 use App\Models\Budget;
 use App\Models\ProductHasContracts;
 class ReportController extends Controller
 {
-    // public function index() {
-    //   return view('reports/index');
-    // }
 
 
 
@@ -126,9 +124,10 @@ class ReportController extends Controller
 
     public function pdf()
     {
+
         $products = Product::all();
 
-        $pdf = PDF::loadView('pdf.products', compact('products'));
+        $pdf = PDF::loadView('pdf.products', compact('products','information'));
 
         return $pdf->download('listado.pdf');
     }

@@ -127,7 +127,7 @@ class OrderRecipeController extends Controller
             // ]);
             $remissionUpdate=Order::findOrfail($remission)->update(["status" => "5"]);
              }
-          // return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
+          return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
         }
       }
       else{

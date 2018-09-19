@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> --}}
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Document</title>
+  <title>Remisión</title>
   <style>
     .page-break {
         page-break-after: always;
@@ -130,17 +130,18 @@
         <img src="{{asset('images/logo.png')}}" alt="">
       </div>
       <div class="columna1 columnas">
-        <p>Usuario: </p>
+      <p>Usuario: {{$information['name'].' '.$information['last_name']}}</p>
         <p>CC: </p>
         <p>Población: </p>
       </div>
       <div class="columna2 columnas">
-        <p>Fecha: </p>
+      <p>Fecha: {{ $information['date'] }}</p>
         <p>Programa: </p>
-        <p>Taller: </p>
+      <p>Taller: {{  $information['recipe'] }}</p>
       </div>
     </div>
     <div class="contenedorTabla" >
+      @if(count($products)>22)
         <table class="greyGridTable">
           <thead>
             <tr>
@@ -157,7 +158,7 @@
           <tbody>
         @for($i=0; $i<22 ; $i++ )
             <tr>
-              <td>{{ $i }}</td>
+              <td>{{ $i+1 }}</td>
               <td>{{ $products[$i]['product_name'] }}</td>
               <td>{{ $products[$i]['quantity'] }}</td>
               <td>{{ $products[$i]['measure_name'] }}</td>
@@ -186,46 +187,55 @@
                     </thead>
                   <tbody>
                   @for($i=22; $i<count($products) ; $i++ )
-                  <tr>
-                        <td>{{ $i}}</td>
-                        <td>{{ $products[$i]['product_name'] }}</td>
-                        <td>{{ $products[$i]['quantity'] }}</td>
-                        <td>{{ $products[$i]['measure_name'] }}</td>
-                        <td>{{ $products[$i]['unit_price'] }}</td>
-                        <td>{{ $products[$i]['tax']}}</td>
-                        <td>{{ $products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)}}</td>
-                        <td>{{ $products[$i]['quantity']*($products[$i]['unit_price']+(($products[$i]['unit_price']*$i['tax'])/100)) }} </td>
-                  </tr>
+                    <tr>
+                          <td>{{ $i}}</td>
+                          <td>{{ $products[$i]['product_name'] }}</td>
+                          <td>{{ $products[$i]['quantity'] }}</td>
+                          <td>{{ $products[$i]['measure_name'] }}</td>
+                          <td>{{ $products[$i]['unit_price'] }}</td>
+                          <td>{{ $products[$i]['tax']}}</td>
+                          <td>{{ $products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)}}</td>
+                          <td>{{ $products[$i]['quantity']*($products[$i]['unit_price']+(($products[$i]['unit_price']*$i['tax'])/100)) }} </td>
+                    </tr>
                   @endfor
-                  </tbody>
-                </table>
-    {{-- <table class="greyGridTable">
-      <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Unidad de Medida</th>
-        <th>Precio unitario</th>
-        <th>Iva</th>
-        <th>Precio con IVA</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-  @foreach($products as $key => $value)
-        <tr>
-        <td>{{ $value['product_name'] }}</td>
-        <td>{{ $value['quantity'] }}</td>
-        <td>{{ $value['measure_name'] }}</td>
-        <td>{{ $value['unit_price'] }}</td>
-        <td>{{ $value['tax']}}</td>
-        <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
-        <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
-        </tr>
-  @endforeach
-      </tbody>
-    </table> --}}
-        <h4>Costo de la orden: {{ $orderCost[0] }}</h4>
+                    </tbody>
+                  </table>
+            @elseif(count($products)<22)
+              <table class="greyGridTable">
+                <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Unidad de Medida</th>
+                  <th>Precio unitario</th>
+                  <th>Iva</th>
+                  <th>Precio con IVA</th>
+                  <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+            @foreach($products as $key => $value)
+                  <tr>
+                  <td>{{ $value['product_name'] }}</td>
+                  <td>{{ $value['quantity'] }}</td>
+                  <td>{{ $value['measure_name'] }}</td>
+                  <td>{{ $value['unit_price'] }}</td>
+                  <td>{{ $value['tax']}}</td>
+                  <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
+                  <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
+                  </tr>
+            @endforeach
+                </tbody>
+              </table>
+              @endif
+              <div class="contenedorDatos">
+            <div style="margin-top:15px" class="columna1 columnas">
+                <h4>Costo de la orden: {{ $orderCost[0] }}</h4>
+            </div>
+            <div style="margin-top:15px" class="columna2 columnas">
+                <h4>Número de paquetes: {{ $information['package_number'] }}</h4>
+            </div>
+              </div>
     {{-- </div> --}}
   </div>
 </body>

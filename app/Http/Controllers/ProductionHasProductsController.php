@@ -73,6 +73,11 @@ class ProductionHasProductsController extends Controller
         
         return $recipe;
 
+
+
+
+
+        
     }
 
     /**
