@@ -6,51 +6,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Document</title>
   <style>
-    .page-break {
-        page-break-after: always;
-    }
-    </style>
-</head>
-<body>
-  <div class="title-pdf">
-  <h5>Usuario: {{ $query[0]['user_name'] }}</h5>
-  <h5>Fecha: {{ $query[0]['created_at'] }}</h5>
-    <h5>CC: </h5>
-
-    <table class="greyGridTable">
-      <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Unidad de Medida</th>
-        <th>Precio unitario</th>
-        <th>Iva</th>
-        <th>Precio con IVA</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-  @foreach($query as $key => $value)
-        <tr>
-        <td>{{ $value['product_name'] }}</td>
-        <td>{{ $value['quantity'] }}</td>
-        <td>{{ $value['measure_name'] }}</td>
-        <td>{{ $value['unit_price'] }}</td>
-        <td>{{ $value['tax']}}</td>
-        <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
-        <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
-        </tr>
-  @endforeach
-      </tbody>
-    </table>
-
-        <h4>Costo de la orden: {{ $cost[0] }}</h4>
-    </div>
-</body>
-</html>
-
-
-<stlye>
 
 title-pdf {
   width: 100%;
@@ -107,6 +62,47 @@ table.greyGridTable tfoot {
 table.greyGridTable tfoot td {
   font-size: 14px;
 }
+    .page-break {
+        page-break-after: always;
+    }
+    </style>
+</head>
+<body>
+  <div class="title-pdf">
+  <h5>Usuario: {{ $query[0]['user_name'] }}</h5>
+  <h5>Fecha: {{ $query[0]['created_at'] }}</h5>
+    <h5>CC: </h5>
 
-</stlye>
+    <table class="greyGridTable">
+      <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Unidad de Medida</th>
+        <th>Precio unitario</th>
+        <th>Iva</th>
+        <th>Precio con IVA</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+  @foreach($query as $key => $value)
+        <tr>
+        <td>{{ $value['product_name'] }}</td>
+        <td>{{ $value['quantity'] }}</td>
+        <td>{{ $value['measure_name'] }}</td>
+        <td>{{ $value['unit_price'] }}</td>
+        <td>{{ $value['tax']}}</td>
+        <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
+        <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
+        </tr>
+  @endforeach
+      </tbody>
+    </table>
+
+        <h4>Costo de la orden: {{ $cost[0] }}</h4>
+    </div>
+</body>
+</html>
+
 

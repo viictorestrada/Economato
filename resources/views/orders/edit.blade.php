@@ -50,9 +50,9 @@
     </div>
   </div>
 </div>
-
+{{-- 
 @section('script')
-<script>
+{{-- <script>
 $(() => {
 
 $("#edit-order form").validate({
@@ -71,5 +71,5 @@ $("#edit-order form").validate({
 });
 });
 
-</script>
-@endsection
+</script> --}}
+
