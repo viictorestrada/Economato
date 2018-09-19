@@ -54,7 +54,7 @@ class ProductionOrdersController extends Controller
             return redirect('Production_orders')->with([swal()->autoclose(1500)->success('Solicitud Éxitosa!', 'Se ha realizado el pedido con exito')]);
         }
         else {
-            return redirect('Production_orders')->with([swal()->autoclose(1500)->success('Solicitud Fallida', 'Hubo un error al realizar el pedido')]);
+            return redirect('Production_orders')->with([swal()->autoclose(1500)->error('Solicitud Fallida', 'Hubo un error al realizar el pedido')]);
             }
     }
 
@@ -191,13 +191,15 @@ class ProductionOrdersController extends Controller
     public function selectedOrderRemission(Request $request)
     {
 
-        $array = collect([]);
+        if ($request->has('factura')) {
+            $array = collect([]);
+        $grouped = collect([]);
         $totalCost = 0;
+        $suma = 0;
         foreach ($request['factura'] as $key => $value)
         {
-
             $query = ProductionOrders::where('center_production_orders.id',$value)->
-            select('center_production_orders.cost','products.id','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
+            select('center_production_orders.cost','products.product_name','center_production_has_products.quantity','center_production_has_products.products_id','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
             join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
             join('products','products.id', '=' , 'center_production_has_products.products_id')->
             join('measure_unit','products.id_measure_unit','=','measure_unit.id')->
@@ -208,14 +210,29 @@ class ProductionOrdersController extends Controller
             foreach ($query as $key => $value) {
                 $array->push(['product_name' => $query[$key]['product_name'], 'quantity' => $query[$key]['quantity'],'measure' => $query[$key]['measure_name'], 'unit_price' => $query[$key]['unit_price'], 'tax' => $query[$key]['tax']]);
             }
-           $totalCost += $query[0]['cost'];
+            $totalCost += $query[0]['cost'];
         }
 
-        dd($array->groupBy('product_name'));
-        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('array','totalCost'));
+
+    //    $array->groupBy('product_name')->each(function ($value, $key)
+    //       {
+    //          $grouped[] = ['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']];
+    //          dump($grouped);
+    //       });
+    //       dd($grouped);
+
+        foreach ($array->groupBy('product_name') as $key => $value) {
+            $grouped->push(['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']]);
+        }
+
+
+        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('grouped','totalCost'));
         return $pdf->stream();
 
-
+        }
+        else {
+            return back()->with([swal()->autoclose(1500)->error('Error', 'Debe seleccionar al menos una orden.')]);
+        }
 
     }
 
