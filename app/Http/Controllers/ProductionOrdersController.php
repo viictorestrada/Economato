@@ -231,6 +231,8 @@ class ProductionOrdersController extends Controller
         }
         else {
             return back()->with([swal()->autoclose(1500)->error('Error', 'Debe seleccionar al menos una orden.')]);
+
+            
         }
         
     }
