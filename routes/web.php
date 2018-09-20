@@ -146,8 +146,6 @@ Route::post('productionCenter/allRemisions', 'ProductionOrdersController@selecte
 Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );
 
 
-// Route::resource('reports', );
-
 });
 
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------
