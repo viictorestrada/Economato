@@ -17,6 +17,7 @@
                             <div class="table-responsive">
                               {{Form::open(['url' => 'productionHasProducts', 'class' => 'form'])}}
                               {{Form::hidden('center_production_orders_id', null, ['id' => 'idProduction'])}}
+                              <h3>Productos</h3>
                               <table class="table table-bordered">
                                 <thead>
                                   <th>Insumos</th>
@@ -29,9 +30,16 @@
                                 </tbody>
                               </table>
                             </div>
-                            <div class="form-group">
-                                {{Form::label('files_id', 'Ficha asociada')}}
-                                {{ Form::select('files_id', $file, null, ['class' => 'form-control'])}}
+                            <hr>
+                            <h3>Caracterización</h3>
+                            {{ Form::select('characterization_id', $characterization, null, ['class' => 'form-control', 'id' => 'dependence'])}}
+                            <hr>
+                            <h3>Fichas</h3>
+                            <div class="input-group">
+                                <select name="files_id" id="files_id" class='form-control' aria-describedby="button-addon2" placeholder='-- Ficha asociada --'></select>
+                              <div class="input-group-append">
+                                  <button type="button" class="btn btn-outline-info" id="button-addon2"><i class="fa fa-plus-circle"></i></button>
+                              </div>
                             </div>
                           </div> 
                       </div>
