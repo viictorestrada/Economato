@@ -16,6 +16,7 @@ Route::resource('orders', 'OrderController');
 Route::get('/order/{id}','OrderController@getCharacterization');
 Route::get('/panel/getOrder','AdministratorController@requestTable');
 Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
+Route::get('/panel/getOrderFinishedCheck','AdministratorController@requestTableCheck');
 Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
 Route::get('/ProductionOrders/update/{id}/{status}','ProductionOrdersController@update');
 
@@ -97,8 +98,6 @@ Route::resource('files', 'FileController');
 //Rutas para Presupuesto
 Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
 ROute::get('budgets/status/{id}/{status}', 'BudgetController@status');
-Route::get('/budgets/get', 'BudgetController@budgetsList');
-Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 Route::post('/panel/updateBudget', 'OrderRecipeController@checkValue');
 Route::get('/panel/check/','OrderRecipeController@update');
 
@@ -143,7 +142,7 @@ Route::get('productionCenter/remission/{id}', 'ProductionOrdersController@orderR
 Route::get('productionCenter/ajaxtable/{id}', 'ProductionHasProductsController@ajaxModal');
 Route::post('productionCenter/allRemisions', 'ProductionOrdersController@selectedOrderRemission');
 //ruta para generar pdf de las nuevas ordenes al proveedor
-Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );
+Route::get('pdf/orderProvider/{id}' , 'OrderController@pdfRemission');
 
 
 });
@@ -151,6 +150,9 @@ Route::get('pdf/orderProvider/{id}', 'OrderController@pdfRemission' );
 // ------------------------------------------- Rutas para el Rol Directivo -------------------------------------------
 Route::group(['middleware' => ['auth', 'executive']], function () {
 
+
+Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
+Route::get('/budgets/get', 'BudgetController@budgetsList');
   //Ruta de reportes
 // Route::get('reports', 'ReportController@index');
 

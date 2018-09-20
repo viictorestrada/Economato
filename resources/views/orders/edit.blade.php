@@ -50,26 +50,5 @@
     </div>
   </div>
 </div>
-{{-- 
-@section('script')
-{{-- <script>
-$(() => {
 
-$("#edit-order form").validate({
-    rules: {
-      package_number: {
-            required: true,
-            number: true
-        }
-    },
-    messages: {
-      package_number: {
-            required: "El numero de paquetes es oblogatorio.",
-            number : "El numéro de paquetes solo acepta campos numericos."
-        }
-    }
-});
-});
-
-</script> --}}
 

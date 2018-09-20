@@ -41,7 +41,15 @@
     </li>
 
     <li class="nav-item">
+        @if (Auth::user()->rol_id == 2)
+          <a href="budgets" style="color: white" class="nav-link"><i class="fab fa-bitcoin"></i> Presupuesto</a>
+        @endif
+      </li>
+
+    <li class="nav-item">
+        @if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
         <a href="{{ url('orders') }}" class="nav-link" style="color: white"><i class="fa fa-bell fa-lg"></i> Gestion de pedidos</a>
+        @endif
     </li>
 
     <li class="nav-item">

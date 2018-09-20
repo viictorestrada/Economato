@@ -30,7 +30,7 @@ class ProductionOrdersController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -40,12 +40,12 @@ class ProductionOrdersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $characterization_id = Characterization::select('id')->where('characterization_name','Producción de Centro')->get()->first();
         $response = productionOrders::Create([
-            'characterizations_id' => $characterization_id->id, 
-            'description' => $request['description'], 
-            'pax' => $request['quantity'], 
+            'characterizations_id' => $characterization_id->id,
+            'description' => $request['description'],
+            'pax' => $request['quantity'],
             'user_name' => Auth::user()->name.' '.Auth::user()->last_name,
             'order_date' => $request['order_date'],
             'title' => $request['title']
@@ -68,7 +68,7 @@ class ProductionOrdersController extends Controller
     {
 
        $data = ProductionOrders::select('center_production_orders.*')->
-       
+
        get();
        return DataTables::of($data)->editColumn('status', function ($id)
        {
@@ -125,7 +125,7 @@ class ProductionOrdersController extends Controller
            }
            return $bot;
        })
-       ->make(true); 
+       ->make(true);
     }
 
     /**
@@ -148,7 +148,7 @@ class ProductionOrdersController extends Controller
      */
     public function update($id, $status)
     {
-        $validate = productionOrders::whereid($id)->update(["status" => $status]); 
+        $validate = productionOrders::whereid($id)->update(["status" => $status]);
         if ($status == 4) {
             $var =  ProductionHasProducts::select('center_production_has_products.*')->where('center_production_orders_id',$id)->get();
             $var->groupBy('products_id')->each(function ($key)
@@ -160,7 +160,7 @@ class ProductionOrdersController extends Controller
                 ProductsHasContracts::where('products_id',$key[0]['products_id'])->update(['quantity'=>$newQuantity]);
             });
         }
-       
+
         return response()->json($validate);
     }
 
@@ -172,6 +172,7 @@ class ProductionOrdersController extends Controller
      */
     public function orderRemission($id)
     {
+
         $query = ProductionOrders::where('center_production_orders.id',$id)->
         select('center_production_orders.*','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
         join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
@@ -184,18 +185,18 @@ class ProductionOrdersController extends Controller
         $cost = $query->pluck('cost');
         $pdf = PDF::loadView('reports.productionRemission', compact('query','cost'));
         return $pdf->stream();
-        
+
     }
 
     public function selectedOrderRemission(Request $request)
-    {   
-        
+    {
+
         if ($request->has('factura')) {
             $array = collect([]);
         $grouped = collect([]);
         $totalCost = 0;
         $suma = 0;
-        foreach ($request['factura'] as $key => $value) 
+        foreach ($request['factura'] as $key => $value)
         {
             $query = ProductionOrders::where('center_production_orders.id',$value)->
             select('center_production_orders.cost','products.product_name','center_production_has_products.quantity','center_production_has_products.products_id','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
@@ -211,15 +212,15 @@ class ProductionOrdersController extends Controller
             }
             $totalCost += $query[0]['cost'];
         }
-        
-          
+
+
     //    $array->groupBy('product_name')->each(function ($value, $key)
     //       {
     //          $grouped[] = ['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']];
     //          dump($grouped);
     //       });
     //       dd($grouped);
-          
+
         foreach ($array->groupBy('product_name') as $key => $value) {
             $grouped->push(['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']]);
         }
@@ -227,14 +228,14 @@ class ProductionOrdersController extends Controller
 
         $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('grouped','totalCost'));
         return $pdf->stream();
-        
+
         }
         else {
             return back()->with([swal()->autoclose(1500)->error('Error', 'Debe seleccionar al menos una orden.')]);
 
             
         }
-        
+
     }
 
 }

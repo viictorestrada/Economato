@@ -3,7 +3,32 @@ function onlyNumbers() {
     if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
 }
 
-
+$(() => {
+  $.validator.addMethod('number_positive',
+  function(package_number){
+    if(package_number>0){
+      return true;
+    }else{
+      return false;
+    }
+  })
+  $("#edit-order form").validate({
+      rules: {
+        package_number: {
+              required: true,
+              number: true,
+              number_positive:true
+          }
+      },
+      messages: {
+        package_number: {
+              required: "El número de paquetes es oblogatorio.",
+              number : "El número de paquetes solo acepta campos numericos.",
+              number_positive:"El número de paquetes debe ser mayor a 0."
+            }
+      }
+  });
+  });
 //Función para actualizar los estados de la solicitud
 function managmentOrder(id,status)
 {
@@ -220,7 +245,7 @@ function changeStatusProductionOrder(id,status)
           else {
             swal('Solicitud Fallida','No se pudo cambiar el estado.','error');
           }
-           
+
         });
       } else {
         swal("Solicitud Cancelada", "La solicitud fue cancelada.", "success");
@@ -255,8 +280,8 @@ function changeStatusProductionOrder(id,status)
           swal('Pedido Fallido','Aún no se ha entregado el pedido.','error')
         }
       })
-  
-        
+
+
   }
 }
 

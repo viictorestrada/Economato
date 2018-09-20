@@ -86,12 +86,12 @@
               </div>
 
 
-              <div class="col">
+              {{-- <div class="col">
                 <a href="{{ url('budgets/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fab fa-bitcoin"></i></h1>
                   <p class="text-center">Presupuesto</p>
                 </a>
-              </div>
+              </div> --}}
 
               <div class="col">
                 <a href="{{ url('files/create') }}" class="text-secondary text-center" style="text-decoration: none;">
@@ -212,8 +212,12 @@
           </ul>
           <div class="tab-pane fade show active" id="v-pills-entregas2" role="tabpanel" aria-labelledby="v-pills-entregas2-tab">
             <div class="card border-secondary">
+
+
               <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
                 @csrf
+                <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
+                    <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
               <div class="card-body">
                 <div class="responsive">
                   <table class="table table-bordered table-md" id="entregas" width="100%">
@@ -236,12 +240,11 @@
         </div>
         <div class="tab-pane fade" id="v-pills-facturas" role="tabpanel" aria-labelledby="v-pills-facturas-tab">
           <div class="card border-secondary">
-            <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
-                @csrf
+            {{-- <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
+                @csrf --}}
               <div class="card-body">
                 <div class="responsive">
-                  <h1>Holaaaaa</h1>
-                  <table class="table table-bordered table-md"  width="100%">
+                  <table class="table table-bordered table-md" id="tableCheck" width="100%">
                     <thead>
                       <tr>
                         <th>Usuario</th>
@@ -256,7 +259,7 @@
                   </table>
                 </div>
               </div>
-            </form>
+            {{-- </form> --}}
           </div>
         </div>
       </div>
@@ -446,8 +449,8 @@
         destroy:true,
         processing:true,
         serverSide:true,
-        laguage: {
-          "url": '/DataTables/datatables-spanish.json'
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
         },
         ajax: '/OrderProduction/getProductionOrder',
         columns: [
@@ -459,6 +462,27 @@
           { data:'order_date', name:'order_date'},
           { data:'status', name:'status'},
           { data: 'action', name: 'action', orderable: false, searchable: true }
+        ]
+      });
+
+   var table2 = $('#tableCheck').DataTable({
+        destroy: true,
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/panel/getOrderFinishedCheck',
+        columns: [
+          { data: 'user_name', name: 'user_name' },
+          { data: 'order_date', name: 'order_date' },
+          { data: 'file_number', name: 'file_number' },
+          { data: 'program_name', name: 'program_name' },
+          { data: 'recipe_name', name: 'recipe_name' },
+          { data: 'status', name: 'status' },
+          { data: 'action', name: 'action', orderable: false, searchable: true },
+
         ]
       });
 
@@ -769,7 +793,7 @@
       datatype: 'json',
       success: function (data) {
         $('#fillProductionOrder').empty();
-        if (data.length == 0) 
+        if (data.length == 0)
         {
           $('#idProduction').val(id);
           $('#fillProductionOrder').append(`
@@ -818,8 +842,8 @@
         }
       }
     })
-    
-    
+
+
   }
   </script>
 @endsection

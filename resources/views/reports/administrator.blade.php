@@ -31,7 +31,7 @@
                   <th>Producto</th>
                   <th>Cantidad Disponible</th>
                   <th>Cantidad Contratada</th>
-                  <th>Porcentaje</th>
+                  <th>Porcentaje de Disponibilidad</th>
                 </tr>
               </thead>
             </table>
