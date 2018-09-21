@@ -17,10 +17,6 @@
             <a class="nav-link" id="v-pills-solicitudes-tab" data-toggle="pill" href="#v-pills-solicitudes" role="tab" aria-controls="v-pills-solicitudes" aria-selected="false" style="color: #fff">Solicitudes</a>
           </li>
 
-          <li class="nav-item" style="background-color: none;">
-            <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro</a>
-          </li>
-
           <li class="nav-item">
             <a class="nav-link" id="v-pills-messages-tab entregas" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false" style="color: #fff">Entregas</a>
           </li>
@@ -90,12 +86,12 @@
               </div>
 
 
-              <div class="col">
+              {{-- <div class="col">
                 <a href="{{ url('budgets/create') }}" class="text-secondary text-center" style="text-decoration: none;">
                   <h1 class="display-1 text-center"><i class="fab fa-bitcoin"></i></h1>
                   <p class="text-center">Presupuesto</p>
                 </a>
-              </div>
+              </div> --}}
 
               <div class="col">
                 <a href="{{ url('files/create') }}" class="text-secondary text-center" style="text-decoration: none;">
@@ -117,60 +113,82 @@
           </div> --}}
           <br>
           <div class="card border-secondary">
-            <h4 class="card-header bg-secondary text-light">Solicitudes</h4>
-            <div class="card-body">
-              <!--Entrada de Busqueda de Regional para editar:-->
-              <div class="row">
-                <div class="table-responsive">
-                <table class="table table-bordered table-md" width="100%" id="orders">
+          
+          <ul class="nav d-flex justify-content-between nav-pills nav-fill bg-secondary admin" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
+          
+            <li class="nav-item" style="background-color: none;">
+              <a class="nav-link active" id="v-pills-solicitudes2-tab" data-toggle="pill" href="#v-pills-solicitudes2" role="tab" aria-controls="v-pills-solicitudes2" aria-selected="false" style="color: #fff">Solicitudes</a>
+            </li>
+
+            <li class="nav-item" style="background-color: none;">
+                <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro</a>
+              </li>
+
+              <li class="nav-item" style="background-color: none;">
+                  <a class="nav-link" id="v-pills-poblacion-tab" data-toggle="pill" href="#v-pills-poblacion" role="tab" aria-controls="v-pills-poblacion" aria-selected="false" style="color: #fff">Población Especial</a>
+              </li>
+
+          </ul>
+          <div class="tab-content" id="v-pills-tabContent2">
+            <div class="tab-pane fade show active" id="v-pills-solicitudes2" role="tabpanel" aria-labelledby="v-pills-solicitudes2-tab">
+              <div class="card-body">
+                <!--Entrada de Busqueda de Regional para editar:-->
+                <div class="row">
+                  <div class="table-responsive">
+                  <table class="table table-bordered table-md" width="100%" id="orders">
+                    <thead>
+                      <tr>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Ficha</th>
+                        <th>Programa de Formación</th>
+                        <th>Taller</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+                </div><br>
+                <div class="tabla_datos" id="resultado"></div><hr class="bg-success">
+                {{-- <a href="#" class="btn btn-primary">Solicitud a proveedores</a> --}}
+              </div>
+            </div>
+                    {{-- producción de centro --}}
+        <div class="tab-pane fade" id="v-pills-produccion" role="tabpanel" aria-labelledby="v-pills-produccion-tab">
+            <div class="card border-secondary">
+              {{Form::open(['url' => 'productionCenter/allRemisions', 'class' => 'forms']) }}
+              <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
+                <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
+              <div class="card-body">
+                <div class="responsive">
+                <table class="table table-bordered" width="100%" id="orderProduction">
                   <thead>
                     <tr>
-                      <th>Usuario</th>
-                      <th>Fecha</th>
+                      <th>Titulo</th>
+                      <th>Descripción</th>
+                      <th>Asistentes</th>
+                      <th>Usario</th>
                       <th>Ficha</th>
-                      <th>Programa de Formación</th>
-                      <th>Taller</th>
+                      <th>Fecha</th>
                       <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
                 </table>
               </div>
-              </div><br>
-              <div class="tabla_datos" id="resultado"></div><hr class="bg-success">
-              {{-- <a href="#" class="btn btn-primary">Solicitud a proveedores</a> --}}
+              {{Form::close()}}
+              </div>
+             </div>
             </div>
+
+            <div class="tab-pane fade" id="v-pills-poblacion" role="tabpanel" aria-labelledby="v-pills-poblacion-tab">
+              <h3>Hola Poblacion</h3>
+            </div>
+
           </div>
         </div>
-        {{-- producción de centro --}}
-        <div class="tab-pane fade" id="v-pills-produccion" role="tabpanel" aria-labelledby="v-pills-produccion-tab">
-
-          <div class="card border-secondary">
-            <h4 class="card-header bg-secondary text-light">Producción de centro</h4>
-            {{Form::open(['url' => 'productionCenter/allRemisions', 'class' => 'forms']) }}
-            <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
-              <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
-            <div class="card-body">
-              <div class="responsive">
-              <table class="table table-bordered" width="100%" id="orderProduction">
-                <thead>
-                  <tr>
-                    <th>Titulo</th>
-                    <th>Descripción</th>
-                    <th>Asistentes</th>
-                    <th>Usario</th>
-                    <th>Ficha</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            {{Form::close()}}
-            </div>
-           </div>
-          </div>
+        </div>
 
         <!--Contenido de Entregas-->
 
@@ -194,8 +212,12 @@
           </ul>
           <div class="tab-pane fade show active" id="v-pills-entregas2" role="tabpanel" aria-labelledby="v-pills-entregas2-tab">
             <div class="card border-secondary">
+
+
               <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
                 @csrf
+                <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
+                    <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
               <div class="card-body">
                 <div class="responsive">
                   <table class="table table-bordered table-md" id="entregas" width="100%">
@@ -218,12 +240,11 @@
         </div>
         <div class="tab-pane fade" id="v-pills-facturas" role="tabpanel" aria-labelledby="v-pills-facturas-tab">
           <div class="card border-secondary">
-            <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
-                @csrf
+            {{-- <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
+                @csrf --}}
               <div class="card-body">
                 <div class="responsive">
-                  <h1>Holaaaaa</h1>
-                  <table class="table table-bordered table-md"  width="100%">
+                  <table class="table table-bordered table-md" id="tableCheck" width="100%">
                     <thead>
                       <tr>
                         <th>Usuario</th>
@@ -238,7 +259,7 @@
                   </table>
                 </div>
               </div>
-            </form>
+            {{-- </form> --}}
           </div>
         </div>
       </div>
@@ -428,8 +449,8 @@
         destroy:true,
         processing:true,
         serverSide:true,
-        laguage: {
-          "url": '/DataTables/datatables-spanish.json'
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
         },
         ajax: '/OrderProduction/getProductionOrder',
         columns: [
@@ -441,6 +462,27 @@
           { data:'order_date', name:'order_date'},
           { data:'status', name:'status'},
           { data: 'action', name: 'action', orderable: false, searchable: true }
+        ]
+      });
+
+   var table2 = $('#tableCheck').DataTable({
+        destroy: true,
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/panel/getOrderFinishedCheck',
+        columns: [
+          { data: 'user_name', name: 'user_name' },
+          { data: 'order_date', name: 'order_date' },
+          { data: 'file_number', name: 'file_number' },
+          { data: 'program_name', name: 'program_name' },
+          { data: 'recipe_name', name: 'recipe_name' },
+          { data: 'status', name: 'status' },
+          { data: 'action', name: 'action', orderable: false, searchable: true },
+
         ]
       });
 
@@ -751,7 +793,7 @@
       datatype: 'json',
       success: function (data) {
         $('#fillProductionOrder').empty();
-        if (data.length == 0) 
+        if (data.length == 0)
         {
           $('#idProduction').val(id);
           $('#fillProductionOrder').append(`
@@ -800,8 +842,8 @@
         }
       }
     })
-    
-    
+
+
   }
   </script>
 @endsection
