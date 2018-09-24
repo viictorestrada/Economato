@@ -212,6 +212,9 @@
           </div>
         </div>
         </div>
+      </div>
+        </div>
+
 
         <!--Contenido de Entregas-->
 
