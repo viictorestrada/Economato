@@ -151,14 +151,14 @@
             <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
               <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
             <div class="card-body">
-              <div class="responsive">
-              <table class="table table-bordered" width="100%" id="orderProduction">
+              <div class="">
+              <table class="table table-bordered table-responsive table-md" width="100%" id="orderProduction">
                 <thead>
                   <tr>
                     <th>Titulo</th>
                     <th>Descripción</th>
                     <th>Asistentes</th>
-                    <th>Usario</th>
+                    <th>Usuario</th>
                     <th>Ficha</th>
                     <th>Fecha</th>
                     <th>Estado</th>
@@ -337,19 +337,6 @@
     </div>
   </section>
 
-{{-- @if(Session::has('navigation'))
-
-<script>
-  $(document).ready(function() {
-    console.log('funciona');
-    $("#v-pills-general").removeClass("show active");
-    $("#v-pills-general-tap").removeClass("active");
-    $("#v-pills-messages").addClass("show active");
-    $("#v-pills-messages-tab").addClass("active");
-    });
-
-</script>
-@endif --}}
 
 @endsection
 @section('script')

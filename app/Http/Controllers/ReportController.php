@@ -9,6 +9,7 @@ use Auth;
 use App\Models\Product;
 use App\Models\Budget;
 use App\Models\ProductHasContracts;
+use App\Models\AditionalBudget;
 class ReportController extends Controller
 {
 
@@ -16,7 +17,6 @@ class ReportController extends Controller
 
     public function index()
     {
-
         $totalBudgetChart=ReportController::totalBudget();
         $charTop=ReportController::topUsedProduct();
         $chartLess=ReportController::lessUsedProducts();
@@ -37,14 +37,19 @@ class ReportController extends Controller
     }
 
     public function totalBudget(){
+      $sumAditions=AditionalBudget::get();
+      foreach($sumAditions as $key){
+        $aditions=$key->sum('aditional_budget');
+      }
+      // dd($aditions);
       $totalBudget=Budget::select('budget.*')->first();
       $averageBudget=(round((($totalBudget->budget/$totalBudget->initial_budget)*100),2));
-      $initial=100-round((($totalBudget->budget/$totalBudget->initial_budget)*100),2);
+      $initial=100-round((($totalBudget->budget/($totalBudget->initial_budget+$aditions))*100),2);
       $totalBudgetChart = app()->chartjs
       ->name('doughnutChartTest')
       ->type('doughnut')
       ->size(['width' => 400, 'height' => 200])
-      ->labels(['Presupuesto Consumido = '.($totalBudget->initial_budget-$totalBudget->budget).' ', 'Presupuesto disponible = '.$totalBudget->budget.''])
+      ->labels(['Presupuesto Consumido = '.number_format(($totalBudget->initial_budget+$aditions)-$totalBudget->budget).' ', 'Presupuesto disponible = '.number_format($totalBudget->budget).''])
       ->datasets([
           [
               'backgroundColor' => ['#17A2B8', '#DCE7E9' ],
@@ -152,8 +157,19 @@ class ReportController extends Controller
           </div>';
         }
         return $bot;
+      })->editColumn('quantity', function($reportsProduct){
+        return number_format($reportsProduct->quantity);
+      })->editColumn('quantity_agreed',function($reportsProduct){
+        return number_format($reportsProduct->quantity_agreed);
       })
       ->make(true);
+    }
+
+
+    public function reportCharacterization (){
+      // SELECT  `order_id`, `quantity`, cost, c.characterization_name,`package_number` FROM `orders_recipes` ore
+      // join orders o on ore.order_id=o.id join files f on f.id=o.files_id
+      // join characterizations c on c.id=f.characterization_id where o.status=5 GROUP BY c.characterization_name
     }
 
 }

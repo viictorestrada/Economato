@@ -46,15 +46,20 @@ class OrderController extends Controller
 
 
         $products = OrderRecipe::where('orders_recipes.order_id',$id)
-        ->select('recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
+        ->select('files.file_number','characterizations.characterization_name','programs.program_name','recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
         ->join('orders', 'orders.id','=','orders_recipes.order_id')
         ->join('products','products.id','=','orders_recipes.product_id')
         ->join('measure_unit','products.id_measure_unit','=','measure_unit.id')
         ->join('products_has_contracts','products_has_contracts.products_id','=','products.id')
         ->join('taxes','taxes.id','=','products_has_contracts.taxes_id')
         ->join('recipes', 'recipes.id', '=' ,'orders.recipes_id')
-        // ->join('files' , '')
+        ->join('files' , 'files.id' , '=' , 'orders.files_id')
+        ->join('programs','programs.id','=','files.program_id')
+        ->join('characterizations','characterizations.id','=','files.characterization_id')
         ->get();
+        $characterization_name=$products->pluck('characterization_name')->first();
+        $program_name=$products->pluck('program_name')->first();
+        $file_number=$products->pluck('file_number');
         $recipeName=$products->pluck('recipe_name')->first();
         $package_number=$products->pluck('package_number')->first();
         $orderCost = $products->pluck('cost');
@@ -63,7 +68,10 @@ class OrderController extends Controller
           'last_name'=>Auth::user()->last_name,
           'date'=>date('y-m-d'),
           'recipe'=>$recipeName,
-          'package_number'=>$package_number
+          'package_number'=>$package_number,
+          'file_number'=>$file_number,
+          'program_name'=>$program_name,
+          'characterization_name'=>$characterization_name
         ];
         $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
         return $pdf->stream();

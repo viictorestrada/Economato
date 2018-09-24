@@ -27,9 +27,16 @@ class BudgetController extends Controller
 
     public function aditionalBudgetCreate(Request $request)
     {
-      $budgetCode=$request->input('budget_id');
-      $budgetA=$request->input('aditional_budget');
-      AditionalBudget::create($request->all());
+      $budgetCode=$request['budget_id'];
+      $budgetA=$request['aditional_budget'];
+
+      // AditionalBudget::create($request->all());
+      AditionalBudget::create([
+        'budget_id' => $request['budget_id'],
+        'aditional_budget' => $request['aditional_budget'],
+        'aditional_budget_code' => $request['aditional_budget_code'],
+        'aditional_finish_date' => $request['aditional_finish_date']
+      ]);
       $budgetOrigin = Budget::select('budget')->get();
       $budgetOrigin = Budget::findOrFail($budgetCode);
       $budgetFinal=$budgetOrigin->budget;
@@ -62,23 +69,50 @@ class BudgetController extends Controller
     public function budgetsList(Budget $budget)
     {
       $budgets =  Budget::select('budget.*')->get();
+      // dump(date('y-m-d'));
+      // dd($budgets);
       return DataTables::of($budgets)
       ->addColumn('action', function ($budgets) {
         $button = " ";
-        if($budgets->status == 1)
+        if($budgets->status == 1 && date('Y-m-d')<$budgets->budget_finish_date)
         {
           $button = '<a href="/budgets/status/'.$budgets->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>  ';
-        }else{
+        }else if(date('Y-m-d')<$budgets->budget_finish_date) {
           $button = '<a href="/budgets/status/'.$budgets->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>  ';
         }
+        if(date('Y-m-d')<$budgets->budget_finish_date){
         return $button.'<a href="/budgets/'.$budgets->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>  '.
         '<button onclick="aditionalBudget('.$budgets->id.')" class="btn btn-md btn-outline-info" data-toggle="tooltip" title="Adicionar Presupuesto"><i class="fa fa-plus-circle"></i></button>';
+         } else if(date('Y-m-d')>$budgets->budget_finish_date){
+         return $button.'<button class="btn btn-outline-info">Presupuesto Finalizado</button>';
+        }
       })->editColumn('status', function ($budgets) {
         return $budgets->status == 1 ? "Activo":"Inactivo";
+
+      })->editColumn('budget', function($budgets){
+        return number_format($budgets->budget);
+      })->editColumn('initial_budget', function($budgets){
+        return number_format($budgets->initial_budget);
       })
       ->make(true);
+      // if(date('Y-m-d')<$budgets->budget_finish_date){
+      //   BudgetController::status($budgets->id,0);
+      // }
+
     }
 
+
+    public function validationBudget($value){
+      $budget=Budget::where('status', 1)->get()->first();
+      // dump($value);
+      // dump($budget->budget);
+      if($value>$budget->budget){
+       $array = array('status' => 'false');
+    }else if($value<$budget->budget){
+     $array = array('status' => 'true');
+    }
+    return $array;
+  }
 
     public function edit($budget)
     {
