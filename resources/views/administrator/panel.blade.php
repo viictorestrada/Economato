@@ -125,7 +125,7 @@
               </li>
 
               <li class="nav-item" style="background-color: none;">
-                  <a class="nav-link" id="v-pills-poblacion-tab" data-toggle="pill" href="#v-pills-poblacion" role="tab" aria-controls="v-pills-poblacion" aria-selected="false" style="color: #fff">Población Especial</a>
+                  <a class="nav-link" id="v-pills-poblacion-tab" data-toggle="pill" href="#v-pills-poblacion" role="tab" aria-controls="v-pills-poblacion" aria-selected="false" style="color: #fff">Población Espacial</a>
               </li>
 
           </ul>
@@ -171,6 +171,7 @@
                       <th>Usario</th>
                       <th>Ficha</th>
                       <th>Fecha</th>
+                      <th>lugar</th>
                       <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
@@ -460,6 +461,7 @@
           { data:'user_name', name:'user_name'},
           { data:'file_number', name:'file_number'},
           { data:'order_date', name:'order_date'},
+          { data:'event_place', name:'event_place'},
           { data:'status', name:'status'},
           { data: 'action', name: 'action', orderable: false, searchable: true }
         ]
@@ -726,6 +728,23 @@
     $(document).on('click', '.remove', function(){
       $(this).closest('tr').remove();
     });
+
+    $(document).on('click', '#dependence', function() {
+    $('#fill_me').append(`
+    <div class="input-group mb-3 remove_me">
+      {{ Form::select('files_id[]', $file, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+      <div class="input-group-append">
+      <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
+      </div>
+    </div>
+    `);
+
+  });
+
+  $(document).on('click', '.click_to_delete', function(){
+      $(this).closest('.remove_me').remove();
+    });
+
   });
 
   function getMeasure(id) {
@@ -792,6 +811,7 @@
       type: 'get',
       datatype: 'json',
       success: function (data) {
+        $('#fill_me').empty();
         $('#fillProductionOrder').empty();
         if (data.length == 0)
         {
@@ -845,5 +865,7 @@
 
 
   }
+
+ 
   </script>
 @endsection

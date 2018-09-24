@@ -41,14 +41,13 @@ class ProductionOrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $characterization_id = Characterization::select('id')->where('characterization_name','Producción de Centro')->get()->first();
         $response = productionOrders::Create([
-            'characterizations_id' => $characterization_id->id,
             'description' => $request['description'],
             'pax' => $request['quantity'],
             'user_name' => Auth::user()->name.' '.Auth::user()->last_name,
             'order_date' => $request['order_date'],
-            'title' => $request['title']
+            'title' => $request['title'],
+            'event_place' => $request['event_place']
             ]);
         if ($response) {
             return redirect('Production_orders')->with([swal()->autoclose(1500)->success('Solicitud Éxitosa!', 'Se ha realizado el pedido con exito')]);
