@@ -107,10 +107,6 @@
 
         <!--Contenido de Solicitudes-->
         <div class="tab-pane fade" id="v-pills-solicitudes" role="tabpanel" aria-labelledby="v-pills-solicitudes-tab">
-          {{-- <div>
-          <a href="{{ url('pdf/orders') }}" style="text-decoration : none; color:black">  Nuevas solicitudes,  Descargar PDF. <i class="far fa-file-pdf fa-2x" style="color:red"></i>
-          </a>
-          </div> --}}
           <br>
           <div class="card border-secondary">
 
@@ -142,6 +138,7 @@
                         <th>Fecha</th>
                         <th>Ficha</th>
                         <th>Programa de Formación</th>
+                        <th>Caracterización</th>
                         <th>Taller</th>
                         <th>Estado</th>
                         <th>Acciones</th>
@@ -182,15 +179,11 @@
              </div>
             </div>
 
+
             <div class="tab-pane fade" id="v-pills-poblacion" role="tabpanel" aria-labelledby="v-pills-poblacion-tab">
-              <h3>Hola Poblacion</h3>
-          <div class="card border-secondary">
-            <h4 class="card-header bg-secondary text-light">Producción de centro</h4>
-            {{Form::open(['url' => 'productionCenter/allRemisions', 'class' => 'forms']) }}
-            <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
-              <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
-            <div class="card-body">
-              <div class="">
+              {{-- <h3>Hola Poblacion</h3> --}}
+           <div class="card border-secondary">
+
               <table class="table table-bordered table-responsive table-md" width="100%" id="orderProduction">
                 <thead>
                   <tr>
@@ -206,14 +199,11 @@
                 </thead>
               </table>
             </div>
-            {{Form::close()}}
-            </div>
 
           </div>
         </div>
         </div>
       </div>
-        </div>
 
 
         <!--Contenido de Entregas-->
@@ -253,6 +243,7 @@
                         <th>Fecha</th>
                         <th>Ficha</th>
                         <th>Programa de Formación</th>
+                        <th>Caracterización</th>
                         <th>Taller</th>
                         <th>Estado</th>
                         <th>Acciones</th>
@@ -277,6 +268,7 @@
                         <th>Fecha</th>
                         <th>Ficha</th>
                         <th>Programa de Formación</th>
+                        <th>Caracterización</th>
                         <th>Taller</th>
                         <th>Estado</th>
                         <th>Acciones</th>
@@ -430,6 +422,7 @@
           { data: 'order_date', name: 'order_date' },
           { data: 'file_number', name: 'file_number' },
           { data: 'program_name', name: 'program_name' },
+          { data: 'characterization_name', name: 'characterization_name'},
           { data: 'recipe_name', name: 'recipe_name' },
           { data: 'status', name: 'status' },
           { data: 'action', name: 'action', orderable: false, searchable: true },
@@ -448,9 +441,10 @@
         ajax: '/panel/getOrderFinished',
         columns: [
           { data: 'user_name', name: 'user_name' },
-          { data: 'order_date', name: 'order_date' },
-          { data: 'file_number', name: 'file_number' },
-          { data: 'program_name', name: 'program_name' },
+          { data: 'order_date', name: 'order_date'},
+          { data: 'file_number', name: 'file_number'},
+          { data: 'program_name', name: 'program_name'},
+          { data: 'characterization_name', name: 'characterization_name'},
           { data: 'recipe_name', name: 'recipe_name' },
           { data: 'status', name: 'status' },
           { data: 'action', name: 'action', orderable: false, searchable: true }
@@ -492,6 +486,7 @@
           { data: 'order_date', name: 'order_date' },
           { data: 'file_number', name: 'file_number' },
           { data: 'program_name', name: 'program_name' },
+          { data: 'characterization_name', name: 'characterization_name'},
           { data: 'recipe_name', name: 'recipe_name' },
           { data: 'status', name: 'status' },
           { data: 'action', name: 'action', orderable: false, searchable: true },

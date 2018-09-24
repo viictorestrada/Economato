@@ -12,7 +12,7 @@
                   </li>
 
                   <li class="nav-item">
-                      <a class="nav-link" id="v-pills-prueba-tab" data-toggle="pill" href="#v-pills-prueba" role="tab" aria-controls="v-pills-prueba" aria-selected="true" style="color: #fff">Prueba</a>
+                      <a class="nav-link" id="v-pills--tab" data-toggle="pill" href="#v-pills-" role="tab" aria-controls="v-pills-" aria-selected="true" style="color: #fff">Solicitud Especial</a>
                   </li>
               </ul>
           </div>
@@ -74,7 +74,7 @@
             </div>
             </div>
 
-            <div class="tab-pane fade" id="v-pills-prueba" role="tabpanel" aria-labelledby="v-pills-prueba-tab">
+            <div class="tab-pane fade" id="v-pills-" role="tabpanel" aria-labelledby="v-pills--tab">
                 <div class="card-body">
                   <div class="container">
                       <div class="row mt-5">
@@ -83,7 +83,7 @@
                             <div class="card-body">
                               <div class="col-12 d-flex justify-content-end">
                               </div>
-                                {{ Form::open(['url'=>'Production_orders', 'method'=>'POST', 'name' => 'formulario1', 'class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
+                                {{ Form::open(['url'=>'Production_orders', 'method'=>'POST', 'name' => 'formulario2', 'class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
                                 <div class="row">
 
                                   <div class="form-group col-md-6 col-lg-6">

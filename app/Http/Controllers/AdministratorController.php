@@ -47,9 +47,10 @@ class AdministratorController extends Controller
         $requestInstructor = Order::where('orders.status', '=', '1')
             ->orWhere('orders.status', '=', '2')
             ->orWhere('orders.status', '=', '4')
-            ->select('orders.*', 'recipes.recipe_name', 'files.file_number', 'programs.program_name')
+            ->select('orders.*', 'recipes.recipe_name','characterizations.characterization_name' ,'files.file_number', 'programs.program_name')
             ->join('recipes', 'orders.recipes_id', '=', 'recipes.id')
             ->join('files', 'orders.files_id', '=', 'files.id')
+            ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id' )
             ->join('programs', 'files.program_id', '=', 'programs.id')
             ->get();
         return DataTables::of($requestInstructor)
@@ -82,11 +83,13 @@ class AdministratorController extends Controller
     {
         $requestInstructor = Order::where('orders.status', '=', '3')
             ->orWhere('orders.status', '=', '0')
-            ->select('orders.*', 'recipes.recipe_name', 'files.file_number', 'programs.program_name')
+            ->select('orders.*', 'recipes.recipe_name', 'files.file_number', 'characterizations.characterization_name','programs.program_name')
             ->join('recipes', 'orders.recipes_id', '=', 'recipes.id')
             ->join('files', 'orders.files_id', '=', 'files.id')
+            ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id' )
             ->join('programs', 'files.program_id', '=', 'programs.id')
             ->get();
+            // dd($requestInstructor);
         return DataTables::of($requestInstructor)
             ->addColumn('action', function ($id) {
                 if ($id->status == 0) {
@@ -116,9 +119,10 @@ class AdministratorController extends Controller
     public function requestTableCheck()
     {
         $requestInstructor = Order::where('orders.status', '=', '5')
-            ->select('orders.*', 'recipes.recipe_name', 'files.file_number', 'programs.program_name')
+            ->select('orders.*', 'recipes.recipe_name', 'files.file_number','characterizations.characterization_name' ,'programs.program_name')
             ->join('recipes', 'orders.recipes_id', '=', 'recipes.id')
             ->join('files', 'orders.files_id', '=', 'files.id')
+            ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id' )
             ->join('programs', 'files.program_id', '=', 'programs.id')
             ->get();
         return DataTables::of($requestInstructor)

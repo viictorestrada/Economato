@@ -7,9 +7,13 @@ use Barryvdh\DomPDF\Facade as PDF;
 use DataTables;
 use Auth;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\Budget;
 use App\Models\ProductHasContracts;
 use App\Models\AditionalBudget;
+use App\Models\File;
+use App\Models\Characterization;
+
 class ReportController extends Controller
 {
 
@@ -20,45 +24,12 @@ class ReportController extends Controller
         $totalBudgetChart=ReportController::totalBudget();
         $charTop=ReportController::topUsedProduct();
         $chartLess=ReportController::lessUsedProducts();
-        $chart = app()->chartjs
-        ->name('pieChartBudget')
-        ->type('pie')
-        ->size(['width' => 400, 'height' => 200])
-        ->labels(['Caracterización x', 'Caracterización x','Caracterización x','Caracterización x','Caracterización x'])
-        ->datasets([
-            [
-                'backgroundColor' => ['#e80d05', '#f2a225','#98c238','#0d9c88','#174d69'],
-                'hoverBackgroundColor' => ['#e80d05', '#f2a225','#98c238','#0d9c88','#174d69'],
-                'data' => [30, 40,54,45,56]
-            ]
-        ])
-        ->options([]);
-        return view('reports.administrator', compact('chartLess','chart','totalBudgetChart','charTop'));
+        $chartCharacterization=ReportController::reportCharacterization();
+
+        return view('reports.administrator', compact('chartLess','chartCharacterization','totalBudgetChart','charTop'));
     }
 
-    public function totalBudget(){
-      $sumAditions=AditionalBudget::get();
-      foreach($sumAditions as $key){
-        $aditions=$key->sum('aditional_budget');
-      }
-      // dd($aditions);
-      $totalBudget=Budget::select('budget.*')->first();
-      $averageBudget=(round((($totalBudget->budget/$totalBudget->initial_budget)*100),2));
-      $initial=100-round((($totalBudget->budget/($totalBudget->initial_budget+$aditions))*100),2);
-      $totalBudgetChart = app()->chartjs
-      ->name('doughnutChartTest')
-      ->type('doughnut')
-      ->size(['width' => 400, 'height' => 200])
-      ->labels(['Presupuesto Consumido = '.number_format(($totalBudget->initial_budget+$aditions)-$totalBudget->budget).' ', 'Presupuesto disponible = '.number_format($totalBudget->budget).''])
-      ->datasets([
-          [
-              'backgroundColor' => ['#17A2B8', '#DCE7E9' ],
-              'hoverBackgroundColor' => ['#17A2B8', '#DCE7E9' ],
-              'data' => [$initial, $averageBudget]
-          ]
-      ]);
-            return $totalBudgetChart;
-    }
+
 
     public function lessUsedProducts(){
       $products=Product::select('products.product_name','products_has_contracts.quantity')
@@ -167,9 +138,66 @@ class ReportController extends Controller
 
 
     public function reportCharacterization (){
-      // SELECT  `order_id`, `quantity`, cost, c.characterization_name,`package_number` FROM `orders_recipes` ore
-      // join orders o on ore.order_id=o.id join files f on f.id=o.files_id
-      // join characterizations c on c.id=f.characterization_id where o.status=5 GROUP BY c.characterization_name
+
+
+    $characterization=Order::where('orders.status',5)
+    ->groupBy('characterizations.characterization_name')
+    ->join('files', 'orders.files_id', '=', 'files.id')
+    ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
+    ->selectRaw('sum(cost) as sum,characterization_name')
+    ->get();
+      $datasets=[];
+      $labels=[];
+      foreach($characterization as $key => $value ){
+        $datasets[$key]=intval($value->sum);
+      }
+      $labels=[
+        [
+        "Negritudes= " .number_format($datasets[0])
+        ],
+        [
+          " Formación= ".number_format($datasets[1])
+        ]
+        ];
+        $chartCharacterization = app()->chartjs
+        ->name('pieChartBudget')
+        ->type('pie')
+        ->size(['width' => 400, 'height' => 200])
+        ->labels($labels)
+        ->datasets([
+          [
+          'backgroundColor' => ['#e80d05', '#f2a225'],
+          'hoverBackgroundColor' => ['#e80d05', '#f2a225'],
+          'data' => $datasets
+          ],
+        ])
+        ->options([]);
+              return $chartCharacterization;
+      }
+
+
+    public function totalBudget(){
+      $sumAditions=AditionalBudget::get();
+      foreach($sumAditions as $key){
+        $aditions=$key->sum('aditional_budget');
+      }
+      // dd($aditions);
+      $totalBudget=Budget::select('budget.*')->first();
+      $averageBudget=(round((($totalBudget->budget/$totalBudget->initial_budget)*100),2));
+      $initial=100-round((($totalBudget->budget/($totalBudget->initial_budget+$aditions))*100),2);
+      $totalBudgetChart = app()->chartjs
+      ->name('doughnutChartTest')
+      ->type('doughnut')
+      ->size(['width' => 400, 'height' => 200])
+      ->labels(['Presupuesto Consumido = '.number_format(($totalBudget->initial_budget+$aditions)-$totalBudget->budget).' ', 'Presupuesto disponible = '.number_format($totalBudget->budget).''])
+      ->datasets([
+          [
+              'backgroundColor' => ['#17A2B8', '#DCE7E9' ],
+              'hoverBackgroundColor' => ['#17A2B8', '#DCE7E9' ],
+              'data' => [$initial, $averageBudget]
+          ]
+      ]);
+            return $totalBudgetChart;
     }
 
 }

@@ -42,7 +42,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
-            {!!  $chart->render() !!}
+            {!!  $chartCharacterization->render() !!}
           </div>
           <div class="col-md-6">
               {!! $totalBudgetChart->render() !!}
