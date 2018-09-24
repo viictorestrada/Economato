@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductionHasProducts;
 use App\Models\ProductionOrders;
 use App\Models\ProductsHasContracts;
+use App\Models\filesHasProductions;
 use Illuminate\Http\Request;
 
 class ProductionHasProductsController extends Controller
@@ -54,7 +55,14 @@ class ProductionHasProductsController extends Controller
                 'quantity' => $request['quantity'][$key]
                 ]);
         }
-        ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2,'files_id' => $request->files_id]);
+        ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2]);
+        filesHasProductions::where('center_production_orders_id', $request['center_production_orders_id'])->delete();
+        foreach ($request['files_id'] as $key => $value) {
+            filesHasProductions::create([
+                'center_production_orders_id' => $request['center_production_orders_id'],
+                'files_id' => $value
+            ]);
+        }
         return back()->with([swal()->autoclose(1500)->success('Modificación exitosa!','Se ha modificado el pedido con exito')]);
         
     }

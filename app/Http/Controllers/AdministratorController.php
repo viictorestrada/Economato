@@ -34,12 +34,12 @@ class AdministratorController extends Controller
   public function panel()
   {
     $recipe = Recipe::all();
-    $characterizations = Characterization::where('id',2)->orWhere('id',4)->get();
     $product=Product::select('products.id','products.product_name')
     ->join('products_has_contracts','products.id' , '=' , 'products_has_contracts.products_id')->get();
+    $files=File::where('characterization_id',2)->get();
+    $file = $files->pluck('file_number','id');
     $products = $product->pluck('product_name', 'id');
-    $characterization = $characterizations->pluck('characterization_name','id');
-    return view('administrator.panel', compact('recipe','products','characterization'));
+    return view('administrator.panel', compact('recipe','products','file'));
   }
 
     public function requestTable()

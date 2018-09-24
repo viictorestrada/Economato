@@ -11,14 +11,15 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
+                  {{Form::open(['url' => 'productionHasProducts', 'class' => 'form'])}}
                   <div class="card border-secondary">
                       <div class="card-body">
                           <div class="form-group">
-                            <div class="table-responsive">
-                              {{Form::open(['url' => 'productionHasProducts', 'class' => 'form'])}}
+                            {{-- <div class="table-responsive"> --}}
+                              {{-- <input type="hidden" name="center_production_orders_id" value="" id="idProduction"> --}}
                               {{Form::hidden('center_production_orders_id', null, ['id' => 'idProduction'])}}
                               <h3>Productos</h3>
-                              <table class="table table-bordered">
+                              <table class="table table-bordered table-responsive">
                                 <thead>
                                   <th>Insumos</th>
                                   <th>Unidad de medida</th>
@@ -29,17 +30,16 @@
                                   
                                 </tbody>
                               </table>
-                            </div>
-                            <hr>
-                            <h3>Caracterización</h3>
-                            {{ Form::select('characterization_id', $characterization, null, ['class' => 'form-control', 'id' => 'dependence'])}}
                             <hr>
                             <h3>Fichas</h3>
-                            <div class="input-group">
-                                <select name="files_id" id="files_id" class='form-control' aria-describedby="button-addon2" placeholder='-- Ficha asociada --'></select>
-                              <div class="input-group-append">
-                                  <button type="button" class="btn btn-outline-info" id="button-addon2"><i class="fa fa-plus-circle"></i></button>
-                              </div>
+                            <div class="input-group mb-3">
+                            {{ Form::select('files_id[]', $file, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-info" id="dependence"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                          </div>
+                            <div class="form-group" id="fill_me">
+
                             </div>
                           </div> 
                       </div>
@@ -49,7 +49,7 @@
                         </div>
                         {{ Form::close()}}
                     </div>
-                    </div>       
+                  </div>       
             </div>
           </div>
           

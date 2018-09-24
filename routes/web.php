@@ -136,7 +136,7 @@ Route::get('/orders/updateStatus/{id}/{status}','OrderController@updateStatus');
 Route::get('/orderRecipeEdit/updateQuantity/{id}','OrderRecipeController@updateQuantity' , ['except '=> 'show','edit','update','destroy']);
 
 // Ruta para registrar la orden de producción de centro con detalles a productos.
-Route::resource('productionHasProducts','ProductionHasProductsController',['except '=> 'show','edit','update','destroy']);
+Route::post('productionHasProducts','ProductionHasProductsController@store');
 Route::get('productionCenter/remission/{id}', 'ProductionOrdersController@orderRemission');
 Route::get('productionCenter/ajaxtable/{id}', 'ProductionHasProductsController@ajaxModal');
 Route::post('productionCenter/allRemisions', 'ProductionOrdersController@selectedOrderRemission');
