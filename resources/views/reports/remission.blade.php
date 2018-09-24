@@ -131,15 +131,15 @@
       </div>
       <div class="columna1 columnas">
       <p>Usuario: {{$information['name'].' '.$information['last_name']}}</p>
-        <p>CC: </p>
-        <p>Población: </p>
+      <p>Fecha: {{ $information['date'] }}</p>
+      <p>Caracterización: {{ $information['characterization_name'] }}</p>
       </div>
       <div class="columna2 columnas">
-      <p>Fecha: {{ $information['date'] }}</p>
-        <p>Programa: </p>
+        <p>Programa de formación: {{ $information['program_name'] }} </p>
       <p>Taller: {{  $information['recipe'] }}</p>
       </div>
     </div>
+    <br>
     <div class="contenedorTabla" >
       @if(count($products)>22)
         <table class="greyGridTable">
@@ -230,7 +230,7 @@
               @endif
               <div class="contenedorDatos">
             <div style="margin-top:15px" class="columna1 columnas">
-                <h4>Costo de la orden: {{ $orderCost[0] }}</h4>
+                <h4>Costo de la orden: {{ number_format($orderCost[0]) }}</h4>
             </div>
             <div style="margin-top:15px" class="columna2 columnas">
                 <h4>Número de paquetes: {{ $information['package_number'] }}</h4>

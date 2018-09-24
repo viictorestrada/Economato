@@ -17,7 +17,8 @@
               <table class="table table-bordered table-md" width="100%" id="budgets">
                 <thead>
                   <tr>
-                    <th>Presupuesto</th>
+                    <th>Presupuesto Inicial</th>
+                    <th>Presupuesto Actual</th>
                     <th>Código</th>
                     <th>Fecha Inicial</th>
                     <th>Fecha Final</th>
@@ -48,6 +49,7 @@
         },
         ajax: '/budgets/get',
         columns: [
+            { data: 'initial_budget', name: 'initial_budget', type: 'number' },
             { data: 'budget', name: 'budget' },
             { data: 'budget_code', name: 'budget_code' },
             { data: 'budget_begin_date', name: 'budget_begin_date' },

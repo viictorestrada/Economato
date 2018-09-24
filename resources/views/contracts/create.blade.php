@@ -35,6 +35,26 @@
 
 @section('script')
   <script>
+
+    function validationBudget(value){
+      console.log(value);
+      $.ajax({
+        url: "{{ url('validation'). '/' }}"+value,
+        type: 'get',
+        dataType : 'JSON'
+      }).done(function(data){
+        console.log(data.status)
+        if(data.status==="false"){
+        swal('error','El valor del contrato sobrepasa el presupuesto.','error');
+        }
+      }).fail(function(data) {
+        console.log("fail ")
+      })
+    //   $.post(`validation`, function(data){
+    //     console.log(data);
+    // }
+  }
+
     var initial_date = 0
     var final_date = 0
     $('#start_date').change(function(){
@@ -43,7 +63,7 @@
 
     $('#final_date').change(function(){
          final_date = $('#final_date').val();
-         
+
     });
 
     $(() => {

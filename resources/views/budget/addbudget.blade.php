@@ -14,7 +14,7 @@
               <div class="col-12">
                 <div class="card border-secondary">
                   <div class="card-body">
-                    <form method="post">
+                    <form method="post" action="aditionalBudget">
                       @csrf {{ method_field('POST') }}
                       <input type="hidden" name="id" id="id">
                       <div class="form-group">
@@ -42,6 +42,18 @@
                           <input class="form-control {{$errors->has('aditional_budget') ? 'is-invalid' : ''}}" name="aditional_budget" id="aditional_budget" value="{{old('aditional_budget')}}" required autocomplete="off">
                           <strong class="invalid-feedback">{{$errors->first('aditional_budget')}}</strong>
                         </div>
+                      </div>
+
+                      <div class="form-group">
+
+                          <label><i class="fas fa-calendar-alt"></i> Fecha final de adición<strong class="text-danger" style="font-size: 23px">*</strong></label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-barcode fa-plus-circle"></i></span>
+                            </div>
+                            <input class="form-control {{$errors->has('aditional_finish_date') ? 'is-invalid' : ''}}" name="aditional_finish_date" id="aditional_finish_date" value="{{old('aditional_finish_date')}}" type="date" required autocomplete="off">
+                            <strong class="invalid-feedback">{{$errors->first('aditional_finish_date')}}</strong>
+                          </div>
                       </div>
 
                       <div class="form-group">

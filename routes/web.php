@@ -96,8 +96,7 @@ Route::get('files/status/{id}/{status}', 'FileController@status');
 Route::resource('files', 'FileController');
 
 //Rutas para Presupuesto
-Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
-ROute::get('budgets/status/{id}/{status}', 'BudgetController@status');
+
 Route::post('/panel/updateBudget', 'OrderRecipeController@checkValue');
 Route::get('/panel/check/','OrderRecipeController@update');
 
@@ -144,6 +143,9 @@ Route::post('productionCenter/allRemisions', 'ProductionOrdersController@selecte
 //ruta para generar pdf de las nuevas ordenes al proveedor
 Route::get('pdf/orderProvider/{id}' , 'OrderController@pdfRemission');
 
+//ruta para validar presupuesto
+
+Route::get('validation/{value}' , 'BudgetController@validationBudget');
 
 });
 
@@ -153,7 +155,9 @@ Route::group(['middleware' => ['auth', 'executive']], function () {
 
 Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 Route::get('/budgets/get', 'BudgetController@budgetsList');
-  //Ruta de reportes
+Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
+Route::get('budgets/status/{id}/{status}', 'BudgetController@status');
+//Ruta de reportes
 // Route::get('reports', 'ReportController@index');
 
 });
