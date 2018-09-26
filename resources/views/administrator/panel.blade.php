@@ -737,22 +737,6 @@
       $(this).closest('tr').remove();
     });
 
-    $(document).on('click', '#dependence', function() {
-    $('#fill_me').append(`
-    <div class="input-group mb-3 remove_me">
-      {{ Form::select('files_id[]', $file, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
-      <div class="input-group-append">
-      <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
-      </div>
-    </div>
-    `);
-
-  });
-
-  $(document).on('click', '.click_to_delete', function(){
-      $(this).closest('.remove_me').remove();
-    });
-
   });
 
   function getMeasure(id) {
@@ -874,6 +858,24 @@
 
   }
 
- 
+  $(document).ready(function() {
+    $(document).on('click', '#dependence', function() {
+        $('#fill_me').append(`
+    <div class="input-group mb-3 remove_me">
+      {{ Form::select('files_id[]', $file, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+      <div class="input-group-append">
+      <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
+      </div>
+    </div>
+    `);
+
+    });
+
+    $(document).on('click', '.click_to_delete', function() {
+        $(this).closest('.remove_me').remove();
+    });
+})
+
+
   </script>
 @endsection

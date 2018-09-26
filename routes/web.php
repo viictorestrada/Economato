@@ -162,6 +162,11 @@ Route::get('budgets/status/{id}/{status}', 'BudgetController@status');
 
 });
 
+Route::group(['middleware' => ['auth','instructor']], function(){
+  Route::post('Special_orders', 'ProductionOrdersController@storeSpecialOrders');
+
+});
+
 Route::group(['middleware' => ['auth', 'leader']], function ()
 {
   Route::resource('Production_orders','ProductionOrdersController', ['except' => 'show','edit','update','destroy']);

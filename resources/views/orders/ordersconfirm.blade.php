@@ -83,32 +83,46 @@
                             <div class="card-body">
                               <div class="col-12 d-flex justify-content-end">
                               </div>
-                                {{ Form::open(['url'=>'Production_orders', 'method'=>'POST', 'name' => 'formulario2', 'class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
-                                <div class="row">
-
-                                  <div class="form-group col-md-6 col-lg-6">
-                                    {{ Form::label('title' , 'Titulo del evento' ) }}
-                                    {{ Form::text('title',null,['class'=>'form-control', 'placeholder' => 'Titulo del evento']) }}
-                                  </div>
-                                  <div class="form-group col-md-6 col-lg-6">
-                                    {{ Form::label('quantity' , 'Numero de asistentes' ) }}
-                                    {{ Form::text('quantity',null,['class'=>'form-control', 'placeholder' => 'Numero de asistentes']) }}
-                                  </div>
-                                  <div class="form-group col-md-12 col-lg-12">
-                                      {{ Form::label('order_date' , 'Fecha del evento' ) }}
-                                      {{ Form::date('order_date',null,['class'=>'form-control']) }}
-                                    </div>
-                                  <div class="form-group col-md-12 col-lg-12">
-                                    {{ Form::label('description' , 'Descripción' ) }}
-                                    {{ Form::textarea('description',null,['class'=>'form-control', 'style' => 'resize:none', 'placeholder' => 'Descripción del evento...']) }}
-                                  </div>
-
-
+                              {{ Form::open(['url'=>'Special_orders', 'method'=>'POST', 'name' => 'formulario2', 'id' => 'ProductionRequest', 'class'=>'forms']) }}
+                              <div class="row">
+                                <div class="form-group col-md-6 col-lg-6">
+                                  {{ Form::label('title' , 'Titulo del evento' ) }}
+                                  {{ Form::text('title',null,['class'=>'form-control', 'placeholder' => 'Titulo del evento']) }}
                                 </div>
-                                <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
-                                    <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Realizar Solicitud</button>
+                                <div class="form-group col-md-6 col-lg-6">
+                                  {{ Form::label('quantity' , 'Numero de asistentes' ) }}
+                                  {{ Form::text('quantity',null,['class'=>'form-control', 'placeholder' => 'Numero de asistentes']) }}
                                 </div>
-                                {{ Form::close() }}
+                                <div class="form-group col-md-6 col-lg-6">
+                                  {{ Form::label('event_place' , 'Lugar del evento' ) }}
+                                  {{ Form::text('event_place',null,['class'=>'form-control', 'placeholder' => 'Lugar del evento']) }}
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6">
+                                    {{ Form::label('order_date' , 'Fecha del evento' ) }}
+                                    {{ Form::date('order_date',null,['class'=>'form-control']) }}
+                                  </div>
+                                <div class="form-group col-md-12 col-lg-12">
+                                  {{ Form::label('description' , 'Descripción' ) }}
+                                  {{ Form::textarea('description',null,['class'=>'form-control', 'style' => 'resize:none', 'placeholder' => 'Descripción del evento...']) }}
+                                </div>
+
+
+                              </div>
+                              <h3>Fichas</h3>
+                            <div class="input-group mb-3">
+                            {{ Form::select('file_id[]',$filePopulationSpecial ,null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-info" id="dependence"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                          </div>
+                            <div class="form-group" id="fill_me">
+
+                            </div>
+
+                              <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
+                                  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Realizar Solicitud</button>
+                              </div>
+                              {{ Form::close() }}
                             </div>
                           </div>
                         </div>
@@ -159,6 +173,23 @@ function loadRecipeProducts(id) {
     })
   }
 
+  $(document).ready(function() {
+    $(document).on('click', '#dependence', function() {
+        $('#fill_me').append(`
+    <div class="input-group mb-3 remove_me">
+      {{ Form::select('file_id[]', $filePopulationSpecial, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+      <div class="input-group-append">
+      <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
+      </div>
+    </div>
+    `);
+
+    });
+
+    $(document).on('click', '.click_to_delete', function() {
+        $(this).closest('.remove_me').remove();
+    });
+})
 
 </script>
 @endsection
