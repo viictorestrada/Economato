@@ -6,11 +6,12 @@ use App\Models\ProductionOrders;
 use App\Models\ProductionHasProducts;
 use App\Models\Characterization;
 use App\Models\ProductsHasContracts;
+use App\Models\filesHasProductions;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Auth;
 use DataTables;
-
+use DB;
 class ProductionOrdersController extends Controller
 {
     /**
@@ -232,9 +233,38 @@ class ProductionOrdersController extends Controller
         else {
             return back()->with([swal()->autoclose(1500)->error('Error', 'Debe seleccionar al menos una orden.')]);
 
-            
+
         }
 
     }
 
+    public function storeSpecialOrders(Request $request){
+      DB::transaction(function() use($request) {
+        try{
+        $dataRegister=productionOrders::Create([
+        'description' => $request['description'],
+        'pax' => $request['quantity'],
+        'user_name' => Auth::user()->name.' '.Auth::user()->last_name,
+        'order_date' => $request['order_date'],
+        'title' => $request['title'],
+        'event_place' => $request['event_place']
+        ]);
+        if(!$dataRegister){
+          DB::rollback();
+        }else{
+          foreach($request['file_id'] as $key){
+            filesHasProductions::Create([
+              'center_production_orders_id' => $dataRegister->id,
+              'files_id' => $key
+            ]);
+          }
+        }
+        DB::commit();
+      }catch(Exeption $e){
+        DB::rollback();
+        throw $e;
+      }
+    });
+    return redirect('orders')->with([swal()->autoclose(3000)->success('Pedido exitoso','Se realizo el pedido exitosamente')]);
+  }
 }

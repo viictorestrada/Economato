@@ -23,10 +23,11 @@ class OrderController extends Controller
      */
     public function index()
     {
+      $filePopulationSpecial=File::where('characterization_id', 4)->pluck('file_number','id');
       $files=File::pluck('file_number','id');
       $recipes=Recipe::pluck('recipe_name','id');
       $product=Product::pluck('product_name','id');
-      return view('orders.ordersconfirm', compact('files','recipes','product'));
+      return view('orders.ordersconfirm', compact('files','recipes','product','filePopulationSpecial'));
     }
 
     public function getCharacterization(Request $request,$id){

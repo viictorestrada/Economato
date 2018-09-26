@@ -83,7 +83,11 @@
                             <div class="card-body">
                               <div class="col-12 d-flex justify-content-end">
                               </div>
+<<<<<<< HEAD
                               {{ Form::open(['url'=>'Production_orders', 'method'=>'POST', 'name' => 'formulario1', 'id' => 'ProductionRequest', 'class'=>'forms']) }}
+=======
+                              {{ Form::open(['url'=>'Special_orders', 'method'=>'POST', 'name' => 'formulario2', 'id' => 'ProductionRequest', 'class'=>'forms']) }}
+>>>>>>> develop
                               <div class="row">
                                 <div class="form-group col-md-6 col-lg-6">
                                   {{ Form::label('title' , 'Titulo del evento' ) }}
@@ -110,7 +114,11 @@
                               </div>
                               <h3>Fichas</h3>
                             <div class="input-group mb-3">
+<<<<<<< HEAD
                             {{ Form::select('files_id[]',$files ,null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+=======
+                            {{ Form::select('file_id[]',$filePopulationSpecial ,null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+>>>>>>> develop
                             <div class="input-group-append">
                               <button type="button" class="btn btn-outline-info" id="dependence"><i class="fa fa-plus-circle"></i></button>
                           </div>
@@ -173,6 +181,23 @@ function loadRecipeProducts(id) {
     })
   }
 
+  $(document).ready(function() {
+    $(document).on('click', '#dependence', function() {
+        $('#fill_me').append(`
+    <div class="input-group mb-3 remove_me">
+      {{ Form::select('file_id[]', $filePopulationSpecial, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+      <div class="input-group-append">
+      <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
+      </div>
+    </div>
+    `);
+
+    });
+
+    $(document).on('click', '.click_to_delete', function() {
+        $(this).closest('.remove_me').remove();
+    });
+})
 
 </script>
 @endsection
