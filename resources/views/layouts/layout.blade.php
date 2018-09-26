@@ -59,7 +59,7 @@
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" style="color: white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle fa-lg"></i> {{ Auth::user()->name }} {{ Auth::user()->last_name }} <span class="caret"></span></a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        @if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2)
+        @if (Auth::user()->rol_id == 1)
           <a class="dropdown-item" href="{{ url('configurations') }}"><i class="fa fa-cogs"></i> Configuraciones</a>
         @endif
       <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

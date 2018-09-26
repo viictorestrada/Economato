@@ -97,17 +97,6 @@ class ReportController extends Controller
       return $charTop;
     }
 
-
-    public function pdf()
-    {
-
-        $products = Product::all();
-
-        $pdf = PDF::loadView('pdf.products', compact('products','information'));
-
-        return $pdf->download('listado.pdf');
-    }
-
     public function reportProducts(){
       $reportsProduct=Product::select('products.*','products_has_contracts.quantity','products_has_contracts.quantity_agreed')
       ->join('products_has_contracts', 'products.id' , '=' , 'products_has_contracts.products_id')
@@ -138,51 +127,55 @@ class ReportController extends Controller
 
 
     public function reportCharacterization (){
-
-
-    $characterization=Order::where('orders.status',5)
-    ->groupBy('characterizations.characterization_name')
-    ->join('files', 'orders.files_id', '=', 'files.id')
-    ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
-    ->selectRaw('sum(cost) as sum,characterization_name')
-    ->get();
-      $datasets=[];
-      $labels=[];
-      foreach($characterization as $key => $value ){
-        $datasets[$key]=intval($value->sum);
-      }
-      $labels=[
-        [
-        "Negritudes= " .number_format($datasets[0])
-        ],
-        [
-          " Formación= ".number_format($datasets[1])
-        ]
-        ];
-        $chartCharacterization = app()->chartjs
-        ->name('pieChartBudget')
-        ->type('pie')
-        ->size(['width' => 400, 'height' => 200])
-        ->labels($labels)
-        ->datasets([
+      $characterization=Order::where('orders.status',5)
+      ->groupBy('characterizations.characterization_name')
+      ->join('files', 'orders.files_id', '=', 'files.id')
+      ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
+      ->selectRaw('sum(cost) as sum,characterization_name')
+      ->get();
+      // dd(!$characterization->isEmpty());
+      if(!$characterization->isEmpty()){
+        $datasets=[];
+        $labels=[];
+        foreach($characterization as $key => $value ){
+          $datasets[$key]=intval($value->sum);
+        }
+        $labels=[
           [
-          'backgroundColor' => ['#e80d05', '#f2a225'],
-          'hoverBackgroundColor' => ['#e80d05', '#f2a225'],
-          'data' => $datasets
+          "Negritudes = " .number_format($datasets[0])
           ],
-        ])
-        ->options([]);
-              return $chartCharacterization;
-      }
+          [
+          "Formación = ".number_format($datasets[1])
+          ]
+          ];
+          $chartCharacterization = app()->chartjs
+          ->name('pieChartBudget')
+          ->type('pie')
+          ->size(['width' => 400, 'height' => 200])
+          ->labels($labels)
+          ->datasets([
+            [
+            'backgroundColor' => ['#e80d05', '#f2a225'],
+            'hoverBackgroundColor' => ['#e80d05', '#f2a225'],
+            'data' => $datasets
+            ],
+          ])
+          ->options([]);
+                return $chartCharacterization;
+          }else {
+            return $characterization;
+          }
+    }
 
 
     public function totalBudget(){
-      $sumAditions=AditionalBudget::get();
+      $aditions=0;
+      $totalBudget=Budget::where('status',1)->first();
+      if($totalBudget != null || $totalBudget>0){
+        $sumAditions=AditionalBudget::where('budget_id', $totalBudget->id)->get();
       foreach($sumAditions as $key){
         $aditions=$key->sum('aditional_budget');
       }
-      // dd($aditions);
-      $totalBudget=Budget::select('budget.*')->first();
       $averageBudget=(round((($totalBudget->budget/$totalBudget->initial_budget)*100),2));
       $initial=100-round((($totalBudget->budget/($totalBudget->initial_budget+$aditions))*100),2);
       $totalBudgetChart = app()->chartjs
@@ -197,7 +190,10 @@ class ReportController extends Controller
               'data' => [$initial, $averageBudget]
           ]
       ]);
-            return $totalBudgetChart;
+      return $totalBudgetChart;
+      }else {
+        return $totalBudget;
+      }
     }
 
 }

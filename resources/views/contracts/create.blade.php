@@ -37,7 +37,6 @@
   <script>
 
     function validationBudget(value){
-      console.log(value);
       $.ajax({
         url: "{{ url('validation'). '/' }}"+value,
         type: 'get',
@@ -45,14 +44,15 @@
       }).done(function(data){
         console.log(data.status)
         if(data.status==="false"){
-        swal('error','El valor del contrato sobrepasa el presupuesto.','error');
-        }
+        swal('Adicione al presupuesto.','El valor del contrato sobrepasa el presupuesto.','error');
+        $( "#createContract" ).prop( "disabled", true );
+        }else if(data.status==="null"){
+        swal('Registre un presupuesto','No se encuentra un presupuesto registrado.','error');
+        $( "#createContract" ).prop( "disabled", true );
+      }
       }).fail(function(data) {
         console.log("fail ")
       })
-    //   $.post(`validation`, function(data){
-    //     console.log(data);
-    // }
   }
 
     var initial_date = 0

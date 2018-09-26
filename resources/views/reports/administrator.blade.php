@@ -42,10 +42,36 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
-            {!!  $chartCharacterization->render() !!}
+            @if(!$chartCharacterization->isEmpty())
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">Presupuesto consumido, discriminado por caracterización.</div>
+                  {!!  $chartCharacterization->render() !!}
+                </div>
+            </div>
+            @else
+            <div class="card  w-50">
+              <div class="card-body">
+                <p class="card-text">No se encuentran gastos por caracterización.</p>
+              </div>
+            </div>
+            @endif
           </div>
           <div class="col-md-6">
-              {!! $totalBudgetChart->render() !!}
+            @if ($totalBudgetChart != null)
+            <div class="card">
+              <div class="card-body">
+                  <div class="card-title">Porcentaje del presupuesto consumido.</div>
+                  {!! $totalBudgetChart->render() !!}
+                </div>
+            </div>
+            @else
+            <div class="card  w-50">
+              <div class="card-body">
+                <p class="card-text">No se encuentra un Presupuesto registrado o activo.</p>
+              </div>
+            </div>
+            @endif
             </div>
         </div>
       </div>

@@ -118,12 +118,7 @@
 
             <li class="nav-item" style="background-color: none;">
                 <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro</a>
-              </li>
-
-              <li class="nav-item" style="background-color: none;">
-                  <a class="nav-link" id="v-pills-poblacion-tab" data-toggle="pill" href="#v-pills-poblacion" role="tab" aria-controls="v-pills-poblacion" aria-selected="false" style="color: #fff">Población Espacial</a>
-              </li>
-
+            </li>
           </ul>
           <div class="tab-content" id="v-pills-tabContent2">
             <div class="tab-pane fade show active" id="v-pills-solicitudes2" role="tabpanel" aria-labelledby="v-pills-solicitudes2-tab">
@@ -179,29 +174,6 @@
               </div>
              </div>
             </div>
-
-
-            <div class="tab-pane fade" id="v-pills-poblacion" role="tabpanel" aria-labelledby="v-pills-poblacion-tab">
-              {{-- <h3>Hola Poblacion</h3> --}}
-           <div class="card border-secondary">
-
-              <table class="table table-bordered table-responsive table-md" width="100%" id="orderProduction">
-                <thead>
-                  <tr>
-                    <th>Titulo</th>
-                    <th>Descripción</th>
-                    <th>Asistentes</th>
-                    <th>Usuario</th>
-                    <th>Ficha</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-
-          </div>
         </div>
         </div>
       </div>

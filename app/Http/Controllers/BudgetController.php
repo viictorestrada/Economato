@@ -104,11 +104,11 @@ class BudgetController extends Controller
 
     public function validationBudget($value){
       $budget=Budget::where('status', 1)->get()->first();
-      // dump($value);
-      // dump($budget->budget);
-      if($value>$budget->budget){
+    if($budget==null){
+      $array = array('status' => 'null');
+    }else if($value>$budget->budget && $budget!=null){
        $array = array('status' => 'false');
-    }else if($value<$budget->budget){
+    }else if($value<$budget->budget && $budget!=null){
      $array = array('status' => 'true');
     }
     return $array;

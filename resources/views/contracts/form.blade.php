@@ -9,7 +9,7 @@
 </div>
 <div class="form-group col-lg-4 col-md-4">
   {{ Form::label('contract_price', 'Valor contrato') }}
-  {{ Form::number('contract_price', null, ['class' => 'form-control', 'onchange'=>'validationBudget(this.value)']) }}
+  {{ Form::number('contract_price', null, ['class' => 'form-control','onchange'=>'validationBudget(this.value)']) }}
 </div>
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('start_date', 'Fecha inicial') }}
@@ -77,6 +77,6 @@
 </div>
 
 <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
-  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+  <button type="submit" class="btn btn-outline-info" id="createContract"><i class="fa fa-save fa-lg"></i> Guardar</button>
 </div>
 
