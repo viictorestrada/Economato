@@ -117,7 +117,7 @@
             </li>
 
             <li class="nav-item" style="background-color: none;">
-                <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro</a>
+                <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro / población especial</a>
             </li>
           </ul>
           <div class="tab-content" id="v-pills-tabContent2">
@@ -157,11 +157,11 @@
                 <table class="table table-bordered" width="100%" id="orderProduction">
                   <thead>
                     <tr>
+                      <th>Caracterización</th>
                       <th>Titulo</th>
                       <th>Descripción</th>
                       <th>Asistentes</th>
                       <th>Usario</th>
-                      <th>Ficha</th>
                       <th>Fecha</th>
                       <th>lugar</th>
                       <th>Estado</th>
@@ -342,6 +342,7 @@
         @include('recipes.index')
         @include('orders.edit')
         @include('orders.productionOrderModal')
+        @include('orders.productionOrderModal2')
       </section>
     </div>
   </section>
@@ -434,11 +435,11 @@
         },
         ajax: '/OrderProduction/getProductionOrder',
         columns: [
+          { data:'characterizations_id', name:'characterizations_id'},
           { data:'title', name:'title'},
           { data:'description', name:'description'},
           { data:'pax', name:'pax'},
           { data:'user_name', name:'user_name'},
-          { data:'file_number', name:'file_number'},
           { data:'order_date', name:'order_date'},
           { data:'event_place', name:'event_place'},
           { data:'status', name:'status'},
@@ -704,6 +705,16 @@
         </tr>`;
           $('#fillProductionOrder').append(html);
       });
+      $(document).on('click', '#addColumns2', function(){
+        var html =
+        `<tr>
+            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+            <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
+            <td>{{ Form::number('quantity[]', null, ['class' => 'form-control']) }}</td>
+            <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
+        </tr>`;
+          $('#fillProductionOrder2').append(html);
+      });
 
     $(document).on('click', '.remove', function(){
       $(this).closest('tr').remove();
@@ -827,7 +838,67 @@
       }
     })
 
+    
 
+
+  }
+
+  function productionOrderModal2(id) {
+    $.ajax({
+      url: 'productionCenter/ajaxtable/'+id,
+      type: 'get',
+      datatype: 'json',
+      success: function (data) {
+        $('#fillProductionOrder2').empty();
+        if (data.length == 0)
+        {
+          $('#idProduction2').val(id);
+          $('#fillProductionOrder2').append(`
+            <tr>
+             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
+              <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
+              <td>{{Form::number('quantity[]', null, ['class' => 'form-control'])}}</td>
+             </tr>`);
+          $('#productionOrderModal2').modal('show');
+        }
+        else
+        {
+          $.each(data, function(a, b) {
+            $.each(b, function(c, d) {
+              product_name = data[a].product_name;
+              product_id = data[a].products_id;
+              measure = data[a].measure_name;
+              quantity = data[a].quantity;
+            })
+              $('#package_number').val(b['package_number']);
+            if (a == 0) {
+              $('#fillProductionOrder2').append(
+              `<tr>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
+                <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+                <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              </tr>`
+            );
+            $("#set"+a).val(product_id);
+            }
+            else{
+            $('#fillProductionOrder2').append(
+            `<tr>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
+              <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
+              <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
+              <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
+            </tr>`
+            );
+            $("#set"+a).val(product_id);
+            }
+
+          })
+          $('#idProduction').val(id);
+          $('#productionOrderModal2').modal('show');
+        }
+      }
+    })
   }
 
   $(document).ready(function() {
