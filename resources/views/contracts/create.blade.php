@@ -42,18 +42,37 @@
         type: 'get',
         dataType : 'JSON'
       }).done(function(data){
-        console.log(data.status)
-        if(data.status==="false"){
-        swal('Adicione al presupuesto.','El valor del contrato sobrepasa el presupuesto.','error');
-        $( "#createContract" ).prop( "disabled", true );
-        }else if(data.status==="null"){
-        swal('Registre un presupuesto','No se encuentra un presupuesto registrado.','error');
-        $( "#createContract" ).prop( "disabled", true );
-      }
+        if (data.length!==0){
+          var budget=number_format(data[0].data);
+         if(data[0].status==="false"){
+          swal('Presupuesto actual: '+ budget+ '' ,'El valor del contrato sobrepasa el presupuesto.','error');
+          $( "#createContract" ).prop( "disabled", true );
+          }else if(data[0].status==="null"){
+          swal('Registre un presupuesto','No se encuentra un presupuesto registrado.','error');
+          $( "#createContract" ).prop( "disabled", true );
+        }else{
+          $( "#createContract" ).prop( "disabled", false );
+        }
+        }else{
+          $( "#createContract" ).prop( "disabled", false );
+        }
+
       }).fail(function(data) {
         console.log("fail ")
       })
   }
+  function number_format(amount,decimals) {
+    amount += '';
+    amount = parseFloat(amount.replace(/[^0-9\.]/g, ''));
+    if (isNaN(amount) || amount === 0)
+        return parseFloat(0).toFixed(decimals);
+    amount = '' + amount.toFixed(decimals);
+    var amount_parts = amount.split('.'),
+        regexp = /(\d+)(\d{3})/;
+    while (regexp.test(amount_parts[0]))
+        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+    return amount_parts.join('.');
+}
 
     var initial_date = 0
     var final_date = 0

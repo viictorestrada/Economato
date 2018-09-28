@@ -41,19 +41,22 @@
     <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
       <div class="card-body">
         <div class="row">
-          <div class="col-md-6">
-            @if(!$chartCharacterization->isEmpty())
-            <div class="card">
+           <div class="col-md-6">
+            {{-- {{
+            dd($chartCharacterization)
+            }}  --}}
+            @if($chartCharacterization == "" || $chartCharacterization->isEmpty())
+              <div class="card  w-50">
+              <div class="card-body">
+                <p class="card-text">No se encuentran gastos por caracterización.</p>
+              </div>
+            </div>
+            @else
+          <div class="card">
               <div class="card-body">
                 <div class="card-title">Presupuesto consumido, discriminado por caracterización.</div>
                   {!!  $chartCharacterization->render() !!}
                 </div>
-            </div>
-            @else
-            <div class="card  w-50">
-              <div class="card-body">
-                <p class="card-text">No se encuentran gastos por caracterización.</p>
-              </div>
             </div>
             @endif
           </div>

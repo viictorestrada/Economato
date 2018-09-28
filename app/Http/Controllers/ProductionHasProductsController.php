@@ -64,28 +64,23 @@ class ProductionHasProductsController extends Controller
             ]);
         }
         return back()->with([swal()->autoclose(1500)->success('Modificación exitosa!','Se ha modificado el pedido con exito')]);
-        
+
     }
 
-        
+
     }
 
     public function ajaxModal(Request $request, $id)
     {
-        
+
           $recipe = ProductionHasProducts::select('center_production_has_products.*','products.product_name','measure_unit.measure_name')->
           join('products','products.id', '=', 'center_production_has_products.products_id')->
           join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')->
           where('center_production_has_products.center_production_orders_id',$id)->
           get();
-        
+
         return $recipe;
 
-
-
-
-
-        
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Budget;
 use App\Models\AditionalBudget;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use DataTables;
@@ -54,7 +55,8 @@ class BudgetController extends Controller
         'budget_begin_date' => 'required|date',
         'budget_finish_date' => 'required|date'
       ]);
-
+        $validation=Budget::where('status',1)->get();
+        if($validation->isEmpty()){
       Budget::create([
         'initial_budget' => $request['budget'],
         'budget'=>$request['budget'],
@@ -63,7 +65,10 @@ class BudgetController extends Controller
         'budget_finish_date'=>$request['budget_finish_date']
       ]);
       return redirect('budgets')->with([swal()->autoclose(1500)->success('Registro Existoso', 'Se agrego un nuevo registro')]);
+    }else  if(!$validation->isEmpty()){
+      return redirect('budgets')->with([swal()->autoclose(1500)->warning('Verifique los presupuestos', 'Se encontro un presupuesto activo.')]);
     }
+  }
 
 
     public function budgetsList(Budget $budget)
@@ -103,13 +108,17 @@ class BudgetController extends Controller
 
 
     public function validationBudget($value){
-      $budget=Budget::where('status', 1)->get()->first();
+      // $contracts_price=0;
+      $budget=Budget::wherestatus(1)->value('budget');
+      $contract_price=Contract::wherestatus(1)->selectRaw('sum(contract_price) as acumContractPrice')->first();
+      $actuallyBudget=($budget-$contract_price->acumContractPrice);
+      $array=array();
     if($budget==null){
-      $array = array('status' => 'null');
-    }else if($value>$budget->budget && $budget!=null){
-       $array = array('status' => 'false');
-    }else if($value<$budget->budget && $budget!=null){
-     $array = array('status' => 'true');
+      $array[] = array('status' => 'null' , 'data' =>$actuallyBudget);
+    }else if($value>$actuallyBudget && $budget!=null){
+       $array[] = array('status' => 'false' , 'data' =>$actuallyBudget);
+    }else if($value<$actuallyBudget && $budget!=null){
+     $array[] = array('status' => 'true', 'data' => $actuallyBudget);
     }
     return $array;
   }

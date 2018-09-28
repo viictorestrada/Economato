@@ -93,8 +93,6 @@ class OrderRecipeController extends Controller
     public function checkValue(Request $request){
       $valueCheck=0;
       $items = '';
-
-
       if($request['factura'] != null)
       foreach ($request['factura'] as $key => $value) {
          $costOrderRecipe=Order::whereid($request['factura'][$key])->value('cost');
@@ -115,7 +113,7 @@ class OrderRecipeController extends Controller
 
     public function update(Request $request){
       if(Session::has('value')){
-        $budget=Budget::select('budget.*')->first();
+        $budget=Budget::where('status', 1)->first();
         if($budget->budget >= Session::get('value')){
         $budgetUpdate=Budget::findOrfail($budget->id)->update(['budget' =>  $budget->budget-Session::get('value')]);
         if($budgetUpdate){

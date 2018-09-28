@@ -171,3 +171,5 @@ Route::group(['middleware' => ['auth', 'leader']], function ()
 {
   Route::resource('Production_orders','ProductionOrdersController', ['except' => 'show','edit','update','destroy']);
 });
+
+Route::get('updateProductsHasContracts','CronJobController@updateProductsHasContracts');

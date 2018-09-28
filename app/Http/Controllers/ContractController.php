@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\Provider;
 use App\Models\Product;
+use App\Models\Budget;
 use App\Models\ProductsHasController;
 use App\Models\Tax;
 use App\Models\ProductsHasContracts;
+use App\Models\ContractsHasBudget;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveContractRequest;
 use DataTables;
@@ -50,9 +52,9 @@ class ContractController extends Controller
       'start_date'=>$input['start_date'],
       'finish_date'=>$input["finish_date"]
       ]);
-        $contracts=Contract::all();
-        $var=$contracts->last();
-        $idContract=$var->id;
+        // $contracts=Contract::all();
+        // $var=$contracts->last();
+        $idContract=$contract->id;
       DB::transaction(function() use($input,$idContract){
           foreach($input['products_id'] as $key => $value){
             ProductsHasContracts::create(['products_id'=>$input['products_id'][$key],
@@ -65,6 +67,13 @@ class ContractController extends Controller
             'total'=>$input['total'][$key],
             'quantity_agreed'=>$input['quantity'][$key]]);
           }
+          $budget=Budget::where('status',1)->first();
+          // dd($budget->id);
+          ContractsHasBudget::create([
+            'contract_id'=>$idContract,
+            'budget_id'=>$budget->id
+          ]);
+
     });
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
     }
