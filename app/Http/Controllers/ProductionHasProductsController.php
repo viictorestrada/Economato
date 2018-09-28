@@ -57,11 +57,13 @@ class ProductionHasProductsController extends Controller
         }
         ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2]);
         filesHasProductions::where('center_production_orders_id', $request['center_production_orders_id'])->delete();
-        foreach ($request['files_id'] as $key => $value) {
-            filesHasProductions::create([
-                'center_production_orders_id' => $request['center_production_orders_id'],
-                'files_id' => $value
-            ]);
+        if ($request->has('files_id')) {
+            foreach ($request['files_id'] as $key => $value) {
+                filesHasProductions::create([
+                    'center_production_orders_id' => $request['center_production_orders_id'],
+                    'files_id' => $value
+                ]);
+        } 
         }
         return back()->with([swal()->autoclose(1500)->success('Modificación exitosa!','Se ha modificado el pedido con exito')]);
 

@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" id="productionOrderModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="productionOrderModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-info text-light">
@@ -17,30 +17,19 @@
                           <div class="form-group">
                             {{-- <div class="table-responsive"> --}}
                               {{-- <input type="hidden" name="center_production_orders_id" value="" id="idProduction"> --}}
-                              {{Form::hidden('center_production_orders_id', null, ['id' => 'idProduction'])}}
+                              {{Form::hidden('center_production_orders_id', null, ['id' => 'idProduction2'])}}
                               <h3>Productos</h3>
                               <table class="table table-bordered table-responsive">
                                 <thead>
                                   <th>Insumos</th>
                                   <th>Unidad de medida</th>
                                   <th>Cantidad</th>
-                                  <th><button type="button" class="btn btn-outline-info" id="addColumns"><i class="fa fa-plus-circle"></i></button></th>
+                                  <th><button type="button" class="btn btn-outline-info" id="addColumns2"><i class="fa fa-plus-circle"></i></button></th>
                                 </thead>
-                                <tbody id="fillProductionOrder">
+                                <tbody id="fillProductionOrder2">
                                   
                                 </tbody>
                               </table>
-                            <hr>
-                            <h3>Fichas</h3>
-                            <div class="input-group mb-3">
-                            {{ Form::select('files_id[]', $file, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
-                            <div class="input-group-append">
-                              <button type="button" class="btn btn-outline-info" id="dependence"><i class="fa fa-plus-circle"></i></button>
-                          </div>
-                          </div>
-                            <div class="form-group" id="fill_me">
-
-                            </div>
                           </div> 
                       </div>
                       <div class="modal-footer">
@@ -50,11 +39,11 @@
                         {{ Form::close()}}
                     </div>
                   </div>       
+                </div>
             </div>
-          </div>
           
+            </div>
+            </div>
         </div>
-      </div>
-    </div>
     </div>
   </div>
