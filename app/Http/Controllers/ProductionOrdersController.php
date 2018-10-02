@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductionOrders;
+use App\Models\Budget;
 use App\Models\ProductionHasProducts;
 use App\Models\Characterization;
 use App\Models\ProductsHasContracts;
@@ -84,6 +85,9 @@ class ProductionOrdersController extends Controller
         else if ($id->status == 4) {
             return "Entregado";
         }
+        else if ($id->status == 5) {
+            return "Facturado";
+        }
         else if ($id->status == 0){
             return "Rechazado";
         }
@@ -110,9 +114,15 @@ class ProductionOrdersController extends Controller
                 </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
                 <label for="checkbox'.$id->id.'"><span></span></label>';
             }
+            if ($id->status == 5) {
+                $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
+                </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+                <label for="checkbox'.$id->id.'"><span></span></label>';
+            }
             if ($id->status == 0) {
                 $bot = '';
             }
+           
         }
         else {
             if ($id->status == 1) {
@@ -135,12 +145,19 @@ class ProductionOrdersController extends Controller
                 </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
                 <label for="checkbox'.$id->id.'"><span></span></label>';
             }
+            if ($id->status == 5) {
+                $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
+                </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+                <label for="checkbox'.$id->id.'"><span></span></label>';
+            }
             if ($id->status == 0) {
                 $bot = '';
             }
-        }
-        
+            
+        }   
             return $bot;
+        
+          
            
        })->editColumn('characterizations_id', function ($id)
        {
@@ -220,12 +237,13 @@ class ProductionOrdersController extends Controller
         if ($request->has('factura')) {
             $array = collect([]);
         $grouped = collect([]);
+        $extraInfo = collect(['user_name'=>Auth::user()->name.' '.Auth::user()->last_name, 'timestamp' => date('d-m-Y')]);
         $totalCost = 0;
-        $suma = 0;
+        $totalToDiscount = 0;
         foreach ($request['factura'] as $key => $value)
         {
             $query = ProductionOrders::where('center_production_orders.id',$value)->
-            select('center_production_orders.cost','products.product_name','center_production_has_products.quantity','center_production_has_products.products_id','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
+            select('center_production_orders.cost','center_production_orders.status','products.product_name','center_production_has_products.quantity','center_production_has_products.products_id','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
             join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
             join('products','products.id', '=' , 'center_production_has_products.products_id')->
             join('measure_unit','products.id_measure_unit','=','measure_unit.id')->
@@ -233,33 +251,28 @@ class ProductionOrdersController extends Controller
             join('taxes','taxes.id','=','products_has_contracts.taxes_id')->
             get();
 
-            foreach ($query as $key => $value) {
-                $array->push(['product_name' => $query[$key]['product_name'], 'quantity' => $query[$key]['quantity'],'measure' => $query[$key]['measure_name'], 'unit_price' => $query[$key]['unit_price'], 'tax' => $query[$key]['tax']]);
+            foreach ($query as $llave => $valor) {
+                $array->push(['product_name' => $query[$llave]['product_name'], 'quantity' => $query[$llave]['quantity'],'measure' => $query[$llave]['measure_name'], 'unit_price' => $query[$llave]['unit_price'], 'tax' => $query[$llave]['tax']]);
+            }
+            if ($query[0]['status'] != 5) {
+                $totalToDiscount += $query[0]['cost'];
+
             }
             $totalCost += $query[0]['cost'];
+           $a = ProductionOrders::whereid($value)->update(["status" => 5]);
         }
-
-
-    //    $array->groupBy('product_name')->each(function ($value, $key)
-    //       {
-    //          $grouped[] = ['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']];
-    //          dump($grouped);
-    //       });
-    //       dd($grouped);
-
         foreach ($array->groupBy('product_name') as $key => $value) {
             $grouped->push(['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']]);
         }
-
-
-        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('grouped','totalCost'));
+        $budget = Budget::where('status',1)->select('budget')->get()->first();
+        $budget = $budget->budget - $totalToDiscount;
+        Budget::where('status',1)->update(['budget'=>$budget]);
+        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('grouped','totalCost','extraInfo'));
         return $pdf->stream();
 
         }
         else {
             return back()->with([swal()->autoclose(1500)->error('Error', 'Debe seleccionar al menos una orden.')]);
-
-
         }
 
     }

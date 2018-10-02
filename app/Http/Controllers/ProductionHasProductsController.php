@@ -38,7 +38,14 @@ class ProductionHasProductsController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request["product_id"][0] == "") {
+        $validation = true; 
+        foreach ($request['product_id'] as $key => $value) {
+            $quantity = ProductsHasContracts::where('products_id',$value)->select('quantity')->get()->first();
+            if ($value == "" || $quantity->quantity < $request['quantity'][$key] || 0.0 > $request['quantity'][$key]) {
+                $validation = false;
+            }
+        }
+        if ($validation == false) {
         return back()->with([swal()->autoclose(1500)->error('Modificación fallida','Debe llenar todos los campos y elegir una ficha')]);
     }
     else {
