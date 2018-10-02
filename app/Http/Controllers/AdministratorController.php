@@ -133,7 +133,11 @@ class AdministratorController extends Controller
                 } else if ($id->status == 5) {
                     $bot = '<a class="btn btn-md btn-outline-info text-info entregado"  data-toggle="tooltip" title="Solicitud Facturada.">Facturado</i></a>
                       <a href="pdf/orderProvider/' . $id->id . '" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
-                      </a>';
+                      </a>
+                       <a class="btn">
+                    <input type="checkbox" id="checkbox' . $id->id . '" class="checkbox"  name="check[]" value="' . $id->id . '" />
+                    <label for="checkbox' . $id->id . '"><span></span></label>
+                    </a>';
                     return $bot;
                 }
             })->editColumn('status', function ($id) {

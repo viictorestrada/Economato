@@ -194,10 +194,10 @@
                   <td>{{ $query[$i]['product_name'] }}</td>
                   <td>{{ $query[$i]['quantity'] }}</td>
                   <td>{{ $query[$i]['measure_name'] }}</td>
-                  <td>{{ $query[$i]['unit_price'] }}</td>
+                  <td>{{ number_format($query[$i]['unit_price']) }}</td>
                   <td>{{ $query[$i]['tax']}}</td>
-                  <td>{{ $query[$i]['unit_price']+(($query[$i]['unit_price']*$query[$i]['tax'])/100)}}</td>
-                  <td>{{ $query[$i]['quantity']*($query[$i]['unit_price']+(($query[$i]['unit_price']*$query[$i]['tax'])/100)) }} </td>
+                  <td>{{ number_format($query[$i]['unit_price']+(($query[$i]['unit_price']*$query[$i]['tax'])/100))}}</td>
+                  <td>{{ number_format($query[$i]['quantity']*($query[$i]['unit_price']+(($query[$i]['unit_price']*$query[$i]['tax'])/100))) }} </td>
                 </tr>
             @endfor
               </tbody>
@@ -224,10 +224,10 @@
                               <td>{{ $query[$i]['product_name'] }}</td>
                               <td>{{ $query[$i]['quantity'] }}</td>
                               <td>{{ $query[$i]['measure_name'] }}</td>
-                              <td>{{ $query[$i]['unit_price'] }}</td>
+                              <td>{{ number_format($query[$i]['unit_price']) }}</td>
                               <td>{{ $query[$i]['tax']}}</td>
-                              <td>{{ $query[$i]['unit_price']+(($query[$i]['unit_price']*$query[$i]['tax'])/100)}}</td>
-                              <td>{{ $query[$i]['quantity']*($query[$i]['unit_price']+(($query[$i]['unit_price']*$i['tax'])/100)) }} </td>
+                              <td>{{ number_format($query[$i]['unit_price']+(($query[$i]['unit_price']*$query[$i]['tax'])/100)) }}</td>
+                              <td>{{ number_format($query[$i]['quantity']*($query[$i]['unit_price']+(($query[$i]['unit_price']*$i['tax'])/100))) }} </td>
                         </tr>
                       @endfor
                         </tbody>
@@ -251,10 +251,10 @@
                       <td>{{ $value['product_name'] }}</td>
                       <td>{{ $value['quantity'] }}</td>
                       <td>{{ $value['measure_name'] }}</td>
-                      <td>{{ $value['unit_price'] }}</td>
+                      <td>{{ number_format($value['unit_price']) }}</td>
                       <td>{{ $value['tax']}}</td>
-                      <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
-                      <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
+                      <td>{{ number_format($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }}</td>
+                      <td>{{ number_format($value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100))) }} </td>
                       </tr>
                 @endforeach
                     </tbody>
@@ -262,7 +262,7 @@
                   @endif
                   <div class="contenedorDatos">
                 <div style="margin-top:15px" class="columna1 columnas">
-                   <h4>Costo de la orden: {{ $cost[0] }}</h4>
+                   <h4>Costo de la orden: {{ number_format($cost[0]) }}</h4>
                 </div>
                 <div style="margin-top:15px" class="columna2 columnas">
                     {{-- <h4>Número de paquetes: {{ $information['package_number'] }}</h4> --}}

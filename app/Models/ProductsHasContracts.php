@@ -11,7 +11,7 @@ class ProductsHasContracts extends Model
 
   protected $fillable = [
     'products_id', 'contracts_id', 'quantity', 'unit_price', 'taxes_id',
-     'total_with_tax', 'tax_value', 'total', 'quantity_agreed'
+     'total_with_tax', 'tax_value', 'total', 'quantity_agreed','status'
   ];
   public $timestamps = false;
 

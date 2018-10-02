@@ -46,7 +46,9 @@ class RecipeHasProductController extends Controller
       ->join('taxes', 'taxes.id' , '=' , 'products_has_contracts.taxes_id' )
       ->join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')
       ->join('recipes','recipes.id', '=' , 'recipes_has_products.recipe_id')
-      ->where('recipes_has_products.recipe_id',$id)->get();
+      ->where('recipes_has_products.recipe_id',$id)
+      ->where('products_has_contracts.status',1)
+      ->get();
       return $recipe;
 
     }
@@ -65,7 +67,7 @@ class RecipeHasProductController extends Controller
           ->join('measure_unit','measure_unit.id', '=' , 'products.id_measure_unit')
           ->join('recipes','recipes.id', '=' , 'orders_recipes.recipe_id')
           ->where('orders_recipes.order_id',$order)
-          ->get()->all();
+          ->get();
        }
        return $recipe;
 

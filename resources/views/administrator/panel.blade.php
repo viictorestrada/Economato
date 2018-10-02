@@ -212,6 +212,7 @@
                   <table class="table table-bordered table-md" id="entregas" width="100%">
                     <thead>
                       <tr>
+                        <th># Remisión</th>
                         <th>Usuario</th>
                         <th>Fecha</th>
                         <th>Ficha</th>
@@ -232,11 +233,16 @@
           <div class="card border-secondary">
             {{-- <form action="/panel/updateBudget" id="formCheck" onsubmit="return checkOrder()" name="formCheck" method="POST"  >
                 @csrf --}}
+                <form action="pdf/check" method="POST" >
+                  @csrf
+                     <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
+                    <i class="fa fa-clipboard-list"></i> Descargar factura.</button>
               <div class="card-body">
                 <div class="responsive">
                   <table class="table table-bordered table-md" id="tableCheck" width="100%">
                     <thead>
                       <tr>
+                        <th># Remisión</th>
                         <th>Usuario</th>
                         <th>Fecha</th>
                         <th>Ficha</th>
@@ -250,6 +256,7 @@
                   </table>
                 </div>
               </div>
+            </form>
             {{-- </form> --}}
           </div>
         </div>
@@ -414,6 +421,7 @@
         },
         ajax: '/panel/getOrderFinished',
         columns: [
+          { data: 'id' , name: 'id'},
           { data: 'user_name', name: 'user_name' },
           { data: 'order_date', name: 'order_date'},
           { data: 'file_number', name: 'file_number'},
@@ -457,6 +465,7 @@
         },
         ajax: '/panel/getOrderFinishedCheck',
         columns: [
+          { data: 'id', name:'id'},
           { data: 'user_name', name: 'user_name' },
           { data: 'order_date', name: 'order_date' },
           { data: 'file_number', name: 'file_number' },
@@ -838,7 +847,7 @@
       }
     })
 
-    
+
 
 
   }
