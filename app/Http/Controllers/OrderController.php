@@ -23,8 +23,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-      $filePopulationSpecial=File::where('characterization_id', 4)->pluck('file_number','id');
-      $files=File::where('characterization_id', 1)->orWhere('characterization_id', 3)->pluck('file_number','id');
+      $filePopulationSpecial=File::where('characterization_id', 4)->where('status',1)->pluck('file_number','id');
+      $files=File::where('characterization_id', 1)->orWhere('characterization_id', 3)->where('status',1)->pluck('file_number','id');
       $recipes=Recipe::pluck('recipe_name','id');
       $product=Product::pluck('product_name','id');
       return view('orders.ordersconfirm', compact('files','recipes','product','filePopulationSpecial'));
@@ -47,7 +47,7 @@ class OrderController extends Controller
 
 
         $products = OrderRecipe::where('orders_recipes.order_id',$id)
-        ->select('files.file_number','characterizations.characterization_name','programs.program_name','recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
+        ->select('orders_recipes.order_id','files.file_number','characterizations.characterization_name','programs.program_name','recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
         ->join('orders', 'orders.id','=','orders_recipes.order_id')
         ->join('products','products.id','=','orders_recipes.product_id')
         ->join('measure_unit','products.id_measure_unit','=','measure_unit.id')
@@ -57,6 +57,7 @@ class OrderController extends Controller
         ->join('files' , 'files.id' , '=' , 'orders.files_id')
         ->join('programs','programs.id','=','files.program_id')
         ->join('characterizations','characterizations.id','=','files.characterization_id')
+        ->where('products_has_contracts.status',1)
         ->get();
         $characterization_name=$products->pluck('characterization_name')->first();
         $program_name=$products->pluck('program_name')->first();
@@ -64,21 +65,68 @@ class OrderController extends Controller
         $recipeName=$products->pluck('recipe_name')->first();
         $package_number=$products->pluck('package_number')->first();
         $orderCost = $products->pluck('cost');
+        $idOrder=$products->pluck('order_id')->first();
         $information=[
           'name'=>Auth::user()->name,
           'last_name'=>Auth::user()->last_name,
-          'date'=>date('y-m-d'),
+          'date'=>date('Y-m-d'),
           'recipe'=>$recipeName,
           'package_number'=>$package_number,
           'file_number'=>$file_number,
           'program_name'=>$program_name,
-          'characterization_name'=>$characterization_name
+          'characterization_name'=>$characterization_name,
+          'idOrder'=>$idOrder
         ];
         $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
         return $pdf->stream();
         //  return $pdf->download('Remisión.pdf');
         # Cargamos el contenido HTML.
     }
+    public function checkReport(Request $request){
+      dump('ingreso');
+      dump($request['check']);
+      $collection=collect([]);
+      $collection2=collect([]);
+      foreach($request['check'] as $key){
+        $productsOrder=OrderRecipe::whereorder_id($key)->get();
+        foreach ($productsOrder as $key => $value) {
+          $collection->push(['product_id'=>$value['product_id'], 'quantity'=>$value['quantityAndPack']]);
+        }
+
+        // $data=Order::where('orders.id',$key)
+        // ->join('orders_recipes','orders.id','=','orders_recipes.order_id')
+        // ->selectRaw('sum(quantityAndPack)')
+        // // ->groupBy('product_id')
+        // ->get();
+        // ->get();
+        // $dataGrouped=$data->groupBy('product_name')->each(function($data){
+        //   dump('data'. $data);
+        //   dump($data->sum('quantityAndPack'));
+        // });
+        // dump($data);
+      }
+       foreach ($collection->groupBy('product_id') as $key => $value) {
+         $collection2->push(['product_id'=>$value[0]['product_id'],'quantity'=>$value->sum('quantity')]);
+       }
+      dd($collection2);
+      $data=collect([]);
+      $array=$collection->toArray();
+    for ($i=0;$i<count($array);$i++){
+      for($e=0;$e<count($array);$e++){
+        $dat=$array[$i][$e]['product_id'];
+        $data->push($dat);
+        // $data->groupBy($data);
+      }
+    }
+    dump($data);
+      // dd($collection->toArray());
+      // foreach (){
+
+      // }
+      // dump($dataGrouped);
+
+    }
+
 
     /**
      * Store a newly created resource in storage.

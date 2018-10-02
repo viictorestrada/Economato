@@ -33,6 +33,7 @@ class OrderRecipeController extends Controller
         $product_price=0;
         foreach($request['product_id']  as $key => $value){
           $quantityContract = ProductsHasContracts::where('products_id', $request['product_id'][$key])
+          ->where('status',1)
           ->select('quantity')
           ->first();
           if(( $request['quantity'][$key] * $request['package_number']) <= $quantityContract->quantity){
@@ -78,10 +79,12 @@ class OrderRecipeController extends Controller
         $product_id = $key[0]["product_id"];
         $valueUpdate = $key->sum('quantity')*$key[0]["package_number"];
         $stockQuantity = ProductsHasContracts::where('products_id',$product_id)
+        ->where('status',1)
         ->select('quantity')
         ->first();
         $result = $stockQuantity->quantity-$valueUpdate;
         $updateStock = ProductsHasContracts::where('products_id',$product_id)
+        ->where('status',1)
         ->update(['quantity'=>$result]);
 
       });
@@ -103,7 +106,7 @@ class OrderRecipeController extends Controller
      $items=implode(", ", $request['factura']);
      Session::put('value', $valueCheck);
      Session::put('remission', $request['factura']);
-    return redirect('panel')->with('message', 'El valor a facturar por las remisiones '. $items .' es: '.$valueCheck.'');
+    return redirect('panel')->with('message', 'El valor a facturar por las remisiones '. $items .' es: '.number_format($valueCheck).'');
 
 
       // OrderRecipeController::update($valueCheck);

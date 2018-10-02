@@ -52,11 +52,11 @@ class ContractController extends Controller
       'start_date'=>$input['start_date'],
       'finish_date'=>$input["finish_date"]
       ]);
-        // $contracts=Contract::all();
-        // $var=$contracts->last();
         $idContract=$contract->id;
       DB::transaction(function() use($input,$idContract){
           foreach($input['products_id'] as $key => $value){
+            $productStatusValidation=ProductsHasContracts::where('products_id',$input['products_id'][$key])->where('status',1)->get();
+            if($productStatusValidation->isEmpty()){
             ProductsHasContracts::create(['products_id'=>$input['products_id'][$key],
             'contracts_id'=>$idContract,
             'quantity'=>$input['quantity'][$key],
@@ -67,8 +67,8 @@ class ContractController extends Controller
             'total'=>$input['total'][$key],
             'quantity_agreed'=>$input['quantity'][$key]]);
           }
+        }
           $budget=Budget::where('status',1)->first();
-          // dd($budget->id);
           ContractsHasBudget::create([
             'contract_id'=>$idContract,
             'budget_id'=>$budget->id

@@ -146,6 +146,8 @@ Route::get('pdf/orderProvider/{id}' , 'OrderController@pdfRemission');
 //ruta para validar presupuesto
 
 Route::get('validation/{value}' , 'BudgetController@validationBudget');
+//ruta para generar facturas
+Route::post('pdf/check','OrderController@checkReport');
 
 });
 
@@ -173,3 +175,5 @@ Route::group(['middleware' => ['auth', 'leader']], function ()
 });
 
 Route::get('updateProductsHasContracts','CronJobController@updateProductsHasContracts');
+Route::get('updateBudget','CronJobController@updateBudget');
+Route::get('updateFiles','CronJobController@updateFiles');

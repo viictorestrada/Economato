@@ -88,21 +88,21 @@ class ProductionOrdersController extends Controller
             return "Rechazado";
         }
        })->addColumn('action', function ($id)
-       {      
+       {
         if ($id->characterizations_id == 4) {
             if ($id->status == 1) {
                 $bot = '<a onclick="productionOrderModal2('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
                 <a  onclick="changeStatusProductionOrder2('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
             }
             if ($id->status == 2) {
- 
+
                 $bot = '<a onclick="productionOrderModal2('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
                 <a  onclick="changeStatusProductionOrder('.$id->id.', 3 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Solicitar al proveedor."><i class="fa fa-check-circle"></i></a>
                 <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
             }
             if ($id->status == 3) {
                 $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i> </a>
-                <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa-check-circle"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa fa-arrow-right"></i></a>
                 <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
             }
             if ($id->status == 4) {
@@ -120,14 +120,14 @@ class ProductionOrdersController extends Controller
                 <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
             }
             if ($id->status == 2) {
- 
+
                 $bot = '<a onclick="productionOrderModal('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
-                <a  onclick="changeStatusProductionOrder('.$id->id.', 3 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Solicitar al proveedor."><i class="fa fa-check-circle"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 3 )" class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Solicitar al proveedor."><i class="fa fa-check-circle"></i></a>
                 <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
             }
             if ($id->status == 3) {
                 $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i> </a>
-                <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa-check-circle"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa-arrow-right"></i></a>
                 <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
             }
             if ($id->status == 4) {
@@ -139,9 +139,9 @@ class ProductionOrdersController extends Controller
                 $bot = '';
             }
         }
-        
+
             return $bot;
-           
+
        })->editColumn('characterizations_id', function ($id)
        {
            if ($id->characterizations_id == 4) {
@@ -238,14 +238,6 @@ class ProductionOrdersController extends Controller
             }
             $totalCost += $query[0]['cost'];
         }
-
-
-    //    $array->groupBy('product_name')->each(function ($value, $key)
-    //       {
-    //          $grouped[] = ['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']];
-    //          dump($grouped);
-    //       });
-    //       dd($grouped);
 
         foreach ($array->groupBy('product_name') as $key => $value) {
             $grouped->push(['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']]);

@@ -100,6 +100,7 @@ class ReportController extends Controller
     public function reportProducts(){
       $reportsProduct=Product::select('products.*','products_has_contracts.quantity','products_has_contracts.quantity_agreed')
       ->join('products_has_contracts', 'products.id' , '=' , 'products_has_contracts.products_id')
+      ->where('products_has_contracts.status',1)
       ->get();
       return DataTables::of($reportsProduct)
       ->addColumn('action', function($reportsProduct) {
@@ -133,9 +134,14 @@ class ReportController extends Controller
       ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
       ->selectRaw('sum(cost) as sum,characterization_name')
       ->get();
-      // dd(!$characterization->isEmpty());
       if(!$characterization->isEmpty()){
-        $datasets=[];
+        $datasets=[
+          0=>0,
+          1=>0,
+          2=>0,
+          3=>0,
+          4=>0
+        ];
         $labels=[];
         foreach($characterization as $key => $value ){
           $datasets[$key]=intval($value->sum);
@@ -145,7 +151,16 @@ class ReportController extends Controller
           "Negritudes = " .number_format($datasets[0])
           ],
           [
-          "Formación = ".number_format($datasets[1])
+          "Formación = " .number_format($datasets[1])
+          ],
+          [
+          "media técnica = " .number_format($datasets[2])
+          ],
+          [
+          "Población especial = " .number_format($datasets[3])
+          ],
+          [
+          "Producción de centro = " .number_format($datasets[4])
           ]
           ];
           $chartCharacterization = app()->chartjs
@@ -155,8 +170,8 @@ class ReportController extends Controller
           ->labels($labels)
           ->datasets([
             [
-            'backgroundColor' => ['#e80d05', '#f2a225'],
-            'hoverBackgroundColor' => ['#e80d05', '#f2a225'],
+            'backgroundColor' => ['#e80d05', '#f2a225','#f2a225'],
+            'hoverBackgroundColor' => ['#e80d05', '#f2a225','#f2a228'],
             'data' => $datasets
             ],
           ])
