@@ -38,17 +38,33 @@ class ProductionHasProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = true; 
+        $validation = 0; 
         foreach ($request['product_id'] as $key => $value) {
             $quantity = ProductsHasContracts::where('products_id',$value)->select('quantity')->get()->first();
-            if ($value == "" || $quantity->quantity < $request['quantity'][$key] || 0.0 > $request['quantity'][$key]) {
-                $validation = false;
+            if ($value == "") {
+                $validation = 1;
+                break;
+            }
+            else if (0.0 >= $request['quantity'][$key]) {
+                $validation = 2;
+                break;
+            }
+            else if ($quantity->quantity < $request['quantity'][$key]) {
+                $validation = 3;
+                break;
             }
         }
-        if ($validation == false) {
-        return back()->with([swal()->autoclose(1500)->error('Modificación fallida','Debe llenar todos los campos y elegir una ficha')]);
-    }
-    else {
+        
+        if ($validation == 1) {
+            return back()->with([swal()->autoclose(1500)->error('Modificación fallida','Debe llenar todos los campos')]);
+        }
+        else if ($validation == 2) {
+            return back()->with([swal()->autoclose(1500)->error('Modificación fallida','La cantidad no debe ser inferior o igual a 0')]);
+            }
+        else if ($validation == 3) {
+            return back()->with([swal()->autoclose(1500)->error('Modificación fallida','La cantidad es mayor a la disponible en stock')]);
+            }
+        else {
         ProductionHasProducts::where('center_production_orders_id', $request['center_production_orders_id'])->delete();
         $center_id = $request['center_production_orders_id'];
         $cost = 0;

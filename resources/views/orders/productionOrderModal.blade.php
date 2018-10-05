@@ -15,11 +15,9 @@
                   <div class="card border-secondary">
                       <div class="card-body">
                           <div class="form-group">
-                            {{-- <div class="table-responsive"> --}}
-                              {{-- <input type="hidden" name="center_production_orders_id" value="" id="idProduction"> --}}
                               {{Form::hidden('center_production_orders_id', null, ['id' => 'idProduction'])}}
                               <h3>Productos</h3>
-                              <table class="table table-bordered table-responsive">
+                              <table class="table table-bordered">
                                 <thead>
                                   <th>Insumos</th>
                                   <th>Unidad de medida</th>

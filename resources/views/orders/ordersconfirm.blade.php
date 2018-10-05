@@ -139,7 +139,66 @@
 @endsection
 @section('script')
 <script>
-
+$(() => {
+  $.validator.addMethod('fechas', function (value, element) {
+        return this.optional(element) || moment(moment()).isBefore(value);
+      });
+  $('#ProductionRequest').validate({
+    rules: {
+      title: {
+        required: true,
+        minlength: 5,
+        maxlength: 50
+      },
+      quantity: {
+        required: true,
+        digits: true,
+        min: 1,
+        max: 999999
+      },
+      event_place: {
+        required: true,
+        minlength: 3,
+        maxlength: 45
+      },
+      order_date: {
+        required: true,
+        fechas: true
+      },
+      description: {
+        required: true,
+        minlength: 10,
+        maxlength: 300
+      }
+    },
+    messages: {
+      title: {
+        required: "El campo Titulo del evento es obligatorio.",
+        minlength: "El campo Titulo del evento debe contener mínimo 5 caracteres.",
+        maxlength: "El campo Titulo del evento debe contener máximo 45 caracteres."
+      },
+      quantity: {
+        required: "El campo Numero de asistentes es obligatorio.",
+        min: "El campo Numero de asistentes debe contener mínimo 1 asistente.",
+        max: "El campo Numero de asistentes debe contener máximo 999999 asistentes."
+      },
+      event_place: {
+        required: "El campo Lugar del evento es obligatorio.",
+        minlength: "El campo lugar del evento debe contener mínimo 3 caracteres.",
+        maxlength: "El campo lugar del evento debe contener máximo 45 caracteres."
+      },
+      order_date: {
+        required: "El campo Fecha del evento es obligatorio.",
+        fechas: "La fecha del pedido es anterior a la actual."
+      },
+      description: {
+        required: "El campo Descripción del evento es obligatorio.",
+        minlength: "El campo Descripción del evento debe contener mínimo 10 caracteres.",
+        maxlength: "El campo Descripción del evento debe contener máximo 300 caracteres."
+      }
+    }
+  });
+});
 function loadRecipeProducts(id) {
     $.ajax({
       url: "{{ url('RecipeHasProduct') }}" + '/' + id + "/show",
