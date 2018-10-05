@@ -96,15 +96,15 @@
       }
 
       .columna1{
-      padding-top:0px;
+      margin-top:0px;
       }
 
       .columna2{
-        padding-top: 0px;
+        padding-top: -20px;
       }
 
       .contenedorTabla{
-        padding-top: -5%;
+        padding-top: -10%;
         width: 100%;
         display: inline-block;
         clear: both;
@@ -131,12 +131,12 @@
             <img src="{{asset('images/logo.png')}}" alt="">
           </div>
           <div class="columna1 columnas">
-          <p>Usuario: {{ $user }}</p>
-
+          <p>Usuario: {{ $query[0]['user_name'] }}</p>
+            <p>Numero de asistentes: {{ $query[0]['tax']}} </p>
           </div>
           <div class="columna2 columnas">
-          <p>Fecha:{{ $query[0]['created_at'] }}</p>
-
+          <p>Lugar del evento: {{ $query[0]['created_at'] }}</p>
+          <p>Caracterización: {{ $query[0]['event_place']}}</p>
           </div>
         </div>
         <div class="contenedorTabla" >

@@ -223,10 +223,18 @@ class ProductionOrdersController extends Controller
         join('products_has_contracts','products_has_contracts.products_id','=','products.id')->
         join('taxes','taxes.id','=','products_has_contracts.taxes_id')->
         get();
-        // dd($query);
-        $cost = $query->pluck('cost');
-        $pdf = PDF::loadView('reports.productionRemission', compact('query','cost'));
-        return $pdf->stream();
+        if ($query[0]['status'] == 4) {
+          $user =  Auth::user()->name.' '.Auth::user()->last_name;
+          $cost = $query->pluck('cost');
+          $pdf = PDF::loadView('reports.productionRemission', compact('query','cost','user'));
+          return $pdf->stream();
+        }
+        else {
+          $cost = $query->pluck('cost');
+          $pdf = PDF::loadView('reports.productionRemission2', compact('query','cost'));
+          return $pdf->stream();
+        }
+
 
     }
 

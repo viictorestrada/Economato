@@ -129,10 +129,11 @@ class ReportController extends Controller
 
     public function reportCharacterization (){
       $characterization=Order::where('orders.status',5)
-      ->groupBy('characterizations.characterization_name')
+      ->groupBy('characterizations.characterization_name','characterizations.id')
       ->join('files', 'orders.files_id', '=', 'files.id')
       ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
-      ->selectRaw('sum(cost) as sum,characterization_name')
+      ->selectRaw('sum(cost) as sum,characterization_name,characterizations.id')
+      ->orderBy('characterizations.id','asc')
       ->get();
       $characterizationSpecial=ProductionOrders::where('center_production_orders.status',5)
       ->groupBy('characterizations.characterization_name')
@@ -141,15 +142,32 @@ class ReportController extends Controller
       ->get();
       if(!$characterization->isEmpty() || !$characterizationSpecial->isEmpty()){
         $datasets=[
-          0=>0,
-          1=>0,
-          2=>0
+          0 => 0,
+          1 => 0,
+          2 => 0
         ];
         $labels=[];
         if (!$characterization->isEmpty()) {
-          foreach($characterization as $key => $value ){
+          if ($characterization[0]['characterization_name'] == 'Negritudes' && $characterization[0]['characterization_name'] == 'Media Técnica') {
+            $datasets[0] = 0;
+            $datasets[1] = $characterization[0]->sum;
+            $datasets[2] = $characterization[1]->sum;
+          }
+          else if ($characterization[0]['characterization_name'] == 'Negritudes') {
+            $datasets[0] = 0;
+            $datasets[1] = $characterization[0]->sum;
+            $datasets[2] = 0;
+        }
+         else if ($characterization[0]['characterization_name'] == 'Media Técnica') {
+            $datasets[0] = 0;
+            $datasets[1] = 0;
+            $datasets[2] = $characterization[0]->sum;
+          }
+          else {
+           foreach($characterization as $key => $value ){
             $datasets[$key]=intval($value->sum);
         }
+          }
         }
         if (!$characterizationSpecial->isEmpty()) {
           if ($characterizationSpecial[0]['characterization_name'] == 'Producción de Centro') {
@@ -163,7 +181,7 @@ class ReportController extends Controller
             if (count($datasets) == 4) {
               $datasets[4] = 0;
             }
-          }    
+          }
         }
         else {
           $datasets[3] = 0;
@@ -171,10 +189,10 @@ class ReportController extends Controller
         }
         $labels=[
           [
-          "Negritudes = " .number_format($datasets[0])
+          "Formación = " .number_format($datasets[0])
           ],
           [
-          "Formación = " .number_format($datasets[1])
+          "Negritudes = " .number_format($datasets[1])
           ],
           [
           "media técnica = " .number_format($datasets[2])
@@ -193,15 +211,15 @@ class ReportController extends Controller
           ->labels($labels)
           ->datasets([
             [
-            'backgroundColor' => ['#e80d05', '#f2a225','#f2a225'],
-            'hoverBackgroundColor' => ['#e80d05', '#f2a225','#f2a228'],
+            'backgroundColor' => ['#e80d05', '#f2a225','#0d9c88','#A569BD','#3498DB'],
+            'hoverBackgroundColor' => ['#e80d05', '#f2a225','#0d9c88','#A569BD','#3498DB'],
             'data' => $datasets
             ],
           ])
           ->options([]);
                 return $chartCharacterization;
           }else {
-            
+
           }
     }
 
