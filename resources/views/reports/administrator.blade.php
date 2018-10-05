@@ -43,9 +43,9 @@
         <div class="row">
            <div class="col-md-6">
             {{-- {{
-            dd($chartCharacterization)
+            dd(isset($chartCharacterization))
             }}  --}}
-            @if($chartCharacterization == "" )
+            @if(isset($chartCharacterization) == false)
               <div class="card  w-50">
               <div class="card-body">
                 <p class="card-text">No se encuentran gastos por caracterización.</p>

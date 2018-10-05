@@ -47,6 +47,9 @@
 @section('script')
 <script>
 $(() => {
+  $.validator.addMethod('fechas', function (value, element) {
+        return this.optional(element) || moment(moment()).isBefore(value);
+      });
   $('#ProductionRequest').validate({
     rules: {
       title: {
@@ -66,7 +69,8 @@ $(() => {
         maxlength: 45
       },
       order_date: {
-        required: true
+        required: true,
+        fechas: true
       },
       description: {
         required: true,
@@ -91,7 +95,8 @@ $(() => {
         maxlength: "El campo lugar del evento debe contener máximo 45 caracteres."
       },
       order_date: {
-        required: "El campo Fecha del evento es obligatorio."
+        required: "El campo Fecha del evento es obligatorio.",
+        fechas: "La fecha del pedido es anterior a la actual."
       },
       description: {
         required: "El campo Descripción del evento es obligatorio.",

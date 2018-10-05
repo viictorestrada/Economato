@@ -8,6 +8,7 @@ use DataTables;
 use Auth;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\ProductionOrders;
 use App\Models\Budget;
 use App\Models\ProductHasContracts;
 use App\Models\AditionalBudget;
@@ -25,7 +26,6 @@ class ReportController extends Controller
         $charTop=ReportController::topUsedProduct();
         $chartLess=ReportController::lessUsedProducts();
         $chartCharacterization=ReportController::reportCharacterization();
-
         return view('reports.administrator', compact('chartLess','chartCharacterization','totalBudgetChart','charTop'));
     }
 
@@ -134,17 +134,40 @@ class ReportController extends Controller
       ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
       ->selectRaw('sum(cost) as sum,characterization_name')
       ->get();
-      if(!$characterization->isEmpty()){
+      $characterizationSpecial=ProductionOrders::where('center_production_orders.status',5)
+      ->groupBy('characterizations.characterization_name')
+      ->join('characterizations' ,'characterizations.id', '=' , 'center_production_orders.characterizations_id')
+      ->selectRaw('sum(cost) as sum,characterization_name')
+      ->get();
+      if(!$characterization->isEmpty() || !$characterizationSpecial->isEmpty()){
         $datasets=[
           0=>0,
           1=>0,
-          2=>0,
-          3=>0,
-          4=>0
+          2=>0
         ];
         $labels=[];
-        foreach($characterization as $key => $value ){
-          $datasets[$key]=intval($value->sum);
+        if (!$characterization->isEmpty()) {
+          foreach($characterization as $key => $value ){
+            $datasets[$key]=intval($value->sum);
+        }
+        }
+        if (!$characterizationSpecial->isEmpty()) {
+          if ($characterizationSpecial[0]['characterization_name'] == 'Producción de Centro') {
+            $datasets[3] = 0;
+            $datasets[4] = $characterizationSpecial[0]->sum;
+          }
+          else {
+            foreach ($characterizationSpecial as $key => $value) {
+              $datasets[]=intval($value->sum);
+            }
+            if (count($datasets) == 4) {
+              $datasets[4] = 0;
+            }
+          }    
+        }
+        else {
+          $datasets[3] = 0;
+          $datasets[4] = 0;
         }
         $labels=[
           [
@@ -178,7 +201,7 @@ class ReportController extends Controller
           ->options([]);
                 return $chartCharacterization;
           }else {
-            return $characterization;
+            
           }
     }
 

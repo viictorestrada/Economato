@@ -36,6 +36,9 @@
 @section('script')
   <script>
     $(() => {
+      $.validator.addMethod('fecha_actual', function (value, element) {
+        return this.optional(element) || moment(moment()).isBefore(value);
+      });
       $('#createFiles').validate({
         rules: {
           program_id: {
@@ -64,7 +67,8 @@
           },
           finish_date:{
             required: true,
-            date: true
+            date: true,
+            fecha_actual: true
           }
         },
         messages: {
@@ -76,7 +80,7 @@
           },
           file_number: {
             required: "El campo Número de Ficha es obligatorio.",
-            digits: "El campo Número de Ficha debe ser numérico.",
+            digits: "El campo Número de Ficha debe ser de tipo numérico.",
             maxlength: "El campo Número de Ficha debe contener máximo 25 caracteres."
           },
           file_route: {
@@ -85,7 +89,7 @@
           },
           apprentices: {
             required: "El campo Aprendices es obligatorio.",
-            digits: "El campo Aprendices debe ser numérico.",
+            digits: "El campo Aprendices debe ser de tipo numérico.",
             maxlength: "El campo Aprendices debe contener máximo 25 caracteres."
           },
           start_date:{
@@ -94,7 +98,8 @@
           },
           finish_date:{
             required: "El campo fecha final es obligatorio",
-            date: "ingrese una fecha valida"
+            date: "ingrese una fecha valida",
+            fecha_actual: "La fecha final es menor a la fecha actual"
           }
         }
       });

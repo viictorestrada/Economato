@@ -14,10 +14,34 @@ class RecipeHasProductController extends Controller
 {
     public function store(Request $request)
     {
-        $input = $request->all();
-        if ($input['product_id'][0] == null || $input['quantity'][0] == null) {
-            return back()->with([swal()->autoclose(1500)->error('Registro fallido', 'No se pudo agregar la receta!')]);
+        $validate = 0;
+        foreach ($request['product_id'] as $key => $value) {
+            $quantity = ProductsHasContracts::where('products_id',$value)->select('quantity')->get()->first();
+            if ($value == "") {
+                $validate = 1;
+                break;
+            }
+            else if ($request['quantity'][$key]<=0.0) {
+                $validate = 2;
+                break;
+            }
+            else if ($quantity < $request['quantity'][$key]) {
+                $validate = 3;
+                break;
+            }
         }
+        if ($validate == 1) {
+            return back()->with([swal()->autoclose(1500)->error('Registro fallido', 'Complete todos los campos!')]);
+        }
+
+        if ($validate == 2) {
+            return back()->with([swal()->autoclose(1500)->error('Registro fallido', 'La cantidad no debe ser menor o igual a 0')]);
+        }
+
+        if ($validate == 3) {
+            return back()->with([swal()->autoclose(1500)->error('Registro fallido', 'La cantidad es mayor a la disponible en stock')]);
+        }
+
         else{
         if ($input['recipe_id'] != null) {
             $recipe = RecipeHasProduct::where('recipe_id', $input['recipe_id'])->delete();

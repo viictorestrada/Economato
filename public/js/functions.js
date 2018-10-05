@@ -240,7 +240,7 @@ function changeStatusProductionOrder(id, status) {
 
                 });
             } else {
-                swal("Solicitud Cancelada", "La solicitud fue cancelada.", "success");
+                swal("Solicitud Cancelada", "La solicitud fue cancelada.", "error");
             }
         })
     }
