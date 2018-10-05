@@ -45,7 +45,7 @@
             {{-- {{
             dd($chartCharacterization)
             }}  --}}
-            @if($chartCharacterization == "" )
+            @if(isset(($Characterization)))
               <div class="card  w-50">
               <div class="card-body">
                 <p class="card-text">No se encuentran gastos por caracterización.</p>

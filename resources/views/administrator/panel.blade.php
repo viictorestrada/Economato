@@ -129,6 +129,7 @@
                   <table class="table table-bordered table-md" width="100%" id="orders">
                     <thead>
                       <tr>
+                        <th># remision</th>
                         <th>Usuario</th>
                         <th>Fecha</th>
                         <th>Ficha</th>
@@ -399,6 +400,7 @@
         },
         ajax: '/panel/getOrder',
         columns: [
+          { data: 'id' , name: 'id'},
           { data: 'user_name', name: 'user_name' },
           { data: 'order_date', name: 'order_date' },
           { data: 'file_number', name: 'file_number' },

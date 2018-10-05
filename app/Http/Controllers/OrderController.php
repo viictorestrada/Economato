@@ -40,14 +40,10 @@ class OrderController extends Controller
 
     public function pdfRemission($id)
     {
-
-        // $products = Product::all();
-
         $information=array();
 
-
         $products = OrderRecipe::where('orders_recipes.order_id',$id)
-        ->select('orders_recipes.order_id','files.file_number','characterizations.characterization_name','programs.program_name','recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
+        ->select('orders_recipes.order_id','orders.user_name','orders.status','files.file_number','characterizations.characterization_name','programs.program_name','recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
         ->join('orders', 'orders.id','=','orders_recipes.order_id')
         ->join('products','products.id','=','orders_recipes.product_id')
         ->join('measure_unit','products.id_measure_unit','=','measure_unit.id')
@@ -67,8 +63,9 @@ class OrderController extends Controller
         $orderCost = $products->pluck('cost');
         $idOrder=$products->pluck('order_id')->first();
         $information=[
-          'name'=>Auth::user()->name,
-          'last_name'=>Auth::user()->last_name,
+          'nameAuth'=>Auth::user()->name,
+          'lastNameAuth'=>Auth::user()->last_name,
+          'name'=>$products->pluck('user_name')->first(),
           'date'=>date('Y-m-d'),
           'recipe'=>$recipeName,
           'package_number'=>$package_number,
@@ -77,57 +74,48 @@ class OrderController extends Controller
           'characterization_name'=>$characterization_name,
           'idOrder'=>$idOrder
         ];
-        $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
+        if($products[0]['status']==2){
+        $pdf = PDF::loadView('reports.remissionProvider', compact('products','orderCost','information'));
         return $pdf->stream();
+        }else if($products[0]['status']==3){
+         $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
+        return $pdf->stream();
+        }
+
         //  return $pdf->download('Remisión.pdf');
         # Cargamos el contenido HTML.
     }
     public function checkReport(Request $request){
-      dump('ingreso');
-      dump($request['check']);
       $collection=collect([]);
       $collection2=collect([]);
+      $collectionTax=collect([]);
       foreach($request['check'] as $key){
-        $productsOrder=OrderRecipe::whereorder_id($key)->get();
+        $productsOrder=OrderRecipe::whereorder_id($key)
+        ->where('products_has_contracts.status',1)
+        ->join('products','products.id','=','orders_recipes.product_id')
+        ->join('products_has_contracts', 'products.id','=','products_has_contracts.products_id')
+        ->join('taxes', 'taxes.id','=' ,'products_has_contracts.taxes_id')
+        ->join('presentations','presentations.id','=','products.presentation_id')
+        ->join('measure_unit','measure_unit.id','=','products.id_measure_unit')
+        ->get();
         foreach ($productsOrder as $key => $value) {
-          $collection->push(['product_id'=>$value['product_id'], 'quantity'=>$value['quantityAndPack']]);
+           $collection->push(['product_id'=>$value['product_id'], 'quantity'=>$value['quantityAndPack'],'product_name'=>$value['product_name'],'tax'=>$value['tax'],
+          'unit_price'=>$value['unit_price'], 'presentation'=>$value['presentation'],'measure_name'=>$value['measure_name']]);
         }
-
-        // $data=Order::where('orders.id',$key)
-        // ->join('orders_recipes','orders.id','=','orders_recipes.order_id')
-        // ->selectRaw('sum(quantityAndPack)')
-        // // ->groupBy('product_id')
-        // ->get();
-        // ->get();
-        // $dataGrouped=$data->groupBy('product_name')->each(function($data){
-        //   dump('data'. $data);
-        //   dump($data->sum('quantityAndPack'));
-        // });
-        // dump($data);
       }
-       foreach ($collection->groupBy('product_id') as $key => $value) {
-         $collection2->push(['product_id'=>$value[0]['product_id'],'quantity'=>$value->sum('quantity')]);
-       }
-      dd($collection2);
-      $data=collect([]);
-      $array=$collection->toArray();
-    for ($i=0;$i<count($array);$i++){
-      for($e=0;$e<count($array);$e++){
-        $dat=$array[$i][$e]['product_id'];
-        $data->push($dat);
-        // $data->groupBy($data);
-      }
-    }
-    dump($data);
-      // dd($collection->toArray());
-      // foreach (){
-
-      // }
-      // dump($dataGrouped);
-
-    }
-
-
+     foreach ($collection->groupBy('product_id') as $key ) {
+         $tax=$key[0]['tax']/100;
+         $price=$key[0]['unit_price'];
+         $collection2->push(['product_id'=>$key[0]['product_id'],'quantity'=>$key->sum('quantity') ,'product_name'=>$key[0]['product_name'],'tax'=>$key[0]['tax'],
+         'priceTax'=>$price*$key->sum('quantity'),'presentation'=>$key[0]['presentation'],'measure_name'=>$key[0]['measure_name'],'unit_price'=>$key[0]['unit_price']]);
+        }
+        foreach ($collection2->groupBy('tax') as $key => $value) {
+         $tax=$value[0]['tax']/100;
+         $collectionTax->push(['priceTax'=>$value->sum('priceTax'),'tax'=>$value[0]['tax']]);
+        }
+         $pdf = PDF::loadView('reports.check', compact('collection2','collectionTax'));
+        return $pdf->stream();
+        }
     /**
      * Store a newly created resource in storage.
      *
@@ -168,6 +156,6 @@ class OrderController extends Controller
           $array = array('status' => 'updateFalse');
       }
        return response()->json($array);
-    }
+  }
 
 }

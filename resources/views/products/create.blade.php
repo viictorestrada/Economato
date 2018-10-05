@@ -18,7 +18,6 @@
 
             {{ Form::open(['url' => 'products', 'class' => 'forms', 'id' => 'createProduct']) }}
 
-              @csrf
               <div class="row">
                 @include('products.form')
               </div>

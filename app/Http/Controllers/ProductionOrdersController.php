@@ -122,7 +122,7 @@ class ProductionOrdersController extends Controller
             if ($id->status == 0) {
                 $bot = '';
             }
-           
+
         }
         else {
             if ($id->status == 1) {
@@ -215,6 +215,7 @@ class ProductionOrdersController extends Controller
     {
 
         $query = ProductionOrders::where('center_production_orders.id',$id)->
+        where('products_has_contracts.status',1)->
         select('center_production_orders.*','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
         join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
         join('products','products.id', '=' , 'center_production_has_products.products_id')->

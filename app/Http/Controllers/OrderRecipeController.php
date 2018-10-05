@@ -54,11 +54,14 @@ class OrderRecipeController extends Controller
         $costOrder= $costRecipe*$request['package_number'];
         if ($countValidationArrays==count($request['product_id'])){
           foreach($request['product_id']  as $key => $value){
+            // dd($request['quantity'][$key],$request['package_number']);
+            $quantityAndPack=($request['quantity'][$key]*$request['package_number']);
             $createRecipeOrder = OrderRecipe::create([ 'recipe_id' => $request['recipe_id'],
               'product_id' => $request['product_id'][$key],
               'order_id' => $request['idOrder'],
-              'quantity' =>$request['quantity'][$key],
-              'package_number' => $request['package_number']]);
+              'quantity' => $request['quantity'][$key],
+              'package_number' => $request['package_number'],
+              'quantityAndPack' => $quantityAndPack]);
             }
             $order=Order::findOrfail($request['idOrder'])->update(['status' => '4', 'cost' => $costOrder]);
           }

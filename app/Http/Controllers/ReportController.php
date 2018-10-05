@@ -64,7 +64,7 @@ class ReportController extends Controller
     }
 
     public function topUsedProduct(){
-      $products=Product::select('products.product_name','products_has_contracts.quantity')
+      $products=Product::where('products_has_contracts.status',1)->select('products.product_name','products_has_contracts.quantity')
       ->join('products_has_contracts', 'products.id' , '=' ,'products_has_contracts.products_id')
       ->orderBy('quantity', 'asc')
       ->take(10)
