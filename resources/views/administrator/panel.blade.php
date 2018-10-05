@@ -580,15 +580,15 @@
                 <td>`+product_id+`</td>
                 <td>`+quantity+`</td>
                 <td>`+measure+`</td>
-                <td>`+(parseInt(unit_price)+parseInt((unit_price*tax)/100))+`</td>
-                <td>`+((parseInt(unit_price)+parseInt((unit_price*tax)/100))*quantity)+`</td>
+                <td>`+number_format(parseInt(unit_price)+parseInt((unit_price*tax)/100))+`</td>
+                <td>`+number_format((parseInt(unit_price)+parseInt((unit_price*tax)/100))*quantity)+`</td>
                 </tr>`
             );
           });
           $('#fillDetails').append(
               `<tr>
                 <td colspan="4">Costo total de la receta (IVA incluido).</td>
-                <td>`+recipes_cost+`</td>
+                <td>`+number_format(recipes_cost)+`</td>
                 </tr>`
             );
           $('#show-details').modal('show');
