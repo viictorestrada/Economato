@@ -109,7 +109,7 @@ class BudgetController extends Controller
 
     public function validationBudget($value){
       // $contracts_price=0;
-      $budget=Budget::wherestatus(1)->value('budget');
+      $budget=Budget::wherestatus(1)->value('initial_budget');
       $contract_price=Contract::wherestatus(1)->selectRaw('sum(contract_price) as acumContractPrice')->first();
       $actuallyBudget=($budget-$contract_price->acumContractPrice);
       $array=array();
@@ -117,7 +117,7 @@ class BudgetController extends Controller
       $array[] = array('status' => 'null' , 'data' =>$actuallyBudget);
     }else if($value>$actuallyBudget && $budget!=null){
        $array[] = array('status' => 'false' , 'data' =>$actuallyBudget);
-    }else if($value<$actuallyBudget && $budget!=null){
+    }else if($value<=$actuallyBudget && $budget!=null){
      $array[] = array('status' => 'true', 'data' => $actuallyBudget);
     }
     return $array;

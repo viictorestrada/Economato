@@ -42,6 +42,7 @@
         type: 'get',
         dataType : 'JSON'
       }).done(function(data){
+        console.log(data)
         if (data.length!==0){
           var budget=number_format(data[0].data);
          if(data[0].status==="false"){

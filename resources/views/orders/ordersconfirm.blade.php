@@ -22,7 +22,7 @@
             <div class="card-body">
               <div class="col-12 d-flex justify-content-end">
               </div>
-                {{ Form::open(['url'=>'orders', 'method'=>'POST', 'name' => 'formulario1', 'class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
+                {{ Form::open(['url'=>'orders', 'method'=>'POST', 'name' => 'formulario1', 'id'=> 'orderRequest','class'=>'forms','onsubmit'=>'return confirmOrder()']) }}
                 <div class="row">
 
                   <div class="form-group col-md-6 col-lg-6">
@@ -138,7 +138,7 @@
   </div>
 @endsection
 @section('script')
-<script>
+<script>    
 $(() => {
   $.validator.addMethod('fechas', function (value, element) {
         return this.optional(element) || moment(moment()).isBefore(value);
@@ -198,6 +198,18 @@ $(() => {
       }
     }
   });
+  $('#orderRequest').validate({
+      rules:{
+        order_date:{
+        fechas:true
+        }
+      },
+      messages:{
+        order_date:{
+          fechas: "La fecha del pedido es anterior a la actual."
+        }
+      }
+    });
 });
 function loadRecipeProducts(id) {
     $.ajax({
