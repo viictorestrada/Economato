@@ -30,7 +30,7 @@ class PresentationController extends Controller
 
     public function edit($id)
     {
-      $presentation = Presentation::find($id);
+      $presentation = Presentation::findOrFail($id);
       return $presentation;
     }
 
@@ -41,14 +41,14 @@ class PresentationController extends Controller
       return DataTables::of($presentations)
       ->addColumn('action', function($presentation) {
         $button=" ";
-        return $button.'  <a onclick="editPresentation('. $presentation->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editPresentation('. $presentation->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 
 
     public function update(Request $request, $id)
     {
-      $presentations = Presentation::find($id);
+      $presentations = Presentation::findOrFail($id);
       $presentations->update($request->all());
       return $presentations;
     }

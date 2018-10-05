@@ -24,29 +24,28 @@ class RecipeController extends Controller
 
       $this->validate($request, $rules, $messages);
       Recipe::create($request->all());
-      return swal()->autoclose(1500)->success('Registro Exitoso!', 'Se ha agregado un nuevo registro!');
     }
-
     public function edit($id)
     {
-      $recipe = Recipe::find($id);
+      $recipe = Recipe::findOrFail($id);
       return $recipe;
     }
 
-    public function recipesList(Request $request)
+    public function recipesList()
     {
       $recipes = Recipe::all();
       return DataTables::of($recipes)
       ->addColumn('action', function ($recipes) {
         $button = " ";
         if ($recipes->status == 1) {
-          $button = '<a href="/recipes/status/'.$recipes->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>  ';
+          $button = '<a href="/recipes/status/'.$recipes->id.'/0" class="btn btn-outline-md btn-outline-danger"><i class="fa fa-ban"></i></a>  ';
         }
         else
         {
-          $button = '<a href="/recipes/status/'.$recipes->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>  ';
+          $button = '<a href="/recipes/status/'.$recipes->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>  ';
         }
-        return $button.'<a onclick="editRecipe('.$recipes->id.')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'<button onclick="editRecipe('.$recipes->id.')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>  '.
+        '<button onclick="showDetails('.$recipes->id.')" class="btn btn-md btn-outline-info"><i class="fa fa-eye"></i></button>  ';
       })->editColumn('status', function ($recipes) {
         return $recipes->status == 1 ? "Activo":"Inactivo";
       })
@@ -55,14 +54,14 @@ class RecipeController extends Controller
 
     public function update(Request $request, $id)
     {
-      $recipe = Recipe::find($id);
+      $recipe = Recipe::findOrFail($id);
       $recipe->update($request->all());
       return $recipe;
     }
 
     public function status($id, $status)
     {
-      $recipe = Recipe::find($id);
+      $recipe = Recipe::findOrFail($id);
       if ($recipe == null) {
       return redirect('panel');
       }else {

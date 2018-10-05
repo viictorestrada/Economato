@@ -8,7 +8,7 @@ class Recipe extends Model
 {
   protected $table = 'recipes';
 
-  protected $fillable =['recipe_name', 'status'];
+  protected $fillable =['recipe_name', 'recipes_cost','status'];
 
   public $timestamps = false;
 }

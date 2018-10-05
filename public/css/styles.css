@@ -1,3 +1,21 @@
+
+.fade:not(.show) {
+  opacity: 0;
+  display: none !important;
+}
+
+.rojo{
+  width: 100px;
+  height: 100px;
+  background: red !important;
+}
+
+#verde{
+  width: 100px;
+  height: 100px;
+  background: green;
+}
+
 .signIn {
     display: flex;
     background-color: #FFF;
@@ -5,7 +23,7 @@
     max-width: 100%;
     width: 340px;
     height: auto;
-    box-shadow: 0.5px 1px;
+    box-shadow: 3px 3px 17px #d0d0d0;
 }
 
 .signIn form input {
@@ -17,9 +35,8 @@
 }
 
 .img img {
-    width: 120px;
-    height: 120px;
-    border-radius: 40%;
+    width: 240px;
+    /* border-radius: 40%; */
 }
 
 .forms input {
@@ -73,4 +90,29 @@ input.error {
 
 input.error:focus {
     border: 1px solid red;
+}
+
+[type=reset],
+[type=submit],
+button,
+html [type=button] {
+    -webkit-appearance: none;
+}
+
+input[type="checkbox"] {
+  display:none;
+}
+
+input[type="checkbox"] + label span {
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin:-1px 4px 0 0;
+  vertical-align:middle;
+  background:url(../images/checkbox-01.png) left top no-repeat;
+  cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+  background:url(../images/checkbox-01.png) -20px top no-repeat;
 }

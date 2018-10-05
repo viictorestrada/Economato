@@ -45,13 +45,13 @@ class UserController extends Controller
     ->addColumn('action', function ($id) {
       $button=" ";
       if ($id->status == 1) {
-        $button = '<a href="/users/status/'.$id->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+        $button = '<a href="/users/status/'.$id->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>';
       }
       else
       {
-        $button = '<a href="/users/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
+        $button = '<a href="/users/status/'.$id->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>';
       }
-      return $button.' <a href="/users/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.' <a href="/users/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
     })->editColumn('status', function ($id) {
       return $id->status == 1 ? "Activo":"Inactivo";
     })
@@ -62,14 +62,14 @@ class UserController extends Controller
   public function edit($id)
   {
     $roles = Role::pluck('role', 'id');
-    $user = User::find($id);
+    $user = User::findOrFail($id);
     return view('users.edit', compact('user', 'roles'));
   }
 
 
   public function update(updateUserRequest $request, $id)
   {
-    $user = User::find($id);
+    $user = User::findOrFail($id);
     $user->update($request->all());
     return redirect('users')->with([swal()->autoclose(1500)->success('Actualización Exitosa!', 'Se actualizo el usuario correctamente!')]);
   }
@@ -77,7 +77,7 @@ class UserController extends Controller
 
   public function status($id, $status)
   {
-    $user = User::find($id);
+    $user = User::findOrFail($id);
     if ($user == null) {
       alert()->autoclose(1000)->warning('Advertencia', 'No se encontraron datos!');
       return redirect('users');

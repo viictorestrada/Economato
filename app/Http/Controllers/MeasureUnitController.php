@@ -30,7 +30,7 @@ class MeasureUnitController extends Controller
 
     public function edit($id)
     {
-        $measure = MeasureUnit::find($id);
+        $measure = MeasureUnit::findOrFail($id);
         return $measure;
     }
 
@@ -41,14 +41,14 @@ class MeasureUnitController extends Controller
       return DataTables::of($measures)
       ->addColumn('action', function($measure) {
         $button=" ";
-        return $button.'  <a onclick="editMeasure('. $measure->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editMeasure('. $measure->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 
 
     public function update(Request $request, $id)
     {
-      $measure = MeasureUnit::find($id);
+      $measure = MeasureUnit::findOrFail($id);
       $measure->update($request->all());
       return $measure;
     }

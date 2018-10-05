@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Budgets')
 @section('content')
   <div class="container">
     <div class="row mt-5">
@@ -9,15 +10,15 @@
             <div class="col-12 d-flex justify-content-end">
               <div class="card-title"><h4>Presupuestos</h4></div><hr>
               <div>
-                <a type="button" onclick="aditionalBudget()" class="btn btn-info text-light"><span class="fa fa-plus-circle"></span> Adicionar Presupuesto</a>
-                <a type="button" href="{{ url('budgets/create') }}" class="btn btn-info "><span class="fa fa-plus-circle"></span> Registrar Nuevo</a>
+                <a type="button" href="{{ url('budgets/create') }}" class="btn btn-outline-info "><span class="fa fa-plus-circle"></span> Registrar Nuevo</a>
               </div>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-md" width="100%" id="budgets">
                 <thead>
                   <tr>
-                    <th>Presupuesto</th>
+                    <th>Presupuesto Inicial</th>
+                    <th>Presupuesto Actual</th>
                     <th>Código</th>
                     <th>Fecha Inicial</th>
                     <th>Fecha Final</th>
@@ -48,6 +49,7 @@
         },
         ajax: '/budgets/get',
         columns: [
+            { data: 'initial_budget', name: 'initial_budget', type: 'number' },
             { data: 'budget', name: 'budget' },
             { data: 'budget_code', name: 'budget_code' },
             { data: 'budget_begin_date', name: 'budget_begin_date' },

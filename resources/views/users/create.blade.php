@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Create User')
 @section('content')
   <div class="container">
     <div class="row mt-5">
@@ -11,7 +12,7 @@
                 <h4>Registro de Usuarios</h4>
               </div>
               <div class="">
-                <a href="{{ url('users') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar todos</a>
+                <a href="{{ url('users') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar todos</a>
               </div>
             </div><hr>
 
@@ -74,12 +75,12 @@
             email: "Debe ingresar una dirección de correo valida."
           },
           password: {
-            required: "El campo Nombres es obligatorio.",
+            required: "El campo Contraseña es obligatorio.",
             minlength: "El campo Contraseña debe contener mínimo 6 caracteres.",
             maxlength: "El campo Contraseña debe contener máximo 16 caracteres."
           },
           password_confirmation: {
-            equalTo: "Confirmar contraseña"
+            equalTo: "La contraseña debe coincidir"
           }
         }
       });

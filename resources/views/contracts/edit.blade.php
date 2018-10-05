@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Edit Contract')
 @section('content')
   <div class="container">
     <div class="row mt-5">
@@ -11,11 +12,12 @@
                 <h4>Editar Contrato</h4>
               </div>
               <div class="">
-                <a href="{{ url('files') }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i> Mostrar Contrato</a>
+                <a href="{{ url('files') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar Contrato</a>
               </div>
             </div><hr>
 
-            {{ Form::model($contract, ['url' => ['contracts', $contract->id], 'class' => 'forms', 'method' => 'PATCH']) }}
+            {{ Form::model($contract, ['url' => ['contracts', $contract->id], 'class' => 'forms', 'method' => '
+            ']) }}
 
               @csrf
               <div class="row">

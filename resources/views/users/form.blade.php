@@ -15,7 +15,8 @@
 
 <div class="form-group col-md-6 col-lg-6">
   {{ Form::label('email', 'Correo Electrónico') }}
-  {{ Form::email('email', null, array('class' => 'form-control')) }}
+  {{ Form::email('email', null, array('class' => 'form-control')) }} {{ $errors->has('email') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('email') }}</strong>
 </div>
 
 <div class="form-group col-md-6 col-lg-6">
@@ -29,5 +30,5 @@
 </div>
 
 <div class="d-flex justify-content-end form-group col-md-12 col-lg-12">
-  <button type="submit" class="btn btn-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
 </div>

@@ -36,7 +36,7 @@ class ComplexController extends Controller
       return DataTables::of($complex)
       ->addColumn('action', function ($complex) {
         $button = " ";
-        return $button.'<a onclick="editComplex('.$complex->id.')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'<button onclick="editComplex('.$complex->id.')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })
       ->make(true);
     }
@@ -44,7 +44,7 @@ class ComplexController extends Controller
 
     public function edit($id)
     {
-        $complex = Complex::find($id);
+        $complex = Complex::findOrFail($id);
         return $complex;
     }
 
@@ -64,7 +64,7 @@ class ComplexController extends Controller
       // ];
 
       // $this->validate($request, $rules, $messages);
-      $complex = Complex::find($id);
+      $complex = Complex::findOrFail($id);
       $complex->update($request->all());
        return $complex;
       //redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);

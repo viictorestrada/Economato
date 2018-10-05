@@ -34,7 +34,7 @@ class CompetenceController extends Controller
 
     public function edit($id)
     {
-      $competence = Competence::find($id);
+      $competence = Competence::findOrFail($id);
       return $competence;
     }
 
@@ -45,14 +45,14 @@ class CompetenceController extends Controller
       return DataTables::of($competence)
       ->addColumn('action', function($competences) {
         $button=" ";
-        return $button.'  <a onclick="editCompetence('. $competences->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editCompetence('. $competences->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->make(true);
     }
 
 
     public function update(Request $request, $id)
     {
-      $competence = Competence::find($id);
+      $competence = Competence::findOrFail($id);
       $competence->update($request->all());
       return redirect('configurations')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
     }

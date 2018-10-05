@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Create Product')
 @section('content')
   <div class="container">
     <div class="row mt-5">
@@ -11,13 +12,12 @@
                 <h4>Registro de Productos</h4>
               </div>
               <div class="">
-                <a href="{{ url('products') }}" class="btn btn-info"><i class="fa fa-eye"></i> Mostrar todos</a>
+                <a href="{{ url('products') }}" class="btn btn-outline-info"><i class="fa fa-eye"></i> Mostrar todos</a>
               </div>
             </div><hr>
 
             {{ Form::open(['url' => 'products', 'class' => 'forms', 'id' => 'createProduct']) }}
 
-              @csrf
               <div class="row">
                 @include('products.form')
               </div>
@@ -53,30 +53,13 @@
       },
       id_measure_unit: {
         required: true
-      },
-      quantity: {
-        required: true,
-        integer: true,
-        minlength: 1
-      },
-      due_date: {
-        required: true
-      },
-      unit_price: {
-        integer: true,
-        minlength: 1
-      },
-      stock: {
-        required: true,
-        integer: true,
-        minlength: 0
       }
     },
     messages: {
       product_code: {
         required: "El campo Código Producto es obligatorio",
         integer: "El campo Código Producto debe ser un número entero positivo",
-        minlength: "El campo Código Producto debe ser mínimo 1"
+        minlength: "El campo Código Producto debe contener mínimo 1 carácter"
       },
       id_product_type: {
         required: "El campo Tipo Producto es obligatorio"
@@ -90,26 +73,24 @@
       },
       id_measure_unit: {
         required: "El campo Unidad de Medida es obligatorio"
-      },
-      quantity: {
-        required: "El campo Cantidad es obligatorio.",
-        integer: "El campo Cantidad debe ser un número entero positivo.",
-        minlength: "El campo Cantidad debe ser mínimo 1."
-      },
-      due_date: {
-        required: "El campo Fecha de Vencimiento es obligatorio"
-      },
-      unit_price: {
-        integer: "El campo Precio Unitario deber un número entero positivo",
-        minlength: "El valor debe ser mínimo 1."
-      },
-      stock: {
-        required: "El campo Stock es obligatorio",
-        integer: "El campo Stock debe ser un número entero positivo",
-        minlength: "El valor del campo Stock debe ser 0 o superior"
       }
     }
     });
+
+    $('#base_price').change(function(){
+      var base_price = $('#base_price').val();
+      var tax = $('#tax option:selected').text();
+      var final_price = (base_price)-(-base_price*(tax/100));
+      $('#final_price').val(final_price);
+    });
+
+    $('#tax').change(function(){
+      var base_price = $('#base_price').val();
+      var tax = $('#tax option:selected').text();
+      var final_price = (base_price)-(-base_price*(tax/100));
+      $('#final_price').val(final_price);
+    });
+
   });
   </script>
 @endsection

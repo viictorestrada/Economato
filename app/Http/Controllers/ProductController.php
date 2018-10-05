@@ -20,7 +20,6 @@ class ProductController extends Controller
     return view('products.index', compact('products'));
   }
 
-
   public function create()
   {
     $measure_unit = MeasureUnit::pluck('measure_name', 'id');
@@ -47,13 +46,13 @@ class ProductController extends Controller
     ->addColumn('action', function ($id) {
       $button=" ";
       if ($id->status == 1) {
-        $button = '<a href="/products/status/'.$id->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+        $button = '<a href="/products/status/'.$id->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>';
       }
       else
       {
-        $button = '<a href="/products/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
+        $button = '<a href="/products/status/'.$id->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>';
       }
-      return $button.' <a href="/products/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.' <a href="/products/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
     })->editColumn('status', function ($id) {
       return $id->status == 1 ? "Activo" : "Inactivo";
     })
@@ -66,28 +65,24 @@ class ProductController extends Controller
     $measure_unit = MeasureUnit::pluck('measure_name', 'id');
     $product_types = ProductType::pluck('product_type_name', 'id');
     $presentations = Presentation::pluck('presentation', 'id');
-    $products = Product::find($id);
+    $products = Product::findOrFail($id);
     return view('products.edit', compact('products', 'measure_unit', 'product_types', 'presentations'));
   }
 
 
   public function update(updateProductRequest $request, $id)
   {
-    $product = Product::find($id);
-    $product->update($request->all());
+    Product::findOrFail($id)->update($request->all());
     return redirect('products')->with([swal()->autoclose(1500)->success('Actualización Exitosa!', 'Se actualizo el producto correctamente!')]);
   }
 
   public function status($id, $status)
   {
-    $product = Product::find($id);
-    if ($product == null) {
-      alert()->autoclose(1500)->warning('Advertencia', 'No se encontraron datos!');
-      return redirect('products');
-    }else {
-      $product->update(["status"=>$status]);
-      return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
-    }
+    $product = Product::findOrFail($id);
+
+    $product->update(["status"=>$status]);
+    return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
   }
+
 
 }

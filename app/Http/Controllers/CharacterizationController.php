@@ -36,13 +36,13 @@ class CharacterizationController extends Controller
       ->addColumn('action', function ($characterization) {
         $button = " ";
         if ($characterization->status == 1) {
-          $button = '<a href="/characterizations/status/'.$characterization->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+          $button = '<a href="/characterizations/status/'.$characterization->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>';
         }
         else
         {
-          $button = '<a href="/characterizations/status/'.$characterization->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
+          $button = '<a href="/characterizations/status/'.$characterization->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>';
         }
-        return $button.'  <a onclick="editCharacterization('. $characterization->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+        return $button.'  <button onclick="editCharacterization('. $characterization->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
       })->editColumn('status',function($characterization){
         return $characterization->status == 1 ? "Activo":"Inactivo";
       })->make(true);
@@ -50,21 +50,21 @@ class CharacterizationController extends Controller
 
     public function edit($id)
     {
-        $characterization = Characterization::find($id);
+        $characterization = Characterization::findOrFail($id);
         return $characterization;
     }
 
 
     public function update(Request $request, $id)
     {
-      $characterization = Characterization::find($id);
+      $characterization = Characterization::findOrFail($id);
       $characterization->update($request->all());
       return $characterization;
     }
 
     public function status($id, $status)
     {
-      $characterization = Characterization::find($id);
+      $characterization = Characterization::findIOrFail($id);
       if ($characterization == null) {
       return redirect('configurations');
       } else {

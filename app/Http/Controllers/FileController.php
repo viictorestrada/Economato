@@ -40,13 +40,13 @@ class FileController extends Controller
     ->addColumn('action', function ($id) {
       $button=" ";
       if ($id->status == 1) {
-        $button = '<a href="/files/status/'.$id->id.'/0" class="btn btn-md btn-danger"><i class="fa fa-ban"></i></a>';
+        $button = '<a href="/files/status/'.$id->id.'/0" class="btn btn-md btn-outline-danger"><i class="fa fa-ban"></i></a>';
       }
       else
       {
-        $button = '<a href="/files/status/'.$id->id.'/1" class="btn btn-md btn-success"><i class="fa fa-check-circle"></i></a>';
+        $button = '<a href="/files/status/'.$id->id.'/1" class="btn btn-md btn-outline-success"><i class="fa fa-check-circle"></i></a>';
       }
-      return $button.'  <a href="/files/'.$id->id.'/edit" class="btn btn-md btn-info"><i class="fa fa-edit"></i></a>';
+      return $button.'  <a href="/files/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
     })->editColumn('status', function ($id) {
       return $id->status == 1 ? "Activo":"Inactivo";
     })
@@ -56,7 +56,7 @@ class FileController extends Controller
 
   public function edit($id)
   {
-    $file = File::find($id);
+    $file = File::findOrFail($id);
     $programs = Program::pluck('program_name', 'id');
     $characterizations = Characterization::pluck('characterization_name', 'id');
     return view('files.edit', compact('file', 'programs', 'characterizations'));
@@ -65,7 +65,7 @@ class FileController extends Controller
 
   public function update(updateFileRequest $request,  $id)
   {
-    $file = File::find($id);
+    $file = File::findOrFail($id);
     $file->update($request->all());
     return redirect('files')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
   }
@@ -73,7 +73,7 @@ class FileController extends Controller
 
   public function status($id, $status)
   {
-    $file = File::find($id);
+    $file = File::findOrFail($id);
     if ($file == null) {
       alert()->autoclose(1500)->warning('Advertencia', 'No se encontraron datos!');
       return redirect('files');

@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', 'Providers')
 @section('content')
   <div class="container-fluid">
     <div class="row mt-5">
@@ -8,7 +9,7 @@
           <div class="card-body">
             <div class="col-12 d-flex justify-content-end">
               <div class="card-title"><h4>Lista de Proveedores</h4></div><hr>
-              <div><a type="button" href="{{ url('providers/create') }}" class="btn btn-info "><span class="fa fa-user-plus"></span> Agregar Proveedor</a></div>
+              <div><a type="button" href="{{ url('providers/create') }}" class="btn btn-outline-info "><span class="fa fa-user-plus"></span> Agregar Proveedor</a></div>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-md" width="100%" id="providers">
@@ -20,6 +21,7 @@
                     <th>Dirección</th>
                     <th>Nombre Contacto</th>
                     <th>Apellido Contacto</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -50,6 +52,7 @@
             { data: 'address', name: 'address' },
             { data: 'contact_name', name: 'contact_name' },
             { data: 'contact_last_name', name: 'contact_last_name' },
+            { data: 'status', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: true },
         ]
     });</script>

@@ -30,7 +30,7 @@ class DocumentTypeController extends Controller
 
   public function edit($id)
   {
-    $documentType = DocumentType::find($id);
+    $documentType = DocumentType::findOrFail($id);
     return $documentType;
   }
 
@@ -41,14 +41,14 @@ class DocumentTypeController extends Controller
     return DataTables::of($documentTypes)
     ->addColumn('action', function($documentType) {
       $button=" ";
-      return $button.'<a onclick="editDocumentType('. $documentType->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+      return $button.'<button onclick="editDocumentType('. $documentType->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
     })->make(true);
   }
 
 
   public function update(Request $request,  $id)
   {
-    $document = DocumentType::find($id);
+    $document = DocumentType::findOrFail($id);
     $document->update($request->all());
     return $document;
   }

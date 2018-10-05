@@ -24,7 +24,7 @@
         <div class="card signIn">
           <div class="card-body">
             <div class="text-center img">
-              <img src="{{ asset('images/logo.png') }}" alt="Logo" class="img-responsive"><hr>
+              <img src="{{ asset('images/logoLogin.png') }}" alt="Logo" class="img-responsive"><hr>
             </div>
             <form action="{{ route('login') }}" method="POST">
               @csrf
@@ -41,16 +41,46 @@
               </div>
 
               <div class="form-group">
-                <label>
-                  <input type="checkbox" name="remember_token"> Recordarme
-                </label>
+                <input type="checkbox" id="checkbox" name="remember_token"> Recordarme
+                <label for="checkbox"><span></span></label>
               </div>
 
               <div class="form-group">
-                <button type="submit" class="btn btn-info btn-block">Ingresar</button>
+                <button type="submit" class="btn btn-outline-info btn-block">Ingresar</button>
               </div>
 
             </form>
+
+            <style>
+              .github{
+                display: flex !important;
+                justify-content: space-between !important;
+              }
+            </style>
+
+            <h6>Developed by: </h4>
+            <div class="row">
+              <div class="col col-6">
+                <div class="github">
+                  <a href="https://github.com/McTraque"><i class="fab fa-github"> /McTraque </i></a>
+                </div>
+              </div>
+              <div class="col col-6">
+                <a href="https://github.com/viictorestrada"><i class="fab fa-github"> /viictorestrada </i></a>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-6">
+                <div class="github">
+                  <a href="https://github.com/JulianFlorez12"><i class="fab fa-github"> /JulianFlorez12 </i></a>
+                </div>
+              </div>
+              <div class="col col-6">
+                <a href="https://github.com/ctabares06"><i class="fab fa-github"> /ctabares06 </i></a>
+              </div>
+            </div>
+            </div>
           </div>
         </div>
       </div>

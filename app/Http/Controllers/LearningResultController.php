@@ -33,7 +33,7 @@ class LearningResultController extends Controller
 
   public function edit($id)
   {
-    $learning_result = LearningResult::find($id);
+    $learning_result = LearningResult::findOrFail($id);
     return $learning_result;
   }
 
@@ -44,14 +44,14 @@ class LearningResultController extends Controller
     return DataTables::of($learning_results)
     ->addColumn('action', function($learning_result) {
       $button=" ";
-      return $button.'  <a onclick="editLearningResult('. $learning_result->id .')" class="btn btn-md btn-info text-light"><i class="fa fa-edit"></i></a>';
+      return $button.'  <button onclick="editLearningResult('. $learning_result->id .')" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></button>';
     })->make(true);
   }
 
 
   public function update(Request $request, $id)
   {
-    $learning_result = LearningResult::find($id);
+    $learning_result = LearningResult::findOrFail($id);
     $learning_result->update($request->all());
     return $learning_result;
   }
