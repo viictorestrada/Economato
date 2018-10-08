@@ -148,6 +148,9 @@ class OrderController extends Controller
     }
 
     public function updateStatus($id,$status){
+      if($status==0){
+          $updateStatus=Order::findOrfail($id)->update(["status" => $status]);
+      }else{
       $validationModify=OrderRecipe::where('order_id', $id)->first();
       if($validationModify != null){
          $updateStatus=Order::findOrfail($id)->update(["status" => $status]);
@@ -156,6 +159,7 @@ class OrderController extends Controller
           $array = array('status' => 'updateFalse');
       }
        return response()->json($array);
+    }
   }
 
 }
