@@ -77,7 +77,7 @@ class OrderController extends Controller
         if($products[0]['status']==2){
         $pdf = PDF::loadView('reports.remissionProvider', compact('products','orderCost','information'));
         return $pdf->stream();
-        }else if($products[0]['status']==3){
+        }else if($products[0]['status']==3 || $products[0]['status']==5){
          $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
         return $pdf->stream();
         }

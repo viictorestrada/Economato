@@ -113,11 +113,16 @@
     }
 
     .imgLogo{
+      width: 100%;
       position: absolute;
       top: 70px;
       right: 0px;
       left: 0px;
     }
+
+    .imgLogo img{
+      width: 100%;
+      }
 
 
 </style>
@@ -127,7 +132,7 @@
   <div class="title-pdf contenedor">
     <div class="contenedorDatos">
       <div class="imgLogo">
-        <img src="{{asset('images/logo.png')}}" alt="">
+        <img style="margin-left:30px" src="{{asset('images/logo.png')}}" alt="">
       </div>
       <div class="columna1 columnas">
       <p>Usuario: {{$information['name']}}</p>
