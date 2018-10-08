@@ -18,7 +18,7 @@
   <!-- fontawesome -->
   <link rel="stylesheet" href="{{ asset('fontawesome/web-fonts-with-css/css/fontawesome-all.min.css') }}">
   <!-- Icono -->
-  <link rel="icon" href="{{ asset('images/logo.png') }}">
+<link rel="shortcut icon" href="{{('images/favicon.png')}}" />
 
   <style media="screen">
     .dataTables_scrollHeadInner {
