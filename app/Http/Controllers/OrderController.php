@@ -81,9 +81,6 @@ class OrderController extends Controller
          $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
         return $pdf->stream();
         }
-
-        //  return $pdf->download('Remisión.pdf');
-        # Cargamos el contenido HTML.
     }
     public function checkReport(Request $request){
       $collection=collect([]);

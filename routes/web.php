@@ -14,10 +14,6 @@ Route::get('/panel/reports', 'ReportController@reportProducts');
 //ruta para pedidos
 Route::resource('orders', 'OrderController');
 Route::get('/order/{id}','OrderController@getCharacterization');
-Route::get('/panel/getOrder','AdministratorController@requestTable');
-Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
-Route::get('/panel/getOrderFinishedCheck','AdministratorController@requestTableCheck');
-Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
 Route::get('/ProductionOrders/update/{id}/{status}','ProductionOrdersController@update');
 
 //Ruta para mostrar el detalle de la receta
@@ -26,6 +22,11 @@ Route::get('RecipeHasProduct/{id}/{order}/details','RecipeHasProductController@s
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
+  //Proceso de pedidos Admin
+Route::get('/panel/getOrder','AdministratorController@requestTable');
+Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
+Route::get('/panel/getOrderFinishedCheck','AdministratorController@requestTableCheck');
+Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
 
 //Ruta para resultados de aprendizaje
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
@@ -159,8 +160,7 @@ Route::resource('budgets', 'BudgetController', ['except' => 'show', 'destroy']);
 Route::get('/budgets/get', 'BudgetController@budgetsList');
 Route::post('aditionalBudget', 'BudgetController@aditionalBudgetCreate');
 Route::get('budgets/status/{id}/{status}', 'BudgetController@status');
-//Ruta de reportes
-// Route::get('reports', 'ReportController@index');
+Route::get('/budgets/aditions/{id}','ReportController@aditionsBudget');
 
 });
 

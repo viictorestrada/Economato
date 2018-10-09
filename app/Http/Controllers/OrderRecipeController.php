@@ -67,7 +67,6 @@ class OrderRecipeController extends Controller
           }
         // });
          return redirect('panel')->with([swal()->autoclose(1500)->success('Receta Modificada','La receta fue modificada con exito.')]);
-          // return redirect()->back(controlador@function);
 
       }
 
@@ -111,10 +110,6 @@ class OrderRecipeController extends Controller
      Session::put('remission', $request['factura']);
     return redirect('panel')->with('message', 'El valor a facturar por las remisiones '. $items .' es: '.number_format($valueCheck).'');
 
-
-      // OrderRecipeController::update($valueCheck);
-
-
     }
 
     public function update(Request $request){
@@ -123,14 +118,7 @@ class OrderRecipeController extends Controller
         if($budget->budget >= Session::get('value')){
         $budgetUpdate=Budget::findOrfail($budget->id)->update(['budget' =>  $budget->budget-Session::get('value')]);
         if($budgetUpdate){
-          foreach(Session::get('remission') as $remission){
-            // Check::create([
-            //   'created_at' => date('y-m-d'),
-            //   'net_total' => Session::get('value'),
-            //   'orders_id' => $remission
-            // ]);
             $remissionUpdate=Order::findOrfail($remission)->update(["status" => "5"]);
-             }
           return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
         }
       }
@@ -140,13 +128,6 @@ class OrderRecipeController extends Controller
       }else{
         dd('no existe la session con los valores a requeridos'. Session::get('value'));
       }
-
-      // $budget=Budget::select('budget.*')->first();
-      // $budgetUpdate=Budget::findOrfail($budget->id)->update(['budget' =>  $budget->budget-$valueCheck]);
-      // if($budgetUpdate){
-        // }
-          // return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total ')]);
-
     }
 
 

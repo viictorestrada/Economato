@@ -252,4 +252,11 @@ class ReportController extends Controller
       }
     }
 
+    public function  aditionsBudget($id){
+      $aditions=Budget::where('budget.id',$id)
+      ->join('aditional_budget', 'budget.id','aditional_budget.budget_id')->get();
+      $pdf = PDF::loadView('reports.aditionsBudget', compact('aditions'));
+        return $pdf->stream();
+    }
+
 }

@@ -30,7 +30,6 @@ class BudgetController extends Controller
     {
       $budgetCode=$request['budget_id'];
       $budgetA=$request['aditional_budget'];
-
       // AditionalBudget::create($request->all());
       AditionalBudget::create([
         'budget_id' => $request['budget_id'],
@@ -87,8 +86,11 @@ class BudgetController extends Controller
         }
         if(date('Y-m-d')<$budgets->budget_finish_date){
         return $button.'<a href="/budgets/'.$budgets->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>  '.
-        '<button onclick="aditionalBudget('.$budgets->id.')" class="btn btn-md btn-outline-info" data-toggle="tooltip" title="Adicionar Presupuesto"><i class="fa fa-plus-circle"></i></button>';
-         } else if(date('Y-m-d')>$budgets->budget_finish_date){
+        '<button onclick="aditionalBudget('.$budgets->id.')" class="btn btn-md btn-outline-info" data-toggle="tooltip" title="Adicionar Presupuesto">
+        <i class="fa fa-plus-circle"></i></button>
+        <a href="/budgets/aditions/'.$budgets->id.'" class="btn btn-outline-danger" data-togle="tooltip" title="Descargar adiciones." style="text-decoration : none;"><i class="far fa-file-pdf "></i></a>';
+
+      } else if(date('Y-m-d')>$budgets->budget_finish_date){
          return $button.'<button class="btn btn-outline-info">Presupuesto Finalizado</button>';
         }
       })->editColumn('status', function ($budgets) {
