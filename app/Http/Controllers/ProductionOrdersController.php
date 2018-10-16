@@ -216,22 +216,28 @@ class ProductionOrdersController extends Controller
 
         $query = ProductionOrders::where('center_production_orders.id',$id)->
         where('products_has_contracts.status',1)->
-        select('center_production_orders.*','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')->
+        select('center_production_orders.*','products.product_name','center_production_has_products.quantity','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name','characterizations.characterization_name')->
         join('center_production_has_products','center_production_orders_id', '=' ,'center_production_orders.id')->
         join('products','products.id', '=' , 'center_production_has_products.products_id')->
         join('measure_unit','products.id_measure_unit','=','measure_unit.id')->
         join('products_has_contracts','products_has_contracts.products_id','=','products.id')->
+        join('characterizations','characterizations.id','=','center_production_orders.characterizations_id')->
         join('taxes','taxes.id','=','products_has_contracts.taxes_id')->
+        get();
+        $files = ProductionOrders::where('center_production_orders.id',$id)->
+        select('files.file_number')->
+        join('characterizations_has_center_production_orders','characterizations_has_center_production_orders.center_production_orders_id','=','center_production_orders.id')->
+        join('files','files.id','=','characterizations_has_center_production_orders.files_id')->
         get();
         if ($query[0]['status'] == 4) {
           $user =  Auth::user()->name.' '.Auth::user()->last_name;
           $cost = $query->pluck('cost');
-          $pdf = PDF::loadView('reports.productionRemission', compact('query','cost','user'));
+          $pdf = PDF::loadView('reports.productionRemission', compact('query','cost','user','files'));
           return $pdf->stream();
         }
         else {
           $cost = $query->pluck('cost');
-          $pdf = PDF::loadView('reports.productionRemission2', compact('query','cost'));
+          $pdf = PDF::loadView('reports.productionRemission2', compact('query','cost','files'));
           return $pdf->stream();
         }
 

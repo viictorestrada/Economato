@@ -12,7 +12,7 @@
     }
     @page {
      margin: 0px;
-      
+
       }
 
     html{
@@ -130,11 +130,11 @@
       </div>
       <div class="columna1 columnas">
       <p>Usuario: {{ $extraInfo['user_name'] }} </p>
-      
+
       </div>
       <div class="columna2 columnas">
         <p>Fecha: {{ $extraInfo['timestamp'] }} </p>
-      
+
       </div>
     </div>
     <br>
@@ -157,18 +157,18 @@
               <td>{{ $value['product_name'] }}</td>
               <td>{{ $value['quantity'] }}</td>
               <td>{{ $value['measure'] }}</td>
-              <td>{{ $value['unit_price'] }}</td>
+              <td>{{ number_format($value['unit_price']) }}</td>
               <td>{{ $value['tax']}}</td>
-              <td>{{ $value['unit_price']+(($value['unit_price']*$value['tax'])/100)}}</td>
-              <td>{{ $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} </td>
+              <td>{{ number_format($value['unit_price']+(($value['unit_price']*$value['tax'])/100))}}</td>
+              <td>{{ number_format($value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100))) }} </td>
               </tr>
         @endforeach
           </tbody>
         </table>
-        
+
               <div class="contenedorDatos">
             <div style="margin-top:15px" class="columna1 columnas">
-            <h4>Costo de la orden: {{ $totalCost }}</h4>
+            <h4>Costo de la orden: {{ number_format($totalCost) }}</h4>
             </div>
               </div>
     {{-- </div> --}}

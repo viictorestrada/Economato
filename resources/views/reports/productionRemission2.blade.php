@@ -131,12 +131,13 @@
             <img src="{{asset('images/logo.png')}}" alt="">
           </div>
           <div class="columna1 columnas">
-          <p>Usuario: {{ $query[0]['user_name'] }}</p>
+            <p>Usuario: {{ $query[0]['user_name'] }}</p>
             <p>Numero de asistentes: {{ $query[0]['tax']}} </p>
+            <p>Fichas: @foreach($files as $key => $value) {{$value['file_number'].' '}} @endforeach</p>
           </div>
           <div class="columna2 columnas">
-          <p>Lugar del evento: {{ $query[0]['created_at'] }}</p>
-          <p>Caracterización: {{ $query[0]['event_place']}}</p>
+            <p>Lugar del evento: {{ $query[0]['event_place'] }}</p>
+            <p>Caracterización: {{ $query[0]['characterization_name']}}</p>
           </div>
         </div>
         <div class="contenedorTabla" >

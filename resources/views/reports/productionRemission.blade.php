@@ -131,11 +131,11 @@
             <img src="{{asset('images/logo.png')}}" alt="">
           </div>
           <div class="columna1 columnas">
-          <p>Usuario: {{ $user }}</p>
-
+            <p>Usuario: {{ $user }}</p>
+            <p>Fichas: @foreach($files as $key => $value) {{$value['file_number'].' '}} @endforeach</p>
           </div>
           <div class="columna2 columnas">
-          <p>Fecha:{{ $query[0]['created_at'] }}</p>
+            <p>Fecha:{{ $query[0]['created_at'] }}</p>
 
           </div>
         </div>

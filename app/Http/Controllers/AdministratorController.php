@@ -15,6 +15,7 @@ use App\Models\ProductsHasContracts;
 use App\Models\RecipeHasProduct;
 use App\Models\Order;
 use App\Models\File;
+use App\Models\Contract;
 use DataTables;
 
 class AdministratorController extends Controller
@@ -34,12 +35,13 @@ class AdministratorController extends Controller
 
   public function panel()
   {
+    $contracts=Contract::pluck('contract_number','id');
     $recipe = Recipe::all();
     $products=ProductsHasContracts::select('products.id','products.product_name')
     ->join('products','products.id' , '=' , 'products_has_contracts.products_id')->where('products.status',1)->get()->pluck('product_name', 'id');
     $files=File::where('characterization_id',2)->get();
     $file = $files->pluck('file_number','id');
-    return view('administrator.panel', compact('recipe','products','file'));
+    return view('administrator.panel', compact('recipe','products','file','contracts'));
   }
 
     public function requestTable()
@@ -116,9 +118,11 @@ class AdministratorController extends Controller
             })
             ->make(true);
     }
-    public function requestTableCheck()
+    public function requestTableCheck($id)
     {
+      $data=Contract::whereid($id)->select('start_date','finish_date')->first();
         $requestInstructor = Order::where('orders.status', '=', '5')
+        ->whereBetween('created_at',[$data->start_date,$data->finish_date])
             ->select('orders.*', 'recipes.recipe_name', 'files.file_number','characterizations.characterization_name' ,'programs.program_name')
             ->join('recipes', 'orders.recipes_id', '=', 'recipes.id')
             ->join('files', 'orders.files_id', '=', 'files.id')

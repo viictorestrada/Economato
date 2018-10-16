@@ -238,6 +238,10 @@
                   @csrf
                      <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
                     <i class="fa fa-clipboard-list"></i> Descargar factura.</button>
+                      <div class="form-group ml-3 pt-4 col-md-5">
+                        {{ Form::select('contracts',$contracts,null,['class'=>'form-control','placeholder'=>'Seleccione un número de contrato','onchange'=>'checkByDates(this.value)']) }}
+                      </div>
+
               <div class="card-body">
                 <div class="responsive">
                   <table class="table table-bordered table-md" id="tableCheck" width="100%">
@@ -457,7 +461,8 @@
         ]
       });
 
-   var table2 = $('#tableCheck').DataTable({
+      function checkByDates(id){
+         var table2 = $('#tableCheck').DataTable({
         destroy: true,
         responsive: true,
         processing: true,
@@ -465,7 +470,7 @@
         language: {
             "url": '/DataTables/datatables-spanish.json'
         },
-        ajax: '/panel/getOrderFinishedCheck',
+        ajax: '/panel/getOrderFinishedCheck'+"/"+id,
         columns: [
           { data: 'id', name:'id'},
           { data: 'user_name', name: 'user_name' },
@@ -479,6 +484,9 @@
 
         ]
       });
+  }
+
+
 
     function addRecipe() {
       save_method = "add";
