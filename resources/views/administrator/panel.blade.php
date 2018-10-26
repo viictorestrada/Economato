@@ -129,7 +129,7 @@
                   <table class="table table-bordered table-md" width="100%" id="orders">
                     <thead>
                       <tr>
-                        <th># remision</th>
+                        <th># Remisión</th>
                         <th>Usuario</th>
                         <th>Fecha</th>
                         <th>Ficha</th>
@@ -462,6 +462,7 @@
       });
 
       function checkByDates(id){
+        if(id != ""){
          var table2 = $('#tableCheck').DataTable({
         destroy: true,
         responsive: true,
@@ -484,6 +485,9 @@
 
         ]
       });
+        }else{
+          swal('Seleccione un número de contrato.','El valor seleccionado no pertenece a un contrato','warning')
+        }
   }
 
 

@@ -17,13 +17,13 @@
 
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('budget_begin_date', 'Fecha de inicio del presupuesto') }}
-  {{ Form::date('budget_begin_date', null, ['class' => 'form-control']) }} {{ $errors->has('budget_begin_date') ? '' : '' }}
+  {{ Form::date('budget_begin_date', null, ['class' => 'form-control', 'id'=>'budget_begin_date']) }} {{ $errors->has('budget_begin_date') ? '' : '' }}
   <strong class="text-danger">{{ $errors->first('budget_begin_date') }}</strong>
 </div>
 
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('budget_finish_date', 'Fecha de terminación del presupuesto') }}
-  {{ Form::date('budget_finish_date', null, ['class' => 'form-control']) }} {{ $errors->has('budget_finish_date') ? '' : '' }}
+  {{ Form::date('budget_finish_date', null, ['class' => 'form-control', 'id']) }} {{ $errors->has('budget_finish_date') ? '' : '' }}
   <strong class="text-danger">{{ $errors->first('budget_finish_date') }}</strong>
 </div>
 

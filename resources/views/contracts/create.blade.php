@@ -91,64 +91,77 @@
           },
           contract_price: {
             required: true,
-            number: true,
+            digits:true,
             maxlength: 25
           },
           start_date: {
             required: true,
-            date: true,
+            date: true
           },
           finish_date: {
             required: true,
             date: true,
             fechas: true
           },
+           unitVal: {
+
+            min: 1
+          },
+          quantity: {
+
+            min: 1
+          }
         },
         messages: {
           provider_id: {
             required: "Debes seleccionar un proveedor."
           },
           contract_number: {
-            required: "El campo Número de Contrato es obligatorio.",
-            digits: "El campo Número de Contrato debe ser numerico.",
+            required: "El campo Número de contrato es obligatorio.",
+            digits: "El campo Número de contrato debe ser numérico.",
             maxlength: "El campo Número de Contrato debe contener máximo 25 caracteres."
           },
           contract_price: {
+            digits: "El valor del contrato deber ser numérico.",
             required: "El campo Valor Contrato es obligatorio.",
-            digits: "El campo Valor Contrato debe ser numerico.",
-            maxlength: "El campo Valor Contrato debe contener máximo 25 caracteres."
+            maxlength: "El campo Valor contrato debe contener máximo 25 caracteres."
           },
           start_date: {
             required: "El campo Fecha inicial es obligatorio.",
-            date: "El campo debe ser una fecha válida.",
+            date: "El campo debe ser una fecha válida."
           },
           finish_date: {
-            required: "El campo Fecha final es obligatorio.",
+            required: "El campo fecha final es obligatorio.",
             date: "El campo debe ser una fecha válida.",
             fechas: "La fecha inicial es mayor o igual a la final."
+          },
+          unitVal: {
+            number: "El valor unitario deber ser numérico.",
+            min: "El valor unitario debe ser mayor a 0"
+          },
+          quantity: {
+            number: "El cantidad deber ser numérico.",
+            min: "La cantida debe ser mayor a 0"
           }
         }
       });
     });
 
-function calculations(id)
-{
-  console.log(id)
-  var quantity = $('.cantidad').val();
-  var unit_price = $('.precio_unitario').val();
-  var measure_unit=$('.unidad').val();
-  var total_without_tax = (quantity)*unit_price;
-  console.log(total_without_tax);
-  $('.subtotal').val(total_without_tax);
-  var tax = $(".tax option:selected").text();
-  var iva_value=((tax*total_without_tax)/100);
-  $('.valor_iva').val(iva_value);
-  var total=iva_value+total_without_tax;
-  $('.total').val(total);
-  console.log(tax);
-  var tax_value = unit_price*(tax/100);
-  var total = (unit_price + tax_value)*quantity;
-}
+  function calculations(id)
+  {
+    var quantity = $('.cantidad').val();
+    var unit_price = $('.precio_unitario').val();
+    var measure_unit=$('.unidad').val();
+    var total_without_tax = (quantity)*unit_price;
+    $('.subtotal').val(total_without_tax);
+    var tax = $(".tax option:selected").text();
+    var iva_value=((tax*total_without_tax)/100);
+    $('.valor_iva').val(iva_value);
+    var total=iva_value+total_without_tax;
+    $('.total').val(total);
+    var tax_value = unit_price*(tax/100);
+    var total = (unit_price + tax_value)*quantity;
+  }
   </script>
 
 <script>

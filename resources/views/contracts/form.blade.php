@@ -1,6 +1,6 @@
 <div class="form-group col-lg-4 col-md-4">
   {{ Form::label('contract_number', 'Número de Contrato') }}
-  {{ Form::number('contract_number', null, ['class' => 'form-control', 'onkeypress' => 'onlyNumbers()']) }}
+  {{ Form::text('contract_number', null, ['class' => 'form-control', 'onkeypress' => 'onlyNumbers()']) }}
 </div>
 
 <div class="form-group col-lg-4 col-md-4">
@@ -9,7 +9,7 @@
 </div>
 <div class="form-group col-lg-4 col-md-4">
   {{ Form::label('contract_price', 'Valor contrato') }}
-  {{ Form::number('contract_price', null, ['class' => 'form-control','onchange'=>'validationBudget(this.value)']) }}
+  {{ Form::text('contract_price', null, ['class' => 'form-control','onchange'=>'validationBudget(this.value)']) }}
 </div>
 <div class="form-group col-lg-6 col-md-6">
   {{ Form::label('start_date', 'Fecha inicial') }}
@@ -29,11 +29,11 @@
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('','Cantidad')}}
-  {{ Form::text('',null,['class'=>'form-control cantidad', 'placeholder'=>'Cantidad', 'onchange'=>"calculations(this)",'onkeypress'=>'onlyNumbers()'] )}}
+  {{ Form::number('quantity',null,['class'=>'form-control cantidad', 'placeholder'=>'Cantidad', 'onchange'=>"calculations(this)",'onkeypress'=>'onlyNumbers()'] )}}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('','Valor Unitario') }}
-  {{ Form::number('',null,['class'=>'form-control precio_unitario', 'onchange'=>'calculations(this)', 'onkeypress'=>'onlyNumbers()' , 'placeholder' => 'Valor unitario'  ] ) }}
+  {{ Form::number('unitVal',null,['class'=>'form-control precio_unitario', 'onchange'=>'calculations(this)', 'onkeypress'=>'onlyNumbers()' , 'placeholder' => 'Valor unitario'  ] ) }}
 </div>
 <div class="form-group col-md-3 col-lg-3">
   {{ Form::label('','Sub Total') }}

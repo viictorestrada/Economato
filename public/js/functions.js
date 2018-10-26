@@ -139,6 +139,11 @@ function checkOrder() {
 //         $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
 //     });
 // }
+$(document).on("click", ".remove", function() {
+  $(this)
+    .closest("tr")
+    .remove();
+});
 
 function chargeMeasureUnit(id) {
   $.get(`/contract/measure_unit/${event.target.value}`, function(element) {
@@ -194,7 +199,7 @@ $(document).ready(function() {
                   <td><input type="number" name="total[]" class="form-control" value="` +
           $(".total").val() +
           `" readonly></td>
-
+          <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
                   </tr>`
       );
       $(".unidad").val("");

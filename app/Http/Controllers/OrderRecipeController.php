@@ -24,7 +24,6 @@ class OrderRecipeController extends Controller
     public function store(Request $request)
     {
         // DB::transaction(function() use($request) {
-
         if($request['idOrder'] != null  ){
           $deleteDetails = OrderRecipe::where('order_id', '=' ,$request['idOrder'])->delete();
         }
@@ -36,6 +35,7 @@ class OrderRecipeController extends Controller
           ->where('status',1)
           ->select('quantity')
           ->first();
+          if($request['quantity'][$key]>0.0){
           if(( $request['quantity'][$key] * $request['package_number']) <= $quantityContract->quantity){
             $countValidationArrays +=1;
             $priceProduct=Product::where('products.id',$request['product_id'][$key])
@@ -50,6 +50,9 @@ class OrderRecipeController extends Controller
             $data = Product::findOrfail($request["product_id"][$key]);
             return redirect('panel')->with([swal()->autoclose(3500)->error('Producto agotado.','La cantidad de '.$data->product_name.' no se encuentran disponible en el contrato.')]);
          }
+        }else{
+          return redirect('panel')->with([swal()->autoclose(3500)->error('Cantidad erronea','Solicito un producto con una cantidad negativa.')]);
+        }
         }
         $costOrder= $costRecipe*$request['package_number'];
         if ($countValidationArrays==count($request['product_id'])){
@@ -118,8 +121,11 @@ class OrderRecipeController extends Controller
         if($budget->budget >= Session::get('value')){
         $budgetUpdate=Budget::findOrfail($budget->id)->update(['budget' =>  $budget->budget-Session::get('value')]);
         if($budgetUpdate){
+          foreach(Session::get('remission') as $remission){
             $remissionUpdate=Order::findOrfail($remission)->update(["status" => "5"]);
-          return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.Session::get('value'))]);
+          }
+          $format=Session::get('value');
+          return redirect('panel')->with([swal()->autoclose(3000)->success('Facturación exitosa.','se ha facturado un total de: '.number_format($format))]);
         }
       }
       else{

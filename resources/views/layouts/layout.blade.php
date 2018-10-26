@@ -48,12 +48,8 @@
 
     <li class="nav-item">
         @if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
-        <a href="{{ url('orders') }}" class="nav-link" style="color: white"><i class="fa fa-bell fa-lg"></i> Gestion de pedidos</a>
+        <a href="{{ url('orders') }}" class="nav-link" style="color: white"><i class="fa fa-bell fa-lg"></i> Gestión de pedidos</a>
         @endif
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link" style="color: white" href="#"><i class="fa fa-question-circle fa-lg"></i> Ayuda</a>
     </li>
 
     <li class="nav-item dropdown">

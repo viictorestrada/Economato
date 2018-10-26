@@ -33,7 +33,17 @@
 @endsection
 @section('script')
 <script>
+   var initial_date = 0
+    $('#budget_begin_date').change(function(){
+         initial_date = $('#budget_begin_date').val();
+    });
   $(()=>{
+      $.validator.addMethod('fechaActual', function (value, element) {
+        return this.optional(element) || moment().isBefore(value);
+      });
+      $.validator.addMethod('fechaInicial', function (value, element) {
+        return this.optional(element) || moment(initial_date).isBefore(value);
+      });
     $('#BudgetCreate').validate({
       rules:{
         budget:{
@@ -45,10 +55,13 @@
         budget_begin_date:{
           required: true,
           date: true
+
         },
         budget_finish_date:{
           required: true,
-          date: true
+          date: true,
+          fechaActual: true,
+          fechaInicial: true
         }
       },
         messages:{
@@ -64,9 +77,11 @@
         },
         budget_finish_date:{
           required: "El campo fecha final es obligatorio",
-          date: "Ingrese una fecha valida"
+          date: "Ingrese una fecha valida",
+          fechaActual: "La fecha final debe ser mayor a la actual",
+          fechaInicial: 'La fecha final debe ser mayor a la inicial'
         }
-        
+
       }
     });
   });

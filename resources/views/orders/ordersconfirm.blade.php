@@ -138,7 +138,7 @@
   </div>
 @endsection
 @section('script')
-<script>    
+<script>
 $(() => {
   $.validator.addMethod('fechas', function (value, element) {
         return this.optional(element) || moment(moment()).isBefore(value);
@@ -180,7 +180,8 @@ $(() => {
       quantity: {
         required: "El campo Numero de asistentes es obligatorio.",
         min: "El campo Numero de asistentes debe contener mínimo 1 asistente.",
-        max: "El campo Numero de asistentes debe contener máximo 999999 asistentes."
+        max: "El campo Numero de asistentes debe contener máximo 999999 asistentes.",
+        digits: "El campo Numero de asistentes debe contener números únicamente"
       },
       event_place: {
         required: "El campo Lugar del evento es obligatorio.",

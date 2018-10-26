@@ -9,10 +9,10 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div class="">
-                <h4>Registro de Fichas</h4>
+                <h4>Registro de fichas</h4>
               </div>
               <div class="">
-                <a href="{{ url('files') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar Fichas</a>
+                <a href="{{ url('files') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar fichas</a>
               </div>
             </div><hr>
 
@@ -59,7 +59,8 @@
           apprentices: {
             required: true,
             digits: true,
-            maxlength: 25
+            maxlength: 2,
+            min: 1
           },
           start_date:{
             required: true,
@@ -81,16 +82,18 @@
           file_number: {
             required: "El campo Número de Ficha es obligatorio.",
             digits: "El campo Número de Ficha debe ser de tipo numérico.",
-            maxlength: "El campo Número de Ficha debe contener máximo 25 caracteres."
+            maxlength: "El campo Número de Ficha debe contener máximo 2 caracteres."
           },
           file_route: {
             required: "El campo Ruta de Aprendizaje es obligatorio.",
-            maxlength: "El campo Ruta de Aprendizaje debe contener máximo 30 caracteres."
+            maxlength: "El campo Ruta de Aprendizaje debe contener máximo 30 caracteres.",
+
           },
           apprentices: {
             required: "El campo Aprendices es obligatorio.",
             digits: "El campo Aprendices debe ser de tipo numérico.",
-            maxlength: "El campo Aprendices debe contener máximo 25 caracteres."
+            maxlength: "El campo Aprendices debe contener máximo 25 caracteres.",
+            min: "La ficha debe contener mínimo un aprendiz."
           },
           start_date:{
             required: "El campo fecha de inicio es obligatorio",

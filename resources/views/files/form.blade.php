@@ -1,5 +1,5 @@
 <div class="form-group col-lg-6 col-md-6">
-  {{ Form::label('program_id', 'Programa de Formación') }}
+  {{ Form::label('program_id', 'Programa de formación') }}
   {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'placeholder' => '-- Seleccionar programa --']) }}
 </div>
 
@@ -9,7 +9,7 @@
 </div>
 
 <div class="form-group col-lg-4 col-md-6">
-  {{ Form::label('file_number', 'Número de Ficha') }}
+  {{ Form::label('file_number', 'Número de ficha') }}
   {{ Form::number('file_number', null, ['class' => 'form-control']) }}
 </div>
 
