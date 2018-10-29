@@ -232,6 +232,26 @@ function confirmOrder() {
   });
   return false;
 }
+function confirmOrderSpecial() {
+  swal({
+    title: "Confirmando solicitud",
+    text: "¿Está seguro?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonClass: "btn-danger",
+    confirmButtonText: "Confirmar.",
+    cancelButtonText: "Cancelar.",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  }).then(result => {
+    if (result.value) {
+      document.formulario2.submit();
+    } else {
+      swal("Solicitud Cancelada", "La solicitud fue cancelada.", "error");
+    }
+  });
+  return false;
+}
 
 function chargeCharacterization(id) {
   $.get(`/order/${event.target.value}`, function(data) {

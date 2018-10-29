@@ -83,7 +83,8 @@
                             <div class="card-body">
                               <div class="col-12 d-flex justify-content-end">
                               </div>
-                              {{ Form::open(['url'=>'Special_orders', 'method'=>'POST', 'name' => 'formulario2', 'id' => 'ProductionRequest', 'class'=>'forms']) }}
+                              {{ Form::open(['url'=>'Special_orders', 'method'=>'POST', 'name' => 'formulario2', 'id' => 'ProductionRequest', 'class'=>'forms','onsubmit'=>'return confirmOrderSpecial()']) }}
+
                               <div class="row">
                                 <div class="form-group col-md-6 col-lg-6">
                                   {{ Form::label('title' , 'Titulo del evento' ) }}

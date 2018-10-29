@@ -225,10 +225,13 @@ class ReportController extends Controller
 
 
     public function totalBudget(){
+
       $aditions=0;
       $totalBudget=Budget::where('status',1)->first();
       if($totalBudget != null || $totalBudget>0){
-        $sumAditions=AditionalBudget::where('budget_id', $totalBudget->id)->get();
+        $sumAditions=AditionalBudget::where('budget_id', $totalBudget->id)
+        ->where('status',1)
+        ->get();
       foreach($sumAditions as $key){
         $aditions=$key->sum('aditional_budget');
       }

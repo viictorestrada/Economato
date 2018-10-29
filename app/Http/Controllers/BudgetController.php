@@ -90,7 +90,7 @@ class BudgetController extends Controller
         <i class="fa fa-plus-circle"></i></button>
         <a href="/budgets/aditions/'.$budgets->id.'" class="btn btn-outline-danger" data-togle="tooltip" title="Descargar adiciones." style="text-decoration : none;"><i class="far fa-file-pdf "></i></a>';
 
-      } else if(date('Y-m-d')>$budgets->budget_finish_date){
+      } else if(date('Y-m-d')>=$budgets->budget_finish_date){
          return $button.'<button class="btn btn-outline-info">Presupuesto Finalizado</button>';
         }
       })->editColumn('status', function ($budgets) {

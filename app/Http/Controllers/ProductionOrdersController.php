@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductionOrders;
+use App\Models\productionOrders;
 use App\Models\Budget;
 use App\Models\ProductionHasProducts;
 use App\Models\Characterization;
@@ -291,6 +291,7 @@ class ProductionOrdersController extends Controller
     }
 
     public function storeSpecialOrders(Request $request){
+      dump($request);
       DB::transaction(function() use($request) {
         try{
         $dataRegister=productionOrders::Create([
