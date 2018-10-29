@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      'App\Console\Commands\UpdateFiles',
+       'App\Console\Commands\UpdateProductsHasContracts',
+       'App\Console\Commands\UpdateBudget',
     ];
 
     /**
@@ -26,6 +28,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+         $schedule->command('update:budget')->daily();
+         $schedule->command('update:files')->daily();
+         $schedule->command('update:productsHasContracts')->daily();
     }
 
     /**
