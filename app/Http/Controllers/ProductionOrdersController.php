@@ -8,6 +8,7 @@ use App\Models\ProductionHasProducts;
 use App\Models\Characterization;
 use App\Models\ProductsHasContracts;
 use App\Models\filesHasProductions;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Auth;
@@ -66,10 +67,13 @@ class ProductionOrdersController extends Controller
      * @param  \App\Models\productionOrders  $productionOrders
      * @return \Illuminate\Http\Response
      */
-    public function dataTable()
+    public function dataTable($id)
     {
-       $data = ProductionOrders::select('center_production_orders.*')->
-       get();
+       $contract =Contract::whereid($id)->select('start_date','finish_date')->first();
+       
+       $data = ProductionOrders::select('center_production_orders.*')
+       ->whereBetween('created_at',[$contract->start_date,$contract->finish_date])
+       ->get();
 
        return DataTables::of($data)->editColumn('status', function ($id)
        {

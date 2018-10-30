@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 Route::get('/panel/getOrder','AdministratorController@requestTable');
 Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
 Route::get('/panel/getOrderFinishedCheck/{id}','AdministratorController@requestTableCheck');
-Route::get('/OrderProduction/getProductionOrder','ProductionOrdersController@dataTable');
+Route::get('/OrderProduction/getProductionOrder/{id}','ProductionOrdersController@dataTable');
 
 //Ruta para resultados de aprendizaje
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');

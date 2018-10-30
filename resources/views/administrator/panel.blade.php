@@ -153,6 +153,9 @@
               {{Form::open(['url' => 'productionCenter/allRemisions', 'class' => 'forms']) }}
               <button type="submit" style="width:100%;border-radius: 0px 0px 5px 5px;" class="btn btn-info  justify-content-end">
                 <i class="fa fa-clipboard-list"></i> Consultar el valor de la facturación de las órdenes seleccionadas.</button>
+                <div class="form-group ml-3 pt-4 col-md-5">
+                  {{ Form::select('contracts',$contracts,null,['class'=>'form-control','placeholder'=>'Seleccione un número de contrato','onchange'=>'checkByDatess(this.value)']) }}
+                </div>
               <div class="card-body">
                 <div class="responsive">
                 <table class="table table-bordered" width="100%" id="orderProduction">
@@ -439,28 +442,6 @@
         ]
       });
 
-      var table4 = $('#orderProduction').DataTable({
-        responsive:true,
-        destroy:true,
-        processing:true,
-        serverSide:true,
-        language: {
-            "url": '/DataTables/datatables-spanish.json'
-        },
-        ajax: '/OrderProduction/getProductionOrder',
-        columns: [
-          { data:'characterizations_id', name:'characterizations_id'},
-          { data:'title', name:'title'},
-          { data:'description', name:'description'},
-          { data:'pax', name:'pax'},
-          { data:'user_name', name:'user_name'},
-          { data:'order_date', name:'order_date'},
-          { data:'event_place', name:'event_place'},
-          { data:'status', name:'status'},
-          { data: 'action', name: 'action', orderable: false, searchable: true }
-        ]
-      });
-
       function checkByDates(id){
         if(id != ""){
          var table2 = $('#tableCheck').DataTable({
@@ -488,6 +469,37 @@
         }else{
           swal('Seleccione un número de contrato.','El valor seleccionado no pertenece a un contrato','warning')
         }
+  }
+
+  function checkByDatess(id) {
+    if(id != "")
+    {
+      var table4 = $('#orderProduction').DataTable({
+        responsive:true,
+        destroy:true,
+        processing:true,
+        serverSide:true,
+        language: {
+            "url": '/DataTables/datatables-spanish.json'
+        },
+        ajax: '/OrderProduction/getProductionOrder/'+id,
+        columns: [
+          { data:'characterizations_id', name:'characterizations_id'},
+          { data:'title', name:'title'},
+          { data:'description', name:'description'},
+          { data:'pax', name:'pax'},
+          { data:'user_name', name:'user_name'},
+          { data:'order_date', name:'order_date'},
+          { data:'event_place', name:'event_place'},
+          { data:'status', name:'status'},
+          { data: 'action', name: 'action', orderable: false, searchable: true }
+        ]
+      });
+    }
+    else
+    {
+      swal('Seleccione un número de contrato.','El valor seleccionado no pertenece a un contrato','warning')
+    }
   }
 
 
