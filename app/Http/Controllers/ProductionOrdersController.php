@@ -70,9 +70,9 @@ class ProductionOrdersController extends Controller
     public function dataTable($id)
     {
        $contract =Contract::whereid($id)->select('start_date','finish_date')->first();
-       
+
        $data = ProductionOrders::select('center_production_orders.*')
-       ->whereBetween('created_at',[$contract->start_date,$contract->finish_date])
+       ->whereBetween('created_at',[$contract->start_date,$contract->finish_date])->where('status',5)
        ->get();
 
        return DataTables::of($data)->editColumn('status', function ($id)
@@ -156,6 +156,88 @@ class ProductionOrdersController extends Controller
             }
             if ($id->status == 0) {
                 $bot = '';
+            }
+        }
+
+            return $bot;
+
+       })->editColumn('characterizations_id', function ($id)
+       {
+           if ($id->characterizations_id == 4) {
+               return 'población especial';
+           }
+           else {
+               return 'Producción de centro';
+           }
+       })
+       ->make(true);
+    }
+    public function dataTable1()
+    {
+       $data = ProductionOrders::select('center_production_orders.*')
+       ->where('status',1)->orWhere('status',2)->orWhere('status',3)->orWhere('status',4)
+       ->get();
+
+       return DataTables::of($data)->editColumn('status', function ($id)
+       {
+        if ($id->status == 1) {
+            return "Solicitado";
+        }
+        else if($id->status == 2){
+            return "Modificado";
+        }
+        else if($id->status == 3){
+            return "Solicitado al proveedor";
+        }
+        else if ($id->status == 4) {
+            return "Entregado";
+        }
+
+       })->addColumn('action', function ($id)
+       {
+        if ($id->characterizations_id == 4) {
+            if ($id->status == 1) {
+                $bot = '<a onclick="productionOrderModal2('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+            }
+            if ($id->status == 2) {
+
+                $bot = '<a onclick="productionOrderModal2('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 3 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Solicitar al proveedor."><i class="fa fa-check-circle"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+            }
+            if ($id->status == 3) {
+                $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i> </a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa fa-arrow-right"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+            }
+            if ($id->status == 4) {
+                $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
+                </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+                <label for="checkbox'.$id->id.'"><span></span></label>';
+            }
+
+        }
+        else {
+            if ($id->status == 1) {
+                $bot = '<a onclick="productionOrderModal('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+            }
+            if ($id->status == 2) {
+
+                $bot = '<a onclick="productionOrderModal('.$id->id.')" data-toggle="tooltip" title="Modificar taller solicitado" class="btn btn-md btn-outline-info text-info"><i class="fa fa-edit"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 3 )" class="btn btn-md btn-outline-success text-success" data-toggle="tooltip" title="Solicitar al proveedor."><i class="fa fa-check-circle"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+            }
+            if ($id->status == 3) {
+                $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i> </a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 4 )" class="btn btn-md btn-outline-info text-info" data-toggle="tooltip" title="Entregar el pedido."><i class="fa fa-arrow-right"></i></a>
+                <a  onclick="changeStatusProductionOrder('.$id->id.', 0 )" class="btn btn-md btn-outline-danger text-danger" data-toggle="tooltip" title="Cancelar solicitud de taller."><i class="fa fa-ban"></i></a>';
+            }
+            if ($id->status == 4) {
+                $bot = '<a href="productionCenter/remission/'.$id->id.'" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Remision." style="text-decoration : none;"><i class="far fa-file-pdf "></i>
+                </a> <input type="checkbox" id="checkbox'.$id->id.'" class="checkbox"  name="factura[]" value="'.$id->id.'" />
+                <label for="checkbox'.$id->id.'"><span></span></label>';
             }
         }
 
@@ -295,7 +377,6 @@ class ProductionOrdersController extends Controller
     }
 
     public function storeSpecialOrders(Request $request){
-      dump($request);
       DB::transaction(function() use($request) {
         try{
         $dataRegister=productionOrders::Create([

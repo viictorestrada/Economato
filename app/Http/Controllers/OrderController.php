@@ -24,7 +24,7 @@ class OrderController extends Controller
     public function index()
     {
       $filePopulationSpecial=File::where('characterization_id', 4)->where('status',1)->pluck('file_number','id');
-      $files=File::where('characterization_id', 1)->orWhere('characterization_id', 3)->orWhere('characterization_id', 5)->where('status',1)->pluck('file_number','id');
+      $files=File::where('status',1)->where('characterization_id', 1)->orWhere('characterization_id', 3)->orWhere('characterization_id', 5)->where('status',1)->pluck('file_number','id');
       $recipes=Recipe::pluck('recipe_name','id');
       $product=Product::pluck('product_name','id');
       return view('orders.ordersconfirm', compact('files','recipes','product','filePopulationSpecial'));

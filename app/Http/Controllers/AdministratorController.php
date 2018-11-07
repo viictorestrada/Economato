@@ -39,7 +39,7 @@ class AdministratorController extends Controller
     $recipe = Recipe::all();
     $products=ProductsHasContracts::select('products.id','products.product_name')
     ->join('products','products.id' , '=' , 'products_has_contracts.products_id')->where('products.status',1)->get()->pluck('product_name', 'id');
-    $files=File::where('characterization_id',2)->get();
+    $files=File::where('characterization_id',2)->where('status',1)->get();
     $file = $files->pluck('file_number','id');
     return view('administrator.panel', compact('recipe','products','file','contracts'));
   }
