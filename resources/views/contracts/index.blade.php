@@ -46,7 +46,7 @@
         ajax: '/contracts/get',
         columns: [
             { data: 'contract_number', name: 'contract_number' },
-            { data: 'provider_id', name: 'provider_id' },
+            { data: 'provider_name', name: 'provider_name' },
             { data: 'contract_price', name: 'contract_price' },
             { data: 'start_date', name: 'start_date' },
             { data: 'finish_date', name: 'finish_date' },

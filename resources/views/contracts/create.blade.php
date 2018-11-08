@@ -16,7 +16,7 @@
               </div>
             </div><hr>
 
-            {{ Form::open(['url' => 'contracts', 'class' => 'forms', 'id' => 'createContracts']) }}
+            {{ Form::open(['url' => 'contracts', 'class' => 'forms', 'id' => 'createContracts', 'enctype'=>'multipart/form-data']) }}
 
 
             <div class="row">

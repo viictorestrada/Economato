@@ -11,17 +11,21 @@
   {{ Form::label('contract_price', 'Valor contrato') }}
   {{ Form::text('contract_price', null, ['class' => 'form-control','onchange'=>'validationBudget(this.value)']) }}
 </div>
-<div class="form-group col-lg-6 col-md-6">
+<div class="form-group col-lg-4 col-md-4">
   {{ Form::label('start_date', 'Fecha inicial') }}
   {{ Form::date('start_date', null, ['class' => 'form-control', 'id' => 'start_date'], 'd/m/Y') }}
 </div>
-<div class="form-group col-lg-6 col-md-6">
+<div class="form-group col-lg-4 col-md-4">
   {{ Form::label('finish_date', 'Fecha final') }}
   {{ Form::date('finish_date', null, ['class' => 'form-control',  'id' => 'final_date'], 'd/m/Y') }}
 </div>
+<div class="form-group col-lg-4 col-md-4">
+  {{ Form::label('Contracts_url','Seleccione el archivo del contrato', ['class'=>'custom-file-label form-control', 'lang'=>'es'])}}
+  {{ Form::file('Contracts_url') ,['class'=>'custom-file-input form-control', 'id'=>'customFileLang' ] }}
+</div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('', 'Productos') }}
-  {{ Form::select('', $products, null, ['class' => 'form-control producto', 'placeholder' => '-- Seleccione Producto --', 'onchange="chargeMeasureUnit(this)"']) }}
+  {{ Form::select('', $products, null, ['class' => 'form-control producto', 'placeholder' => '-- Seleccione Producto --', 'onchange'=>"chargeMeasureUnit(this)"]) }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('', 'Unidad de Medida' ) }}
