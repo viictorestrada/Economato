@@ -42,6 +42,10 @@ class ContractController extends Controller
 
     public function store(Request $request)
     {
+
+       $file = $request->file('Contracts_url');
+       $nombre = $file->getClientOriginalName();
+       \Storage::disk('local')->put($request['contract_number'].$nombre,  \File::get($file));
       $input=$request->all();
       if (count($input)<7) {
         return redirect('contracts/create')->with([swal()->autoclose(1500)->error('Registro Fallido', 'No se han agregado productos!')]);
@@ -50,7 +54,8 @@ class ContractController extends Controller
       'contract_number'=>$input['contract_number'],
       'contract_price'=>$input["contract_price"],
       'start_date'=>$input['start_date'],
-      'finish_date'=>$input["finish_date"]
+      'finish_date'=>$input["finish_date"],
+      'Contracts_url'=> $input['contract_number'].$nombre
       ]);
         $idContract=$contract->id;
       DB::transaction(function() use($input,$idContract){
@@ -89,11 +94,15 @@ class ContractController extends Controller
 
     public function contractsList(Request $request)
     {
-      $contract = Contract::select('contracts.*','providers.provider_name')->join('providers', 'providers.id', '=', 'contracts.provider_id')->get();;
+      $contract = Contract::select('contracts.*','providers.provider_name')
+      ->join('providers','providers.id','contracts.provider_id')->get();
       return DataTables::of($contract)
       ->addColumn('action', function($id) {
         $button=" ";
         return $button.'  <a href="/contracts/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
+      })
+      ->editColumn('contract_price', function($dataContract){
+          return number_format($dataContract->contract_price);
       })->make(true);
     }
 
