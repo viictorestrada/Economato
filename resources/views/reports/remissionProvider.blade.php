@@ -236,7 +236,6 @@
                 <h4>Número de paquetes: {{ $information['package_number'] }}</h4>
             </div>
               </div>
-    {{-- </div> --}}
   </div>
 </body>
 </html>

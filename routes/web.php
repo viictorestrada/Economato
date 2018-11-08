@@ -27,6 +27,7 @@ Route::get('/panel/getOrder','AdministratorController@requestTable');
 Route::get('/panel/getOrderFinished','AdministratorController@requestTableFinished');
 Route::get('/panel/getOrderFinishedCheck/{id}','AdministratorController@requestTableCheck');
 Route::get('/OrderProduction/getProductionOrder/{id}','ProductionOrdersController@dataTable');
+Route::get('/OrderProduction/getProductionOrderWhere','ProductionOrdersController@dataTable1');
 
 //Ruta para resultados de aprendizaje
 Route::get('/learning_results/get', 'LearningResultController@learningResultsList');
