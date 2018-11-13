@@ -81,6 +81,7 @@ Route::get('/contracts/get', 'ContractController@contractsList');
 Route::get('/contract/measure_unit/{id}', 'ContractController@getMeasureUnit');
 Route::resource('contracts', 'ContractController', ['except' => 'show', 'destroy']);
 Route::get('contract/pdf', 'ContractController@generatePDF');
+Route::get('contracts/{data?}/downloadFile',['as'=>'downloadFile','uses'=>'ContractController@downloadFile']);
 
 //Rutas para crud de usuarios
 Route::get('/users/get', 'UserController@usersList');
@@ -178,3 +179,8 @@ Route::group(['middleware' => ['auth', 'leader']], function ()
 Route::get('updateProductsHasContracts','CronJobController@updateProductsHasContracts');
 Route::get('updateBudget','CronJobController@updateBudget');
 Route::get('updateFiles','CronJobController@updateFiles');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -43,9 +43,10 @@ class ContractController extends Controller
     public function store(Request $request)
     {
 
-       $file = $request->file('Contracts_url');
+      $file = $request->file('Contracts_url');
        $nombre = $file->getClientOriginalName();
        \Storage::disk('local')->put($request['contract_number'].$nombre,  \File::get($file));
+
       $input=$request->all();
       if (count($input)<7) {
         return redirect('contracts/create')->with([swal()->autoclose(1500)->error('Registro Fallido', 'No se han agregado productos!')]);
@@ -57,7 +58,10 @@ class ContractController extends Controller
       'finish_date'=>$input["finish_date"],
       'Contracts_url'=> $input['contract_number'].$nombre
       ]);
+
+
         $idContract=$contract->id;
+
       DB::transaction(function() use($input,$idContract){
           foreach($input['products_id'] as $key => $value){
             $productStatusValidation=ProductsHasContracts::where('products_id',$input['products_id'][$key])->where('status',1)->get();
@@ -97,9 +101,13 @@ class ContractController extends Controller
       $contract = Contract::select('contracts.*','providers.provider_name')
       ->join('providers','providers.id','contracts.provider_id')->get();
       return DataTables::of($contract)
-      ->addColumn('action', function($id) {
+      ->addColumn('action', function($dataContract) {
         $button=" ";
-        return $button.'  <a href="/contracts/'.$id->id.'/edit" class="btn btn-md btn-outline-info"><i class="fa fa-edit"></i></a>';
+        if($dataContract->Contracts_Url==""){
+          $dataContract->Contracts_Url='vacio';
+        }
+           $button ='<a href='.route('downloadFile',$dataContract->Contracts_Url).' class="btn btn-md btn-outline-info" title="Descargar contrato."><i class="fas fa-download"></i></a>';
+        return $button;
       })
       ->editColumn('contract_price', function($dataContract){
           return number_format($dataContract->contract_price);
@@ -112,5 +120,19 @@ class ContractController extends Controller
       Complex::findOrFail($id)->update($request->all());
       return redirect('contracts')->with([swal()->autoclose(1500)->success('Actualización Exitosa', 'Se ha actualizado el registro correctamente')]);
     }
+
+    public function downloadFile($data){
+      if($data=="vacio"){
+        return redirect('contracts')->with([swal()->autoclose(2500)->info('El contrato no tiene archivo de soporte.')]);
+      }else{
+      $public_path=storage_path();
+      $file=$public_path.'/uploads/'.$data;
+      if(\Storage::disk('local')->exists($data)){
+        return response()->download($file);
+      }else{
+       abort(404);
+    }
+  }
+  }
 
 }

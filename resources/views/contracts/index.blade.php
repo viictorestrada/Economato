@@ -20,7 +20,7 @@
                     <th>Monto</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Final</th>
-                    <th>Acciones</th>
+                    <th>Descargar Contrato</th>
                   </tr>
                 </thead>
               </table>
