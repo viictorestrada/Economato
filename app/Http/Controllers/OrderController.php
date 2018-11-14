@@ -76,10 +76,10 @@ class OrderController extends Controller
         ];
         if($products[0]['status']==2){
         $pdf = PDF::loadView('reports.remissionProvider', compact('products','orderCost','information'));
-        return $pdf->stream();
+        return $pdf->download();
         }else if($products[0]['status']==3 || $products[0]['status']==5){
          $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
-        return $pdf->stream();
+        return $pdf->download();
         }
     }
     public function checkReport(Request $request){
@@ -111,7 +111,7 @@ class OrderController extends Controller
          $collectionTax->push(['priceTax'=>$value->sum('priceTax'),'tax'=>$value[0]['tax']]);
         }
          $pdf = PDF::loadView('reports.check', compact('collection2','collectionTax'));
-        return $pdf->stream();
+        return $pdf->download();
         }
     /**
      * Store a newly created resource in storage.

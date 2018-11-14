@@ -38,7 +38,7 @@ class ProductionHasProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = 0; 
+        $validation = 0;
         foreach ($request['product_id'] as $key => $value) {
             $quantity = ProductsHasContracts::where('products_id',$value)->select('quantity')->get()->first();
             if ($value == "") {
@@ -54,7 +54,7 @@ class ProductionHasProductsController extends Controller
                 break;
             }
         }
-        
+
         if ($validation == 1) {
             return back()->with([swal()->autoclose(1500)->error('Modificación fallida','Debe llenar todos los campos')]);
         }
@@ -79,15 +79,19 @@ class ProductionHasProductsController extends Controller
                 ]);
         }
         ProductionOrders::where('id',$request['center_production_orders_id'])->update(['cost'=> $cost, 'status' => 2]);
-        filesHasProductions::where('center_production_orders_id', $request['center_production_orders_id'])->delete();
-        if ($request->has('files_id')) {
+        $charactid = ProductionOrders::where('id',$request['center_production_orders_id'])->select('characterizations_id');
+        if ($charactid->characterizations_id = 4) {
+          if ($request->has('files_id')) {
             foreach ($request['files_id'] as $key => $value) {
                 filesHasProductions::create([
                     'center_production_orders_id' => $request['center_production_orders_id'],
                     'files_id' => $value
                 ]);
-        } 
         }
+        }
+        }
+        filesHasProductions::where('center_production_orders_id', $request['center_production_orders_id'])->delete();
+
         return back()->with([swal()->autoclose(1500)->success('Modificación exitosa!','Se ha modificado el pedido con exito')]);
 
     }

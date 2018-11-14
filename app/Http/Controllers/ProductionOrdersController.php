@@ -319,12 +319,12 @@ class ProductionOrdersController extends Controller
           $user =  Auth::user()->name.' '.Auth::user()->last_name;
           $cost = $query->pluck('cost');
           $pdf = PDF::loadView('reports.productionRemission', compact('query','cost','user','files'));
-          return $pdf->stream();
+          return $pdf->download();
         }
         else {
           $cost = $query->pluck('cost');
           $pdf = PDF::loadView('reports.productionRemission2', compact('query','cost','files'));
-          return $pdf->stream();
+          return $pdf->download();
         }
 
 
@@ -334,8 +334,10 @@ class ProductionOrdersController extends Controller
     {
 
         if ($request->has('factura')) {
-            $array = collect([]);
+        $array = collect([]);
         $grouped = collect([]);
+        $collectionTax = collect([]);
+        $collection = collect([]);
         $extraInfo = collect(['user_name'=>Auth::user()->name.' '.Auth::user()->last_name, 'timestamp' => date('d-m-Y')]);
         $totalCost = 0;
         $totalToDiscount = 0;
@@ -361,13 +363,20 @@ class ProductionOrdersController extends Controller
            $a = ProductionOrders::whereid($value)->update(["status" => 5]);
         }
         foreach ($array->groupBy('product_name') as $key => $value) {
-            $grouped->push(['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax']]);
+            $grouped->push(['product_name' => $value[0]['product_name'], 'quantity' => $value->sum('quantity'),'measure' => $value[0]['measure'], 'unit_price' => $value[0]['unit_price'], 'tax' => $value[0]['tax'], 'priceTax' =>$value->sum('quantity')*$value[0]['unit_price']]);
         }
+
+        foreach ($grouped->groupBy('tax') as $key => $value) {
+         $tax=$value[0]['tax']/100;
+         $collectionTax->push(['priceTax'=>$value->sum('priceTax'),'tax'=>$value[0]['tax']]);
+        }
+
+
         $budget = Budget::where('status',1)->select('budget')->get()->first();
         $budget = $budget->budget - $totalToDiscount;
         Budget::where('status',1)->update(['budget'=>$budget]);
-        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('grouped','totalCost','extraInfo'));
-        return $pdf->stream();
+        $pdf = PDF::loadView('reports.selectedProductionRemissions', compact('grouped','totalCost','extraInfo','collectionTax'));
+        return $pdf->download();
 
         }
         else {

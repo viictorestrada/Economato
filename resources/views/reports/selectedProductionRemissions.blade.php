@@ -172,6 +172,13 @@
             </div>
               </div>
     {{-- </div> --}}
+    @foreach($collectionTax as $key)
+                <div class="contenedorDatos">
+                  <div class="columna1 columnas" style="float:left; width:20%;">
+                       <p>IVA: {{ $key['tax'] }} </p>
+                      <p>Total:{{ number_format((($key['priceTax']*$key['tax'])/100),1) }} </p>
+                    </div>
+                  @endforeach
   </div>
 </body>
 </html>
