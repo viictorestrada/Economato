@@ -181,6 +181,4 @@ Route::get('updateBudget','CronJobController@updateBudget');
 Route::get('updateFiles','CronJobController@updateFiles');
 
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('productsBycharacterizations/{id}','ReportController@productsBycharacterizations');

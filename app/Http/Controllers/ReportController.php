@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\ProductionOrders;
 use App\Models\Budget;
-use App\Models\ProductHasContracts;
+use App\Models\ProductsHasContracts;
 use App\Models\AditionalBudget;
 use App\Models\File;
 use App\Models\Characterization;
@@ -148,12 +148,12 @@ class ReportController extends Controller
         ];
         $labels=[];
         if (!$characterization->isEmpty()) {
-          if ($characterization[0]['characterization_name'] == 'Negritudes' && $characterization[0]['characterization_name'] == 'Media Técnica') {
+          if ($characterization[0]['characterization_name'] == 'Desplazados por la violencia' && $characterization[0]['characterization_name'] == 'Media Técnica') {
             $datasets[0] = 0;
             $datasets[1] = $characterization[0]->sum;
             $datasets[2] = $characterization[1]->sum;
           }
-          else if ($characterization[0]['characterization_name'] == 'Negritudes') {
+          else if ($characterization[0]['characterization_name'] == 'Desplazados por la violencia') {
             $datasets[0] = 0;
             $datasets[1] = $characterization[0]->sum;
             $datasets[2] = 0;
@@ -192,7 +192,7 @@ class ReportController extends Controller
           "Formación = " .number_format($datasets[0])
           ],
           [
-          "Negritudes = " .number_format($datasets[1])
+          "Desplazados por la violencia = " .number_format($datasets[1])
           ],
           [
           "media técnica = " .number_format($datasets[2])
@@ -260,6 +260,19 @@ class ReportController extends Controller
       ->join('aditional_budget', 'budget.id','aditional_budget.budget_id')->get();
       $pdf = PDF::loadView('reports.aditionsBudget', compact('aditions'));
         return $pdf->stream();
+    }
+
+    public function productsBycharacterizations($id){
+      $aditions=ProductsHasContracts::join('products','products.id','products_has_contracts.products_id')
+      ->join('orders_recipes','orders_recipes.product_id','products.id')
+      ->join('orders','orders.id','orders_recipes.order_id')
+      ->join('files','orders.files_id','files.id')
+      ->join('characterizations','characterizations.id','files.characterization_id')
+      ->where('characterizations.id',$id)
+      ->selectRaw('sum(orders_recipes.quantity) as sum,characterization_name,characterizations.id')
+      ->groupBy('characterizations.characterization_name','characterizations.id')
+      ->get();
+
     }
 
 }

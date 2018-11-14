@@ -236,11 +236,19 @@
               @endif
               <div class="contenedorDatos" style="margin-top:15px">
             <div class="columna1 columnas">
-              <h4>Costo de la orden: {{ number_format($orderCost[0]) }}</h4>
+              {{-- <h4>Costo de la orden: {{ number_format($orderCost[0]) }}</h4> --}}
               <h4>Costo individual de la orden: {{ number_format($orderCost[0]/$information['package_number'] ) }}</h4>
             </div>
             <div  class="columna2 columnas">
-                <h4>Número de paquetes: {{ $information['package_number'] }}</h4>
+            </div>
+              </div>
+            <div class="contenedorDatos">
+
+             <div class="columna1 columnas">
+              <strong>Entrega:<hr style="color:black;" size="3" width="50%"></strong>
+            </div>
+            <div  class="columna2 columnas">
+              <strong>Recibe:<hr style="color:black;" size="3" width="50%"></strong>
             </div>
 
               </div>
@@ -248,3 +256,5 @@
   </div>
 </body>
 </html>
+
+
