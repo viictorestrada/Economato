@@ -7,6 +7,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 
 
+
 Route::get('reports', 'ReportController@index');
 Route::get('/panel/reports', 'ReportController@reportProducts');
 
@@ -182,3 +183,4 @@ Route::get('updateFiles','CronJobController@updateFiles');
 
 
 Route::get('productsBycharacterizations/{id}','ReportController@productsBycharacterizations');
+Route::get('productsBySpecialCharacterizations/{id}', 'ReportController@productsBySpecialCharacterizations');

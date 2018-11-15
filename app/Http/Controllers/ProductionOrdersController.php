@@ -319,12 +319,12 @@ class ProductionOrdersController extends Controller
           $user =  Auth::user()->name.' '.Auth::user()->last_name;
           $cost = $query->pluck('cost');
           $pdf = PDF::loadView('reports.productionRemission', compact('query','cost','user','files'));
-          return $pdf->download();
+          return $pdf->stream();
         }
         else {
           $cost = $query->pluck('cost');
           $pdf = PDF::loadView('reports.productionRemission2', compact('query','cost','files'));
-          return $pdf->download();
+          return $pdf->stream();
         }
 
 
