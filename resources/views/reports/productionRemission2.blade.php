@@ -236,6 +236,14 @@
                     {{-- <h4>Número de paquetes: {{ $information['package_number'] }}</h4> --}}
                 </div>
                   </div>
+                  
+                  <div style="" class="columnas">
+                    <strong>Entrega:<hr style="color:black;" width="50%"></strong>
+                </div>
+                  <div style="" class="columnas">
+                    <strong>Recibe:<hr style="color:black;" width="50%"></strong>
+                </div>
+              
         {{-- </div> --}}
       </div>
 </body>

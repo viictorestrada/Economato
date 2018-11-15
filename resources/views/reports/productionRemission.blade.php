@@ -234,6 +234,7 @@
                 <div style="margin-top:15px" class="columna2 columnas">
                     {{-- <h4>Número de paquetes: {{ $information['package_number'] }}</h4> --}}
                 </div>
+
                   </div>
         {{-- </div> --}}
       </div>

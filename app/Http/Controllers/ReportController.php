@@ -275,4 +275,18 @@ class ReportController extends Controller
 
     }
 
+    public function productsBySpecialCharacterizations($id)
+    {
+      $aditions=ProductionOrders::join('center_production_has_products','center_production_orders_id','center_production_orders.id')
+      ->join('products','products.id','center_production_has_products.products_id')
+      ->join('products_has_contracts', 'products_has_contracts.products_id', 'products.id')
+      ->join('characterizations', 'characterizations.id', 'center_production_orders.characterizations_id')
+      ->where('characterizations.id',$id)
+      ->selectRaw('sum(center_production_has_products.quantity) as sum,products.product_name,products.id')
+      ->groupBy('products.product_name','products.id')
+      ->get();
+      dd($aditions);
+      
+    }
+
 }
