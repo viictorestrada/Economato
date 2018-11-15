@@ -20,7 +20,9 @@
               <li class="nav-item">
                 <a class="nav-link" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="true" style="color: #fff">Productos</a>
               </li>
-
+                <li class="nav-item">
+                <a class="nav-link" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="true" style="color: #fff">Productos Consumidos por caracterización</a>
+              </li>
             </ul>
       </div>
     <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
@@ -90,6 +92,25 @@
           {!!  $charTop->render() !!}
         </div>
         </div>
+      </div>
+    </div>
+        <div class="tab-pane fade active" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
+      <div class="card-body">
+        <div class="form-group ml-3 pt-4 col-md-5">
+            {{ Form::label('characterizations','Seleccione una caracterización') }}
+          {{ Form::select('characterizations',$characterizations,null,['class'=>'form-control','placeholder'=>'Seleccione una caracterización','onchange'=>'reportBycharacterization(this.value)']) }}
+        </div>
+
+          <table class="table table-bordered " width="100%" id="productsByCharacterizations">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad consumida por la caracterización</th>
+                  <th>Cantidad contratada</th>
+                  <th>Porcentaje de disponibilidad total</th>
+                </tr>
+              </thead>
+            </table>
       </div>
     </div>
     </div>
