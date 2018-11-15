@@ -27,8 +27,8 @@ function reportBycharacterization(id) {
     var url = "";
     if (id == 1 || id == 3 || id == 5) {
       url = "productsBycharacterizations/" + id;
-    } else if (id === 2 || id === 4) {
-      url = "";
+    } else if (id == 2 || id == 4) {
+      url = "productsBySpecialCharacterizations/" + id;
     }
     var table = $("#productsByCharacterizations").dataTable({
       destroy: true,
@@ -42,6 +42,7 @@ function reportBycharacterization(id) {
       columns: [
         { data: "product_name", name: "product_name" },
         { data: "sum", name: "sum" },
+        { data: "measure_name", name: "measure_name" },
         { data: "quantity_agreed", name: "quantity_agreed" },
         { data: "action", name: "action" }
       ]

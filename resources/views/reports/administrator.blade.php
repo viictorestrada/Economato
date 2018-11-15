@@ -106,6 +106,7 @@
                 <tr>
                   <th>Producto</th>
                   <th>Cantidad consumida por la caracterización</th>
+                  <th>Unidad de medida</th>
                   <th>Cantidad contratada</th>
                   <th>Porcentaje de disponibilidad total</th>
                 </tr>

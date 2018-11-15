@@ -264,14 +264,14 @@ class ReportController extends Controller
     }
 
     public function productsBycharacterizations($id){
-      // dd($id);
       $aditions=ProductsHasContracts::join('products','products.id','products_has_contracts.products_id')
       ->join('orders_recipes','orders_recipes.product_id','products.id')
       ->join('orders','orders.id','orders_recipes.order_id')
       ->join('files','orders.files_id','files.id')
       ->join('characterizations','characterizations.id','files.characterization_id')
+      ->join('measure_unit','measure_unit.id','products.id_measure_unit')
       ->where('characterizations.id',$id)
-      ->selectRaw('sum(orders_recipes.quantity) as sum,products.id,products.product_name,products_has_contracts.quantity_agreed,products_has_contracts.quantity')
+      ->selectRaw('sum(orders_recipes.quantity) as sum,products.id,products.product_name,products_has_contracts.quantity_agreed,products_has_contracts.quantity,measure_name')
       ->groupBy('products.id','products_has_contracts.quantity_agreed','products_has_contracts.quantity')
       ->get();
       return DataTables::of($aditions)
@@ -304,12 +304,35 @@ class ReportController extends Controller
       ->join('products','products.id','center_production_has_products.products_id')
       ->join('products_has_contracts', 'products_has_contracts.products_id', 'products.id')
       ->join('characterizations', 'characterizations.id', 'center_production_orders.characterizations_id')
+      ->join('measure_unit','measure_unit.id','products.id_measure_unit')
       ->where('characterizations.id',$id)
-      ->selectRaw('sum(center_production_has_products.quantity) as sum,products.product_name,products.id')
-      ->groupBy('products.product_name','products.id')
+      ->selectRaw('sum(center_production_has_products.quantity) as sum,products.product_name,products.id,products_has_contracts.quantity_agreed,products_has_contracts.quantity,measure_name')
+      ->groupBy('products.product_name','products.id','products_has_contracts.quantity_agreed','products_has_contracts.quantity')
       ->get();
-      dd($aditions);
-      
+
+      return DataTables::of($aditions)
+          ->addColumn('action', function($aditions) {
+        if((($aditions->quantity/$aditions->quantity_agreed)*100)<20)
+        $bot=' <div class="progress">
+        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+        </div>';
+        else if((($aditions->quantity/$aditions->quantity_agreed)*100)>20 && (($aditions->quantity/$aditions->quantity_agreed)*100)<70){
+          $bot=' <div class="progress">
+          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+          </div>';
+        }else if((($aditions->quantity/$aditions->quantity_agreed)*100)>70){
+          $bot=' <div class="progress">
+          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+          </div>';
+        }
+        return $bot;
+      })->editColumn('quantity', function($aditions){
+        return number_format($aditions->quantity);
+      })->editColumn('quantity_agreed',function($aditions){
+        return number_format($aditions->quantity_agreed);
+      })
+      ->make(true);
+
     }
 
 }
