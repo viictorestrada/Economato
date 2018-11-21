@@ -17,13 +17,13 @@ class ProductsHasContractsImport implements ToModel
         return new ProductsHasContracts([
               'products_id' => $row[0],
               'contracts_id' => $row[1],
-              'quantity' => $row[2],
-              'unit_price' => $row[3],
-              'taxes_id' => $row[4],
+              'quantity' => $row[3],
+              'unit_price' => $row[4],
+              'taxes_id' => $row[2],
               'total_with_tax' => $row[5],
-              'tax_value' => $row[6],
-              'total' => $row[7],
-              'quantity_agreed' => $row[8]
+              'tax_value' => 0,
+              'total' => $row[5],
+              'quantity_agreed' =>$row[3]
         ]);
     }
 }

@@ -102,6 +102,7 @@ class ReportController extends Controller
       $reportsProduct=Product::select('products.*','products_has_contracts.quantity','products_has_contracts.quantity_agreed')
       ->join('products_has_contracts', 'products.id' , '=' , 'products_has_contracts.products_id')
       ->where('products_has_contracts.status',1)
+      ->where('products_has_contracts.quantity_agreed','>',0)
       ->get();
       return DataTables::of($reportsProduct)
       ->addColumn('action', function($reportsProduct) {
