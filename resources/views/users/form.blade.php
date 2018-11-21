@@ -20,6 +20,13 @@
 </div>
 
 <div class="form-group col-md-6 col-lg-6">
+  {{ Form::label('number_document', 'N° Documento') }}
+  {{ Form::text('number_document', null, array('class' => 'form-control')) }} {{ $errors->has('number_document') ? '' : '' }}
+  <strong class="text-danger">{{ $errors->first('number_document') }}</strong>
+</div>
+
+
+<div class="form-group col-md-6 col-lg-6">
   {{ Form::label('password', 'Contraseña') }}
   {{ Form::password('password', array('class' => 'form-control', 'id' => 'password')) }}
 </div>

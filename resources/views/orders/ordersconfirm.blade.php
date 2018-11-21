@@ -38,6 +38,11 @@
                   </div>
 
                   <div class="form-group col-md-6 col-lg-6">
+                    {{ Form::label('user_name' , 'Instructor' ) }}
+                    {{ Form::text('user_name',null,['class'=>'form-control ']) }}
+                  </div>
+
+                  <div class="form-group col-md-6 col-lg-6">
                     {{ Form::label('order_date', 'Fecha' ) }}
                     {{ Form::date('order_date',null,[ 'class'=> 'form-control' ]) }}
                     {{ $errors->has('order_date') ? '' : '' }}
@@ -49,6 +54,12 @@
                     {{ Form::select('recipes_id',$recipes,null,['class'=>'form-control', 'onchange' =>'loadRecipeProducts(this.value)' ,'placeholder'=>'--Seleccione una Receta--']) }}
                     {{ $errors->has('recipes_id') }}
                     <strong class="text-danger">{{ $errors->first('recipes_id') }}</strong>
+                  </div>
+
+                  <div class="form-group  col-md-6 col-lg-6">
+                    <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
+                    <a href="../files/create" class="btn btn-outline-info"><i class="fa fa-file fa-lg"></i> Nueva Ficha</a>
+                </div>
                   </div>
 
                   <hr class="style-two">
@@ -99,6 +110,10 @@
                                   {{ Form::text('event_place',null,['class'=>'form-control', 'placeholder' => 'Lugar del evento']) }}
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6">
+                                  {{ Form::label('user_name' , 'Instructor' ) }}
+                                  {{ Form::text('user_name',null,['class'=>'form-control ', 'placeholder' => 'Encargado del evento']) }}
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6">
                                     {{ Form::label('order_date' , 'Fecha del evento' ) }}
                                     {{ Form::date('order_date',null,['class'=>'form-control']) }}
                                   </div>
@@ -141,9 +156,9 @@
 @section('script')
 <script>
 $(() => {
-  $.validator.addMethod('fechas', function (value, element) {
-        return this.optional(element) || moment(moment()).isBefore(value);
-      });
+  // $.validator.addMethod('fechas', function (value, element) {
+  //       return this.optional(element) || moment(moment()).isBefore(value);
+  //     });
   $('#ProductionRequest').validate({
     rules: {
       title: {
@@ -164,7 +179,7 @@ $(() => {
       },
       order_date: {
         required: true,
-        fechas: true
+        // fechas: true
       },
       description: {
         required: true,
@@ -190,8 +205,8 @@ $(() => {
         maxlength: "El campo lugar del evento debe contener máximo 45 caracteres."
       },
       order_date: {
-        required: "El campo Fecha del evento es obligatorio.",
-        fechas: "La fecha del pedido es anterior a la actual."
+        required: "El campo Fecha del evento es obligatorio."
+        // fechas: "La fecha del pedido es anterior a la actual."
       },
       description: {
         required: "El campo Descripción del evento es obligatorio.",
@@ -200,18 +215,18 @@ $(() => {
       }
     }
   });
-  $('#orderRequest').validate({
-      rules:{
-        order_date:{
-        fechas:true
-        }
-      },
-      messages:{
-        order_date:{
-          fechas: "La fecha del pedido es anterior a la actual."
-        }
-      }
-    });
+//   $('#orderRequest').validate({
+//       rules:{
+//         order_date:{
+//         fechas:true
+//         }
+//       },
+//       messages:{
+//         order_date:{
+//           fechas: "La fecha del pedido es anterior a la actual."
+//         }
+//       }
+//     });
 });
 function loadRecipeProducts(id) {
     $.ajax({

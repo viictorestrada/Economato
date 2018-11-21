@@ -11,9 +11,16 @@
               <div class="">
                 <h4>Registro de fichas</h4>
               </div>
-              <div class="">
+              @if(Auth::User()->rol_id==1)
+               <div class="">
+                <a href="../orders" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i>Nuevo pedido</a>
                 <a href="{{ url('files') }}" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i> Mostrar fichas</a>
               </div>
+              @elseif(Auth::User()->rol_id==3)
+               <div class="">
+                <a href="../orders" class="btn btn-outline-info"><i class="fa fa-eye fa-lg"></i>Nuevo pedido</a>
+              </div>
+              @endif
             </div><hr>
 
             {{ Form::open(['url' => 'files', 'class' => 'forms', 'id' => 'createFiles']) }}

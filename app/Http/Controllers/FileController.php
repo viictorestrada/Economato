@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\saveFileRequest;
 use App\Http\Requests\updateFileRequest;
 use DataTables;
+use Auth;
 
 class FileController extends Controller
 {
@@ -28,7 +29,12 @@ class FileController extends Controller
   public function store(saveFileRequest $request)
   {
     File::create($request->all());
-    return redirect('files')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+
+    if(Auth::User()->rol_id==1){
+      return redirect('files')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+    }else if(Auth::User()->rol_id==3){
+      return redirect('orders/create')->with([swal()->autoclose(1500)->success('Registro Exitoso', 'Se ha agregado un nuevo registro!')]);
+    }
   }
 
   public function filesList(Request $request)

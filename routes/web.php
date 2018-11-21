@@ -13,7 +13,6 @@ Route::get('/panel/reports', 'ReportController@reportProducts');
 
 
 //ruta para pedidos
-Route::resource('orders', 'OrderController');
 Route::get('/order/{id}','OrderController@getCharacterization');
 Route::get('/ProductionOrders/update/{id}/{status}','ProductionOrdersController@update');
 
@@ -96,8 +95,6 @@ Route::resource('products', 'ProductController');
 
 //Rutas para fichas
 Route::get('/files/get', 'FileController@filesList');
-Route::get('files/status/{id}/{status}', 'FileController@status');
-Route::resource('files', 'FileController');
 
 //Rutas para Presupuesto
 
@@ -168,7 +165,6 @@ Route::get('/budgets/aditions/{id}','ReportController@aditionsBudget');
 });
 
 Route::group(['middleware' => ['auth','instructor']], function(){
-  Route::post('Special_orders', 'ProductionOrdersController@storeSpecialOrders');
 
 });
 
@@ -189,3 +185,9 @@ Route::get('excel','ProductController@export');
 Route::get('excel2','ContractController@export');
 Route::post('productsImport','ProductController@import');
 Route::post('contractsImport','ContractController@import');
+Route::post('Special_orders', 'ProductionOrdersController@storeSpecialOrders');
+
+Route::get('files/status/{id}/{status}', 'FileController@status');
+Route::resource('files', 'FileController');
+Route::resource('orders', 'OrderController');
+

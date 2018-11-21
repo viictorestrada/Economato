@@ -32,6 +32,7 @@
                 <tr>
                   <th>Producto</th>
                   <th>Cantidad Disponible</th>
+                  <th>Unidad de medida</th>
                   <th>Cantidad Contratada</th>
                   <th>Porcentaje de Disponibilidad</th>
                 </tr>

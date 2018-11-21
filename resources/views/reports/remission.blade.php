@@ -135,7 +135,7 @@
         <img style="margin-left:30px" src="{{asset('images/logo.png')}}" alt="">
       </div>
       <div class="columna1 columnas">
-      <p>Usuario: {{$information['name']}}</p>
+      <p>Usuario: {{$information['name_user']}}</p>
       <p>Fecha: {{ $information['date'] }}</p>
       <p>Caracterización: {{ $information['characterization_name'] }}</p>
       </div>

@@ -28,7 +28,8 @@ class saveUserRequest extends FormRequest
           'name' => 'required|string|max:45',
           'last_name' => 'required|string|max:45',
           'email' => 'required|email|string|unique:users',
-          'password' => 'required|min:6|max:16|confirmed'
+          'password' => 'required|min:6|max:16|confirmed',
+          'number_document'=> 'required'
         ];
     }
 
@@ -44,7 +45,8 @@ class saveUserRequest extends FormRequest
         'email.email' => 'El campo Correo electrónico debe ser una dirección de correo valida',
         'password.required' => 'El campo Contraseña es obligatorio',
         'password.min' => 'El campo Constraseña debe contener mínimo 6 caracteres',
-        'password.max' => 'El campo Constraseña debe contener máximo 16 caracteres'
+        'password.max' => 'El campo Constraseña debe contener máximo 16 caracteres',
+        'number_document.required'=>'El campo número de documento es obligatorio'
       ];
     }
 }

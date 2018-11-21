@@ -11,6 +11,7 @@ $(document).ready(function() {
     columns: [
       { data: "product_name", name: "product_name" },
       { data: "quantity", name: "quantity" },
+      { data: "measure_name", name: "measure_name" },
       { data: "quantity_agreed", name: "quantity_agreed" },
       { data: "action", name: "action" }
     ]

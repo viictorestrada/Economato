@@ -392,10 +392,11 @@ class ProductionOrdersController extends Controller
         'characterizations_id' => 4,
         'description' => $request['description'],
         'pax' => $request['quantity'],
-        'user_name' => Auth::user()->name.' '.Auth::user()->last_name,
+        'user_name' =>  $request['user_name'],
         'order_date' => $request['order_date'],
         'title' => $request['title'],
         'event_place' => $request['event_place']
+
         ]);
         if(!$dataRegister){
           DB::rollback();

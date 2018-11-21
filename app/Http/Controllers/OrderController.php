@@ -30,6 +30,15 @@ class OrderController extends Controller
       return view('orders.ordersconfirm', compact('files','recipes','product','filePopulationSpecial'));
     }
 
+    public function create()
+    {
+      $filePopulationSpecial=File::where('characterization_id', 4)->where('status',1)->pluck('file_number','id');
+      $files=File::where('status',1)->where('characterization_id', 1)->orWhere('characterization_id', 3)->orWhere('characterization_id', 5)->where('status',1)->pluck('file_number','id');
+      $recipes=Recipe::pluck('recipe_name','id');
+      $product=Product::pluck('product_name','id');
+      return view('orders.ordersconfirm', compact('files','recipes','product','filePopulationSpecial'));
+    }
+
     public function getCharacterization(Request $request,$id){
       if($request->ajax()){
         $characterization = File::Characterization($id);
@@ -62,7 +71,9 @@ class OrderController extends Controller
         $package_number=$products->pluck('package_number')->first();
         $orderCost = $products->pluck('cost');
         $idOrder=$products->pluck('order_id')->first();
+        $user=$products->pluck('user_name')->first();
         $information=[
+          'name_user'=>$user,
           'nameAuth'=>Auth::user()->name,
           'lastNameAuth'=>Auth::user()->last_name,
           'name'=>$products->pluck('user_name')->first(),
@@ -124,14 +135,16 @@ class OrderController extends Controller
       $rules = [
         'files_id' => 'required',
         'recipes_id' => 'required',
-        'order_date' => 'required|date'
+        'order_date' => 'required|date',
+        'user_name'=> 'required'
       ];
 
       $messages = [
         'files_id.required' => 'Debe seleccionar una ficha.',
         'recipes_id.required' => 'Debe seleccionar el taller.',
         'order_date.required' => 'La fecha es obligatoria.',
-        'order_date.date' => 'el campo debe contener un formato de fecha'
+        'order_date.date' => 'el campo debe contener un formato de fecha',
+        'user_name'=>'el nombre de el instructor es obligatorio'
       ];
 
       $this->validate($request,$rules,$messages);
@@ -139,7 +152,7 @@ class OrderController extends Controller
         'files_id' => $request['files_id'],
         'recipes_id' => $request['recipes_id'],
         'order_date' => $request['order_date'],
-        'user_name' => Auth::user()->name.' '.Auth::user()->last_name
+        'user_name' => $request['user_name']
       ]);
       return redirect('orders')->with([swal()->autoclose(2000)->success('Solicitud Exitosa','Se realizo la solicitud')]);
     }

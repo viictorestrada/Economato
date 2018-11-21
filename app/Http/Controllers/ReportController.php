@@ -99,8 +99,9 @@ class ReportController extends Controller
     }
 
     public function reportProducts(){
-      $reportsProduct=Product::select('products.*','products_has_contracts.quantity','products_has_contracts.quantity_agreed')
+      $reportsProduct=Product::select('products.*','products_has_contracts.quantity','products_has_contracts.quantity_agreed','measure_name')
       ->join('products_has_contracts', 'products.id' , '=' , 'products_has_contracts.products_id')
+      ->join('measure_unit' ,'measure_unit.id', '=' , 'products.id_measure_unit')
       ->where('products_has_contracts.status',1)
       ->where('products_has_contracts.quantity_agreed','>',0)
       ->get();
