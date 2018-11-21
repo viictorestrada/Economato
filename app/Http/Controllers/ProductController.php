@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\saveProductRequest;
 use App\Http\Requests\updateProductRequest;
 use DataTables;
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -84,5 +87,19 @@ class ProductController extends Controller
     return redirect('products')->with([swal()->autoclose(1500)->message('El Producto '.$product->product_name.' esta',''.$product->status == 1 ? "Activo" : "Inactivo".'', 'success')]);
   }
 
+      public function export()
+    {
+        return Excel::download(new ProductExport, 'product.xlsx');
+    }
+
+      public function import(Request $request)
+    {
+      $file = $request->file('productsImport');
+      $nombre = $file->getClientOriginalName();
+
+
+ Excel::import(new ProductImport,  $request->file('productsImport'));
+      return redirect('products');
+    }
 
 }

@@ -12,6 +12,9 @@ use App\Models\ProductsHasContracts;
 use App\Models\ContractsHasBudget;
 use Illuminate\Http\Request;
 use App\Http\Requests\saveContractRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductsHasContractsExport;
+use App\Imports\ProductsHasContractsImport;
 use DataTables;
 use DB;
 
@@ -133,6 +136,22 @@ class ContractController extends Controller
        abort(404);
     }
   }
+  }
+
+  public function import(Request $request)
+  {
+      $file = $request->file('contractsImportName');
+      $nombre = $file->getClientOriginalName();
+
+
+      Excel::import(new ProductsHasContractsImport,  $request->file('contractsImportName'));
+      return redirect('products');
+
+  }
+
+  public function export()
+  {
+    return Excel::download(new ProductsHasContractsExport, 'contract.xlsx');
   }
 
 }

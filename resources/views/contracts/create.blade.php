@@ -30,6 +30,16 @@
       </div>
     </div>
   </div>
+  {{ Form::open(['url' => 'contractsImport', 'class' => 'forms', 'enctype'=>'multipart/form-data' ,'id' => 'createProduct']) }}
+          <div class="form-group col-lg-4 col-md-4">
+
+            {{ Form::file('contractsImportName') ,['class'=>'custom-file-input form-control', 'id'=>'customFileLang' ] }}
+        </div>
+            <div class="d-flex justify-content-end form-group col-md-12 col-lg-12">
+      <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Guardar</button>
+    </div>
+
+        {{ Form::close() }}
 @endsection
 
 

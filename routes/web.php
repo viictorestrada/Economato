@@ -184,3 +184,8 @@ Route::get('updateFiles','CronJobController@updateFiles');
 
 Route::get('productsBycharacterizations/{id}','ReportController@productsBycharacterizations');
 Route::get('productsBySpecialCharacterizations/{id}', 'ReportController@productsBySpecialCharacterizations');
+
+Route::get('excel','ProductController@export');
+Route::get('excel2','ContractController@export');
+Route::post('productsImport','ProductController@import');
+Route::post('contractsImport','ContractController@import');
