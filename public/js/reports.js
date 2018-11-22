@@ -26,9 +26,9 @@ $(document).ready(function() {
 function reportBycharacterization(id) {
   if (id != "") {
     var url = "";
-    if (id == 1 || id == 3 || id == 5) {
+    if (id == 1 || id == 3 || id == 5 || id == 4) {
       url = "productsBycharacterizations/" + id;
-    } else if (id == 2 || id == 4) {
+    } else if (id == 2) {
       url = "productsBySpecialCharacterizations/" + id;
     }
     var table = $("#productsByCharacterizations").dataTable({

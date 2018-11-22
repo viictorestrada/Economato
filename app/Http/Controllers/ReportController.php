@@ -109,15 +109,15 @@ class ReportController extends Controller
       ->addColumn('action', function($reportsProduct) {
         if((($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100)<20)
         $bot=' <div class="progress">
-        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%</div>
+        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100),2).'%</div>
         </div>';
         else if((($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100)>20 && (($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100)<70){
           $bot=' <div class="progress">
-          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%</div>
+          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100),2).'%</div>
           </div>';
         }else if((($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100)>70){
           $bot=' <div class="progress">
-          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%</div>
+          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($reportsProduct->quantity/$reportsProduct->quantity_agreed)*100),2).'%</div>
           </div>';
         }
         return $bot;
@@ -147,24 +147,28 @@ class ReportController extends Controller
         $datasets=[
           0 => 0,
           1 => 0,
-          2 => 0
+          2 => 0,
+          3 => 0
         ];
         $labels=[];
         if (!$characterization->isEmpty()) {
-          if ($characterization[0]['characterization_name'] == 'Desplazados por la violencia' && $characterization[0]['characterization_name'] == 'Media Técnica') {
+          if ($characterization[0]['characterization_name'] == 'Desplazados por la violencia' && $characterization[1]['characterization_name'] == 'Poblacion especial' && $characterization[2]['characterization_name'] == 'Media Técnica') {
             $datasets[0] = 0;
             $datasets[1] = $characterization[0]->sum;
             $datasets[2] = $characterization[1]->sum;
+            $datasets[3] = $characterization[2]->sum;
           }
-          else if ($characterization[0]['characterization_name'] == 'Desplazados por la violencia') {
+          else if ($characterization[0]['characterization_name'] == 'Poblacion especial' && $characterization[1]['characterization_name'] == 'Media Técnica') {
             $datasets[0] = 0;
-            $datasets[1] = $characterization[0]->sum;
-            $datasets[2] = 0;
+            $datasets[1] = 0;
+            $datasets[2] = $characterization[0]->sum;
+            $datasets[3] = $characterization[1]->sum;
         }
          else if ($characterization[0]['characterization_name'] == 'Media Técnica') {
             $datasets[0] = 0;
             $datasets[1] = 0;
             $datasets[2] = $characterization[0]->sum;
+            $datasets[3] = 0;
           }
           else {
            foreach($characterization as $key => $value ){
@@ -173,22 +177,13 @@ class ReportController extends Controller
           }
         }
         if (!$characterizationSpecial->isEmpty()) {
-          if ($characterizationSpecial[0]['characterization_name'] == 'Producción de Centro') {
-            $datasets[3] = 0;
+
             $datasets[4] = $characterizationSpecial[0]->sum;
+
           }
           else {
-            foreach ($characterizationSpecial as $key => $value) {
-              $datasets[]=intval($value->sum);
-            }
-            if (count($datasets) == 4) {
-              $datasets[4] = 0;
-            }
+            $datasets[4] = 0;
           }
-        }
-        else {
-          $datasets[3] = 0;
-          $datasets[4] = 0;
         }
         $labels=[
           [
@@ -198,10 +193,10 @@ class ReportController extends Controller
           "Desplazados por la violencia = " .number_format($datasets[1])
           ],
           [
-          "media técnica = " .number_format($datasets[2])
+          "media técnica = " .number_format($datasets[3])
           ],
           [
-          "Población especial = " .number_format($datasets[3])
+          "Población especial = " .number_format($datasets[2])
           ],
           [
           "Producción de centro = " .number_format($datasets[4])
@@ -221,9 +216,7 @@ class ReportController extends Controller
           ])
           ->options([]);
                 return $chartCharacterization;
-          }else {
 
-          }
     }
 
 
@@ -280,15 +273,15 @@ class ReportController extends Controller
           ->addColumn('action', function($aditions) {
         if((($aditions->quantity/$aditions->quantity_agreed)*100)<20)
         $bot=' <div class="progress">
-        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($aditions->quantity/$aditions->quantity_agreed)*100),2).'%</div>
         </div>';
         else if((($aditions->quantity/$aditions->quantity_agreed)*100)>20 && (($aditions->quantity/$aditions->quantity_agreed)*100)<70){
           $bot=' <div class="progress">
-          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($aditions->quantity/$aditions->quantity_agreed)*100),2).'%</div>
           </div>';
         }else if((($aditions->quantity/$aditions->quantity_agreed)*100)>70){
           $bot=' <div class="progress">
-          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($aditions->quantity/$aditions->quantity_agreed)*100),2).'%</div>
           </div>';
         }
         return $bot;
@@ -316,15 +309,15 @@ class ReportController extends Controller
           ->addColumn('action', function($aditions) {
         if((($aditions->quantity/$aditions->quantity_agreed)*100)<20)
         $bot=' <div class="progress">
-        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+        <div class="progress-bar   bg-danger" role="progressbar" style="background:#e80d05 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($aditions->quantity/$aditions->quantity_agreed)*100),2).'%</div>
         </div>';
         else if((($aditions->quantity/$aditions->quantity_agreed)*100)>20 && (($aditions->quantity/$aditions->quantity_agreed)*100)<70){
           $bot=' <div class="progress">
-          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+          <div class="progress-bar  bg-warning" role="progressbar" style="background:#f2a225 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($aditions->quantity/$aditions->quantity_agreed)*100),2).'%</div>
           </div>';
         }else if((($aditions->quantity/$aditions->quantity_agreed)*100)>70){
           $bot=' <div class="progress">
-          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%</div>
+          <div class="progress-bar   bg-success" role="progressbar" style="background:#0d9c88 !important; width:'.(($aditions->quantity/$aditions->quantity_agreed)*100).'%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'.round((($aditions->quantity/$aditions->quantity_agreed)*100),2).'%</div>
           </div>';
         }
         return $bot;

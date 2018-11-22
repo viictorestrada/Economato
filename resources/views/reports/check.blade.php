@@ -129,7 +129,7 @@
             <img src="{{asset('images/logo.png')}}" alt="">
           </div>
           <div class="columna1 columnas">
-            <p>Proveedor: </p>
+            <p>Proveedor:Sumedes </p>
             <br>
             <br>
           </div>
@@ -149,14 +149,18 @@
                     <th>Cantidad</th>
                     <th>Unidad de Medida</th>
                     <th>Presentación</th>
-                    <th>Precio unitario</th>
+                    <th>Precio unitario con Iva</th>
                     <th>Iva</th>
-                    <th>Precio con IVA</th>
+                    {{-- <th>Precio con IVA</th> --}}
                     <th>Total con IVA</th>
                 </tr>
               </thead>
               <tbody>
+                {{ $acum=0,$acumNeto=0 }}
             @for($i=0; $i<22 ; $i++ )
+                      {{-- {{ $acum += $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} --}}
+                      {{ $acum += $value['quantity']*($value['unit_price']) }}
+                     {{ $acumNeto += $value['quantity']*($value['unit_price']) }}
                 <tr>
                   <td>{{ $i }}</td>
                   <td>{{ $collection2[$i]['product_name'] }}</td>
@@ -165,11 +169,14 @@
                   <td>{{ $collection2[$i]['presentation'] }}</td>
                   <td>{{ number_format($collection2[$i]['unit_price']) }}</td>
                   <td>{{ $collection2[$i]['tax']}}</td>
-                  <td>{{ number_format($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))}}</td>
-                  <td>{{ number_format($collection2[$i]['quantity']*($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))) }} </td>
+                  {{-- <td>{{ number_format($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))}}</td> --}}
+                  {{-- <td>{{ number_format($collection2[$i]['quantity']*($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))) }} </td> --}}
+                  {{-- <td>{{ number_format($collection2[$i]['quantity']*($collection2[$i]['unit_price'])) }} </td> --}}
+                      <td>{{ number_format($value['quantity']*($value['unit_price'])) }} </td>
                 </tr>
             @endfor
               </tbody>
+              {{ $acum=0,$acumNeto=0 }}
             </table>
             <div style="width:100%;heigth:20px"></div>
                 </div>
@@ -181,14 +188,18 @@
                           <th>Cantidad</th>
                           <th>Unidad de Medida</th>
                           <th>Presentación</th>
-                          <th>Precio unitario</th>
+                          <th>Precio unitario con IVA</th>
                           <th>Iva</th>
-                          <th>Precio con IVA</th>
+                          {{-- <th>Precio con IVA</th> --}}
                           <th>Total con IVA</th>
                         </tr>
                         </thead>
                       <tbody>
+                        {{ $acum=0,$acumNeto=0 }}
                       @for($i=22; $i<count($collection2) ; $i++ )
+                      {{-- {{ $acum += $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} --}}
+                      {{ $acum += $value['quantity']*($value['unit_price']) }}
+                     {{ $acumNeto += $value['quantity']*($value['unit_price']) }}
                         <tr>
                         <td>{{ $i }}</td>
                       <td>{{ $collection2[$i]['product_name'] }}</td>
@@ -197,9 +208,11 @@
                       <td>{{ $collection2[$i]['presentation'] }}</td>
                       <td>{{ number_format($collection2[$i]['unit_price']) }}</td>
                       <td>{{ $collection2[$i]['tax']}}</td>
-                      <td>{{ number_format($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))}}</td>
-                      <td>{{ number_format($collection2[$i]['quantity']*($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))) }} </td>
-                        </tr>
+                      {{-- <td>{{ number_format($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))}}</td> --}}
+                      {{-- <td>{{ number_format($collection2[$i]['quantity']*($collection2[$i]['unit_price']+(($collection2[$i]['unit_price']*$collection2[$i]['tax'])/100))) }} </td> --}}
+                      <td>{{ number_format($value['quantity']*($value['unit_price'])) }} </td>
+
+                    </tr>
                       @endfor
                         </tbody>
                       </table>
@@ -211,16 +224,18 @@
                       <th>Cantidad</th>
                       <th>Unidad de Medida</th>
                       <th>Presentación</th>
-                      <th>Precio unitario</th>
+                      <th>Precio unitario con IVA</th>
                       <th>Iva</th>
-                      <th>Precio con IVA</th>
+                      {{-- <th>Precio con IVA</th> --}}
                       <th>Total con IVA</th>
                     </tr>
                     </thead>
                     <tbody>
-                      {{ $acum=0 }}
+                      {{ $acum=0,$acumNeto=0 }}
                 @foreach($collection2 as $key => $value)
-                     {{ $acum += $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }}
+                     {{-- {{ $acum += $value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100)) }} --}}
+                      {{ $acum += $value['quantity']*($value['unit_price']) }}
+                     {{ $acumNeto += $value['quantity']*($value['unit_price']) }}
                       <tr>
                       <td>{{ $value['product_name'] }}</td>
                       <td>{{ $value['quantity'] }}</td>
@@ -228,18 +243,21 @@
                       <td>{{ $value['presentation'] }}</td>
                       <td>{{ number_format($value['unit_price']) }}</td>
                       <td>{{ $value['tax']}}</td>
-                      <td>{{ number_format($value['unit_price']+(($value['unit_price']*$value['tax'])/100))}}</td>
-                      <td>{{ number_format($value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100))) }} </td>
-                      </tr>
+                      {{-- <td>{{ number_format($value['unit_price']+(($value['unit_price']*$value['tax'])/100))}}</td> --}}
+                      {{-- <td>{{ number_format($value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100))) }} </td> --}}
+                      <td>{{ number_format($value['quantity']*($value['unit_price'])) }} </td>
+
+                    </tr>
                 @endforeach
                     </tbody>
                   </table>
                   @endif
                   <div class="contenedorDatos">
                 <div style="margin-top:15px" class="columna1 columnas">
-                   <h4>Costo de la orden: {{ number_format(($acum),1) }} </h4>
+                   <h4>Costo total de la factura con IVA: {{ number_format(($acum),1) }} </h4>
                 </div>
                 <div style="margin-top:15px" class="columna2 columnas">
+                   <h4>Costo total de la factura sin IVA: {{ number_format(($acumNeto),1) }} </h4>
                 </div>
                 @foreach($collectionTax as $key)
                 <div class="contenedorDatos">

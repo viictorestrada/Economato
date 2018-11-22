@@ -136,7 +136,7 @@
       </div>
       <div class="columna1 columnas">
       <p>Usuario: {{$information['name_user']}}</p>
-      <p>Fecha: {{ $information['date'] }}</p>
+      <p>Fecha de Entrega: {{ $information['date'] }}</p>
       <p>Caracterización: {{ $information['characterization_name'] }}</p>
       </div>
       <div class="columna2 columnas">
@@ -155,9 +155,9 @@
                 <th>Producto</th>
                 <th>Cantidad</th>
                 <th>Unidad de Medida</th>
-                <th>Precio unitario</th>
+                {{-- <th>Precio unitario</th> --}}
                 <th>Iva</th>
-                <th>Precio con IVA</th>
+                <th>Precio uitario con IVA</th>
                 <th>Total</th>
             </tr>
           </thead>
@@ -168,9 +168,9 @@
               <td>{{ $products[$i]['product_name'] }}</td>
               <td>{{ $products[$i]['quantity'] }}</td>
               <td>{{ $products[$i]['measure_name'] }}</td>
-              <td>{{ number_format($products[$i]['unit_price']) }}</td>
               <td>{{ $products[$i]['tax']}}</td>
-              <td>{{ number_format($products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)) }}</td>
+              <td>{{ number_format($products[$i]['unit_price']) }}</td>
+              {{-- <td>{{ number_format($products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100)) }}</td> --}}
               <td>{{ number_format($products[$i]['quantity']*($products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100))) }} </td>
             </tr>
         @endfor
@@ -185,9 +185,9 @@
                       <th>Producto</th>
                       <th>Cantidad</th>
                       <th>Unidad de Medida</th>
-                      <th>Precio unitario</th>
+                      {{-- <th>Precio unitario</th> --}}
                       <th>Iva</th>
-                      <th>Precio con IVA</th>
+                      <th>Precio unitario con IVA</th>
                       <th>Total</th>
                     </tr>
                     </thead>
@@ -198,9 +198,9 @@
                           <td>{{ $products[$i]['product_name'] }}</td>
                           <td>{{ $products[$i]['quantity'] }}</td>
                           <td>{{ $products[$i]['measure_name'] }}</td>
-                          <td>{{ number_format($products[$i]['unit_price']) }}</td>
                           <td>{{ $products[$i]['tax']}}</td>
-                          <td>{{ number_format($products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100))}}</td>
+                          <td>{{ number_format($products[$i]['unit_price']) }}</td>
+                          {{-- <td>{{ number_format($products[$i]['unit_price']+(($products[$i]['unit_price']*$products[$i]['tax'])/100))}}</td> --}}
                           <td>{{ number_format($products[$i]['quantity']*($products[$i]['unit_price']+(($products[$i]['unit_price']*$i['tax'])/100))) }} </td>
                     </tr>
                   @endfor
@@ -213,9 +213,9 @@
                   <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Unidad de Medida</th>
-                  <th>Precio unitario</th>
+                  {{-- <th>Precio unitario</th> --}}
                   <th>Iva</th>
-                  <th>Precio con IVA</th>
+                  <th>Precio unitario con IVA</th>
                   <th>Total</th>
                 </tr>
                 </thead>
@@ -225,9 +225,9 @@
                   <td>{{ $value['product_name'] }}</td>
                   <td>{{ $value['quantity'] }}</td>
                   <td>{{ $value['measure_name'] }}</td>
-                  <td>{{ number_format($value['unit_price']) }}</td>
                   <td>{{ $value['tax']}}</td>
-                  <td>{{ number_format($value['unit_price']+(($value['unit_price']*$value['tax'])/100))}}</td>
+                  <td>{{ number_format($value['unit_price']) }}</td>
+                  {{-- <td>{{ number_format($value['unit_price']+(($value['unit_price']*$value['tax'])/100))}}</td> --}}
                   <td>{{ number_format($value['quantity']*($value['unit_price']+(($value['unit_price']*$value['tax'])/100))) }} </td>
                   </tr>
             @endforeach
@@ -237,7 +237,7 @@
               <div class="contenedorDatos" style="margin-top:15px">
             <div class="columna1 columnas">
               {{-- <h4>Costo de la orden: {{ number_format($orderCost[0]) }}</h4> --}}
-              <h4>Costo individual de la orden: {{ number_format($orderCost[0]/$information['package_number'] ) }}</h4>
+              <h4>Costo  de la orden: {{ number_format($orderCost[0]/$information['package_number'] ) }}</h4>
             </div>
             <div  class="columna2 columnas">
             </div>
@@ -245,10 +245,14 @@
             <div class="contenedorDatos">
 
              <div class="columna1 columnas">
-              <strong>Entrega:<hr style="color:black;" size="3" width="50%"></strong>
+              <strong>Entrega:<hr style="color:black;" size="3" width="50%">
+              <div style="margin-left:90px">Firma economato</div>
+              </strong>
             </div>
             <div  class="columna2 columnas">
-              <strong>Recibe:<hr style="color:black;" size="3" width="50%"></strong>
+              <strong>Recibe:<hr style="color:black;" size="3" width="50%">
+              <div style="margin-left:90px">Firma instructor quien recibe</div>
+              </strong>
             </div>
 
               </div>

@@ -162,7 +162,7 @@
                       <th>Titulo</th>
                       <th>Descripción</th>
                       <th>Asistentes</th>
-                      <th>Usario</th>
+                      <th>Usuario</th>
                       <th>Fecha</th>
                       <th>lugar</th>
                       <th>Estado</th>
@@ -286,7 +286,7 @@
                       <th>Titulo</th>
                       <th>Descripción</th>
                       <th>Asistentes</th>
-                      <th>Usario</th>
+                      <th>Usuario</th>
                       <th>Fecha</th>
                       <th>lugar</th>
                       <th>Estado</th>
