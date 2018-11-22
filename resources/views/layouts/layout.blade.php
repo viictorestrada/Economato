@@ -18,7 +18,9 @@
   <!-- fontawesome -->
   <link rel="stylesheet" href="{{ asset('fontawesome/web-fonts-with-css/css/fontawesome-all.min.css') }}">
   <!-- Icono -->
-<link rel="shortcut icon" href="{{('images/favicon.png')}}" />
+  <link rel="shortcut icon" href="{{('images/favicon.png')}}" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
   <style media="screen">
     .dataTables_scrollHeadInner {
@@ -77,6 +79,7 @@
   <script src="{{ asset('js/toastr.min.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
   <script src="{{ asset('datatables/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('datatables/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('datatables/js/dataTables.responsive.min.js') }}"></script>
