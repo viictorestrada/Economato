@@ -17,6 +17,7 @@ use App\Models\Order;
 use App\Models\File;
 use App\Models\Contract;
 use DataTables;
+use Carbon;
 
 class AdministratorController extends Controller
 {
@@ -80,6 +81,8 @@ class AdministratorController extends Controller
                 } else if ($id->status == 4) {
                     return "Modificado";
                 }
+            })->editColumn('created_at',function($data){
+              return $data->created_at->toDateString();
             })
             ->make(true);
     }
