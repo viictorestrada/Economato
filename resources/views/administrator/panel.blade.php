@@ -399,7 +399,6 @@
 @section('script')
 <script src="{{ asset('js/functions.js') }}"></script>
     <script>
-      $(()=>{
         $('#RecipeDetails').validate({
           rules:{
             recipe_id:{
@@ -412,7 +411,7 @@
             }
           }
         });
-      })
+     
       var table = $('#recipes').DataTable({
         destroy: true,
         responsive: true,
@@ -753,12 +752,13 @@
           $(document).on('click', '.addProduct', function(){
             var html =
              `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select','id'=>'select','onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::text('quantity[]', null, ['class' => 'form-control']) }}</td>
                 <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
             </tr>`;
             $('#orderEditDetails').append(html);
+            $('.select').select2();
           });
 
           $(document).on('click', '.remove', function(){
@@ -812,10 +812,12 @@
   });
 
   function getMeasure(id) {
-    $.get(`/panel/getMeasure/${event.target.value}`, function(element) {
+    $.get(`/panel/getMeasure/${id.value}`, function(element) {
         $(id).parent().parent().children('.tdUnit').children('.unidad').val(element[0]);
     });
-}
+
+  }
+
   function modalEditOrder(id,order) {
     $("#idOrder").val(order),
     $("#recipes_id").val(id);
