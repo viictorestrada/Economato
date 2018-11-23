@@ -45,7 +45,9 @@
 
 @section('script')
   <script>
-
+    $(document).ready(function() {
+      $('.select').select2();
+    })
     function validationBudget(value){
       $.ajax({
         url: "{{ url('validation'). '/' }}"+value,

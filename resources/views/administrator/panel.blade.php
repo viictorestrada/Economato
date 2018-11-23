@@ -364,7 +364,7 @@
                             <tbody id="fillRecipeDetails">
                               <tr>
                                 <td>
-                                  {{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
+                                  {{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}
                                 </td>
                                 <td class="tdUnit">
                                   {{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}
@@ -400,6 +400,9 @@
 @section('script')
 <script src="{{ asset('js/functions.js') }}"></script>
     <script>
+      $(document).ready( function() {
+        $('.select').select2();
+      })
         $('#RecipeDetails').validate({
           rules:{
             recipe_id:{

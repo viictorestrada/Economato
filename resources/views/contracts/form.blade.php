@@ -25,7 +25,7 @@
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('', 'Productos') }}
-  {{ Form::select('', $products, null, ['class' => 'form-control producto', 'placeholder' => '-- Seleccione Producto --', 'onchange'=>"chargeMeasureUnit(this)"]) }}
+  {{ Form::select('', $products, null, ['class' => 'form-control producto select', 'placeholder' => '-- Seleccione Producto --', 'onchange'=>"chargeMeasureUnit(this)"]) }}
 </div>
 <div class="form-group col-lg-3 col-md-3">
   {{ Form::label('', 'Unidad de Medida' ) }}

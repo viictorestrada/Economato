@@ -23,7 +23,7 @@
 
                   <div class="form-group col-md-6 col-lg-6">
                     {{ Form::label('files_id','Ficha') }}
-                    {{ Form::select('files_id',$files,null,['class'=>'form-control','onchange'=>'chargeCharacterization(this.value)','placeholder'=>'--Seleccione una ficha--']) }}
+                    {{ Form::select('files_id',$files,null,['class'=>'form-control select','onchange'=>'chargeCharacterization(this.value)','placeholder'=>'--Seleccione una ficha--']) }}
                     {{ $errors->has('files_id'  ? '' : '') }}
                     <strong class="text-danger" >{{ $errors->first('files_id') }}</strong>
                   </div>
@@ -92,6 +92,7 @@
 @section('script')
 <script>
 $(() => {
+  $('.select').select2();
   // $.validator.addMethod('fechas', function (value, element) {
   //       return this.optional(element) || moment(moment()).isBefore(value);
   //     });
