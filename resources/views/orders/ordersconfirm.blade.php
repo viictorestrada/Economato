@@ -10,10 +10,6 @@
                   <li class="nav-item">
                     <a class="nav-link active" id="v-pills-solicitudPedidos-tab" data-toggle="pill" href="#v-pills-solicitudPedidos" role="tab" aria-controls="v-pills-solicitudPedidos" aria-selected="true" style="color: #fff">Solicitud de Pedidos</a>
                   </li>
-
-                  <li class="nav-item">
-                      <a class="nav-link" id="v-pills--tab" data-toggle="pill" href="#v-pills-" role="tab" aria-controls="v-pills-" aria-selected="true" style="color: #fff">Solicitud Especial</a>
-                  </li>
               </ul>
           </div>
           <div class="tab-content" id="v-pills-tabContent">
@@ -43,7 +39,7 @@
                   </div>
 
                   <div class="form-group col-md-6 col-lg-6">
-                    {{ Form::label('order_date', 'Fecha' ) }}
+                    {{ Form::label('order_date', 'Fecha de realización del taller' ) }}
                     {{ Form::date('order_date',null,[ 'class'=> 'form-control' ]) }}
                     {{ $errors->has('order_date') ? '' : '' }}
                   <strong class="text-danger" >{{ $errors->first('order_date') }}</strong>
@@ -85,67 +81,7 @@
             </div>
             </div>
 
-            <div class="tab-pane fade" id="v-pills-" role="tabpanel" aria-labelledby="v-pills--tab">
-                <div class="card-body">
-                  <div class="container">
-                      <div class="row mt-5">
-                        <div class="col-md-12">
-                          <div class="card">
-                            <div class="card-body">
-                              <div class="col-12 d-flex justify-content-end">
-                              </div>
-                              {{ Form::open(['url'=>'Special_orders', 'method'=>'POST', 'name' => 'formulario2', 'id' => 'ProductionRequest', 'class'=>'forms','onsubmit'=>'return confirmOrderSpecial()']) }}
 
-                              <div class="row">
-                                <div class="form-group col-md-6 col-lg-6">
-                                  {{ Form::label('title' , 'Titulo del evento' ) }}
-                                  {{ Form::text('title',null,['class'=>'form-control', 'placeholder' => 'Titulo del evento']) }}
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6">
-                                  {{ Form::label('quantity' , 'Numero de asistentes' ) }}
-                                  {{ Form::text('quantity',null,['class'=>'form-control', 'placeholder' => 'Numero de asistentes']) }}
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6">
-                                  {{ Form::label('event_place' , 'Lugar del evento' ) }}
-                                  {{ Form::text('event_place',null,['class'=>'form-control', 'placeholder' => 'Lugar del evento']) }}
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6">
-                                  {{ Form::label('user_name' , 'Instructor' ) }}
-                                  {{ Form::text('user_name',null,['class'=>'form-control ', 'placeholder' => 'Encargado del evento']) }}
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6">
-                                    {{ Form::label('order_date' , 'Fecha del evento' ) }}
-                                    {{ Form::date('order_date',null,['class'=>'form-control']) }}
-                                  </div>
-                                <div class="form-group col-md-12 col-lg-12">
-                                  {{ Form::label('description' , 'Descripción' ) }}
-                                  {{ Form::textarea('description',null,['class'=>'form-control', 'style' => 'resize:none', 'placeholder' => 'Descripción del evento...']) }}
-                                </div>
-
-
-                              </div>
-                              <h3>Fichas</h3>
-                            <div class="input-group mb-3">
-                            {{ Form::select('file_id[]',$filePopulationSpecial ,null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
-                            <div class="input-group-append">
-                              <button type="button" class="btn btn-outline-info" id="dependence"><i class="fa fa-plus-circle"></i></button>
-                          </div>
-                          </div>
-                            <div class="form-group" id="fill_me">
-
-                            </div>
-
-                              <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
-                                  <button type="submit" class="btn btn-outline-info"><i class="fa fa-save fa-lg"></i> Realizar Solicitud</button>
-                              </div>
-                              {{ Form::close() }}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div>
 
           </div>
         </div>
@@ -261,23 +197,23 @@ function loadRecipeProducts(id) {
     })
   }
 
-  $(document).ready(function() {
-    $(document).on('click', '#dependence', function() {
-        $('#fill_me').append(`
-    <div class="input-group mb-3 remove_me">
-      {{ Form::select('file_id[]', $filePopulationSpecial, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
-      <div class="input-group-append">
-      <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
-      </div>
-    </div>
-    `);
+//   $(document).ready(function() {
+//     $(document).on('click', '#dependence', function() {
+//         $('#fill_me').append(`
+//     <div class="input-group mb-3 remove_me">
+//       {{ Form::select('file_id[]', $filePopulationSpecial, null, ['class' => 'form-control', 'aria-describedby'=>"dependence"])}}
+//       <div class="input-group-append">
+//       <button type="button" class="btn btn-outline-danger click_to_delete"><i class="fas fa-times-circle"></i></button>
+//       </div>
+//     </div>
+//     `);
 
-    });
+//     });
 
-    $(document).on('click', '.click_to_delete', function() {
-        $(this).closest('.remove_me').remove();
-    });
-})
+//     $(document).on('click', '.click_to_delete', function() {
+//         $(this).closest('.remove_me').remove();
+//     });
+// })
 
 </script>
 @endsection

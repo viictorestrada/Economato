@@ -17,6 +17,7 @@ use App\Models\Order;
 use App\Models\File;
 use App\Models\Contract;
 use DataTables;
+use Carbon;
 
 class AdministratorController extends Controller
 {
@@ -38,7 +39,10 @@ class AdministratorController extends Controller
     $contracts=Contract::pluck('contract_number','id');
     $recipe = Recipe::all();
     $products=ProductsHasContracts::select('products.id','products.product_name')
-    ->join('products','products.id' , '=' , 'products_has_contracts.products_id')->where('products.status',1)->get()->pluck('product_name', 'id');
+    ->join('products','products.id' , '=' , 'products_has_contracts.products_id')
+    ->where('products.status',1)
+    ->where('products_has_contracts.quantity','>',0)
+    ->get()->pluck('product_name', 'id');
     $files=File::where('characterization_id',2)->where('status',1)->get();
     $file = $files->pluck('file_number','id');
     return view('administrator.panel', compact('recipe','products','file','contracts'));
@@ -77,6 +81,8 @@ class AdministratorController extends Controller
                 } else if ($id->status == 4) {
                     return "Modificado";
                 }
+            })->editColumn('created_at',function($data){
+              return $data->created_at->toDateString();
             })
             ->make(true);
     }

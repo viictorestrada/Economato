@@ -113,11 +113,11 @@
           <ul class="nav d-flex justify-content-between nav-pills nav-fill bg-secondary admin" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
 
             <li class="nav-item" style="background-color: none;">
-              <a class="nav-link active" id="v-pills-solicitudes2-tab" data-toggle="pill" href="#v-pills-solicitudes2" role="tab" aria-controls="v-pills-solicitudes2" aria-selected="false" style="color: #fff">Solicitudes</a>
+              <a class="nav-link active" id="v-pills-solicitudes2-tab" data-toggle="pill" href="#v-pills-solicitudes2" role="tab" aria-controls="v-pills-solicitudes2" aria-selected="false" style="color: #fff">Solicitudes de Formación</a>
             </li>
 
             <li class="nav-item" style="background-color: none;">
-                <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro / población especial</a>
+                <a class="nav-link" id="v-pills-produccion-tab" data-toggle="pill" href="#v-pills-produccion" role="tab" aria-controls="v-pills-produccion" aria-selected="false" style="color: #fff">Producción de centro</a>
             </li>
           </ul>
           <div class="tab-content" id="v-pills-tabContent2">
@@ -131,7 +131,8 @@
                       <tr>
                         <th># Remisión</th>
                         <th>Usuario</th>
-                        <th>Fecha</th>
+                        <th>Fecha para la entrega</th>
+                        <th>Fecha de solicitud</th>
                         <th>Ficha</th>
                         <th>Programa de Formación</th>
                         <th>Caracterización</th>
@@ -162,7 +163,7 @@
                       <th>Titulo</th>
                       <th>Descripción</th>
                       <th>Asistentes</th>
-                      <th>Usario</th>
+                      <th>Usuario</th>
                       <th>Fecha</th>
                       <th>lugar</th>
                       <th>Estado</th>
@@ -286,7 +287,7 @@
                       <th>Titulo</th>
                       <th>Descripción</th>
                       <th>Asistentes</th>
-                      <th>Usario</th>
+                      <th>Usuario</th>
                       <th>Fecha</th>
                       <th>lugar</th>
                       <th>Estado</th>
@@ -411,7 +412,7 @@
             }
           }
         });
-     
+
       var table = $('#recipes').DataTable({
         destroy: true,
         responsive: true,
@@ -441,6 +442,7 @@
           { data: 'id' , name: 'id'},
           { data: 'user_name', name: 'user_name' },
           { data: 'order_date', name: 'order_date' },
+          { data: 'created_at', name: 'created_at' },
           { data: 'file_number', name: 'file_number' },
           { data: 'program_name', name: 'program_name' },
           { data: 'characterization_name', name: 'characterization_name'},

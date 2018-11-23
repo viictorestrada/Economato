@@ -24,7 +24,11 @@ class OrderController extends Controller
     public function index()
     {
       $filePopulationSpecial=File::where('characterization_id', 4)->where('status',1)->pluck('file_number','id');
-      $files=File::where('status',1)->where('characterization_id', 1)->orWhere('characterization_id', 3)->orWhere('characterization_id', 5)->where('status',1)->pluck('file_number','id');
+  $files=File::where('status',1)->where('characterization_id', 1)
+      ->orWhere('characterization_id', 3)
+      ->orWhere('characterization_id', 4)
+      ->orWhere('characterization_id', 5)
+      ->where('status',1)->pluck('file_number','id');
       $recipes=Recipe::pluck('recipe_name','id');
       $product=Product::pluck('product_name','id');
       return view('orders.ordersconfirm', compact('files','recipes','product','filePopulationSpecial'));
@@ -33,6 +37,11 @@ class OrderController extends Controller
     public function create()
     {
       $filePopulationSpecial=File::where('characterization_id', 4)->where('status',1)->pluck('file_number','id');
+        $files=File::where('status',1)->where('characterization_id', 1)
+      ->orWhere('characterization_id', 3)
+      ->orWhere('characterization_id', 4)
+      ->orWhere('characterization_id', 5)
+      ->where('status',1)->pluck('file_number','id');
       $files=File::where('status',1)->where('characterization_id', 1)->orWhere('characterization_id', 3)->orWhere('characterization_id', 5)->where('status',1)->pluck('file_number','id');
       $recipes=Recipe::pluck('recipe_name','id');
       $product=Product::pluck('product_name','id');
@@ -50,7 +59,6 @@ class OrderController extends Controller
     public function pdfRemission($id)
     {
         $information=array();
-
         $products = OrderRecipe::where('orders_recipes.order_id',$id)
         ->select('orders_recipes.order_id','orders.user_name','orders.status','files.file_number','characterizations.characterization_name','programs.program_name','recipes.recipe_name','orders.order_date','orders.cost','orders_recipes.*','products.product_name','products_has_contracts.unit_price','taxes.tax','measure_unit.measure_name')
         ->join('orders', 'orders.id','=','orders_recipes.order_id')
@@ -64,6 +72,8 @@ class OrderController extends Controller
         ->join('characterizations','characterizations.id','=','files.characterization_id')
         ->where('products_has_contracts.status',1)
         ->get();
+      // dd($products);
+
         $characterization_name=$products->pluck('characterization_name')->first();
         $program_name=$products->pluck('program_name')->first();
         $file_number=$products->pluck('file_number');
@@ -87,10 +97,10 @@ class OrderController extends Controller
         ];
         if($products[0]['status']==2){
         $pdf = PDF::loadView('reports.remissionProvider', compact('products','orderCost','information'));
-        return $pdf->download();
+        return $pdf->download('Solicitud de '.$user.$recipeName.$idOrder.' Pedido a Proveedor.pdf');
         }else if($products[0]['status']==3 || $products[0]['status']==5){
          $pdf = PDF::loadView('reports.remission', compact('products','orderCost','information'));
-        return $pdf->download();
+        return $pdf->download('Constancia de entrega '.$user.$recipeName.$idOrder.'.pdf');
         }
     }
     public function checkReport(Request $request){
@@ -122,7 +132,7 @@ class OrderController extends Controller
          $collectionTax->push(['priceTax'=>$value->sum('priceTax'),'tax'=>$value[0]['tax']]);
         }
          $pdf = PDF::loadView('reports.check', compact('collection2','collectionTax'));
-        return $pdf->download();
+        return $pdf->download('factura de '.date('Y-m-d').'.pdf');
         }
     /**
      * Store a newly created resource in storage.
