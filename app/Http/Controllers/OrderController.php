@@ -72,8 +72,6 @@ class OrderController extends Controller
         ->join('characterizations','characterizations.id','=','files.characterization_id')
         ->where('products_has_contracts.status',1)
         ->get();
-      // dd($products);
-
         $characterization_name=$products->pluck('characterization_name')->first();
         $program_name=$products->pluck('program_name')->first();
         $file_number=$products->pluck('file_number');

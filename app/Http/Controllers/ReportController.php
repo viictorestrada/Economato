@@ -184,7 +184,7 @@ class ReportController extends Controller
           else {
             $datasets[4] = 0;
           }
-        }
+
         $labels=[
           [
           "Formación = " .number_format($datasets[0])
@@ -217,7 +217,10 @@ class ReportController extends Controller
           ->options([]);
                 return $chartCharacterization;
 
+    }else{
+      ;
     }
+  }
 
 
     public function totalBudget(){
@@ -328,6 +331,19 @@ class ReportController extends Controller
       })
       ->make(true);
 
+    }
+    public function expensesPdf(){
+      
+      $characterization=Order::where('orders.status',5)
+      ->groupBy('characterizations.characterization_name','characterizations.id')
+      ->join('files', 'orders.files_id', '=', 'files.id')
+      ->join('characterizations' ,'characterizations.id', '=' , 'files.characterization_id')
+      ->selectRaw('sum(cost) as sum,characterization_name,characterizations.id')
+      ->orderBy('characterizations.id','asc')
+      ->get();
+
+      $pdf = PDF::loadView('reports.expenses', compact('characterization'));
+        return $pdf->download('GastosPorFormacionEconomato.pdf');
     }
 
 }
