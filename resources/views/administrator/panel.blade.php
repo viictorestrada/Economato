@@ -700,11 +700,11 @@
           if (data.length == 0) {
             $('#fillRecipeDetails').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::text('quantity[]', null, ['class' => 'form-control',]) }}</td>
               </tr>`
-            );
+            ); 
           }
           else {
           var product_id;
@@ -720,7 +720,7 @@
             if (a == 0) {
               $('#fillRecipeDetails').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'setSelect`+a+`', 'onchange="getMeasure(this)"']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'id' => 'setSelect`+a+`', 'onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
@@ -730,7 +730,7 @@
             else{
             $('#fillRecipeDetails').append(
             `<tr>
-              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelect`+a+`']) }}</td>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"','id' => 'setSelect`+a+`']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
@@ -740,6 +740,7 @@
             }
           })
         }
+        $('.select').select2();
         },
         error: function() {
         }
@@ -770,12 +771,13 @@
       $(document).on('click', '.addProducts', function(){
         var html =
         `<tr>
-            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
             <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
             <td>{{ Form::text('quantity[]', null, ['class' => 'form-control']) }}</td>
             <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
         </tr>`;
           $('#fillRecipeDetails').append(html);
+          $('.select').select2();
       });
 
     $(document).on('click', '.remove', function(){
@@ -787,22 +789,24 @@
       $(document).on('click', '#addColumns', function(){
         var html =
         `<tr>
-            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
             <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
             <td>{{ Form::text('quantity[]', null, ['class' => 'form-control']) }}</td>
             <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
         </tr>`;
           $('#fillProductionOrder').append(html);
+          $('.select').select2();
       });
       $(document).on('click', '#addColumns2', function(){
         var html =
         `<tr>
-            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+            <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
             <td class="tdUnit">{{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}</td>
             <td>{{ Form::text('quantity[]', null, ['class' => 'form-control']) }}</td>
             <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
         </tr>`;
           $('#fillProductionOrder2').append(html);
+          $('.select').select2();
       });
 
     $(document).on('click', '.remove', function(){
@@ -826,7 +830,6 @@
         type: 'get',
         datatype: "json",
         success: function(data) {
-          // console.log(data['price'])
           $('#orderEditDetails').empty();
           $('#package_number').val(null);
           var product_id;
@@ -843,7 +846,7 @@
             if (a == 0) {
               $('#orderEditDetails').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'setSelected`+a+`', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'id' => 'setSelected`+a+`', 'onchange="getMeasure(this)"', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
@@ -853,7 +856,7 @@
             else{
             $('#orderEditDetails').append(
             `<tr>
-              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'setSelected`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"','id' => 'setSelected`+a+`', 'placeholder' => '-- Seleccionar Producto --']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
@@ -863,6 +866,7 @@
             }
 
           });
+          $('.select').select2();
           $('#edit-order').modal();
         },
         error: function() {
@@ -884,10 +888,11 @@
           $('#idProduction').val(id);
           $('#fillProductionOrder').append(`
             <tr>
-             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
+             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
               <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
               <td>{{Form::text('quantity[]', null, ['class' => 'form-control'])}}</td>
              </tr>`);
+             $('.select').select2();
           $('#productionOrderModal').modal();
         }
         else
@@ -903,7 +908,7 @@
             if (a == 0) {
               $('#fillProductionOrder').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
@@ -913,7 +918,7 @@
             else{
             $('#fillProductionOrder').append(
             `<tr>
-              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
@@ -924,6 +929,7 @@
 
           })
           $('#idProduction').val(id);
+          $('.select').select2();
           $('#productionOrderModal').modal();
         }
       }
@@ -946,10 +952,11 @@
           $('#idProduction2').val(id);
           $('#fillProductionOrder2').append(`
             <tr>
-             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
+             <td>{{Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"', 'placeholder' => '-- seleccionar producto --'])}}</td>
               <td class="tdUnit">{{Form::text('measure_unit', null, ['class' => 'form-control unidad', 'readonly' => 'true'])}}</td>
               <td>{{Form::text('quantity[]', null, ['class' => 'form-control'])}}</td>
              </tr>`);
+          $('.select').select2();
           $('#productionOrderModal2').modal('show');
         }
         else
@@ -965,7 +972,7 @@
             if (a == 0) {
               $('#fillProductionOrder2').append(
               `<tr>
-                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
+                <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'id' => 'set`+a+`', 'onchange="getMeasure(this)"']) }}</td>
                 <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
                 <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               </tr>`
@@ -975,7 +982,7 @@
             else{
             $('#fillProductionOrder2').append(
             `<tr>
-              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
+              <td>{{ Form::select('product_id[]', $products, null, ['class' => 'form-control select', 'onchange="getMeasure(this)"','id' => 'set`+a+`']) }}</td>
               <td class="tdUnit">{{ Form::text('id_measure_unit', '`+measure+`', ['class' => 'form-control unidad', 'readonly']) }}</td>
               <td>{{ Form::text('quantity[]', '`+quantity+`', ['class' => 'form-control',]) }}</td>
               <td><button type="button" name="remove" class="btn btn-outline-danger remove"><i class="fa fa-times-circle"></i></button></td>
@@ -986,6 +993,7 @@
 
           })
           $('#idProduction').val(id);
+          $('.select').select2();
           $('#productionOrderModal2').modal('show');
         }
       }
