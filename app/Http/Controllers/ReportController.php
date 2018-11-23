@@ -333,6 +333,7 @@ class ReportController extends Controller
 
     }
     public function expensesPdf(){
+      
       $characterization=Order::where('orders.status',5)
       ->groupBy('characterizations.characterization_name','characterizations.id')
       ->join('files', 'orders.files_id', '=', 'files.id')

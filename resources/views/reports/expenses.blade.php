@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> --}}
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Remisión</title>
+  <title>Gatos por formación Economato</title>
   <style>
     .page-break {
         page-break-after: always;
@@ -155,7 +155,9 @@
                 </tr>
                 </thead>
                 <tbody>
+                  {{ $acum=0 }}
             @foreach($characterization as $key => $value)
+            {{  $acum +=$value['sum'] }}
                   <tr>
                   <td>{{ $value['characterization_name'] }}</td>
                   <td>{{ number_format($value['sum']) }}</td>
@@ -166,7 +168,7 @@
               @endif
               <div class="contenedorDatos" style="margin-top:15px">
             <div class="columna1 columnas">
-              <h4></h4>
+            <h4>Total consumido por Formación: {{ number_format($acum) }}</h4>
             </div>
             <div  class="columna2 columnas">
             </div>
@@ -174,13 +176,13 @@
             <div class="contenedorDatos">
 
              <div class="columna1 columnas">
-              <strong>Entrega:<hr style="color:black;" size="3" width="50%">
+              <strong><hr style="color:black;" size="3" width="50%">
               <div style="margin-left:90px">Firma economato</div>
               </strong>
             </div>
             <div  class="columna2 columnas">
-              <strong>Recibe:<hr style="color:black;" size="3" width="50%">
-              <div style="margin-left:90px">Firma instructor quien recibe</div>
+              <strong><hr style="color:black;" size="3" width="50%">
+              <div style="margin-left:90px">Firma de Coordinación</div>
               </strong>
             </div>
 
