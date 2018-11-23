@@ -45,9 +45,6 @@
       <div class="card-body">
         <div class="row">
            <div class="col-md-6">
-            {{-- {{
-            dd(isset($chartCharacterization))
-            }}  --}}
             @if(isset($chartCharacterization) == false)
               <div class="card  w-50">
               <div class="card-body">
@@ -59,6 +56,9 @@
               <div class="card-body">
                 <div class="card-title">Presupuesto consumido, discriminado por caracterización.</div>
                   {!!  $chartCharacterization->render() !!}
+                  <div class="d-flex justify-content-end form-group col-lg-12 col-md-12">
+                   <a href="pdf/expenses" class="btn btn-outline-danger" data-toggle="tooltip" title="Descargar Informe de gastos" style="text-decoration : none;"><i class="far fa-file-pdf "></i></a>
+                  </div>
                 </div>
             </div>
             @endif
@@ -88,6 +88,7 @@
         <div class="row">
           <div class="col-md-6">
               {!!  $chartLess->render() !!}
+
         </div>
         <div class="col-md-6">
           {!!  $charTop->render() !!}

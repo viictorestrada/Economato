@@ -99,7 +99,7 @@ Route::get('/files/get', 'FileController@filesList');
 //Rutas para Presupuesto
 
 Route::post('/panel/updateBudget', 'OrderRecipeController@checkValue');
-Route::get('/panel/check/','OrderRecipeController@update');
+Route::post('/panel/check','OrderRecipeController@update');
 
 //Rutas para Proveedores
 Route::get('/providers/get', 'ProviderController@providersList');
@@ -188,6 +188,7 @@ Route::post('contractsImport','ContractController@import');
 Route::post('Special_orders', 'ProductionOrdersController@storeSpecialOrders');
 
 Route::get('files/status/{id}/{status}', 'FileController@status');
+Route::get('pdf/expenses', 'ReportController@expensesPdf');
 Route::resource('files', 'FileController');
 Route::resource('orders', 'OrderController');
 
