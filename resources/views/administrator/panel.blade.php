@@ -185,7 +185,8 @@
 
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
           @if(Session::has('message'))
-          <form action="/panel/check/" method="POST">
+          <form action="/panel/check" method="POST">
+            @csrf
             <div class="alert alert-primary" role="alert">
               {{ Session::get('message') }}
               <button type="submit" class="btn btn-outline-info">Facturar</button>
