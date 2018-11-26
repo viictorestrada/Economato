@@ -240,13 +240,17 @@ class ReportController extends Controller
       ->name('doughnutChartTest')
       ->type('doughnut')
       ->size(['width' => 400, 'height' => 200])
-      ->labels(['Presupuesto Consumido = '.number_format(($totalBudget->initial_budget+$aditions)-$totalBudget->budget).' ', 'Presupuesto disponible = '.number_format($totalBudget->budget).''])
+      ->labels(['Presupuesto Consumido = '.number_format(($totalBudget->initial_budget+$aditions)-$totalBudget->budget).' | '.round($initial,2).'%', 'Presupuesto disponible = '.number_format($totalBudget->budget).' | '.round($averageBudget,2).'%'])
       ->datasets([
           [
               'backgroundColor' => ['#17A2B8', '#DCE7E9' ],
               'hoverBackgroundColor' => ['#17A2B8', '#DCE7E9' ],
-              'data' => [$initial, $averageBudget]
+              'data' => [round($initial,2), round($averageBudget,2)]
           ]
+      ])->options([
+        'tooltips' => [
+            'title' => [number_format(($totalBudget->initial_budget+$aditions)-$totalBudget->budget),number_format($totalBudget->budget)]
+        ]
       ]);
       return $totalBudgetChart;
       }else {

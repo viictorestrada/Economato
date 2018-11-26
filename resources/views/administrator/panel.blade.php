@@ -371,10 +371,18 @@
                                   {{ Form::text('id_measure_unit', null, ['class' => 'form-control unidad', 'readonly']) }}
                                 </td>
                                 <td>
-                                  {{ Form::number('quantity[]', null, ['class' => 'form-control']) }}
+                                  {{ Form::text('quantity[]', null, ['class' => 'form-control']) }}
                                 </td>
                               </tr>
                             </tbody>
+                            <tfoot>
+                              <tr class="text-center">
+                                <th>Insumo</th>
+                                <th>Unidad de medida</th>
+                                <th>Cantidad</th>
+                                <th><button type="button" class="btn btn-outline-info addProducts"><i class="fa fa-plus-circle"></i></button></th>
+                              </tr>
+                            </tfoot>
                           </table>
                       </div>
                       </div>
